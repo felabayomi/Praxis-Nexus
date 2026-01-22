@@ -127,8 +127,8 @@ export async function sendContactEmail(data: ContactEmailData): Promise<void> {
           
           <p style="line-height: 1.8; margin: 20px 0;">
             Best regards,<br>
-            <strong>Felix Olusola Abayomi</strong><br>
-            <span style="color: #666;">EdD Student, Antioch University</span>
+            <strong>Felix Abayomi</strong><br>
+            <span style="color: #666;">Doctor of Education (EdD) Candidate, Antioch University</span>
           </p>
           
           <p style="color: #666; font-size: 12px; margin-top: 30px; border-top: 1px solid #ddd; padding-top: 15px;">

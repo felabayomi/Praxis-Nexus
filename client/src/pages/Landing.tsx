@@ -24,9 +24,12 @@ export default function Landing({ onEnterJournal }: LandingProps) {
       <main className="flex-1 flex items-center justify-center px-4 sm:px-6 py-12">
         <div className="max-w-2xl mx-auto text-center space-y-8">
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium">
-              <BookOpen className="h-4 w-4" />
-              <span>Academic Inquiry Journal</span>
+            <div className="inline-flex flex-col items-center gap-1 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium">
+              <div className="flex items-center gap-2">
+                <BookOpen className="h-4 w-4" />
+                <span>Academic Inquiry Journal</span>
+              </div>
+              <span className="text-xs opacity-80">EdD AI Cohort Inquiry Journal</span>
             </div>
             
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-foreground" data-testid="text-inquiry-title">
@@ -40,7 +43,7 @@ export default function Landing({ onEnterJournal }: LandingProps) {
 
           <div className="pt-4">
             <p className="text-lg text-foreground font-serif" data-testid="text-author">
-              Felix Olusola Abayomi
+              Felix Abayomi
             </p>
             <p className="text-sm text-muted-foreground mt-1">
               EdD Candidate, Antioch University
@@ -61,7 +64,7 @@ export default function Landing({ onEnterJournal }: LandingProps) {
 
           <div className="pt-8 border-t border-border/50">
             <p className="text-xs text-muted-foreground">
-              © Felix Olusola Abayomi 2026
+              © Felix Abayomi 2026
             </p>
           </div>
         </div>

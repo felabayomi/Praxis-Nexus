@@ -42,7 +42,8 @@ Praxis Nexus is an academic inquiry journal web application for presenting EdD (
 ### Backend (Express)
 - **server/routes.ts** - API endpoints for journal data
 - **server/storage.ts** - In-memory storage for journal entries
-- **server/replit_integrations/ai-presentation.ts** - OpenAI integration for AI insights
+- **server/replit_integrations/ai-presentation.ts** - OpenAI integration for AI insights and slide headings
+- **server/replit_integrations/tts.ts** - OpenAI TTS for audio narration (CarPlay compatible)
 
 ### Shared
 - **shared/schema.ts** - TypeScript interfaces for journal data types
@@ -60,11 +61,13 @@ Praxis Nexus is an academic inquiry journal web application for presenting EdD (
 - Monthly inquiry sections with themed content
 - Academic reference list with DOI links
 - Responsive design for all devices
-- AI-enhanced presentation mode with 5 templates
+- AI-enhanced presentation mode with 5 templates and auto-generated slide headings
 - Full-text search (Ctrl+K / Cmd+K)
-- Text-to-speech audio narration
+- Text-to-speech audio narration (Web Speech API)
+- AI audio narration via OpenAI TTS (CarPlay/Android Auto/Bluetooth compatible)
 - Print/PDF export with clean styling
 - PWA support for home screen installation
+- Access code protection (code: 150920) for journal entry
 
 ## Presentation Templates
 1. Forest Canopy - Deep greens with layered depth

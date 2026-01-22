@@ -175,9 +175,8 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                     <p className="text-muted-foreground text-sm mb-3">
                       Introduction, context, and references for this inquiry.
                     </p>
-                    <div className="flex items-center gap-2 text-primary text-sm font-medium">
-                      <span>Introduction & References</span>
-                      <ArrowRight className="h-4 w-4" />
+                    <div className="flex items-center justify-end text-primary">
+                      <ArrowRight className="h-5 w-5" />
                     </div>
                   </div>
                 </div>
@@ -198,9 +197,8 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                     <p className="text-muted-foreground text-sm mb-3">
                       Monthly reflections and explorations documenting the inquiry journey.
                     </p>
-                    <div className="flex items-center gap-2 text-primary text-sm font-medium">
-                      <span>Start with Month 1</span>
-                      <ArrowRight className="h-4 w-4" />
+                    <div className="flex items-center justify-end text-primary">
+                      <ArrowRight className="h-5 w-5" />
                     </div>
                   </div>
                 </div>

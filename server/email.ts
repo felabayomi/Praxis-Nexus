@@ -52,13 +52,15 @@ async function getResendClient() {
 export async function sendContactEmail(data: ContactEmailData): Promise<void> {
   const { name, email, subject, message } = data;
   const { client, fromEmail } = await getResendClient();
+  const senderFrom = fromEmail || "Praxis Nexus <onboarding@resend.dev>";
   
   const emailSubject = subject 
     ? `Praxis Nexus Inquiry: ${subject}` 
     : `Praxis Nexus Inquiry from ${name}`;
 
+  // Send notification to Felix
   await client.emails.send({
-    from: fromEmail || "Praxis Nexus <onboarding@resend.dev>",
+    from: senderFrom,
     to: "praxinex@gmail.com",
     replyTo: email,
     subject: emailSubject,
@@ -81,6 +83,43 @@ export async function sendContactEmail(data: ContactEmailData): Promise<void> {
         
         <p style="color: #666; font-size: 12px; margin-top: 30px; border-top: 1px solid #ddd; padding-top: 15px;">
           This message was sent via the Praxis Nexus contact form.
+        </p>
+      </div>
+    `,
+  });
+
+  // Send confirmation to the sender
+  await client.emails.send({
+    from: senderFrom,
+    to: email,
+    subject: "Thank you for contacting Praxis Nexus",
+    html: `
+      <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #0f4c3a; border-bottom: 2px solid #0f4c3a; padding-bottom: 10px;">
+          Thank You for Your Message
+        </h2>
+        
+        <p style="line-height: 1.8; margin: 20px 0;">
+          Dear ${name},
+        </p>
+        
+        <p style="line-height: 1.8; margin: 20px 0;">
+          Thank you for reaching out through Praxis Nexus. I have received your message${subject ? ` regarding "${subject}"` : ''} and will respond as soon as possible.
+        </p>
+        
+        <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <h3 style="color: #0f4c3a; margin-top: 0; font-size: 14px;">Your message:</h3>
+          <p style="white-space: pre-wrap; line-height: 1.6; font-style: italic; color: #555;">${message}</p>
+        </div>
+        
+        <p style="line-height: 1.8; margin: 20px 0;">
+          Best regards,<br>
+          <strong>Felix Olusola Abayomi</strong><br>
+          <span style="color: #666;">EdD Student, Antioch University</span>
+        </p>
+        
+        <p style="color: #666; font-size: 12px; margin-top: 30px; border-top: 1px solid #ddd; padding-top: 15px;">
+          This is an automated confirmation from Praxis Nexus - Academic Inquiry Journal.
         </p>
       </div>
     `,

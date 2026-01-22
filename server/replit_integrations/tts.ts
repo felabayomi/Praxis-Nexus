@@ -7,7 +7,7 @@ const openai = new OpenAI({
 });
 
 export function registerTTSRoutes(app: Express): void {
-  // Generate audio for a section of the journal
+  // Generate audio for a section of the journal using gpt-audio model
   app.post("/api/tts/generate", async (req: Request, res: Response) => {
     try {
       const { text, sectionId } = req.body;
@@ -16,24 +16,39 @@ export function registerTTSRoutes(app: Express): void {
         return res.status(400).json({ error: "Text is required" });
       }
 
-      // Truncate to reasonable length for TTS (about 4000 characters max)
-      const truncatedText = text.slice(0, 4000);
+      // Truncate to reasonable length for audio generation
+      const truncatedText = text.slice(0, 2000);
 
       console.log(`Generating TTS for section: ${sectionId}, text length: ${truncatedText.length}`);
 
-      const response = await openai.audio.speech.create({
-        model: "tts-1",
-        voice: "alloy",
-        input: truncatedText,
-        response_format: "mp3",
+      // Use gpt-audio model with audio output modality
+      const response = await openai.chat.completions.create({
+        model: "gpt-audio",
+        modalities: ["text", "audio"],
+        audio: { voice: "alloy", format: "mp3" },
+        messages: [
+          {
+            role: "system",
+            content: "You are a professional narrator. Read the following academic text clearly and naturally, as if narrating a scholarly journal article. Do not add any commentary, just read the text exactly as provided."
+          },
+          {
+            role: "user",
+            content: `Please read this text aloud:\n\n${truncatedText}`
+          }
+        ],
       });
 
-      // Get audio as buffer
-      const audioBuffer = Buffer.from(await response.arrayBuffer());
+      // Extract audio data from the response
+      const audioData = response.choices[0]?.message?.audio?.data;
       
-      // Send as base64 for easy client-side handling
+      if (!audioData) {
+        console.error("No audio data in response");
+        return res.status(500).json({ error: "No audio generated" });
+      }
+      
+      // Audio data is already base64 encoded
       res.json({
-        audio: audioBuffer.toString("base64"),
+        audio: audioData,
         mimeType: "audio/mpeg",
         sectionId
       });

@@ -301,10 +301,7 @@ export function AuthorModal({ open, onOpenChange }: AuthorModalProps) {
           </ScrollArea>
         </Tabs>
 
-        <div className="p-4 border-t text-center text-xs text-muted-foreground">
-          © Felix Abayomi 2026. All rights reserved.
-        </div>
-      </DialogContent>
+              </DialogContent>
     </Dialog>
   );
 }

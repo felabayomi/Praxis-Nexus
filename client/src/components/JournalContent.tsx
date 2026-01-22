@@ -264,18 +264,6 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
         )}
 
         <footer className="mt-16 pt-8 border-t border-border/50 text-center print:mt-8">
-          {onOpenInfoCenter && (
-            <p className="text-sm text-muted-foreground mb-2">
-              <button
-                type="button"
-                onClick={onOpenInfoCenter}
-                className="font-bold text-foreground bg-primary/10 hover:bg-primary/20 px-4 py-2 rounded-md transition-colors cursor-pointer"
-                data-testid="button-author-name"
-              >
-                Info Center
-              </button>
-            </p>
-          )}
           <p className="text-xs text-muted-foreground">
             © Felix Abayomi 2026. All rights reserved.
           </p>

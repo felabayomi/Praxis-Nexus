@@ -145,7 +145,7 @@ export function JournalSidebar({ activeSection, onSectionChange }: JournalSideba
 
       <SidebarFooter className="p-4 pt-2">
         <div className="text-xs text-sidebar-foreground/40 text-center">
-          {journalData.author}
+          Academic Inquiry Journal
         </div>
       </SidebarFooter>
     </Sidebar>

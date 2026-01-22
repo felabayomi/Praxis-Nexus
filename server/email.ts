@@ -98,6 +98,9 @@ export async function sendContactEmail(data: ContactEmailData): Promise<void> {
     console.error("Admin email error:", adminError);
   }
 
+  // Wait 1 second to avoid Resend rate limit (2 requests per second)
+  await new Promise(resolve => setTimeout(resolve, 1000));
+
   // Send confirmation to the sender (with reply-to praxinex@gmail.com)
   try {
     console.log("Now sending confirmation email to:", email);

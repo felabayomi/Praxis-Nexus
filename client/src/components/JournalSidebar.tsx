@@ -31,9 +31,10 @@ import {
 interface JournalSidebarProps {
   activeSection: string;
   onSectionChange: (sectionId: string) => void;
+  onOpenInfoCenter?: () => void;
 }
 
-export function JournalSidebar({ activeSection, onSectionChange }: JournalSidebarProps) {
+export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCenter }: JournalSidebarProps) {
   const introTime = getIntroductionReadingTime(journalData);
   const refsTime = getReferencesReadingTime(journalData);
   const totalTime = getTotalReadingTime(journalData);
@@ -141,7 +142,17 @@ export function JournalSidebar({ activeSection, onSectionChange }: JournalSideba
         </ScrollArea>
       </SidebarContent>
 
-      <SidebarFooter className="p-4 pt-2">
+      <SidebarFooter className="p-4 pt-2 space-y-2">
+        {onOpenInfoCenter && (
+          <button
+            type="button"
+            onClick={onOpenInfoCenter}
+            className="w-full font-semibold text-sm text-sidebar-foreground bg-primary/10 hover:bg-primary/20 px-4 py-2 rounded-md transition-colors cursor-pointer"
+            data-testid="sidebar-info-center"
+          >
+            Info Center
+          </button>
+        )}
         <div className="text-xs text-sidebar-foreground/40 text-center">
           Academic Inquiry Journal
         </div>

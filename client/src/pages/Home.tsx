@@ -5,6 +5,7 @@ import { JournalContent } from "@/components/JournalContent";
 import { PresentationView } from "@/components/PresentationView";
 import { TemplateSelector, TemplateStyle } from "@/components/TemplateSelector";
 import { SearchDialog } from "@/components/SearchDialog";
+import { AuthorModal } from "@/components/AuthorModal";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -19,6 +20,7 @@ export default function Home() {
   const [showSearch, setShowSearch] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateStyle>("forest");
   const [hasPreference, setHasPreference] = useState(false);
+  const [showInfoCenter, setShowInfoCenter] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem(TEMPLATE_STORAGE_KEY);
@@ -103,6 +105,7 @@ export default function Home() {
         <JournalSidebar
           activeSection={activeSection}
           onSectionChange={setActiveSection}
+          onOpenInfoCenter={() => setShowInfoCenter(true)}
         />
         <div className="flex flex-col flex-1 min-w-0">
           <header className="flex items-center justify-between gap-4 px-4 h-14 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 print:hidden">
@@ -147,10 +150,12 @@ export default function Home() {
             <JournalContent 
               activeSection={activeSection} 
               onOpenPresentation={handleOpenPresentation}
+              onOpenInfoCenter={() => setShowInfoCenter(true)}
             />
           </main>
         </div>
       </div>
+      <AuthorModal open={showInfoCenter} onOpenChange={setShowInfoCenter} />
     </SidebarProvider>
   );
 }

@@ -107,8 +107,9 @@ export function AuthorModal({ open, onOpenChange }: AuthorModalProps) {
             <TabsContent value="about" className="mt-0 space-y-4 pb-6">
               <h3 className="font-serif text-lg font-semibold">About the Author</h3>
               <p className="text-muted-foreground leading-relaxed">
-                <strong>Felix Olusola ABAYOMI</strong> is a doctoral student in the EdD in Educational 
-                and Professional Practice program at Antioch University (Online), Yellow Springs, Ohio.
+                <strong>Felix Olusola Abayomi</strong> is a doctoral candidate in the Ed.D. in Educational 
+                and Professional Practice program at Antioch University (Online), Yellow Springs, Ohio. 
+                He is a member of Cohort 10, with a specialization in Environmental and Sustainability Education.
               </p>
               <p className="text-muted-foreground leading-relaxed">
                 His research explores the complex intersections of artificial intelligence, 

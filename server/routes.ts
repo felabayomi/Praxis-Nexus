@@ -1,11 +1,13 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { registerPresentationRoutes } from "./replit_integrations/ai-presentation";
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  registerPresentationRoutes(app);
   
   app.get("/api/journal", async (req, res) => {
     try {

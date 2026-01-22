@@ -1,0 +1,74 @@
+Month 1: Framing the Inquiry
+
+Theme: What Do We Want to Learn and How?
+Your Project Title:
+AI, Conservation, and the Reconfiguration of Human–Wildlife Relations
+(under the cohort theme: EdD Inquiry on AI’s Ecological and Economic Entanglements)
+
+🧠 Inquiry Question
+
+How is AI reconfiguring conservation governance and human–wildlife conflict through ecological, economic, and political entanglements—and what tensions or values are made visible or obscured in the process?
+
+This guiding question reflects a move from general curiosity toward a more focused exploration of how AI systems intersect with land use, habitat monitoring, energy demand, community livelihoods, and conservation ethics.
+
+🔍 Assumptions I Hold About AI
+
+That AI is not neutral—it encodes values such as efficiency, control, and optimization that may conflict with the rhythms of living ecological systems.
+
+That AI’s role in environmental systems is both promising and problematic—capable of enabling large-scale monitoring while also obscuring local knowledge and justice concerns.
+
+That the current deployment of AI in conservation often lacks full accountability for its long-term ecological or social consequences.
+
+🌿 Where is AI Already Influencing My Field?
+
+In conservation, AI is being used in drone-based wildlife tracking (Pedrazzi et al., 2025), predictive models for human–elephant conflict (Priyambodo et al., 2026), and ecological surveillance systems.
+
+These tools are shaping how landscapes are managed, how decisions are made, and who gets included—or excluded—from the process.
+
+Marine mammal conservation (Bogomolni et al., 2025) and food system planning (Willer et al., 2025) offer examples of cross-sector collaboration or friction.
+
+✨ What Excites Me?
+
+The potential to reveal previously invisible patterns in human–wildlife conflict and habitat change.
+
+Opportunities to integrate data-rich insights with ethical, community-driven conservation.
+
+AI’s capacity to support anticipatory environmental planning—if governed justly.
+
+⚠️ What Concerns or Resistance Do I Notice?
+
+The extractive logic of AI infrastructures (energy use, data colonialism, technical elitism).
+
+The risk of reinforcing top-down or techno-solutionist approaches that marginalize Indigenous knowledge, local stewardship, or ecological complexity.
+
+The invisibility of AI’s long-term ecological cost—both material (e.g., server farms) and conceptual (e.g., narrowing what counts as “efficient”).
+
+🧭 Purpose of My Inquiry
+
+To surface and explore how AI is actively reshaping conservation governance and human–wildlife relations—especially in ways that might remain unseen or under-theorized. This includes investigating both visible impacts (like automation and land-use decisions) and invisible ones (like energy demands or erased forms of knowledge).
+
+📚 Scope and Boundaries
+
+Focuses on AI in conservation and environmental governance, with attention to conflict zones (e.g., elephants, marine mammals), data infrastructures, and economic systems.
+
+Examines global and local scales, while remaining grounded in stakeholder tensions.
+
+Uses reflective journaling and case-based analysis as primary methods.
+
+🎯 Objectives
+
+Surface ethical tensions in AI-based conservation practices.
+
+Explore stakeholder perspectives and unequal power dynamics in technology design and deployment.
+
+Stay with complexity rather than seeking premature solutions—honoring ecological and relational insights.
+
+🔄 Planned Exploration Process
+
+Weekly journal reflections using the inquiry journal framework (resources, conflict, livelihoods, justice).
+
+Engagement with case studies and critical AI/environmental literature.
+
+Participation in group dialogue to test and evolve ideas.
+
+Integration of theory (e.g., Crawford, Latour, Sandbrook) with real-world examples (e.g., marine conservation, elephant conflict mapping).

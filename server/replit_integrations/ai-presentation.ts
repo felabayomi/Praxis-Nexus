@@ -53,6 +53,41 @@ Keep responses scholarly yet accessible. Be specific to the content provided.`;
     }
   });
 
+  app.post("/api/presentation/generate-heading", async (req: Request, res: Response) => {
+    try {
+      const { content, slideNumber, projectTitle } = req.body;
+
+      if (!content) {
+        return res.status(400).json({ error: "Content is required" });
+      }
+
+      const systemPrompt = `You are an academic advisor helping create concise slide headings for an EdD research presentation on "${projectTitle}".
+
+Generate a short, impactful heading (2-5 words) that captures the essence of this slide's content. The heading should:
+- Be academic but accessible
+- Highlight the key concept or theme
+- Be suitable for use as a slide title badge
+
+Respond with just the heading text, no quotes or formatting.`;
+
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: `Slide ${slideNumber}:\n\n${content.substring(0, 500)}` }
+        ],
+        max_tokens: 20,
+      });
+
+      const heading = response.choices[0]?.message?.content?.trim() || "";
+      console.log(`Generated heading for slide ${slideNumber}: ${heading}`);
+      res.json({ heading });
+    } catch (error) {
+      console.error("Error generating heading:", error);
+      res.status(500).json({ error: "Failed to generate heading" });
+    }
+  });
+
   app.post("/api/presentation/generate-summary", async (req: Request, res: Response) => {
     try {
       const { content, projectTitle, cohortTheme } = req.body;

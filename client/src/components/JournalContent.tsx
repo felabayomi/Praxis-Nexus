@@ -533,6 +533,18 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                       <AudioPlayer sectionId={month.id} />
                     </DialogContent>
                   </Dialog>
+                  {onOpenPresentation && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={onOpenPresentation}
+                      className="flex items-center gap-2"
+                      data-testid="button-presentation-mode"
+                    >
+                      <Presentation className="h-4 w-4" />
+                      <span className="hidden sm:inline">Present</span>
+                    </Button>
+                  )}
                 </div>
               </div>
               <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3 leading-tight">

@@ -20,7 +20,8 @@ import {
   Waves,
   Sun,
   Compass,
-  X
+  X,
+  Palette
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import { apiRequest } from "@/lib/queryClient";
@@ -29,6 +30,7 @@ import { TemplateStyle, templates } from "./TemplateSelector";
 interface PresentationViewProps {
   template: TemplateStyle;
   onClose: () => void;
+  onChangeTemplate: () => void;
 }
 
 interface Slide {
@@ -124,7 +126,7 @@ const templateStyles = {
   }
 };
 
-export function PresentationView({ template, onClose }: PresentationViewProps) {
+export function PresentationView({ template, onClose, onChangeTemplate }: PresentationViewProps) {
   const slides = createSlides();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -243,6 +245,15 @@ export function PresentationView({ template, onClose }: PresentationViewProps) {
           >
             <Sparkles className="h-4 w-4" />
             <span className="hidden sm:inline">AI Insights</span>
+          </Button>
+          <Button 
+            size="icon" 
+            variant="ghost" 
+            onClick={onChangeTemplate}
+            title="Change template"
+            data-testid="button-change-template"
+          >
+            <Palette className="h-4 w-4" />
           </Button>
           <Button 
             size="icon" 

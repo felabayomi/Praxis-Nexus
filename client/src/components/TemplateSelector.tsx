@@ -18,6 +18,7 @@ export type TemplateStyle = "forest" | "nature" | "minimal" | "bold" | "elegant"
 interface TemplateSelectorProps {
   onSelect: (template: TemplateStyle) => void;
   onClose: () => void;
+  currentTemplate?: TemplateStyle;
 }
 
 interface TemplateOption {
@@ -126,8 +127,8 @@ const templates: TemplateOption[] = [
   }
 ];
 
-export function TemplateSelector({ onSelect, onClose }: TemplateSelectorProps) {
-  const [selected, setSelected] = useState<TemplateStyle>("forest");
+export function TemplateSelector({ onSelect, onClose, currentTemplate }: TemplateSelectorProps) {
+  const [selected, setSelected] = useState<TemplateStyle>(currentTemplate || "forest");
   const selectedTemplate = templates.find(t => t.id === selected)!;
 
   return (

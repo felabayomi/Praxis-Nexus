@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { JournalSidebar } from "@/components/JournalSidebar";
 import { JournalContent } from "@/components/JournalContent";
@@ -8,11 +8,22 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { Separator } from "@/components/ui/separator";
 import { Leaf } from "lucide-react";
 
+const TEMPLATE_STORAGE_KEY = "ai-inquiry-preferred-template";
+
 export default function Home() {
   const [activeSection, setActiveSection] = useState("introduction");
   const [showTemplateSelector, setShowTemplateSelector] = useState(false);
   const [showPresentation, setShowPresentation] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateStyle>("forest");
+  const [hasPreference, setHasPreference] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(TEMPLATE_STORAGE_KEY);
+    if (saved && ["forest", "nature", "minimal", "bold", "elegant"].includes(saved)) {
+      setSelectedTemplate(saved as TemplateStyle);
+      setHasPreference(true);
+    }
+  }, []);
 
   const sidebarStyle = {
     "--sidebar-width": "18rem",
@@ -20,13 +31,24 @@ export default function Home() {
   };
 
   const handleOpenPresentation = () => {
-    setShowTemplateSelector(true);
+    if (hasPreference) {
+      setShowPresentation(true);
+    } else {
+      setShowTemplateSelector(true);
+    }
   };
 
   const handleSelectTemplate = (template: TemplateStyle) => {
     setSelectedTemplate(template);
+    localStorage.setItem(TEMPLATE_STORAGE_KEY, template);
+    setHasPreference(true);
     setShowTemplateSelector(false);
     setShowPresentation(true);
+  };
+
+  const handleChangeTemplate = () => {
+    setShowPresentation(false);
+    setShowTemplateSelector(true);
   };
 
   const handleClosePresentation = () => {
@@ -37,7 +59,8 @@ export default function Home() {
     return (
       <TemplateSelector 
         onSelect={handleSelectTemplate} 
-        onClose={() => setShowTemplateSelector(false)} 
+        onClose={() => setShowTemplateSelector(false)}
+        currentTemplate={selectedTemplate}
       />
     );
   }
@@ -46,7 +69,8 @@ export default function Home() {
     return (
       <PresentationView 
         template={selectedTemplate}
-        onClose={handleClosePresentation} 
+        onClose={handleClosePresentation}
+        onChangeTemplate={handleChangeTemplate}
       />
     );
   }

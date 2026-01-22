@@ -15,9 +15,17 @@ import {
   RefreshCw,
   Quote,
   ExternalLink,
-  Presentation
+  Presentation,
+  Clock
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
+import { TextToSpeech } from "@/components/TextToSpeech";
+import { 
+  getIntroductionReadingTime, 
+  getMonthReadingTime, 
+  getReferencesReadingTime,
+  formatReadingTime 
+} from "@/lib/journalUtils";
 import type { ContentSection, MonthSection, Reference } from "@shared/schema";
 
 interface JournalContentProps {
@@ -126,6 +134,8 @@ function ReferenceItem({ reference }: { reference: Reference }) {
 
 export function JournalContent({ activeSection, onOpenPresentation }: JournalContentProps) {
   const month = journalData.months.find((m) => m.id === activeSection);
+  const introTime = getIntroductionReadingTime(journalData);
+  const refsTime = getReferencesReadingTime(journalData);
 
   return (
     <ScrollArea className="flex-1 h-full">
@@ -133,22 +143,31 @@ export function JournalContent({ activeSection, onOpenPresentation }: JournalCon
         {activeSection === "introduction" && (
           <article data-testid="section-introduction">
             <header className="mb-10">
-              <div className="flex items-start justify-between gap-4 mb-4">
-                <Badge variant="secondary">
-                  Introduction
-                </Badge>
-                {onOpenPresentation && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={onOpenPresentation}
-                    className="flex items-center gap-2"
-                    data-testid="button-presentation-mode"
-                  >
-                    <Presentation className="h-4 w-4" />
-                    <span className="hidden sm:inline">Presentation View</span>
-                  </Button>
-                )}
+              <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Badge variant="secondary">
+                    Introduction
+                  </Badge>
+                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <Clock className="h-3 w-3" />
+                    <span>{formatReadingTime(introTime)}</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <TextToSpeech sectionId="introduction" />
+                  {onOpenPresentation && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={onOpenPresentation}
+                      className="flex items-center gap-2"
+                      data-testid="button-presentation-mode"
+                    >
+                      <Presentation className="h-4 w-4" />
+                      <span className="hidden sm:inline">Presentation View</span>
+                    </Button>
+                  )}
+                </div>
               </div>
               <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3 leading-tight">
                 {journalData.cohortTheme}
@@ -180,9 +199,18 @@ export function JournalContent({ activeSection, onOpenPresentation }: JournalCon
         {activeSection === "references" && (
           <article data-testid="section-references">
             <header className="mb-8">
-              <Badge variant="secondary" className="mb-4">
-                Bibliography
-              </Badge>
+              <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Badge variant="secondary">
+                    Bibliography
+                  </Badge>
+                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <Clock className="h-3 w-3" />
+                    <span>{formatReadingTime(refsTime)}</span>
+                  </div>
+                </div>
+                <TextToSpeech sectionId="references" />
+              </div>
               <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3">
                 References
               </h1>
@@ -204,10 +232,17 @@ export function JournalContent({ activeSection, onOpenPresentation }: JournalCon
         {month && (
           <article data-testid={`section-${month.id}`}>
             <header className="mb-8">
-              <div className="flex items-center gap-3 mb-4">
-                <Badge variant="default" className="bg-primary">
-                  Month {month.monthNumber}
-                </Badge>
+              <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Badge variant="default" className="bg-primary">
+                    Month {month.monthNumber}
+                  </Badge>
+                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <Clock className="h-3 w-3" />
+                    <span>{formatReadingTime(getMonthReadingTime(month))}</span>
+                  </div>
+                </div>
+                <TextToSpeech sectionId={month.id} />
               </div>
               <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3 leading-tight">
                 {month.title}

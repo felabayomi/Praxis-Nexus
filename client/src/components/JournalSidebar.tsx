@@ -16,9 +16,17 @@ import {
   FileText, 
   Calendar,
   Leaf,
-  ChevronRight
+  ChevronRight,
+  Clock
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
+import { 
+  getIntroductionReadingTime, 
+  getMonthReadingTime, 
+  getReferencesReadingTime,
+  formatReadingTime,
+  getTotalReadingTime
+} from "@/lib/journalUtils";
 
 interface JournalSidebarProps {
   activeSection: string;
@@ -26,6 +34,10 @@ interface JournalSidebarProps {
 }
 
 export function JournalSidebar({ activeSection, onSectionChange }: JournalSidebarProps) {
+  const introTime = getIntroductionReadingTime(journalData);
+  const refsTime = getReferencesReadingTime(journalData);
+  const totalTime = getTotalReadingTime(journalData);
+
   return (
     <Sidebar className="border-r-0">
       <SidebarHeader className="p-4 pb-2">
@@ -41,6 +53,10 @@ export function JournalSidebar({ activeSection, onSectionChange }: JournalSideba
               EdD Cohort 2026
             </span>
           </div>
+        </div>
+        <div className="flex items-center gap-1.5 mt-3 text-xs text-sidebar-foreground/50">
+          <Clock className="h-3 w-3" />
+          <span>{formatReadingTime(totalTime)} total</span>
         </div>
       </SidebarHeader>
 
@@ -59,7 +75,12 @@ export function JournalSidebar({ activeSection, onSectionChange }: JournalSideba
                     data-testid="nav-introduction"
                   >
                     <FileText className="h-4 w-4" />
-                    <span>Introduction & Context</span>
+                    <div className="flex flex-col items-start gap-0.5 flex-1">
+                      <span>Introduction & Context</span>
+                      <span className="text-xs text-sidebar-foreground/50">
+                        {formatReadingTime(introTime)}
+                      </span>
+                    </div>
                     {activeSection === "introduction" && (
                       <ChevronRight className="ml-auto h-4 w-4" />
                     )}
@@ -72,7 +93,12 @@ export function JournalSidebar({ activeSection, onSectionChange }: JournalSideba
                     data-testid="nav-references"
                   >
                     <BookOpen className="h-4 w-4" />
-                    <span>References</span>
+                    <div className="flex flex-col items-start gap-0.5 flex-1">
+                      <span>References</span>
+                      <span className="text-xs text-sidebar-foreground/50">
+                        {formatReadingTime(refsTime)}
+                      </span>
+                    </div>
                     {activeSection === "references" && (
                       <ChevronRight className="ml-auto h-4 w-4" />
                     )}
@@ -88,26 +114,29 @@ export function JournalSidebar({ activeSection, onSectionChange }: JournalSideba
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {journalData.months.map((month) => (
-                  <SidebarMenuItem key={month.id}>
-                    <SidebarMenuButton
-                      onClick={() => onSectionChange(month.id)}
-                      className={activeSection === month.id ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""}
-                      data-testid={`nav-${month.id}`}
-                    >
-                      <Calendar className="h-4 w-4" />
-                      <div className="flex flex-col items-start gap-0.5">
-                        <span className="text-sm">Month {month.monthNumber}</span>
-                        <span className="text-xs text-sidebar-foreground/60 line-clamp-1">
-                          {month.title}
-                        </span>
-                      </div>
-                      {activeSection === month.id && (
-                        <ChevronRight className="ml-auto h-4 w-4" />
-                      )}
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                {journalData.months.map((month) => {
+                  const monthTime = getMonthReadingTime(month);
+                  return (
+                    <SidebarMenuItem key={month.id}>
+                      <SidebarMenuButton
+                        onClick={() => onSectionChange(month.id)}
+                        className={activeSection === month.id ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""}
+                        data-testid={`nav-${month.id}`}
+                      >
+                        <Calendar className="h-4 w-4" />
+                        <div className="flex flex-col items-start gap-0.5 flex-1">
+                          <span className="text-sm">Month {month.monthNumber}: {month.title}</span>
+                          <span className="text-xs text-sidebar-foreground/50">
+                            {formatReadingTime(monthTime)}
+                          </span>
+                        </div>
+                        {activeSection === month.id && (
+                          <ChevronRight className="ml-auto h-4 w-4" />
+                        )}
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

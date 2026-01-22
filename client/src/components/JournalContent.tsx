@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { 
@@ -13,13 +14,15 @@ import {
   Target, 
   RefreshCw,
   Quote,
-  ExternalLink
+  ExternalLink,
+  Presentation
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import type { ContentSection, MonthSection, Reference } from "@shared/schema";
 
 interface JournalContentProps {
   activeSection: string;
+  onOpenPresentation?: () => void;
 }
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -121,7 +124,7 @@ function ReferenceItem({ reference }: { reference: Reference }) {
   );
 }
 
-export function JournalContent({ activeSection }: JournalContentProps) {
+export function JournalContent({ activeSection, onOpenPresentation }: JournalContentProps) {
   const month = journalData.months.find((m) => m.id === activeSection);
 
   return (
@@ -130,9 +133,23 @@ export function JournalContent({ activeSection }: JournalContentProps) {
         {activeSection === "introduction" && (
           <article data-testid="section-introduction">
             <header className="mb-10">
-              <Badge variant="secondary" className="mb-4">
-                Introduction
-              </Badge>
+              <div className="flex items-start justify-between gap-4 mb-4">
+                <Badge variant="secondary">
+                  Introduction
+                </Badge>
+                {onOpenPresentation && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={onOpenPresentation}
+                    className="flex items-center gap-2"
+                    data-testid="button-presentation-mode"
+                  >
+                    <Presentation className="h-4 w-4" />
+                    <span className="hidden sm:inline">Presentation View</span>
+                  </Button>
+                )}
+              </div>
               <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3 leading-tight">
                 {journalData.cohortTheme}
               </h1>

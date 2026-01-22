@@ -2,17 +2,23 @@ import { useState } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { JournalSidebar } from "@/components/JournalSidebar";
 import { JournalContent } from "@/components/JournalContent";
+import { PresentationView } from "@/components/PresentationView";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Separator } from "@/components/ui/separator";
 import { Leaf } from "lucide-react";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("introduction");
+  const [showPresentation, setShowPresentation] = useState(false);
 
   const sidebarStyle = {
     "--sidebar-width": "18rem",
     "--sidebar-width-icon": "3.5rem",
   };
+
+  if (showPresentation) {
+    return <PresentationView onClose={() => setShowPresentation(false)} />;
+  }
 
   return (
     <SidebarProvider style={sidebarStyle as React.CSSProperties}>
@@ -36,7 +42,10 @@ export default function Home() {
             <ThemeToggle />
           </header>
           <main className="flex-1 overflow-hidden bg-muted/30">
-            <JournalContent activeSection={activeSection} />
+            <JournalContent 
+              activeSection={activeSection} 
+              onOpenPresentation={() => setShowPresentation(true)}
+            />
           </main>
         </div>
       </div>

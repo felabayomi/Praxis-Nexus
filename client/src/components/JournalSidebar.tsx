@@ -45,14 +45,9 @@ export function JournalSidebar({ activeSection, onSectionChange }: JournalSideba
           <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10">
             <Leaf className="h-5 w-5 text-primary" />
           </div>
-          <div className="flex flex-col">
-            <span className="text-sm font-serif font-semibold text-sidebar-foreground">
-              Praxis Nexus
-            </span>
-            <span className="text-xs text-sidebar-foreground/60">
-              EdD Cohort 2026
-            </span>
-          </div>
+          <span className="text-sm font-serif font-semibold text-sidebar-foreground">
+            Praxis Nexus
+          </span>
         </div>
         <div className="flex items-center gap-1.5 mt-3 text-xs text-sidebar-foreground/50">
           <Clock className="h-3 w-3" />
@@ -62,6 +57,9 @@ export function JournalSidebar({ activeSection, onSectionChange }: JournalSideba
 
       <SidebarContent>
         <ScrollArea className="flex-1">
+          <div className="px-4 py-2 text-xs text-sidebar-foreground/60 font-medium">
+            EdD AI Inquiry Exploration Cohort
+          </div>
           <SidebarGroup>
             <SidebarGroupLabel className="text-sidebar-foreground/50 text-xs uppercase tracking-wider">
               Overview

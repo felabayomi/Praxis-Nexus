@@ -273,7 +273,7 @@ export function JournalContent({ activeSection, onOpenPresentation }: JournalCon
               className="font-medium text-foreground hover:text-primary transition-colors cursor-pointer underline-offset-4 hover:underline"
               data-testid="button-author-name"
             >
-              {journalData.author}
+              Info Center
             </button>
           </p>
           <p className="text-xs text-muted-foreground">

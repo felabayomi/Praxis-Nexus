@@ -5,6 +5,7 @@ export interface Reference {
   title: string;
   source: string;
   doi?: string;
+  type?: 'journal' | 'book' | 'chapter' | 'report' | 'website';
 }
 
 export interface ContentSection {

@@ -59,15 +59,19 @@ Praxis Nexus is an academic inquiry journal web application for presenting EdD (
 - Collapsible sidebar navigation with reading time estimates
 - Dark/light theme support
 - Monthly inquiry sections with themed content
-- Academic reference list with DOI links
+- Academic reference list with DOI links (APA 7th edition format)
 - Responsive design for all devices
 - AI-enhanced presentation mode with 5 templates and auto-generated slide headings
 - Full-text search (Ctrl+K / Cmd+K)
 - Text-to-speech audio narration (Web Speech API)
-- AI audio narration via OpenAI TTS (CarPlay/Android Auto/Bluetooth compatible)
+- AI audio narration via OpenAI TTS (CarPlay/Android Auto/Bluetooth compatible) with unlimited length support
+- Audio download as MP3 for podcast/sharing
 - Print/PDF export with clean styling
 - PWA support for home screen installation
 - Access code protection (code: 150920) for journal entry
+- "Keep me signed in" option for persistent access
+- Adjustable font size (14px-20px) with localStorage persistence
+- AI Citation Assistant for checking statements that need citations
 
 ## Presentation Templates
 1. Forest Canopy - Deep greens with layered depth
@@ -81,5 +85,35 @@ Praxis Nexus is an academic inquiry journal web application for presenting EdD (
 - Contact form sends emails to praxinex@gmail.com via Resend integration
 - Footer includes copyright "© Felix Abayomi 2026"
 
+## APA 7th Edition References
+- References are formatted in proper APA 7th edition style
+- Journal articles: Title in regular text, journal name in italics
+- Books: Title in italics, publisher in regular text
+- Full DOI URLs included (https://doi.org/...)
+- Hanging indent formatting
+- References sorted alphabetically by first author's last name
+- Each reference has a `type` field: 'journal', 'book', 'chapter', 'report', 'website'
+
+## AI Citation Assistant
+- Available in the References section via "Citation Check" button
+- Analyzes text for statements that may need citations
+- Checks APA 7th format in existing citations
+- Provides suggestions for finding sources
+- Maximum 15,000 characters per analysis
+
 ## Adding New Months
 To add new months, update the `journalData` object in `client/src/lib/journalData.ts` and `server/storage.ts` with new month entries following the existing structure.
+
+## Adding References
+When adding new references to `journalData.ts`, include the `type` field:
+```typescript
+{
+  id: "ref-new",
+  authors: "Author, A. B., & Author, C. D.",
+  year: "2025",
+  title: "Article title here",
+  source: "Journal Name, 12(3), 45-67",
+  doi: "10.xxxx/xxxxx",
+  type: "journal" // or "book", "chapter", "report", "website"
+}
+```

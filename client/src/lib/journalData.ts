@@ -202,7 +202,8 @@ export const journalData: JournalEntry = {
       authors: "Akbaş, I., & Koklu, M.",
       year: "2025",
       title: "Artificial intelligence and deep learning approaches to human-wildlife conflict: A bibliometric analysis (2015-2024)",
-      source: "ResearchGate Publication"
+      source: "ResearchGate Publication",
+      type: "report"
     },
     {
       id: "ref-2",
@@ -210,7 +211,8 @@ export const journalData: JournalEntry = {
       year: "2015",
       title: "Digital technology and the conservation of nature",
       source: "Ambio, 44 Suppl 4(Suppl 4), 661–673",
-      doi: "10.1007/s13280-015-0705-1"
+      doi: "10.1007/s13280-015-0705-1",
+      type: "journal"
     },
     {
       id: "ref-3",
@@ -218,14 +220,16 @@ export const journalData: JournalEntry = {
       year: "2025",
       title: "Editorial: Rebounding marine mammal species and conservation recovery challenges",
       source: "Frontiers in Conservation Science, 6",
-      doi: "10.3389/fcosc.2025.1565870"
+      doi: "10.3389/fcosc.2025.1565870",
+      type: "journal"
     },
     {
       id: "ref-4",
       authors: "Crawford, K.",
       year: "2021",
       title: "The atlas of AI: Power, politics, and the planetary costs of artificial intelligence",
-      source: "Yale University Press"
+      source: "Yale University Press",
+      type: "book"
     },
     {
       id: "ref-5",
@@ -233,7 +237,8 @@ export const journalData: JournalEntry = {
       year: "2004",
       title: "Why has critique run out of steam? From matters of fact to matters of concern",
       source: "Critical Inquiry",
-      doi: "10.1086/421123"
+      doi: "10.1086/421123",
+      type: "journal"
     },
     {
       id: "ref-6",
@@ -241,7 +246,8 @@ export const journalData: JournalEntry = {
       year: "2024",
       title: "Artificial intelligence in environmental monitoring: Advancements, challenges, and future directions",
       source: "Hygiene and Environmental Health Advances, 12, 100114",
-      doi: "10.1016/j.heha.2024.100114"
+      doi: "10.1016/j.heha.2024.100114",
+      type: "journal"
     },
     {
       id: "ref-7",
@@ -249,7 +255,8 @@ export const journalData: JournalEntry = {
       year: "2025",
       title: "Advancing animal behaviour research using drone technology",
       source: "Animal Behaviour, 222, 123147",
-      doi: "10.1016/j.anbehav.2025.123147"
+      doi: "10.1016/j.anbehav.2025.123147",
+      type: "journal"
     },
     {
       id: "ref-8",
@@ -257,7 +264,8 @@ export const journalData: JournalEntry = {
       year: "2026",
       title: "Global research trends on human-elephant conflicts and sustainable plantation management: A 30-year bibliometric study",
       source: "Journal of Bioresources and Environmental Sciences, 0(0)",
-      doi: "10.61435/jbes.2026.19978"
+      doi: "10.61435/jbes.2026.19978",
+      type: "journal"
     },
     {
       id: "ref-9",
@@ -265,7 +273,8 @@ export const journalData: JournalEntry = {
       year: "2019",
       title: "The global conservation movement is diverse but not divided",
       source: "Nature Sustainability, 2(4), 316–323",
-      doi: "10.1038/s41893-019-0267-5"
+      doi: "10.1038/s41893-019-0267-5",
+      type: "journal"
     },
     {
       id: "ref-10",
@@ -273,7 +282,8 @@ export const journalData: JournalEntry = {
       year: "2025",
       title: "Challenges and opportunities in leveraging an existing systematic evidence database for mitigating hazards to the global food system",
       source: "Royal Society Open Science, 12",
-      doi: "10.1098/rsos.241645"
+      doi: "10.1098/rsos.241645",
+      type: "journal"
     }
   ]
 };

@@ -21,11 +21,21 @@ import {
   Calendar,
   ArrowRight,
   ArrowLeft,
-  Headphones
+  Headphones,
+  Plus,
+  Minus,
+  Type
 } from "lucide-react";
+import { useState, useEffect } from "react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { journalData } from "@/lib/journalData";
 import { TextToSpeech } from "@/components/TextToSpeech";
 import { AudioPlayer } from "@/components/AudioPlayer";
+import { CitationAssistant } from "@/components/CitationAssistant";
 import {
   Dialog,
   DialogContent,
@@ -46,6 +56,59 @@ interface JournalContentProps {
   onOpenPresentation?: () => void;
   onOpenInfoCenter?: () => void;
   onSectionChange?: (section: string) => void;
+}
+
+const FONT_SIZE_KEY = "praxis-nexus-font-size";
+const FONT_SIZES = [
+  { label: "Small", value: "text-sm", size: 14 },
+  { label: "Medium", value: "text-base", size: 16 },
+  { label: "Large", value: "text-lg", size: 18 },
+  { label: "X-Large", value: "text-xl", size: 20 },
+];
+
+function FontSizeControl({ fontSize, onFontSizeChange }: { fontSize: number; onFontSizeChange: (size: number) => void }) {
+  const currentIndex = FONT_SIZES.findIndex(f => f.size === fontSize);
+  const canDecrease = currentIndex > 0;
+  const canIncrease = currentIndex < FONT_SIZES.length - 1;
+  const currentLabel = FONT_SIZES[currentIndex]?.label || "Medium";
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="ghost" size="icon" title="Adjust font size" data-testid="button-font-size">
+          <Type className="h-4 w-4" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-48 p-2" align="end">
+        <div className="space-y-2">
+          <p className="text-xs text-muted-foreground text-center font-medium">Text Size: {currentLabel}</p>
+          <div className="flex items-center justify-center gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => canDecrease && onFontSizeChange(FONT_SIZES[currentIndex - 1].size)}
+              disabled={!canDecrease}
+              data-testid="button-font-decrease"
+            >
+              <Minus className="h-4 w-4" />
+            </Button>
+            <div className="w-16 text-center font-medium text-sm">
+              {fontSize}px
+            </div>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => canIncrease && onFontSizeChange(FONT_SIZES[currentIndex + 1].size)}
+              disabled={!canIncrease}
+              data-testid="button-font-increase"
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
 }
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -122,39 +185,88 @@ function MonthSectionCard({ section }: { section: MonthSection }) {
 }
 
 function ReferenceItem({ reference }: { reference: Reference }) {
+  // Use explicit type field for proper APA 7th formatting
+  // Journal articles: Title in regular text, source (journal name) in italics
+  // Books: Title in italics, source (publisher) in regular text
+  const isJournalArticle = reference.type === 'journal';
+  const isBook = reference.type === 'book';
+  
   return (
     <div 
-      className="py-4 border-b border-border/50 last:border-0"
+      className="py-4 border-b border-border/50 last:border-0 pl-8 -indent-8"
       data-testid={`reference-${reference.id}`}
     >
       <p className="text-foreground/85 leading-relaxed">
-        <span className="font-medium">{reference.authors}</span> ({reference.year}).{" "}
-        <span className="italic">{reference.title}</span>.{" "}
-        {reference.source}
+        {reference.authors} ({reference.year}).{" "}
+        {isJournalArticle ? (
+          <>
+            {reference.title}.{" "}
+            <span className="italic">{reference.source}</span>
+          </>
+        ) : isBook ? (
+          <>
+            <span className="italic">{reference.title}</span>.{" "}
+            {reference.source}
+          </>
+        ) : (
+          <>
+            <span className="italic">{reference.title}</span>.{" "}
+            {reference.source}
+          </>
+        )}
         {reference.doi && (
-          <a 
-            href={`https://doi.org/${reference.doi}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 ml-2 text-primary hover:underline"
-          >
-            <ExternalLink className="h-3 w-3" />
-            <span className="text-sm">DOI</span>
-          </a>
+          <>
+            .{" "}
+            <a 
+              href={`https://doi.org/${reference.doi}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline break-all"
+            >
+              https://doi.org/{reference.doi}
+            </a>
+          </>
         )}
       </p>
     </div>
   );
 }
 
+// Sort references alphabetically by first author's last name
+function getSortedReferences(references: Reference[]): Reference[] {
+  return [...references].sort((a, b) => {
+    // Extract first author's last name for sorting
+    const getLastName = (authors: string) => {
+      const firstAuthor = authors.split(',')[0].trim();
+      return firstAuthor.toLowerCase();
+    };
+    return getLastName(a.authors).localeCompare(getLastName(b.authors));
+  });
+}
+
 export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCenter, onSectionChange }: JournalContentProps) {
   const month = journalData.months.find((m) => m.id === activeSection);
   const introTime = getIntroductionReadingTime(journalData);
   const refsTime = getReferencesReadingTime(journalData);
+  
+  // Font size state with localStorage persistence (with SSR safety check)
+  const [fontSize, setFontSize] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(FONT_SIZE_KEY);
+      return saved ? parseInt(saved, 10) : 16;
+    }
+    return 16;
+  });
+
+  useEffect(() => {
+    localStorage.setItem(FONT_SIZE_KEY, fontSize.toString());
+  }, [fontSize]);
+
+  const fontSizeStyle = { fontSize: `${fontSize}px` };
 
   return (
     <ScrollArea className="flex-1 h-full">
-      <div className="max-w-4xl mx-auto p-6 md:p-10">
+      <div className="max-w-4xl mx-auto p-6 md:p-10" style={fontSizeStyle}>
         {activeSection === "welcome" && (
           <article data-testid="section-welcome">
             <header className="mb-10 text-center">
@@ -378,6 +490,7 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
+                  <FontSizeControl fontSize={fontSize} onFontSizeChange={setFontSize} />
                   <TextToSpeech sectionId="introduction" />
                   <Dialog>
                     <DialogTrigger asChild>
@@ -459,6 +572,7 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
+                  <FontSizeControl fontSize={fontSize} onFontSizeChange={setFontSize} />
                   <TextToSpeech sectionId="references" />
                   <Dialog>
                     <DialogTrigger asChild>
@@ -473,6 +587,7 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                       <AudioPlayer sectionId="references" />
                     </DialogContent>
                   </Dialog>
+                  <CitationAssistant />
                 </div>
               </div>
               <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3">
@@ -486,7 +601,7 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
             <Separator className="mb-6" />
 
             <Card className="p-6">
-              {journalData.references.map((ref) => (
+              {getSortedReferences(journalData.references).map((ref) => (
                 <ReferenceItem key={ref.id} reference={ref} />
               ))}
             </Card>
@@ -519,6 +634,7 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
+                  <FontSizeControl fontSize={fontSize} onFontSizeChange={setFontSize} />
                   <TextToSpeech sectionId={month.id} />
                   <Dialog>
                     <DialogTrigger asChild>

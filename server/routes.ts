@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { registerPresentationRoutes } from "./replit_integrations/ai-presentation";
 import { registerTTSRoutes } from "./replit_integrations/tts";
+import { registerCitationRoutes } from "./replit_integrations/citation-assistant";
 import { sendContactEmail } from "./email";
 import { contactFormSchema } from "@shared/contactSchema";
 
@@ -12,6 +13,7 @@ export async function registerRoutes(
 ): Promise<Server> {
   registerPresentationRoutes(app);
   registerTTSRoutes(app);
+  registerCitationRoutes(app);
   
   app.get("/api/journal", async (req, res) => {
     try {

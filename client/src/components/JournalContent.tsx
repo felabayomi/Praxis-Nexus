@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ import {
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import { TextToSpeech } from "@/components/TextToSpeech";
+import { AuthorModal } from "@/components/AuthorModal";
 import { 
   getIntroductionReadingTime, 
   getMonthReadingTime, 
@@ -133,6 +135,7 @@ function ReferenceItem({ reference }: { reference: Reference }) {
 }
 
 export function JournalContent({ activeSection, onOpenPresentation }: JournalContentProps) {
+  const [showAuthorModal, setShowAuthorModal] = useState(false);
   const month = journalData.months.find((m) => m.id === activeSection);
   const introTime = getIntroductionReadingTime(journalData);
   const refsTime = getReferencesReadingTime(journalData);
@@ -261,6 +264,23 @@ export function JournalContent({ activeSection, onOpenPresentation }: JournalCon
             </div>
           </article>
         )}
+
+        <footer className="mt-16 pt-8 border-t border-border/50 text-center print:mt-8">
+          <p className="text-sm text-muted-foreground mb-2">
+            <button
+              onClick={() => setShowAuthorModal(true)}
+              className="font-medium text-foreground hover:text-primary transition-colors cursor-pointer underline-offset-4 hover:underline"
+              data-testid="button-author-name"
+            >
+              {journalData.author}
+            </button>
+          </p>
+          <p className="text-xs text-muted-foreground">
+            © Felix Abayomi 2026. All rights reserved.
+          </p>
+        </footer>
+
+        <AuthorModal open={showAuthorModal} onOpenChange={setShowAuthorModal} />
       </div>
     </ScrollArea>
   );

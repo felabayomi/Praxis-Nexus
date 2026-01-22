@@ -1,7 +1,7 @@
 import type { JournalEntry, Reference } from "@shared/schema";
 
 export const journalData: JournalEntry = {
-  id: "edd-ai-inquiry-2025",
+  id: "edd-ai-inquiry-2026",
   projectTitle: "AI, Conservation, and the Reconfiguration of Human–Wildlife Relations",
   cohortTheme: "EdD Inquiry on AI's Ecological and Economic Entanglements",
   author: "Felix Abayomi",

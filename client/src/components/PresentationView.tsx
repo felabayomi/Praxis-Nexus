@@ -155,7 +155,7 @@ export function PresentationView({ onClose }: PresentationViewProps) {
               </h2>
               <div className="pt-8">
                 <p className="text-lg text-muted-foreground">{slide.author}</p>
-                <p className="text-sm text-muted-foreground/60 mt-2">EdD Cohort 2025</p>
+                <p className="text-sm text-muted-foreground/60 mt-2">EdD Cohort 2026</p>
               </div>
             </div>
           ) : (

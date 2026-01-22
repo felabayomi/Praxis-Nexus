@@ -38,7 +38,7 @@ export function JournalSidebar({ activeSection, onSectionChange }: JournalSideba
               AI Inquiry Journal
             </span>
             <span className="text-xs text-sidebar-foreground/60">
-              EdD Cohort 2025
+              EdD Cohort 2026
             </span>
           </div>
         </div>

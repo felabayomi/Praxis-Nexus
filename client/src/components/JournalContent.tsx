@@ -281,7 +281,7 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
 
             <Separator className="mb-10" />
 
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-6 md:grid-cols-3">
               <button
                 type="button"
                 className="w-full text-left p-6 rounded-lg border bg-card cursor-pointer hover:bg-accent/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
@@ -295,7 +295,7 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                   <div className="flex-1 min-w-0">
                     <h3 className="font-serif text-xl font-semibold text-foreground mb-2">Overview</h3>
                     <p className="text-muted-foreground text-sm mb-3">
-                      Introduction, context, and references for this inquiry.
+                      Introduction and context for this inquiry.
                     </p>
                     <div className="flex items-center justify-end text-primary">
                       <ArrowRight className="h-5 w-5" />
@@ -318,6 +318,28 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                     <h3 className="font-serif text-xl font-semibold text-foreground mb-2">Monthly Inquiries</h3>
                     <p className="text-muted-foreground text-sm mb-3">
                       Monthly reflections and explorations documenting the inquiry journey.
+                    </p>
+                    <div className="flex items-center justify-end text-primary">
+                      <ArrowRight className="h-5 w-5" />
+                    </div>
+                  </div>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                className="w-full text-left p-6 rounded-lg border bg-card cursor-pointer hover:bg-accent/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                onClick={() => onSectionChange?.("references")}
+                data-testid="card-references"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    <BookOpen className="h-6 w-6" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-serif text-xl font-semibold text-foreground mb-2">References</h3>
+                    <p className="text-muted-foreground text-sm mb-3">
+                      Academic sources and citations from all content.
                     </p>
                     <div className="flex items-center justify-end text-primary">
                       <ArrowRight className="h-5 w-5" />
@@ -354,13 +376,13 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                 Overview
               </h1>
               <p className="text-muted-foreground">
-                Introduction, context, and references for this inquiry
+                Introduction and context for this inquiry
               </p>
             </header>
 
             <Separator className="mb-10" />
 
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="max-w-lg mx-auto">
               <button
                 type="button"
                 className="w-full text-left p-6 rounded-lg border bg-card cursor-pointer hover:bg-accent/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
@@ -375,28 +397,6 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                     <h3 className="font-serif text-xl font-semibold text-foreground mb-2">Introduction</h3>
                     <p className="text-muted-foreground text-sm mb-3">
                       Context and framing for this inquiry into AI's ecological and economic entanglements.
-                    </p>
-                    <div className="flex items-center justify-end text-primary">
-                      <ArrowRight className="h-5 w-5" />
-                    </div>
-                  </div>
-                </div>
-              </button>
-
-              <button
-                type="button"
-                className="w-full text-left p-6 rounded-lg border bg-card cursor-pointer hover:bg-accent/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                onClick={() => onSectionChange?.("references")}
-                data-testid="card-references"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                    <BookOpen className="h-6 w-6" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-serif text-xl font-semibold text-foreground mb-2">References</h3>
-                    <p className="text-muted-foreground text-sm mb-3">
-                      Academic sources and citations referenced in this inquiry.
                     </p>
                     <div className="flex items-center justify-end text-primary">
                       <ArrowRight className="h-5 w-5" />
@@ -552,12 +552,12 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => onSectionChange?.("overview")}
+                onClick={() => onSectionChange?.("welcome")}
                 className="gap-2"
-                data-testid="button-back-to-overview"
+                data-testid="button-back-to-welcome"
               >
                 <ArrowLeft className="h-4 w-4" />
-                Back to Overview
+                Back
               </Button>
             </div>
             <header className="mb-8">

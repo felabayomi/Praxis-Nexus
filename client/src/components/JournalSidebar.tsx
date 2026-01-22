@@ -77,7 +77,7 @@ export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCente
                     <div className="flex flex-col items-start gap-0.5 flex-1">
                       <span>Overview</span>
                       <span className="text-xs text-sidebar-foreground/50">
-                        {formatReadingTime(introTime + refsTime)}
+                        {formatReadingTime(introTime)}
                       </span>
                     </div>
                     {activeSection === "overview" && (
@@ -103,7 +103,17 @@ export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCente
                     )}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-                <SidebarMenuItem className="ml-4">
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-sidebar-foreground/50 text-xs uppercase tracking-wider">
+              References
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
                   <SidebarMenuButton
                     onClick={() => onSectionChange("references")}
                     className={activeSection === "references" ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""}
@@ -111,7 +121,7 @@ export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCente
                   >
                     <BookOpen className="h-4 w-4" />
                     <div className="flex flex-col items-start gap-0.5 flex-1">
-                      <span>References</span>
+                      <span>All References</span>
                       <span className="text-xs text-sidebar-foreground/50">
                         {formatReadingTime(refsTime)}
                       </span>

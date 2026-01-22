@@ -17,9 +17,11 @@ Praxis Nexus is an academic inquiry journal web application for presenting EdD (
 
 ## Navigation Flow
 1. **Landing Page** - Entry point showing inquiry title and "Enter Journal" button
-2. **Welcome Section** - Two cards: Overview (leads to Introduction) and Monthly Inquiries (leads to Month 1)
-3. **Journal Content** - Introduction, References, and Monthly Inquiry sections
-4. Clicking "Praxis Nexus" in header returns to landing page
+2. **Welcome Section** - Three cards: Overview, Monthly Inquiries, and References
+3. **Overview** - Leads to Introduction content
+4. **Monthly Inquiries** - Leads to month selection (Month 1, etc.)
+5. **References** - Auto-aggregated academic sources from all content sections
+6. Clicking "Praxis Nexus" in header returns to landing page
 
 ## Project Architecture
 

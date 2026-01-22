@@ -100,7 +100,7 @@ export default function Home() {
 
   const handleBackToLanding = () => {
     sessionStorage.removeItem(JOURNAL_ENTERED_KEY);
-    localStorage.removeItem(JOURNAL_REMEMBER_KEY);
+    // Don't clear localStorage - keep "remember me" access persistent
     setShowLanding(true);
   };
 

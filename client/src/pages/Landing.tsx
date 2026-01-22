@@ -12,6 +12,7 @@ interface LandingProps {
 }
 
 const ACCESS_CODE = "150920";
+const JOURNAL_REMEMBER_KEY = "praxis-nexus-remember-access";
 
 export default function Landing({ onEnterJournal }: LandingProps) {
   const [showAccessScreen, setShowAccessScreen] = useState(false);
@@ -19,7 +20,15 @@ export default function Landing({ onEnterJournal }: LandingProps) {
   const [error, setError] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
+  // Check if user is already remembered
+  const isRemembered = localStorage.getItem(JOURNAL_REMEMBER_KEY) === "true";
+
   const handleEnterClick = () => {
+    // If already remembered, skip the access screen
+    if (isRemembered) {
+      onEnterJournal(true);
+      return;
+    }
     setShowAccessScreen(true);
     setError("");
     setAccessCode("");

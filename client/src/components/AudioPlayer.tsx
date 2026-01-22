@@ -9,7 +9,8 @@ import {
   Loader2, 
   Headphones,
   SkipBack,
-  SkipForward
+  SkipForward,
+  Download
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import { getAllTextForTTS } from "@/lib/journalUtils";
@@ -135,6 +136,17 @@ export function AudioPlayer({ sectionId, onClose }: AudioPlayerProps) {
     setCurrentTime(0);
   };
 
+  const downloadAudio = () => {
+    if (!audioSrc) return;
+    
+    const link = document.createElement('a');
+    link.href = audioSrc;
+    link.download = `praxis-nexus-${sectionId}.mp3`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   if (!audioSrc) {
     return (
       <Card className="border shadow-lg">
@@ -243,6 +255,19 @@ export function AudioPlayer({ sectionId, onClose }: AudioPlayerProps) {
             </div>
           </div>
 
+          <div className="flex items-center justify-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={downloadAudio}
+              className="gap-2"
+              data-testid="button-download-audio"
+            >
+              <Download className="h-4 w-4" />
+              Download MP3
+            </Button>
+          </div>
+          
           <p className="text-xs text-center text-muted-foreground">
             Audio plays through your device's media output
           </p>

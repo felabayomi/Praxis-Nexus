@@ -15,7 +15,8 @@ import {
   Lightbulb,
   MessageCircleQuestion,
   Link2,
-  Loader2
+  Quote,
+  TreeDeciduous
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import { apiRequest } from "@/lib/queryClient";
@@ -64,6 +65,12 @@ function createSlides(): Slide[] {
 
   return slides;
 }
+
+const decorativePatterns = [
+  "radial-gradient(circle at 10% 20%, hsl(var(--primary) / 0.08) 0%, transparent 50%)",
+  "radial-gradient(circle at 90% 80%, hsl(var(--accent) / 0.1) 0%, transparent 40%)",
+  "radial-gradient(circle at 50% 0%, hsl(var(--primary) / 0.05) 0%, transparent 30%)",
+];
 
 export function PresentationView({ onClose }: PresentationViewProps) {
   const slides = createSlides();
@@ -149,16 +156,18 @@ export function PresentationView({ onClose }: PresentationViewProps) {
 
   return (
     <div 
-      className="fixed inset-0 z-50 bg-background flex flex-col"
+      className="fixed inset-0 z-50 bg-gradient-to-br from-background via-background to-muted/50 flex flex-col"
       onKeyDown={handleKeyDown}
       tabIndex={0}
       data-testid="presentation-view"
     >
-      <header className="flex items-center justify-between px-4 md:px-6 py-3 border-b bg-card">
+      <header className="flex items-center justify-between px-4 md:px-6 py-3 border-b bg-card/80 backdrop-blur-sm">
         <div className="flex items-center gap-3">
-          <Leaf className="h-5 w-5 text-primary" />
+          <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+            <Leaf className="h-4 w-4 text-primary" />
+          </div>
           <span className="font-serif font-medium hidden sm:inline">AI-Enhanced Presentation</span>
-          <Badge variant="secondary">
+          <Badge variant="outline" className="font-mono text-xs">
             {currentSlide + 1} / {slides.length}
           </Badge>
         </div>
@@ -195,108 +204,187 @@ export function PresentationView({ onClose }: PresentationViewProps) {
         </div>
       </header>
 
-      <Progress value={progress} className="h-1 rounded-none" />
+      <div className="h-1 bg-muted overflow-hidden">
+        <div 
+          className="h-full bg-gradient-to-r from-primary via-accent to-primary transition-all duration-500 ease-out"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
 
-      <main className="flex-1 flex items-stretch p-4 md:p-8 overflow-hidden gap-4">
+      <main className="flex-1 flex items-stretch p-4 md:p-8 overflow-hidden gap-6">
         <div className={`flex-1 flex items-center justify-center ${showAI && slide.type === "content" ? "lg:flex-[2]" : ""}`}>
-          <Card className="w-full max-w-4xl aspect-[16/9] p-8 md:p-12 flex flex-col justify-center relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent to-primary opacity-60" />
-            
-            {slide.type === "title" ? (
-              <div className="text-center space-y-6">
-                <div className="flex justify-center mb-4">
-                  <div className="h-16 w-16 md:h-20 md:w-20 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Leaf className="h-8 w-8 md:h-10 md:w-10 text-primary" />
+          {slide.type === "title" ? (
+            <Card className="w-full max-w-5xl aspect-[16/9] relative overflow-hidden border-0 shadow-2xl">
+              <div 
+                className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/80 to-primary/95"
+              />
+              <div className="absolute inset-0 opacity-20">
+                <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                  <defs>
+                    <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.5" opacity="0.3"/>
+                    </pattern>
+                  </defs>
+                  <rect width="100" height="100" fill="url(#grid)" />
+                </svg>
+              </div>
+              <div className="absolute top-0 right-0 w-1/2 h-full opacity-10">
+                <TreeDeciduous className="w-full h-full text-white" />
+              </div>
+              
+              <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 md:p-16 text-center">
+                <div className="mb-8">
+                  <div className="inline-flex items-center justify-center h-20 w-20 md:h-28 md:w-28 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
+                    <Leaf className="h-10 w-10 md:h-14 md:w-14 text-white" />
                   </div>
                 </div>
-                <h1 className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
+                
+                <Badge className="bg-white/20 text-white border-white/30 mb-6 text-xs uppercase tracking-widest">
+                  EdD Cohort 2026
+                </Badge>
+                
+                <h1 className="font-serif text-2xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6 max-w-4xl">
                   {slide.title}
                 </h1>
-                <h2 className="font-serif text-lg md:text-xl lg:text-2xl text-muted-foreground italic">
+                
+                <div className="w-24 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent mb-6" />
+                
+                <h2 className="font-serif text-lg md:text-xl lg:text-2xl text-white/90 italic max-w-3xl">
                   {slide.subtitle}
                 </h2>
-                <div className="pt-6">
-                  <p className="text-lg text-muted-foreground">{slide.author}</p>
-                  <p className="text-sm text-muted-foreground/60 mt-2">EdD Cohort 2026</p>
+                
+                <div className="absolute bottom-8 left-0 right-0 text-center">
+                  <p className="text-white/70 font-medium">{slide.author}</p>
                 </div>
               </div>
-            ) : (
-              <div className="space-y-4">
-                {slide.title && (
-                  <Badge variant="secondary" className="mb-2">
-                    {slide.title}
-                  </Badge>
-                )}
-                <p className="font-serif text-base md:text-lg lg:text-xl leading-relaxed text-foreground/90">
-                  {slide.content}
-                </p>
+            </Card>
+          ) : (
+            <Card 
+              className="w-full max-w-5xl aspect-[16/9] relative overflow-hidden border shadow-xl"
+              style={{
+                background: decorativePatterns.map(p => p).join(", ") + ", hsl(var(--card))"
+              }}
+            >
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary via-accent to-primary" />
+              
+              <div className="absolute top-6 right-6 opacity-5">
+                <Leaf className="h-32 w-32 text-primary" />
               </div>
-            )}
-
-            <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">
-                {journalData.author}
-              </span>
-              <span className="text-xs text-muted-foreground">
-                Slide {currentSlide + 1}
-              </span>
-            </div>
-          </Card>
+              
+              <div className="relative z-10 h-full flex flex-col p-8 md:p-12 lg:p-16">
+                {slide.title && (
+                  <div className="mb-6">
+                    <Badge className="bg-primary/10 text-primary border-primary/20 uppercase tracking-wider text-xs">
+                      {slide.title}
+                    </Badge>
+                  </div>
+                )}
+                
+                {!slide.title && (
+                  <div className="mb-4">
+                    <Quote className="h-8 w-8 text-primary/20" />
+                  </div>
+                )}
+                
+                <div className="flex-1 flex items-center">
+                  <p className="font-serif text-lg md:text-xl lg:text-2xl leading-relaxed text-foreground/90 max-w-prose">
+                    {slide.content}
+                  </p>
+                </div>
+                
+                <div className="flex items-center justify-between pt-6 border-t border-border/50">
+                  <div className="flex items-center gap-3">
+                    <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Leaf className="h-4 w-4 text-primary" />
+                    </div>
+                    <span className="text-sm text-muted-foreground font-medium">
+                      {journalData.author}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground uppercase tracking-wider">
+                      Slide
+                    </span>
+                    <span className="font-mono text-sm font-bold text-primary">
+                      {String(currentSlide + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          )}
         </div>
 
         {showAI && slide.type === "content" && (
           <div className="hidden lg:flex flex-col flex-1 max-w-sm gap-4">
-            <Card className="p-4 flex-1 flex flex-col gap-4 overflow-auto">
-              <div className="flex items-center gap-2 text-primary">
-                <Sparkles className="h-5 w-5" />
-                <h3 className="font-serif font-semibold">AI Insights</h3>
+            <Card className="p-5 flex-1 flex flex-col gap-5 overflow-auto border shadow-lg bg-card/80 backdrop-blur-sm">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                  <Sparkles className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-serif font-semibold text-foreground">AI Insights</h3>
+                  <p className="text-xs text-muted-foreground">Powered by intelligence</p>
+                </div>
               </div>
 
               {isLoadingInsight ? (
-                <div className="space-y-4 flex-1">
+                <div className="space-y-5 flex-1">
                   <div className="space-y-2">
                     <Skeleton className="h-4 w-24" />
-                    <Skeleton className="h-16 w-full" />
+                    <Skeleton className="h-20 w-full rounded-xl" />
                   </div>
                   <div className="space-y-2">
                     <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-12 w-full" />
+                    <Skeleton className="h-16 w-full rounded-xl" />
                   </div>
                   <div className="space-y-2">
                     <Skeleton className="h-4 w-28" />
-                    <Skeleton className="h-12 w-full" />
+                    <Skeleton className="h-16 w-full rounded-xl" />
                   </div>
                 </div>
               ) : insight ? (
                 <div className="space-y-4 flex-1">
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                      <Lightbulb className="h-4 w-4 text-amber-500" />
+                    <div className="flex items-center gap-2 text-sm font-semibold text-amber-600 dark:text-amber-400">
+                      <div className="h-6 w-6 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                        <Lightbulb className="h-3.5 w-3.5" />
+                      </div>
                       Key Insight
                     </div>
-                    <p className="text-sm text-foreground/85 leading-relaxed bg-amber-500/5 p-3 rounded-md border border-amber-500/20">
-                      {insight.keyInsight}
-                    </p>
+                    <div className="bg-gradient-to-br from-amber-50 to-orange-50/50 dark:from-amber-950/30 dark:to-orange-950/20 p-4 rounded-xl border border-amber-200/50 dark:border-amber-800/30">
+                      <p className="text-sm text-foreground/85 leading-relaxed">
+                        {insight.keyInsight}
+                      </p>
+                    </div>
                   </div>
 
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                      <Link2 className="h-4 w-4 text-primary" />
+                    <div className="flex items-center gap-2 text-sm font-semibold text-primary">
+                      <div className="h-6 w-6 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <Link2 className="h-3.5 w-3.5" />
+                      </div>
                       Thematic Connection
                     </div>
-                    <p className="text-sm text-foreground/85 leading-relaxed bg-primary/5 p-3 rounded-md border border-primary/20">
-                      {insight.thematicConnection}
-                    </p>
+                    <div className="bg-gradient-to-br from-emerald-50 to-teal-50/50 dark:from-emerald-950/30 dark:to-teal-950/20 p-4 rounded-xl border border-emerald-200/50 dark:border-emerald-800/30">
+                      <p className="text-sm text-foreground/85 leading-relaxed">
+                        {insight.thematicConnection}
+                      </p>
+                    </div>
                   </div>
 
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                      <MessageCircleQuestion className="h-4 w-4 text-accent" />
+                    <div className="flex items-center gap-2 text-sm font-semibold text-violet-600 dark:text-violet-400">
+                      <div className="h-6 w-6 rounded-lg bg-violet-500/10 flex items-center justify-center">
+                        <MessageCircleQuestion className="h-3.5 w-3.5" />
+                      </div>
                       Discussion Question
                     </div>
-                    <p className="text-sm text-foreground/85 leading-relaxed italic bg-accent/5 p-3 rounded-md border border-accent/20">
-                      {insight.discussionQuestion}
-                    </p>
+                    <div className="bg-gradient-to-br from-violet-50 to-purple-50/50 dark:from-violet-950/30 dark:to-purple-950/20 p-4 rounded-xl border border-violet-200/50 dark:border-violet-800/30">
+                      <p className="text-sm text-foreground/85 leading-relaxed italic">
+                        {insight.discussionQuestion}
+                      </p>
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -312,34 +400,31 @@ export function PresentationView({ onClose }: PresentationViewProps) {
         )}
       </main>
 
-      <footer className="px-4 md:px-6 py-4 border-t bg-card">
+      <footer className="px-4 md:px-6 py-4 border-t bg-card/80 backdrop-blur-sm">
         <div className="flex items-center justify-between max-w-5xl mx-auto">
           <Button
             variant="outline"
             onClick={goToPrev}
             disabled={currentSlide === 0}
+            className="gap-2"
             data-testid="button-prev-slide"
           >
-            <ChevronLeft className="h-4 w-4 mr-2" />
+            <ChevronLeft className="h-4 w-4" />
             <span className="hidden sm:inline">Previous</span>
           </Button>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             {slides.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`p-0.5 rounded-full transition-colors ${
+                className={`transition-all duration-300 ${
                   index === currentSlide 
-                    ? "text-primary" 
-                    : "text-muted-foreground/40 hover:text-muted-foreground"
+                    ? "w-6 h-2 rounded-full bg-primary" 
+                    : "w-2 h-2 rounded-full bg-muted-foreground/30 hover:bg-muted-foreground/50"
                 }`}
                 data-testid={`slide-indicator-${index}`}
-              >
-                <Circle 
-                  className={`h-2 w-2 ${index === currentSlide ? "fill-current" : ""}`} 
-                />
-              </button>
+              />
             ))}
           </div>
 
@@ -347,10 +432,11 @@ export function PresentationView({ onClose }: PresentationViewProps) {
             variant="outline"
             onClick={goToNext}
             disabled={currentSlide === slides.length - 1}
+            className="gap-2"
             data-testid="button-next-slide"
           >
             <span className="hidden sm:inline">Next</span>
-            <ChevronRight className="h-4 w-4 ml-2" />
+            <ChevronRight className="h-4 w-4" />
           </Button>
         </div>
       </footer>

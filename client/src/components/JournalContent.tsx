@@ -123,10 +123,12 @@ const iconMap: Record<string, React.ReactNode> = {
   "refresh-cw": <RefreshCw className="h-5 w-5" />,
 };
 
-function ContentBlock({ section }: { section: ContentSection }) {
+function ContentBlock({ section, fontSize }: { section: ContentSection; fontSize: number }) {
+  const bodyStyle = { fontSize: `${fontSize}px` };
+  
   if (section.type === "paragraph") {
     return (
-      <p className="text-foreground/85 leading-relaxed mb-4" data-testid={`content-${section.id}`}>
+      <p className="text-foreground/85 leading-relaxed mb-4" style={bodyStyle} data-testid={`content-${section.id}`}>
         {section.content}
       </p>
     );
@@ -136,6 +138,7 @@ function ContentBlock({ section }: { section: ContentSection }) {
     return (
       <blockquote 
         className="border-l-4 border-primary/30 pl-4 py-2 my-4 italic text-muted-foreground"
+        style={bodyStyle}
         data-testid={`content-${section.id}`}
       >
         <Quote className="h-4 w-4 inline-block mr-2 opacity-50" />
@@ -150,7 +153,7 @@ function ContentBlock({ section }: { section: ContentSection }) {
         {section.items.map((item, index) => (
           <li key={index} className="flex gap-3">
             <span className="flex-shrink-0 h-1.5 w-1.5 rounded-full bg-primary mt-2.5" />
-            <span className="text-foreground/85 leading-relaxed">{item}</span>
+            <span className="text-foreground/85 leading-relaxed" style={bodyStyle}>{item}</span>
           </li>
         ))}
       </ul>
@@ -160,7 +163,7 @@ function ContentBlock({ section }: { section: ContentSection }) {
   return null;
 }
 
-function MonthSectionCard({ section }: { section: MonthSection }) {
+function MonthSectionCard({ section, fontSize }: { section: MonthSection; fontSize: number }) {
   const icon = section.icon ? iconMap[section.icon] : null;
 
   return (
@@ -177,26 +180,27 @@ function MonthSectionCard({ section }: { section: MonthSection }) {
       </div>
       <div className="pl-0 md:pl-14">
         {section.content.map((block) => (
-          <ContentBlock key={block.id} section={block} />
+          <ContentBlock key={block.id} section={block} fontSize={fontSize} />
         ))}
       </div>
     </Card>
   );
 }
 
-function ReferenceItem({ reference }: { reference: Reference }) {
+function ReferenceItem({ reference, fontSize }: { reference: Reference; fontSize: number }) {
   // Use explicit type field for proper APA 7th formatting
   // Journal articles: Title in regular text, source (journal name) in italics
   // Books: Title in italics, source (publisher) in regular text
   const isJournalArticle = reference.type === 'journal';
   const isBook = reference.type === 'book';
+  const bodyStyle = { fontSize: `${fontSize}px` };
   
   return (
     <div 
       className="py-4 border-b border-border/50 last:border-0 pl-8 -indent-8"
       data-testid={`reference-${reference.id}`}
     >
-      <p className="text-foreground/85 leading-relaxed">
+      <p className="text-foreground/85 leading-relaxed" style={bodyStyle}>
         {reference.authors} ({reference.year}).{" "}
         {isJournalArticle ? (
           <>
@@ -262,11 +266,9 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
     localStorage.setItem(FONT_SIZE_KEY, fontSize.toString());
   }, [fontSize]);
 
-  const fontSizeStyle = { fontSize: `${fontSize}px` };
-
   return (
     <ScrollArea className="flex-1 h-full">
-      <div className="max-w-4xl mx-auto p-6 md:p-10" style={fontSizeStyle}>
+      <div className="max-w-4xl mx-auto p-6 md:p-10">
         {activeSection === "welcome" && (
           <article data-testid="section-welcome">
             <header className="mb-10 text-center">
@@ -536,7 +538,8 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
               {journalData.introduction.map((section, index) => (
                 <p 
                   key={section.id}
-                  className={`text-foreground/85 leading-relaxed mb-6 text-base md:text-lg ${index === 0 ? 'drop-cap' : ''}`}
+                  className={`text-foreground/85 leading-relaxed mb-6 ${index === 0 ? 'drop-cap' : ''}`}
+                  style={{ fontSize: `${fontSize}px` }}
                   data-testid={`intro-${section.id}`}
                 >
                   {section.content}
@@ -602,7 +605,7 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
 
             <Card className="p-6">
               {getSortedReferences(journalData.references).map((ref) => (
-                <ReferenceItem key={ref.id} reference={ref} />
+                <ReferenceItem key={ref.id} reference={ref} fontSize={fontSize} />
               ))}
             </Card>
           </article>
@@ -675,7 +678,7 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
 
             <div className="space-y-2">
               {month.sections.map((section) => (
-                <MonthSectionCard key={section.id} section={section} />
+                <MonthSectionCard key={section.id} section={section} fontSize={fontSize} />
               ))}
             </div>
           </article>

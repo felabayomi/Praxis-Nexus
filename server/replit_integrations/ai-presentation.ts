@@ -10,6 +10,7 @@ interface SlideInsight {
   keyInsight: string;
   thematicConnection: string;
   discussionQuestion: string;
+  inquiryGuidance: string;
 }
 
 export function registerPresentationRoutes(app: Express): void {
@@ -23,12 +24,15 @@ export function registerPresentationRoutes(app: Express): void {
 
       const systemPrompt = `You are an academic advisor helping an EdD student enhance their inquiry presentation on "${cohortTheme}" focusing on "${projectTitle}".
 
+This is an inquiry journal designed to move from the unknown to the known through critical reflection and exploration.
+
 For each slide, provide:
 1. A KEY INSIGHT: A concise, memorable takeaway (1-2 sentences) that captures the essence of the content
 2. A THEMATIC CONNECTION: How this connects to broader themes of AI, ecology, ethics, or conservation (1 sentence)
 3. A DISCUSSION QUESTION: A thought-provoking question that could spark academic dialogue (1 question)
+4. INQUIRY GUIDANCE: 2-3 pathways or approaches to explore the discussion question. These should guide the reader toward discovering answers through inquiry methods like examining literature, considering multiple perspectives, analyzing case studies, or reflecting on personal experience. Frame these as starting points for exploration, not definitive answers.
 
-Respond in JSON format with keys: keyInsight, thematicConnection, discussionQuestion.
+Respond in JSON format with keys: keyInsight, thematicConnection, discussionQuestion, inquiryGuidance.
 Keep responses scholarly yet accessible. Be specific to the content provided.`;
 
       const response = await openai.chat.completions.create({
@@ -38,7 +42,7 @@ Keep responses scholarly yet accessible. Be specific to the content provided.`;
           { role: "user", content: `Slide ${slideNumber} of ${totalSlides}:\n\n${content}` }
         ],
         response_format: { type: "json_object" },
-        max_tokens: 500,
+        max_tokens: 700,
       });
 
       const result = JSON.parse(response.choices[0]?.message?.content || "{}");

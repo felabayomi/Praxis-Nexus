@@ -17,7 +17,8 @@ import {
   TreeDeciduous,
   Mountain,
   Waves,
-  Sun
+  Sun,
+  Compass
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import { apiRequest } from "@/lib/queryClient";
@@ -42,6 +43,7 @@ interface SlideInsight {
   keyInsight: string;
   thematicConnection: string;
   discussionQuestion: string;
+  inquiryGuidance: string;
 }
 
 function createSlides(): Slide[] {
@@ -434,6 +436,22 @@ export function PresentationView({ template, onClose }: PresentationViewProps) {
                       </p>
                     </div>
                   </div>
+
+                  {insight.inquiryGuidance && (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm font-semibold text-sky-600 dark:text-sky-400">
+                        <div className="h-6 w-6 rounded-lg bg-sky-500/10 flex items-center justify-center">
+                          <Compass className="h-3.5 w-3.5" />
+                        </div>
+                        Inquiry Pathways
+                      </div>
+                      <div className="bg-gradient-to-br from-sky-50 to-cyan-50/50 dark:from-sky-950/30 dark:to-cyan-950/20 p-4 rounded-xl border border-sky-200/50 dark:border-sky-800/30">
+                        <p className="text-sm text-foreground/85 leading-relaxed">
+                          {insight.inquiryGuidance}
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="flex-1 flex items-center justify-center">

@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { registerPresentationRoutes } from "./replit_integrations/ai-presentation";
 import { sendContactEmail } from "./email";
+import { contactFormSchema } from "@shared/contactSchema";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -51,12 +52,14 @@ export async function registerRoutes(
 
   app.post("/api/contact", async (req, res) => {
     try {
-      const { name, email, subject, message } = req.body;
+      const result = contactFormSchema.safeParse(req.body);
       
-      if (!name || !email || !message) {
-        return res.status(400).json({ error: "Name, email, and message are required" });
+      if (!result.success) {
+        const errors = result.error.errors.map(e => e.message).join(", ");
+        return res.status(400).json({ error: errors });
       }
 
+      const { name, email, subject, message } = result.data;
       await sendContactEmail({ name, email, subject, message });
       res.json({ success: true, message: "Email sent successfully" });
     } catch (error) {

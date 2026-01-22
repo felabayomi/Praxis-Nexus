@@ -1,4 +1,5 @@
-import { Resend } from "resend";
+// Resend email integration for contact form
+import { Resend } from 'resend';
 
 interface ContactEmailData {
   name: string;
@@ -7,17 +8,57 @@ interface ContactEmailData {
   message: string;
 }
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let connectionSettings: any;
+
+async function getCredentials() {
+  const hostname = process.env.REPLIT_CONNECTORS_HOSTNAME;
+  const xReplitToken = process.env.REPL_IDENTITY 
+    ? 'repl ' + process.env.REPL_IDENTITY 
+    : process.env.WEB_REPL_RENEWAL 
+    ? 'depl ' + process.env.WEB_REPL_RENEWAL 
+    : null;
+
+  if (!xReplitToken) {
+    throw new Error('X_REPLIT_TOKEN not found for repl/depl');
+  }
+
+  connectionSettings = await fetch(
+    'https://' + hostname + '/api/v2/connection?include_secrets=true&connector_names=resend',
+    {
+      headers: {
+        'Accept': 'application/json',
+        'X_REPLIT_TOKEN': xReplitToken
+      }
+    }
+  ).then(res => res.json()).then(data => data.items?.[0]);
+
+  if (!connectionSettings || (!connectionSettings.settings.api_key)) {
+    throw new Error('Resend not connected');
+  }
+  return {
+    apiKey: connectionSettings.settings.api_key, 
+    fromEmail: connectionSettings.settings.from_email
+  };
+}
+
+async function getResendClient() {
+  const { apiKey, fromEmail } = await getCredentials();
+  return {
+    client: new Resend(apiKey),
+    fromEmail
+  };
+}
 
 export async function sendContactEmail(data: ContactEmailData): Promise<void> {
   const { name, email, subject, message } = data;
+  const { client, fromEmail } = await getResendClient();
   
   const emailSubject = subject 
     ? `Praxis Nexus Inquiry: ${subject}` 
     : `Praxis Nexus Inquiry from ${name}`;
 
-  await resend.emails.send({
-    from: "Praxis Nexus <onboarding@resend.dev>",
+  await client.emails.send({
+    from: fromEmail || "Praxis Nexus <onboarding@resend.dev>",
     to: "praxinex@gmail.com",
     replyTo: email,
     subject: emailSubject,

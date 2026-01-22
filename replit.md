@@ -63,5 +63,10 @@ Praxis Nexus is an academic inquiry journal web application for presenting EdD (
 4. Ocean Deep - Cool blue depths
 5. Botanical Garden - Vibrant natural palette
 
+## Author Modal & Contact Form
+- Clicking author name in footer opens AuthorModal with tabs: About, Privacy, Data Usage, Terms of Use, Contact
+- Contact form sends emails to praxinex@gmail.com via Resend integration
+- Footer includes copyright "© Felix Abayomi 2026"
+
 ## Adding New Months
 To add new months, update the `journalData` object in `client/src/lib/journalData.ts` and `server/storage.ts` with new month entries following the existing structure.

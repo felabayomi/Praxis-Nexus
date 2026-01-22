@@ -268,6 +268,7 @@ export function JournalContent({ activeSection, onOpenPresentation }: JournalCon
         <footer className="mt-16 pt-8 border-t border-border/50 text-center print:mt-8">
           <p className="text-sm text-muted-foreground mb-2">
             <button
+              type="button"
               onClick={() => setShowAuthorModal(true)}
               className="font-medium text-foreground hover:text-primary transition-colors cursor-pointer underline-offset-4 hover:underline"
               data-testid="button-author-name"

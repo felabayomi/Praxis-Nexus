@@ -19,7 +19,8 @@ import {
   Clock,
   FileText,
   Calendar,
-  ArrowRight
+  ArrowRight,
+  ArrowLeft
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import { TextToSpeech } from "@/components/TextToSpeech";
@@ -215,6 +216,18 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
 
         {activeSection === "overview" && (
           <article data-testid="section-overview">
+            <div className="mb-6">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onSectionChange?.("welcome")}
+                className="gap-2"
+                data-testid="button-back-to-welcome"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back
+              </Button>
+            </div>
             <header className="mb-10 text-center">
               <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3 leading-tight">
                 Overview
@@ -276,6 +289,18 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
 
         {activeSection === "monthly-inquiries" && (
           <article data-testid="section-monthly-inquiries">
+            <div className="mb-6">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onSectionChange?.("welcome")}
+                className="gap-2"
+                data-testid="button-back-to-welcome"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back
+              </Button>
+            </div>
             <header className="mb-10 text-center">
               <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3 leading-tight">
                 Monthly Inquiries
@@ -320,6 +345,18 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
 
         {activeSection === "introduction" && (
           <article data-testid="section-introduction">
+            <div className="mb-6">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onSectionChange?.("overview")}
+                className="gap-2"
+                data-testid="button-back-to-overview"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to Overview
+              </Button>
+            </div>
             <header className="mb-10">
               <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
                 <div className="flex items-center gap-2 flex-wrap">
@@ -376,6 +413,18 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
 
         {activeSection === "references" && (
           <article data-testid="section-references">
+            <div className="mb-6">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onSectionChange?.("overview")}
+                className="gap-2"
+                data-testid="button-back-to-overview"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to Overview
+              </Button>
+            </div>
             <header className="mb-8">
               <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
                 <div className="flex items-center gap-2 flex-wrap">
@@ -409,6 +458,18 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
 
         {month && (
           <article data-testid={`section-${month.id}`}>
+            <div className="mb-6">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onSectionChange?.("monthly-inquiries")}
+                className="gap-2"
+                data-testid="button-back-to-monthly"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to Monthly Inquiries
+              </Button>
+            </div>
             <header className="mb-8">
               <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
                 <div className="flex items-center gap-2 flex-wrap">

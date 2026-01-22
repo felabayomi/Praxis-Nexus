@@ -83,7 +83,7 @@ export function AuthorModal({ open, onOpenChange }: AuthorModalProps) {
           <TabsList className="mx-6 mt-4 grid w-auto grid-cols-5 h-auto">
             <TabsTrigger value="about" className="flex items-center gap-1.5 text-xs sm:text-sm py-2">
               <User className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">About</span>
+              <span className="hidden sm:inline">Info Center</span>
             </TabsTrigger>
             <TabsTrigger value="privacy" className="flex items-center gap-1.5 text-xs sm:text-sm py-2">
               <Shield className="h-3.5 w-3.5" />

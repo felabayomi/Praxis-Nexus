@@ -131,10 +131,28 @@ export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCente
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    onClick={() => onSectionChange("monthly-inquiries")}
+                    className={activeSection === "monthly-inquiries" ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""}
+                    data-testid="nav-monthly-inquiries"
+                  >
+                    <Calendar className="h-4 w-4" />
+                    <div className="flex flex-col items-start gap-0.5 flex-1">
+                      <span>Monthly Inquiries</span>
+                      <span className="text-xs text-sidebar-foreground/50">
+                        {formatReadingTime(journalData.months.reduce((acc, m) => acc + getMonthReadingTime(m), 0))}
+                      </span>
+                    </div>
+                    {activeSection === "monthly-inquiries" && (
+                      <ChevronRight className="ml-auto h-4 w-4" />
+                    )}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
                 {journalData.months.map((month) => {
                   const monthTime = getMonthReadingTime(month);
                   return (
-                    <SidebarMenuItem key={month.id}>
+                    <SidebarMenuItem key={month.id} className="ml-4">
                       <SidebarMenuButton
                         onClick={() => onSectionChange(month.id)}
                         className={activeSection === month.id ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""}

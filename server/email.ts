@@ -54,12 +54,17 @@ export async function sendContactEmail(data: ContactEmailData): Promise<void> {
   const { client } = await getResendClient();
   const senderFrom = "Praxis Nexus <no-reply@praxinex.org>";
   
+  console.log("Sending contact form emails...");
+  console.log("From:", senderFrom);
+  console.log("To admin:", "praxinex@gmail.com");
+  console.log("Confirmation to:", email);
+  
   const emailSubject = subject 
     ? `Praxis Nexus Inquiry: ${subject}` 
     : `Praxis Nexus Inquiry from ${name}`;
 
   // Send notification to Felix (with sender's email as reply-to so you can reply directly)
-  await client.emails.send({
+  const adminResult = await client.emails.send({
     from: senderFrom,
     to: "praxinex@gmail.com",
     replyTo: email,
@@ -87,9 +92,10 @@ export async function sendContactEmail(data: ContactEmailData): Promise<void> {
       </div>
     `,
   });
+  console.log("Admin email result:", JSON.stringify(adminResult));
 
   // Send confirmation to the sender (with reply-to praxinex@gmail.com)
-  await client.emails.send({
+  const confirmResult = await client.emails.send({
     from: senderFrom,
     to: email,
     replyTo: "praxinex@gmail.com",
@@ -125,4 +131,5 @@ export async function sendContactEmail(data: ContactEmailData): Promise<void> {
       </div>
     `,
   });
+  console.log("Confirmation email result:", JSON.stringify(confirmResult));
 }

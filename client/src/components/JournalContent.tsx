@@ -16,7 +16,10 @@ import {
   Quote,
   ExternalLink,
   Presentation,
-  Clock
+  Clock,
+  FileText,
+  Calendar,
+  ArrowRight
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import { TextToSpeech } from "@/components/TextToSpeech";
@@ -32,6 +35,7 @@ interface JournalContentProps {
   activeSection: string;
   onOpenPresentation?: () => void;
   onOpenInfoCenter?: () => void;
+  onSectionChange?: (section: string) => void;
 }
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -133,7 +137,7 @@ function ReferenceItem({ reference }: { reference: Reference }) {
   );
 }
 
-export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCenter }: JournalContentProps) {
+export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCenter, onSectionChange }: JournalContentProps) {
   const month = journalData.months.find((m) => m.id === activeSection);
   const introTime = getIntroductionReadingTime(journalData);
   const refsTime = getReferencesReadingTime(journalData);
@@ -141,6 +145,76 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
   return (
     <ScrollArea className="flex-1 h-full">
       <div className="max-w-4xl mx-auto p-6 md:p-10">
+        {activeSection === "welcome" && (
+          <article data-testid="section-welcome">
+            <header className="mb-10 text-center">
+              <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3 leading-tight">
+                {journalData.cohortTheme}
+              </h1>
+              <h2 className="font-serif text-xl md:text-2xl text-muted-foreground mb-4">
+                Personal Inquiry: {journalData.projectTitle}
+              </h2>
+              <p className="text-muted-foreground">{journalData.author}</p>
+            </header>
+
+            <Separator className="mb-10" />
+
+            <div className="grid gap-6 md:grid-cols-2">
+              <button
+                type="button"
+                className="w-full text-left p-6 rounded-lg border bg-card cursor-pointer hover:bg-accent/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                onClick={() => onSectionChange?.("introduction")}
+                data-testid="card-overview"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    <FileText className="h-6 w-6" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-serif text-xl font-semibold text-foreground mb-2">Overview</h3>
+                    <p className="text-muted-foreground text-sm mb-3">
+                      Introduction and context for this inquiry into AI's ecological and economic entanglements.
+                    </p>
+                    <div className="flex items-center gap-2 text-primary text-sm font-medium">
+                      <span>Read Introduction</span>
+                      <ArrowRight className="h-4 w-4" />
+                    </div>
+                  </div>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                className="w-full text-left p-6 rounded-lg border bg-card cursor-pointer hover:bg-accent/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                onClick={() => onSectionChange?.("month-1")}
+                data-testid="card-monthly-inquiries"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    <Calendar className="h-6 w-6" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-serif text-xl font-semibold text-foreground mb-2">Monthly Inquiries</h3>
+                    <p className="text-muted-foreground text-sm mb-3">
+                      Monthly reflections and explorations documenting the inquiry journey.
+                    </p>
+                    <div className="flex items-center gap-2 text-primary text-sm font-medium">
+                      <span>Start with Month 1</span>
+                      <ArrowRight className="h-4 w-4" />
+                    </div>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div className="mt-10 text-center">
+              <p className="text-sm text-muted-foreground">
+                Use the sidebar menu to navigate between sections
+              </p>
+            </div>
+          </article>
+        )}
+
         {activeSection === "introduction" && (
           <article data-testid="section-introduction">
             <header className="mb-10">

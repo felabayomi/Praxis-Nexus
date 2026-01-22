@@ -10,11 +10,16 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Leaf, Search, Printer } from "lucide-react";
+import Landing from "./Landing";
 
 const TEMPLATE_STORAGE_KEY = "ai-inquiry-preferred-template";
+const JOURNAL_ENTERED_KEY = "praxis-nexus-journal-entered";
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState("introduction");
+  const [showLanding, setShowLanding] = useState(() => {
+    return !sessionStorage.getItem(JOURNAL_ENTERED_KEY);
+  });
+  const [activeSection, setActiveSection] = useState("welcome");
   const [showTemplateSelector, setShowTemplateSelector] = useState(false);
   const [showPresentation, setShowPresentation] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -79,6 +84,20 @@ export default function Home() {
     setShowPresentation(false);
   };
 
+  const handleEnterJournal = () => {
+    sessionStorage.setItem(JOURNAL_ENTERED_KEY, "true");
+    setShowLanding(false);
+  };
+
+  const handleBackToLanding = () => {
+    sessionStorage.removeItem(JOURNAL_ENTERED_KEY);
+    setShowLanding(true);
+  };
+
+  if (showLanding) {
+    return <Landing onEnterJournal={handleEnterJournal} />;
+  }
+
   if (showTemplateSelector) {
     return (
       <TemplateSelector 
@@ -108,18 +127,23 @@ export default function Home() {
           onOpenInfoCenter={() => setShowInfoCenter(true)}
         />
         <div className="flex flex-col flex-1 min-w-0">
-          <header className="flex items-center justify-between gap-4 px-4 h-14 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 print:hidden">
-            <div className="flex items-center gap-3">
+          <header className="flex items-center justify-between gap-2 px-3 sm:px-4 h-14 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 print:hidden">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <SidebarTrigger data-testid="button-sidebar-toggle" />
-              <Separator orientation="vertical" className="h-5" />
-              <div className="flex items-center gap-2">
-                <Leaf className="h-4 w-4 text-primary" />
-                <span className="font-serif text-sm font-medium hidden sm:inline">
+              <Separator orientation="vertical" className="h-5 hidden sm:block" />
+              <button 
+                onClick={handleBackToLanding}
+                className="flex items-center gap-2 min-w-0 hover:opacity-80 transition-opacity"
+                title="Back to landing page"
+                data-testid="button-back-to-landing"
+              >
+                <Leaf className="h-4 w-4 text-primary shrink-0" />
+                <span className="font-serif text-sm font-medium truncate" data-testid="text-header-app-name">
                   Praxis Nexus
                 </span>
-              </div>
+              </button>
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 shrink-0">
               <Button
                 variant="ghost"
                 size="icon"
@@ -151,6 +175,7 @@ export default function Home() {
               activeSection={activeSection} 
               onOpenPresentation={handleOpenPresentation}
               onOpenInfoCenter={() => setShowInfoCenter(true)}
+              onSectionChange={setActiveSection}
             />
           </main>
         </div>

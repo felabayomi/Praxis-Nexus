@@ -163,7 +163,7 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
               <button
                 type="button"
                 className="w-full text-left p-6 rounded-lg border bg-card cursor-pointer hover:bg-accent/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                onClick={() => onSectionChange?.("introduction")}
+                onClick={() => onSectionChange?.("overview")}
                 data-testid="card-overview"
               >
                 <div className="flex items-start gap-4">
@@ -209,6 +209,67 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
               <p className="text-sm text-muted-foreground">
                 Use the sidebar menu to navigate between sections
               </p>
+            </div>
+          </article>
+        )}
+
+        {activeSection === "overview" && (
+          <article data-testid="section-overview">
+            <header className="mb-10 text-center">
+              <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3 leading-tight">
+                Overview
+              </h1>
+              <p className="text-muted-foreground">
+                Introduction, context, and references for this inquiry
+              </p>
+            </header>
+
+            <Separator className="mb-10" />
+
+            <div className="grid gap-6 md:grid-cols-2">
+              <button
+                type="button"
+                className="w-full text-left p-6 rounded-lg border bg-card cursor-pointer hover:bg-accent/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                onClick={() => onSectionChange?.("introduction")}
+                data-testid="card-introduction"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    <FileText className="h-6 w-6" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-serif text-xl font-semibold text-foreground mb-2">Introduction</h3>
+                    <p className="text-muted-foreground text-sm mb-3">
+                      Context and framing for this inquiry into AI's ecological and economic entanglements.
+                    </p>
+                    <div className="flex items-center justify-end text-primary">
+                      <ArrowRight className="h-5 w-5" />
+                    </div>
+                  </div>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                className="w-full text-left p-6 rounded-lg border bg-card cursor-pointer hover:bg-accent/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                onClick={() => onSectionChange?.("references")}
+                data-testid="card-references"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    <BookOpen className="h-6 w-6" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-serif text-xl font-semibold text-foreground mb-2">References</h3>
+                    <p className="text-muted-foreground text-sm mb-3">
+                      Academic sources and citations referenced in this inquiry.
+                    </p>
+                    <div className="flex items-center justify-end text-primary">
+                      <ArrowRight className="h-5 w-5" />
+                    </div>
+                  </div>
+                </div>
+              </button>
             </div>
           </article>
         )}

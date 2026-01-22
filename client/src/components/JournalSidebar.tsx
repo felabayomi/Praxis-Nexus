@@ -69,13 +69,31 @@ export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCente
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton
+                    onClick={() => onSectionChange("overview")}
+                    className={activeSection === "overview" ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""}
+                    data-testid="nav-overview"
+                  >
+                    <FileText className="h-4 w-4" />
+                    <div className="flex flex-col items-start gap-0.5 flex-1">
+                      <span>Overview</span>
+                      <span className="text-xs text-sidebar-foreground/50">
+                        {formatReadingTime(introTime + refsTime)}
+                      </span>
+                    </div>
+                    {activeSection === "overview" && (
+                      <ChevronRight className="ml-auto h-4 w-4" />
+                    )}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem className="ml-4">
+                  <SidebarMenuButton
                     onClick={() => onSectionChange("introduction")}
                     className={activeSection === "introduction" ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""}
                     data-testid="nav-introduction"
                   >
                     <FileText className="h-4 w-4" />
                     <div className="flex flex-col items-start gap-0.5 flex-1">
-                      <span>Introduction & Context</span>
+                      <span>Introduction</span>
                       <span className="text-xs text-sidebar-foreground/50">
                         {formatReadingTime(introTime)}
                       </span>
@@ -85,7 +103,7 @@ export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCente
                     )}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-                <SidebarMenuItem>
+                <SidebarMenuItem className="ml-4">
                   <SidebarMenuButton
                     onClick={() => onSectionChange("references")}
                     className={activeSection === "references" ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""}

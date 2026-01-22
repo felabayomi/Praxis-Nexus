@@ -97,7 +97,9 @@ Praxis Nexus is an academic inquiry journal web application for presenting EdD (
 - Each reference has a `type` field: 'journal', 'book', 'chapter', 'report', 'website'
 
 ## AI Citation Assistant
-- Available in the References section via "Citation Check" button
+- **Hidden from readers by default** - only visible in "Author Mode"
+- Toggle Author Mode: Press **Ctrl+Shift+C** (Windows/Linux) or **Cmd+Shift+C** (Mac)
+- Author Mode persists in localStorage until toggled off
 - Analyzes text for statements that may need citations
 - Checks APA 7th format in existing citations
 - Provides suggestions for finding sources

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,6 +14,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+
+const AUTHOR_MODE_KEY = "praxis-nexus-author-mode";
 
 interface CitationSuggestion {
   statement: string;
@@ -32,6 +34,31 @@ export function CitationAssistant() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState<CitationAnalysis | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isAuthorMode, setIsAuthorMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem(AUTHOR_MODE_KEY) === 'true';
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === 'c') {
+        e.preventDefault();
+        setIsAuthorMode(prev => {
+          const newValue = !prev;
+          localStorage.setItem(AUTHOR_MODE_KEY, String(newValue));
+          return newValue;
+        });
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  if (!isAuthorMode) {
+    return null;
+  }
 
   const handleAnalyze = async () => {
     if (!text.trim()) return;

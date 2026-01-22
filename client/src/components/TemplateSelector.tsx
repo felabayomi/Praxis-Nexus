@@ -132,21 +132,21 @@ export function TemplateSelector({ onSelect, onClose }: TemplateSelectorProps) {
 
   return (
     <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex flex-col" data-testid="template-selector">
-      <header className="flex items-center justify-between px-6 py-4 border-b">
+      <header className="flex items-center justify-between px-4 md:px-6 py-3 md:py-4 border-b">
         <div>
-          <h2 className="font-serif text-xl font-semibold">Choose Presentation Style</h2>
-          <p className="text-sm text-muted-foreground">Select a visual theme for your slides</p>
+          <h2 className="font-serif text-lg md:text-xl font-semibold">Choose Style</h2>
+          <p className="text-xs md:text-sm text-muted-foreground hidden sm:block">Select a visual theme for your slides</p>
         </div>
         <Button variant="ghost" size="icon" onClick={onClose} data-testid="button-close-templates">
           <X className="h-5 w-5" />
         </Button>
       </header>
 
-      <main className="flex-1 overflow-auto p-6">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8">
-          <div className="space-y-4">
-            <h3 className="font-medium text-sm text-muted-foreground uppercase tracking-wider">Templates</h3>
-            <div className="grid gap-3">
+      <main className="flex-1 overflow-auto p-4 md:p-6">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-6 md:gap-8">
+          <div className="space-y-3 md:space-y-4">
+            <h3 className="font-medium text-xs md:text-sm text-muted-foreground uppercase tracking-wider">Templates</h3>
+            <div className="grid gap-2 md:gap-3">
               {templates.map((template) => {
                 const Icon = template.icon;
                 const isSelected = selected === template.id;
@@ -182,7 +182,7 @@ export function TemplateSelector({ onSelect, onClose }: TemplateSelectorProps) {
             </div>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-4 hidden lg:block">
             <h3 className="font-medium text-sm text-muted-foreground uppercase tracking-wider">Preview</h3>
             <div className="space-y-4">
               <Card className="overflow-hidden">
@@ -256,14 +256,15 @@ export function TemplateSelector({ onSelect, onClose }: TemplateSelectorProps) {
         </div>
       </main>
 
-      <footer className="px-6 py-4 border-t bg-card/80">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <p className="text-sm text-muted-foreground">
-            Selected: <span className="font-medium text-foreground">{selectedTemplate.name}</span>
+      <footer className="px-4 md:px-6 py-3 md:py-4 border-t bg-card/80">
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+          <p className="text-xs md:text-sm text-muted-foreground truncate">
+            <span className="hidden sm:inline">Selected: </span>
+            <span className="font-medium text-foreground">{selectedTemplate.name}</span>
           </p>
-          <Button onClick={() => onSelect(selected)} className="gap-2" data-testid="button-start-presentation">
+          <Button onClick={() => onSelect(selected)} className="gap-2 shrink-0" data-testid="button-start-presentation">
             <Play className="h-4 w-4" />
-            Start Presentation
+            <span className="hidden sm:inline">Start</span> Presentation
           </Button>
         </div>
       </footer>

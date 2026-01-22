@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -18,7 +19,8 @@ import {
   Mountain,
   Waves,
   Sun,
-  Compass
+  Compass,
+  X
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import { apiRequest } from "@/lib/queryClient";
@@ -127,6 +129,7 @@ export function PresentationView({ template, onClose }: PresentationViewProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showAI, setShowAI] = useState(true);
+  const [showMobileAI, setShowMobileAI] = useState(false);
   const [insight, setInsight] = useState<SlideInsight | null>(null);
   const [isLoadingInsight, setIsLoadingInsight] = useState(false);
   const [insightCache, setInsightCache] = useState<Record<number, SlideInsight>>({});
@@ -228,7 +231,13 @@ export function PresentationView({ template, onClose }: PresentationViewProps) {
           <Button 
             size="sm"
             variant={showAI ? "default" : "outline"}
-            onClick={() => setShowAI(!showAI)}
+            onClick={() => {
+              if (window.innerWidth < 1024) {
+                setShowMobileAI(true);
+              } else {
+                setShowAI(!showAI);
+              }
+            }}
             className="gap-2"
             data-testid="button-toggle-ai"
           >
@@ -506,6 +515,107 @@ export function PresentationView({ template, onClose }: PresentationViewProps) {
           </Button>
         </div>
       </footer>
+
+      <Sheet open={showMobileAI} onOpenChange={setShowMobileAI}>
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-xl overflow-hidden flex flex-col p-0">
+          <SheetHeader className="px-4 py-3 border-b shrink-0">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className={`h-8 w-8 rounded-lg ${style.footerIcon} flex items-center justify-center`}>
+                  <Sparkles className="h-4 w-4 text-white" />
+                </div>
+                <SheetTitle className="font-serif">AI Insights</SheetTitle>
+              </div>
+            </div>
+          </SheetHeader>
+          
+          <div className="flex-1 overflow-auto p-4 space-y-4">
+            {isLoadingInsight ? (
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-20 w-full rounded-xl" />
+                </div>
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-16 w-full rounded-xl" />
+                </div>
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-28" />
+                  <Skeleton className="h-16 w-full rounded-xl" />
+                </div>
+              </div>
+            ) : insight ? (
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-amber-600 dark:text-amber-400">
+                    <div className="h-6 w-6 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                      <Lightbulb className="h-3.5 w-3.5" />
+                    </div>
+                    Key Insight
+                  </div>
+                  <div className="bg-gradient-to-br from-amber-50 to-orange-50/50 dark:from-amber-950/30 dark:to-orange-950/20 p-4 rounded-xl border border-amber-200/50 dark:border-amber-800/30">
+                    <p className="text-sm text-foreground/85 leading-relaxed">
+                      {insight.keyInsight}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-primary">
+                    <div className="h-6 w-6 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Link2 className="h-3.5 w-3.5" />
+                    </div>
+                    Thematic Connection
+                  </div>
+                  <div className="bg-gradient-to-br from-emerald-50 to-teal-50/50 dark:from-emerald-950/30 dark:to-teal-950/20 p-4 rounded-xl border border-emerald-200/50 dark:border-emerald-800/30">
+                    <p className="text-sm text-foreground/85 leading-relaxed">
+                      {insight.thematicConnection}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-violet-600 dark:text-violet-400">
+                    <div className="h-6 w-6 rounded-lg bg-violet-500/10 flex items-center justify-center">
+                      <MessageCircleQuestion className="h-3.5 w-3.5" />
+                    </div>
+                    Discussion Question
+                  </div>
+                  <div className="bg-gradient-to-br from-violet-50 to-purple-50/50 dark:from-violet-950/30 dark:to-purple-950/20 p-4 rounded-xl border border-violet-200/50 dark:border-violet-800/30">
+                    <p className="text-sm text-foreground/85 leading-relaxed italic">
+                      {insight.discussionQuestion}
+                    </p>
+                  </div>
+                </div>
+
+                {insight.inquiryGuidance && (
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm font-semibold text-sky-600 dark:text-sky-400">
+                      <div className="h-6 w-6 rounded-lg bg-sky-500/10 flex items-center justify-center">
+                        <Compass className="h-3.5 w-3.5" />
+                      </div>
+                      Inquiry Pathways
+                    </div>
+                    <div className="bg-gradient-to-br from-sky-50 to-cyan-50/50 dark:from-sky-950/30 dark:to-cyan-950/20 p-4 rounded-xl border border-sky-200/50 dark:border-sky-800/30">
+                      <p className="text-sm text-foreground/85 leading-relaxed">
+                        {insight.inquiryGuidance}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="flex-1 flex items-center justify-center py-12">
+                <Button onClick={fetchInsight} variant="outline" className="gap-2">
+                  <Sparkles className="h-4 w-4" />
+                  Generate Insights
+                </Button>
+              </div>
+            )}
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

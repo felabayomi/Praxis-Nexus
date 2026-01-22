@@ -94,8 +94,13 @@ export async function sendContactEmail(data: ContactEmailData): Promise<void> {
     `,
   });
   console.log("Admin email result:", JSON.stringify(adminResult));
+  
+  if (adminResult.error) {
+    console.error("Admin email error:", adminResult.error);
+  }
 
   // Send confirmation to the sender (with reply-to praxinex@gmail.com)
+  console.log("Sending confirmation email to:", email);
   const confirmResult = await client.emails.send({
     from: senderFrom,
     to: email,

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "wouter";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { JournalSidebar } from "@/components/JournalSidebar";
 import { JournalContent } from "@/components/JournalContent";
@@ -9,7 +10,7 @@ import { AuthorModal } from "@/components/AuthorModal";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Leaf, Search, Printer, Home as HomeIcon } from "lucide-react";
+import { Leaf, Search, Printer, Home as HomeIcon, ArrowLeft } from "lucide-react";
 import Landing from "./Landing";
 
 const TEMPLATE_STORAGE_KEY = "ai-inquiry-preferred-template";
@@ -141,11 +142,21 @@ export default function Home() {
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <SidebarTrigger data-testid="button-sidebar-toggle" />
               <Separator orientation="vertical" className="h-5" />
+              <Link href="/">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  title="Back to Project Hub"
+                  data-testid="button-hub"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                </Button>
+              </Link>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={handleBackToLanding}
-                title="Back to landing page"
+                title="Back to project landing"
                 data-testid="button-home"
               >
                 <HomeIcon className="h-4 w-4" />

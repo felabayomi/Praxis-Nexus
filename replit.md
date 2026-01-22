@@ -1,34 +1,39 @@
 # Praxis Nexus
 
 ## Overview
-Praxis Nexus is an academic inquiry journal web application for presenting EdD (Doctor of Education) research on AI's Ecological and Economic Entanglements. The journal presents Felix Olusola Abayomi's personal inquiry on "AI, Conservation, and the Reconfiguration of Human–Wildlife Relations."
+Praxis Nexus is an academic research hub web application presenting multiple research projects by Felix Olusola Abayomi. The platform supports multiple projects with individual access codes and distinct visual layouts.
 
 ## Current State
-- Fully functional academic journal with elegant, scholarly design
-- Landing page with inquiry title, personal inquiry subtitle, and author name
-- Welcome section with Overview and Monthly Inquiries navigation cards
-- Month-based structure for organizing inquiry progress
-- Complete Month 1 content: "Framing the Inquiry"
-- Reference management with DOI linking
-- AI-enhanced presentation mode with 5 visual templates
+- Multi-project architecture with main hub landing page
+- Two projects configured:
+  1. **EdD Inquiry on AI's Ecological and Economic Entanglements** (Active) - Access code: 150920
+  2. **Quasi-Qualitative Project** (Coming Soon) - Access code: QUASI2026
+- Each project has its own unique visual design and layout
+- Fully functional academic journal for EdD project with elegant, scholarly design
 - PWA support for home screen installation
-- Mobile-responsive design with app name visible on all screen sizes
-- Contact form with dual email system (notification + sender confirmation)
+- Mobile-responsive design
 
 ## Navigation Flow
-1. **Landing Page** - Entry point showing inquiry title and "Enter Journal" button
-2. **Welcome Section** - Three cards: Overview, Monthly Inquiries, and References
-3. **Overview** - Leads to Introduction content
-4. **Monthly Inquiries** - Leads to month selection (Month 1, etc.)
-5. **References** - Auto-aggregated academic sources from all content sections
-6. Clicking "Praxis Nexus" in header returns to landing page
+1. **Project Hub (/)** - Main entry point showing all project cards
+2. **EdD Inquiry (/edd-inquiry)** - Forest green theme, serif typography
+   - Landing Page → Access Code → Welcome Section → Content
+   - Three cards: Overview, Monthly Inquiries, References
+3. **Quasi-Qualitative (/quasi-qualitative)** - Violet/purple theme, sans-serif typography
+   - Landing Page → Access Code → Content (placeholder for now)
 
 ## Project Architecture
 
+### Routes
+- `/` - ProjectHub.tsx - Main hub with project selection cards
+- `/edd-inquiry` - Home.tsx + Landing.tsx - EdD AI Inquiry Journal
+- `/quasi-qualitative` - QuasiQualitative.tsx - Quasi-Qualitative Project
+
 ### Frontend (React + Vite)
 - **client/src/App.tsx** - Main app with routing and providers
-- **client/src/pages/Home.tsx** - Main journal page with landing, welcome, and sidebar layout
-- **client/src/pages/Landing.tsx** - Landing page with inquiry title and enter button
+- **client/src/pages/ProjectHub.tsx** - Main project hub landing page
+- **client/src/pages/Home.tsx** - EdD journal page with landing, welcome, and sidebar layout
+- **client/src/pages/Landing.tsx** - EdD project landing page with access code
+- **client/src/pages/QuasiQualitative.tsx** - Quasi-Qualitative project (different layout)
 - **client/src/components/**
   - `ThemeProvider.tsx` - Dark/light theme management
   - `ThemeToggle.tsx` - Theme toggle button
@@ -51,13 +56,22 @@ Praxis Nexus is an academic inquiry journal web application for presenting EdD (
 - **shared/schema.ts** - TypeScript interfaces for journal data types
 
 ## Design System
+
+### EdD Inquiry Project
 - Forest green (#0f4c3a) and warm earth tones (conservation/ecology theme)
 - Serif typography (Source Serif 4, Playfair Display) for academic feel
+- Leaf icon branding
 - Clean, minimal interface with spacious reading areas
 - Drop cap styling for introduction
-- Card-based section layout for month content
 
-## Key Features
+### Quasi-Qualitative Project
+- Violet/purple color scheme
+- Sans-serif typography for modern feel
+- FlaskConical icon branding
+- Different gradient backgrounds
+- Unique layout (to be developed with content)
+
+## Key Features (EdD Inquiry)
 - Collapsible sidebar navigation with reading time estimates
 - Dark/light theme support
 - Monthly inquiry sections with themed content
@@ -72,7 +86,7 @@ Praxis Nexus is an academic inquiry journal web application for presenting EdD (
 - PWA support for home screen installation
 - Access code protection (code: 150920) for journal entry
 - "Keep me signed in" option for persistent access
-- Adjustable font size (14px-20px) with localStorage persistence
+- Adjustable font size (14px-20px) with localStorage persistence - affects body text only
 - AI Citation Assistant for checking statements that need citations
 
 ## Presentation Templates
@@ -105,7 +119,18 @@ Praxis Nexus is an academic inquiry journal web application for presenting EdD (
 - Provides suggestions for finding sources
 - Maximum 15,000 characters per analysis
 
-## Adding New Months
+## Adding New Projects
+To add a new project:
+1. Create a new page component in `client/src/pages/`
+2. Add the route to `client/src/App.tsx`
+3. Add project card to `client/src/pages/ProjectHub.tsx`
+4. Each project should have its own unique:
+   - Access code (stored in the project page)
+   - Visual design/color scheme
+   - Typography choices
+   - Content structure
+
+## Adding New Months (EdD Inquiry)
 To add new months, update the `journalData` object in `client/src/lib/journalData.ts` and `server/storage.ts` with new month entries following the existing structure.
 
 ## Adding References

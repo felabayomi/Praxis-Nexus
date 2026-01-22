@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -60,13 +61,21 @@ export default function Landing({ onEnterJournal }: LandingProps) {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <header className="flex items-center justify-between px-4 sm:px-6 h-14 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
-            <Leaf className="h-4 w-4 text-primary" />
+        <div className="flex items-center gap-4">
+          <Link href="/">
+            <Button variant="ghost" size="sm" className="gap-2" data-testid="button-back-hub">
+              <ArrowLeft className="h-4 w-4" />
+              <span className="hidden sm:inline">Back to Hub</span>
+            </Button>
+          </Link>
+          <div className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
+              <Leaf className="h-4 w-4 text-primary" />
+            </div>
+            <span className="font-serif text-sm font-semibold" data-testid="text-app-name">
+              Praxis Nexus
+            </span>
           </div>
-          <span className="font-serif text-sm font-semibold" data-testid="text-app-name">
-            Praxis Nexus
-          </span>
         </div>
         <ThemeToggle />
       </header>

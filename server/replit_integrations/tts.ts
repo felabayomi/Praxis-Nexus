@@ -16,8 +16,8 @@ export function registerTTSRoutes(app: Express): void {
         return res.status(400).json({ error: "Text is required" });
       }
 
-      // Truncate to reasonable length for audio generation
-      const truncatedText = text.slice(0, 2000);
+      // gpt-audio can handle longer content - increase limit for fuller narration
+      const truncatedText = text.slice(0, 8000);
 
       console.log(`Generating TTS for section: ${sectionId}, text length: ${truncatedText.length}`);
 

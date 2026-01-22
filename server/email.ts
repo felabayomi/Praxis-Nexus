@@ -63,8 +63,9 @@ export async function sendContactEmail(data: ContactEmailData): Promise<void> {
     ? `Praxis Nexus Inquiry: ${subject}` 
     : `Praxis Nexus Inquiry from ${name}`;
 
-  // Send notification to Felix (with sender's email as reply-to so you can reply directly)
-  const adminResult = await client.emails.send({
+  try {
+    // Send notification to Felix (with sender's email as reply-to so you can reply directly)
+    const adminResult = await client.emails.send({
     from: senderFrom,
     to: "praxinex@gmail.com",
     replyTo: email,
@@ -132,4 +133,12 @@ export async function sendContactEmail(data: ContactEmailData): Promise<void> {
     `,
   });
   console.log("Confirmation email result:", JSON.stringify(confirmResult));
+  
+  if (confirmResult.error) {
+    console.error("Confirmation email error:", confirmResult.error);
+  }
+  } catch (error) {
+    console.error("Email sending error:", error);
+    throw error;
+  }
 }

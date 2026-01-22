@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Leaf, ArrowRight, BookOpen, Lock, Mail, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface LandingProps {
-  onEnterJournal: () => void;
+  onEnterJournal: (rememberMe: boolean) => void;
 }
 
 const ACCESS_CODE = "150920";
@@ -15,6 +17,7 @@ export default function Landing({ onEnterJournal }: LandingProps) {
   const [showAccessScreen, setShowAccessScreen] = useState(false);
   const [accessCode, setAccessCode] = useState("");
   const [error, setError] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleEnterClick = () => {
     setShowAccessScreen(true);
@@ -25,7 +28,7 @@ export default function Landing({ onEnterJournal }: LandingProps) {
   const handleCodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (accessCode === ACCESS_CODE) {
-      onEnterJournal();
+      onEnterJournal(rememberMe);
     } else {
       setError("Invalid access code. Please try again or request access.");
     }
@@ -137,6 +140,20 @@ export default function Landing({ onEnterJournal }: LandingProps) {
                       {error}
                     </p>
                   )}
+                </div>
+                <div className="flex items-center gap-2 justify-center">
+                  <Checkbox 
+                    id="remember-me" 
+                    checked={rememberMe}
+                    onCheckedChange={(checked) => setRememberMe(checked === true)}
+                    data-testid="checkbox-remember-me"
+                  />
+                  <Label 
+                    htmlFor="remember-me" 
+                    className="text-sm text-muted-foreground cursor-pointer"
+                  >
+                    Keep me signed in
+                  </Label>
                 </div>
                 <Button 
                   type="submit" 

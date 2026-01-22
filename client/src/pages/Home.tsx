@@ -14,9 +14,15 @@ import Landing from "./Landing";
 
 const TEMPLATE_STORAGE_KEY = "ai-inquiry-preferred-template";
 const JOURNAL_ENTERED_KEY = "praxis-nexus-journal-entered";
+const JOURNAL_REMEMBER_KEY = "praxis-nexus-remember-access";
 
 export default function Home() {
   const [showLanding, setShowLanding] = useState(() => {
+    // Check localStorage first for "remember me" persistent access
+    if (localStorage.getItem(JOURNAL_REMEMBER_KEY)) {
+      return false;
+    }
+    // Then check session storage for current session
     return !sessionStorage.getItem(JOURNAL_ENTERED_KEY);
   });
   const [activeSection, setActiveSection] = useState("welcome");
@@ -84,13 +90,17 @@ export default function Home() {
     setShowPresentation(false);
   };
 
-  const handleEnterJournal = () => {
+  const handleEnterJournal = (rememberMe: boolean) => {
+    if (rememberMe) {
+      localStorage.setItem(JOURNAL_REMEMBER_KEY, "true");
+    }
     sessionStorage.setItem(JOURNAL_ENTERED_KEY, "true");
     setShowLanding(false);
   };
 
   const handleBackToLanding = () => {
     sessionStorage.removeItem(JOURNAL_ENTERED_KEY);
+    localStorage.removeItem(JOURNAL_REMEMBER_KEY);
     setShowLanding(true);
   };
 

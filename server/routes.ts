@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { registerPresentationRoutes } from "./replit_integrations/ai-presentation";
+import { registerTTSRoutes } from "./replit_integrations/tts";
 import { sendContactEmail } from "./email";
 import { contactFormSchema } from "@shared/contactSchema";
 
@@ -10,6 +11,7 @@ export async function registerRoutes(
   app: Express
 ): Promise<Server> {
   registerPresentationRoutes(app);
+  registerTTSRoutes(app);
   
   app.get("/api/journal", async (req, res) => {
     try {

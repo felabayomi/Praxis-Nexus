@@ -20,10 +20,19 @@ import {
   FileText,
   Calendar,
   ArrowRight,
-  ArrowLeft
+  ArrowLeft,
+  Headphones
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import { TextToSpeech } from "@/components/TextToSpeech";
+import { AudioPlayer } from "@/components/AudioPlayer";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { 
   getIntroductionReadingTime, 
   getMonthReadingTime, 
@@ -370,6 +379,19 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                 </div>
                 <div className="flex items-center gap-2">
                   <TextToSpeech sectionId="introduction" />
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="ghost" size="icon" title="AI Audio (CarPlay compatible)" data-testid="button-ai-audio-intro">
+                        <Headphones className="h-4 w-4" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle className="font-serif">AI Audio Narration</DialogTitle>
+                      </DialogHeader>
+                      <AudioPlayer sectionId="introduction" />
+                    </DialogContent>
+                  </Dialog>
                   {onOpenPresentation && (
                     <Button
                       variant="outline"
@@ -436,7 +458,22 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                     <span>{formatReadingTime(refsTime)}</span>
                   </div>
                 </div>
-                <TextToSpeech sectionId="references" />
+                <div className="flex items-center gap-2">
+                  <TextToSpeech sectionId="references" />
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="ghost" size="icon" title="AI Audio (CarPlay compatible)" data-testid="button-ai-audio-refs">
+                        <Headphones className="h-4 w-4" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle className="font-serif">AI Audio Narration</DialogTitle>
+                      </DialogHeader>
+                      <AudioPlayer sectionId="references" />
+                    </DialogContent>
+                  </Dialog>
+                </div>
               </div>
               <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3">
                 References
@@ -481,7 +518,22 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                     <span>{formatReadingTime(getMonthReadingTime(month))}</span>
                   </div>
                 </div>
-                <TextToSpeech sectionId={month.id} />
+                <div className="flex items-center gap-2">
+                  <TextToSpeech sectionId={month.id} />
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="ghost" size="icon" title="AI Audio (CarPlay compatible)" data-testid="button-ai-audio-month">
+                        <Headphones className="h-4 w-4" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle className="font-serif">AI Audio Narration</DialogTitle>
+                      </DialogHeader>
+                      <AudioPlayer sectionId={month.id} />
+                    </DialogContent>
+                  </Dialog>
+                </div>
               </div>
               <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3 leading-tight">
                 {month.title}

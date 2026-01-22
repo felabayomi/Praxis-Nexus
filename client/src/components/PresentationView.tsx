@@ -41,6 +41,7 @@ interface Slide {
   content?: string;
   author?: string;
   slideNumber: number;
+  aiHeading?: string;
 }
 
 interface SlideInsight {
@@ -127,7 +128,7 @@ const templateStyles = {
 };
 
 export function PresentationView({ template, onClose, onChangeTemplate }: PresentationViewProps) {
-  const slides = createSlides();
+  const [slides, setSlides] = useState<Slide[]>(createSlides());
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showAI, setShowAI] = useState(true);
@@ -135,6 +136,7 @@ export function PresentationView({ template, onClose, onChangeTemplate }: Presen
   const [insight, setInsight] = useState<SlideInsight | null>(null);
   const [isLoadingInsight, setIsLoadingInsight] = useState(false);
   const [insightCache, setInsightCache] = useState<Record<number, SlideInsight>>({});
+  const [headingCache, setHeadingCache] = useState<Record<number, string>>({});
 
   const slide = slides[currentSlide];
   const progress = ((currentSlide + 1) / slides.length) * 100;
@@ -143,16 +145,44 @@ export function PresentationView({ template, onClose, onChangeTemplate }: Presen
   const templateInfo = templates.find(t => t.id === template)!;
 
   useEffect(() => {
-    if (slide.type === "content" && showAI) {
-      if (insightCache[currentSlide]) {
-        setInsight(insightCache[currentSlide]);
+    const slideIndex = currentSlide;
+    const currentSlideData = slides[slideIndex];
+    
+    if (currentSlideData.type === "content" && showAI) {
+      if (insightCache[slideIndex]) {
+        setInsight(insightCache[slideIndex]);
       } else {
         fetchInsight();
+      }
+      // Also fetch AI heading if not cached
+      if (!headingCache[slideIndex] && currentSlideData.content) {
+        fetchHeadingForSlide(slideIndex, currentSlideData.content);
       }
     } else {
       setInsight(null);
     }
   }, [currentSlide, showAI]);
+
+  const fetchHeadingForSlide = async (slideIndex: number, content: string) => {
+    try {
+      const response = await apiRequest("POST", "/api/presentation/generate-heading", {
+        content: content,
+        slideNumber: slideIndex + 1,
+        projectTitle: journalData.projectTitle
+      });
+      const result = await response.json();
+      if (result.heading) {
+        setHeadingCache(prev => ({ ...prev, [slideIndex]: result.heading }));
+        setSlides(prevSlides => 
+          prevSlides.map((s, i) => 
+            i === slideIndex ? { ...s, aiHeading: result.heading } : s
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Failed to fetch heading:", error);
+    }
+  };
 
   const fetchInsight = async () => {
     if (!slide.content) return;
@@ -342,15 +372,15 @@ export function PresentationView({ template, onClose, onChangeTemplate }: Presen
               </div>
               
               <div className="relative z-10 flex-1 flex flex-col p-6 md:p-10 lg:p-12 overflow-hidden">
-                {slide.title && (
+                {(slide.title || slide.aiHeading || headingCache[currentSlide]) && (
                   <div className="mb-4 shrink-0">
                     <Badge className={`${style.badgeBg} uppercase tracking-wider text-xs`}>
-                      {slide.title}
+                      {slide.aiHeading || headingCache[currentSlide] || slide.title}
                     </Badge>
                   </div>
                 )}
                 
-                {!slide.title && (
+                {!slide.title && !slide.aiHeading && !headingCache[currentSlide] && (
                   <div className="mb-3 shrink-0">
                     <Quote className="h-6 w-6 opacity-20" />
                   </div>

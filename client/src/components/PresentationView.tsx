@@ -2,26 +2,29 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { 
   ChevronLeft, 
   ChevronRight, 
   Maximize2, 
   Minimize2,
-  Circle,
   Leaf,
   Sparkles,
   Lightbulb,
   MessageCircleQuestion,
   Link2,
   Quote,
-  TreeDeciduous
+  TreeDeciduous,
+  Mountain,
+  Waves,
+  Sun
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import { apiRequest } from "@/lib/queryClient";
+import { TemplateStyle, templates } from "./TemplateSelector";
 
 interface PresentationViewProps {
+  template: TemplateStyle;
   onClose: () => void;
 }
 
@@ -66,13 +69,58 @@ function createSlides(): Slide[] {
   return slides;
 }
 
-const decorativePatterns = [
-  "radial-gradient(circle at 10% 20%, hsl(var(--primary) / 0.08) 0%, transparent 50%)",
-  "radial-gradient(circle at 90% 80%, hsl(var(--accent) / 0.1) 0%, transparent 40%)",
-  "radial-gradient(circle at 50% 0%, hsl(var(--primary) / 0.05) 0%, transparent 30%)",
-];
+const templateIcons = {
+  forest: TreeDeciduous,
+  nature: Mountain,
+  minimal: Sun,
+  bold: Waves,
+  elegant: Leaf
+};
 
-export function PresentationView({ onClose }: PresentationViewProps) {
+const templateStyles = {
+  forest: {
+    titleBg: "bg-gradient-to-br from-emerald-700 via-emerald-800 to-emerald-900",
+    contentBg: "bg-gradient-to-br from-emerald-50/80 to-teal-50/30 dark:from-emerald-950/40 dark:to-teal-950/20",
+    accentBar: "from-emerald-500 via-teal-400 to-emerald-600",
+    pattern: "radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.12) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(20, 184, 166, 0.08) 0%, transparent 40%)",
+    badgeBg: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/20",
+    footerIcon: "bg-gradient-to-br from-emerald-600 to-emerald-700"
+  },
+  nature: {
+    titleBg: "bg-gradient-to-br from-amber-600 via-orange-600 to-amber-700",
+    contentBg: "bg-gradient-to-br from-amber-50/80 to-orange-50/30 dark:from-amber-950/40 dark:to-orange-950/20",
+    accentBar: "from-amber-500 via-sky-400 to-orange-500",
+    pattern: "radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.12) 0%, transparent 50%), radial-gradient(circle at 80% 30%, rgba(14, 165, 233, 0.08) 0%, transparent 40%)",
+    badgeBg: "bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/20",
+    footerIcon: "bg-gradient-to-br from-amber-600 to-orange-600"
+  },
+  minimal: {
+    titleBg: "bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950",
+    contentBg: "bg-gradient-to-br from-slate-50/80 to-gray-50/30 dark:from-slate-950/40 dark:to-gray-950/20",
+    accentBar: "from-slate-500 via-slate-400 to-slate-600",
+    pattern: "radial-gradient(circle at 50% 50%, rgba(100, 116, 139, 0.06) 0%, transparent 70%)",
+    badgeBg: "bg-slate-500/10 text-slate-700 dark:text-slate-300 border-slate-500/20",
+    footerIcon: "bg-gradient-to-br from-slate-700 to-slate-800"
+  },
+  bold: {
+    titleBg: "bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900",
+    contentBg: "bg-gradient-to-br from-blue-50/80 to-cyan-50/30 dark:from-blue-950/40 dark:to-cyan-950/20",
+    accentBar: "from-blue-500 via-cyan-400 to-indigo-500",
+    pattern: "radial-gradient(circle at 90% 90%, rgba(6, 182, 212, 0.12) 0%, transparent 50%), radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 40%)",
+    badgeBg: "bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500/20",
+    footerIcon: "bg-gradient-to-br from-blue-600 to-indigo-700"
+  },
+  elegant: {
+    titleBg: "bg-gradient-to-br from-green-600 via-green-700 to-green-800",
+    contentBg: "bg-gradient-to-br from-green-50/80 to-lime-50/30 dark:from-green-950/40 dark:to-lime-950/20",
+    accentBar: "from-green-500 via-lime-400 to-green-600",
+    pattern: "radial-gradient(circle at 10% 30%, rgba(132, 204, 22, 0.10) 0%, transparent 50%), radial-gradient(circle at 85% 70%, rgba(34, 197, 94, 0.08) 0%, transparent 40%)",
+    badgeBg: "bg-green-500/10 text-green-700 dark:text-green-300 border-green-500/20",
+    footerIcon: "bg-gradient-to-br from-green-600 to-green-700"
+  }
+};
+
+export function PresentationView({ template, onClose }: PresentationViewProps) {
   const slides = createSlides();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -83,6 +131,9 @@ export function PresentationView({ onClose }: PresentationViewProps) {
 
   const slide = slides[currentSlide];
   const progress = ((currentSlide + 1) / slides.length) * 100;
+  const style = templateStyles[template];
+  const Icon = templateIcons[template];
+  const templateInfo = templates.find(t => t.id === template)!;
 
   useEffect(() => {
     if (slide.type === "content" && showAI) {
@@ -163,10 +214,10 @@ export function PresentationView({ onClose }: PresentationViewProps) {
     >
       <header className="flex items-center justify-between px-4 md:px-6 py-3 border-b bg-card/80 backdrop-blur-sm">
         <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-            <Leaf className="h-4 w-4 text-primary" />
+          <div className={`h-8 w-8 rounded-full ${style.footerIcon} flex items-center justify-center`}>
+            <Icon className="h-4 w-4 text-white" />
           </div>
-          <span className="font-serif font-medium hidden sm:inline">AI-Enhanced Presentation</span>
+          <span className="font-serif font-medium hidden sm:inline">{templateInfo.name}</span>
           <Badge variant="outline" className="font-mono text-xs">
             {currentSlide + 1} / {slides.length}
           </Badge>
@@ -206,7 +257,7 @@ export function PresentationView({ onClose }: PresentationViewProps) {
 
       <div className="h-1 bg-muted overflow-hidden">
         <div 
-          className="h-full bg-gradient-to-r from-primary via-accent to-primary transition-all duration-500 ease-out"
+          className={`h-full bg-gradient-to-r ${style.accentBar} transition-all duration-500 ease-out`}
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -214,10 +265,7 @@ export function PresentationView({ onClose }: PresentationViewProps) {
       <main className="flex-1 flex items-stretch p-4 md:p-8 overflow-hidden gap-6">
         <div className={`flex-1 flex items-center justify-center ${showAI && slide.type === "content" ? "lg:flex-[2]" : ""}`}>
           {slide.type === "title" ? (
-            <Card className="w-full max-w-5xl aspect-[16/9] relative overflow-hidden border-0 shadow-2xl">
-              <div 
-                className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/80 to-primary/95"
-              />
+            <Card className={`w-full max-w-5xl aspect-[16/9] relative overflow-hidden border-0 shadow-2xl ${style.titleBg}`}>
               <div className="absolute inset-0 opacity-20">
                 <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                   <defs>
@@ -229,13 +277,13 @@ export function PresentationView({ onClose }: PresentationViewProps) {
                 </svg>
               </div>
               <div className="absolute top-0 right-0 w-1/2 h-full opacity-10">
-                <TreeDeciduous className="w-full h-full text-white" />
+                <Icon className="w-full h-full text-white" />
               </div>
               
               <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 md:p-16 text-center">
                 <div className="mb-8">
                   <div className="inline-flex items-center justify-center h-20 w-20 md:h-28 md:w-28 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
-                    <Leaf className="h-10 w-10 md:h-14 md:w-14 text-white" />
+                    <Icon className="h-10 w-10 md:h-14 md:w-14 text-white" />
                   </div>
                 </div>
                 
@@ -260,42 +308,42 @@ export function PresentationView({ onClose }: PresentationViewProps) {
             </Card>
           ) : (
             <Card 
-              className="w-full max-w-5xl aspect-[16/9] relative overflow-hidden border shadow-xl"
+              className={`w-full max-w-5xl min-h-[400px] max-h-[80vh] relative overflow-hidden border shadow-xl flex flex-col`}
               style={{
-                background: decorativePatterns.map(p => p).join(", ") + ", hsl(var(--card))"
+                background: style.pattern + ", hsl(var(--card))"
               }}
             >
-              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary via-accent to-primary" />
+              <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${style.accentBar} z-20`} />
               
               <div className="absolute top-6 right-6 opacity-5">
-                <Leaf className="h-32 w-32 text-primary" />
+                <Icon className="h-32 w-32" />
               </div>
               
-              <div className="relative z-10 h-full flex flex-col p-8 md:p-12 lg:p-16">
+              <div className="relative z-10 flex-1 flex flex-col p-6 md:p-10 lg:p-12 overflow-hidden">
                 {slide.title && (
-                  <div className="mb-6">
-                    <Badge className="bg-primary/10 text-primary border-primary/20 uppercase tracking-wider text-xs">
+                  <div className="mb-4 shrink-0">
+                    <Badge className={`${style.badgeBg} uppercase tracking-wider text-xs`}>
                       {slide.title}
                     </Badge>
                   </div>
                 )}
                 
                 {!slide.title && (
-                  <div className="mb-4">
-                    <Quote className="h-8 w-8 text-primary/20" />
+                  <div className="mb-3 shrink-0">
+                    <Quote className="h-6 w-6 opacity-20" />
                   </div>
                 )}
                 
-                <div className="flex-1 flex items-center">
-                  <p className="font-serif text-lg md:text-xl lg:text-2xl leading-relaxed text-foreground/90 max-w-prose">
+                <div className="flex-1 overflow-y-auto pr-2">
+                  <p className="font-serif text-base md:text-lg lg:text-xl leading-relaxed text-foreground/90">
                     {slide.content}
                   </p>
                 </div>
                 
-                <div className="flex items-center justify-between pt-6 border-t border-border/50">
+                <div className="flex items-center justify-between pt-4 border-t border-border/50 mt-4 shrink-0">
                   <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Leaf className="h-4 w-4 text-primary" />
+                    <div className={`h-8 w-8 rounded-full ${style.footerIcon} flex items-center justify-center`}>
+                      <Icon className="h-4 w-4 text-white" />
                     </div>
                     <span className="text-sm text-muted-foreground font-medium">
                       {journalData.author}
@@ -305,7 +353,7 @@ export function PresentationView({ onClose }: PresentationViewProps) {
                     <span className="text-xs text-muted-foreground uppercase tracking-wider">
                       Slide
                     </span>
-                    <span className="font-mono text-sm font-bold text-primary">
+                    <span className="font-mono text-sm font-bold opacity-70">
                       {String(currentSlide + 1).padStart(2, '0')}
                     </span>
                   </div>
@@ -319,8 +367,8 @@ export function PresentationView({ onClose }: PresentationViewProps) {
           <div className="hidden lg:flex flex-col flex-1 max-w-sm gap-4">
             <Card className="p-5 flex-1 flex flex-col gap-5 overflow-auto border shadow-lg bg-card/80 backdrop-blur-sm">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                  <Sparkles className="h-5 w-5 text-primary" />
+                <div className={`h-10 w-10 rounded-xl ${style.footerIcon} flex items-center justify-center`}>
+                  <Sparkles className="h-5 w-5 text-white" />
                 </div>
                 <div>
                   <h3 className="font-serif font-semibold text-foreground">AI Insights</h3>
@@ -420,7 +468,7 @@ export function PresentationView({ onClose }: PresentationViewProps) {
                 onClick={() => goToSlide(index)}
                 className={`transition-all duration-300 ${
                   index === currentSlide 
-                    ? "w-6 h-2 rounded-full bg-primary" 
+                    ? `w-6 h-2 rounded-full ${style.footerIcon}` 
                     : "w-2 h-2 rounded-full bg-muted-foreground/30 hover:bg-muted-foreground/50"
                 }`}
                 data-testid={`slide-indicator-${index}`}

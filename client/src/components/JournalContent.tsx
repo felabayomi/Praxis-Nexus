@@ -173,10 +173,10 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                   <div className="flex-1 min-w-0">
                     <h3 className="font-serif text-xl font-semibold text-foreground mb-2">Overview</h3>
                     <p className="text-muted-foreground text-sm mb-3">
-                      Introduction and context for this inquiry into AI's ecological and economic entanglements.
+                      Introduction, context, and references for this inquiry.
                     </p>
                     <div className="flex items-center gap-2 text-primary text-sm font-medium">
-                      <span>Read Introduction</span>
+                      <span>Introduction & References</span>
                       <ArrowRight className="h-4 w-4" />
                     </div>
                   </div>

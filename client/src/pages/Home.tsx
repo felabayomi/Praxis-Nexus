@@ -9,7 +9,7 @@ import { AuthorModal } from "@/components/AuthorModal";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Leaf, Search, Printer } from "lucide-react";
+import { Leaf, Search, Printer, Home as HomeIcon } from "lucide-react";
 import Landing from "./Landing";
 
 const TEMPLATE_STORAGE_KEY = "ai-inquiry-preferred-template";
@@ -130,18 +130,22 @@ export default function Home() {
           <header className="flex items-center justify-between gap-2 px-3 sm:px-4 h-14 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 print:hidden">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <SidebarTrigger data-testid="button-sidebar-toggle" />
-              <Separator orientation="vertical" className="h-5 hidden sm:block" />
-              <button 
+              <Separator orientation="vertical" className="h-5" />
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={handleBackToLanding}
-                className="flex items-center gap-2 min-w-0 hover:opacity-80 transition-opacity"
                 title="Back to landing page"
-                data-testid="button-back-to-landing"
+                data-testid="button-home"
               >
+                <HomeIcon className="h-4 w-4" />
+              </Button>
+              <div className="flex items-center gap-2 min-w-0">
                 <Leaf className="h-4 w-4 text-primary shrink-0" />
                 <span className="font-serif text-sm font-medium truncate" data-testid="text-header-app-name">
                   Praxis Nexus
                 </span>
-              </button>
+              </div>
             </div>
             <div className="flex items-center gap-1 shrink-0">
               <Button

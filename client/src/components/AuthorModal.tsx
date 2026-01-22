@@ -73,9 +73,9 @@ export function AuthorModal({ open, onOpenChange }: AuthorModalProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-2xl max-h-[85vh] flex flex-col p-0">
         <DialogHeader className="p-6 pb-0">
-          <DialogTitle className="font-serif text-2xl">Felix Olusola Abayomi</DialogTitle>
-          <DialogDescription>
-            EdD Student, Antioch University - Exploring AI's ecological and economic entanglements
+          <DialogTitle className="font-serif text-2xl">Info Center</DialogTitle>
+          <DialogDescription className="sr-only">
+            Information about the author and this journal
           </DialogDescription>
         </DialogHeader>
         

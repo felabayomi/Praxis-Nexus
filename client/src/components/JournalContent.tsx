@@ -270,7 +270,7 @@ export function JournalContent({ activeSection, onOpenPresentation }: JournalCon
             <button
               type="button"
               onClick={() => setShowAuthorModal(true)}
-              className="font-medium text-foreground hover:text-primary transition-colors cursor-pointer underline-offset-4 hover:underline"
+              className="font-bold text-foreground bg-primary/10 hover:bg-primary/20 px-4 py-2 rounded-md transition-colors cursor-pointer"
               data-testid="button-author-name"
             >
               Info Center

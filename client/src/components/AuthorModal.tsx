@@ -103,8 +103,8 @@ export function AuthorModal({ open, onOpenChange }: AuthorModalProps) {
             </TabsTrigger>
           </TabsList>
 
-          <ScrollArea className="flex-1 px-6 py-4">
-            <TabsContent value="about" className="mt-0 space-y-4">
+          <ScrollArea className="flex-1 px-6 py-4 pb-0">
+            <TabsContent value="about" className="mt-0 space-y-4 pb-6">
               <h3 className="font-serif text-lg font-semibold">About the Author</h3>
               <p className="text-muted-foreground leading-relaxed">
                 <strong>Felix Olusola ABAYOMI</strong> is a doctoral student in the EdD in Educational 
@@ -123,7 +123,7 @@ export function AuthorModal({ open, onOpenChange }: AuthorModalProps) {
               </p>
             </TabsContent>
 
-            <TabsContent value="privacy" className="mt-0 space-y-4">
+            <TabsContent value="privacy" className="mt-0 space-y-4 pb-6">
               <h3 className="font-serif text-lg font-semibold">Privacy Policy</h3>
               <p className="text-muted-foreground leading-relaxed">
                 This website respects your privacy and is committed to protecting your personal information.
@@ -146,7 +146,7 @@ export function AuthorModal({ open, onOpenChange }: AuthorModalProps) {
               </p>
             </TabsContent>
 
-            <TabsContent value="data" className="mt-0 space-y-4">
+            <TabsContent value="data" className="mt-0 space-y-4 pb-6">
               <h3 className="font-serif text-lg font-semibold">Data Usage</h3>
               <p className="text-muted-foreground leading-relaxed">
                 This section outlines how data is used in connection with this academic journal.
@@ -171,7 +171,7 @@ export function AuthorModal({ open, onOpenChange }: AuthorModalProps) {
               </p>
             </TabsContent>
 
-            <TabsContent value="terms" className="mt-0 space-y-4">
+            <TabsContent value="terms" className="mt-0 space-y-4 pb-6">
               <h3 className="font-serif text-lg font-semibold">Terms of Use</h3>
               <p className="text-muted-foreground leading-relaxed">
                 By accessing this website, you agree to the following terms and conditions.
@@ -196,7 +196,7 @@ export function AuthorModal({ open, onOpenChange }: AuthorModalProps) {
               </p>
             </TabsContent>
 
-            <TabsContent value="contact" className="mt-0 space-y-4">
+            <TabsContent value="contact" className="mt-0 space-y-4 pb-6">
               <h3 className="font-serif text-lg font-semibold">Contact & Support</h3>
               <p className="text-muted-foreground leading-relaxed mb-4">
                 Have questions about the research or interested in collaboration? 

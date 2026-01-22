@@ -57,7 +57,7 @@ export function JournalSidebar({ activeSection, onSectionChange }: JournalSideba
 
       <SidebarContent>
         <ScrollArea className="flex-1">
-          <div className="px-4 py-2 text-xs text-sidebar-foreground/60 font-medium">
+          <div className="mx-4 my-2 px-3 py-2 text-xs font-semibold text-primary bg-primary/10 rounded-md">
             EdD AI Inquiry Exploration Cohort
           </div>
           <SidebarGroup>

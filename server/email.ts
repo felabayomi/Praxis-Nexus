@@ -51,14 +51,14 @@ async function getResendClient() {
 
 export async function sendContactEmail(data: ContactEmailData): Promise<void> {
   const { name, email, subject, message } = data;
-  const { client, fromEmail } = await getResendClient();
-  const senderFrom = fromEmail || "Praxis Nexus <onboarding@resend.dev>";
+  const { client } = await getResendClient();
+  const senderFrom = "Praxis Nexus <no-reply@praxinex.org>";
   
   const emailSubject = subject 
     ? `Praxis Nexus Inquiry: ${subject}` 
     : `Praxis Nexus Inquiry from ${name}`;
 
-  // Send notification to Felix
+  // Send notification to Felix (with sender's email as reply-to so you can reply directly)
   await client.emails.send({
     from: senderFrom,
     to: "praxinex@gmail.com",
@@ -88,10 +88,11 @@ export async function sendContactEmail(data: ContactEmailData): Promise<void> {
     `,
   });
 
-  // Send confirmation to the sender
+  // Send confirmation to the sender (with reply-to praxinex@gmail.com)
   await client.emails.send({
     from: senderFrom,
     to: email,
+    replyTo: "praxinex@gmail.com",
     subject: "Thank you for contacting Praxis Nexus",
     html: `
       <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto;">

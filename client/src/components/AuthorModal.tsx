@@ -73,9 +73,9 @@ export function AuthorModal({ open, onOpenChange }: AuthorModalProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-2xl max-h-[85vh] flex flex-col p-0">
         <DialogHeader className="p-6 pb-0">
-          <DialogTitle className="font-serif text-2xl">Felix Abayomi</DialogTitle>
+          <DialogTitle className="font-serif text-2xl">Felix Olusola Abayomi</DialogTitle>
           <DialogDescription>
-            EdD Researcher exploring AI's ecological and economic entanglements
+            EdD Student, Antioch University - Exploring AI's ecological and economic entanglements
           </DialogDescription>
         </DialogHeader>
         
@@ -107,19 +107,19 @@ export function AuthorModal({ open, onOpenChange }: AuthorModalProps) {
             <TabsContent value="about" className="mt-0 space-y-4">
               <h3 className="font-serif text-lg font-semibold">About the Author</h3>
               <p className="text-muted-foreground leading-relaxed">
-                Felix Abayomi is a doctoral researcher in the EdD (Doctor of Education) program, 
-                Cohort 2026. His research explores the complex intersections of artificial intelligence, 
-                ecological conservation, and economic systems.
+                <strong>Felix Olusola ABAYOMI</strong> is a doctoral student in the EdD in Educational 
+                and Professional Practice program at Antioch University (Online), Yellow Springs, Ohio.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                This academic inquiry journal, Praxis Nexus, documents his ongoing investigation into 
-                how AI technologies are reshaping human-wildlife relations and conservation practices 
-                across the Global South and beyond.
+                His research explores the complex intersections of artificial intelligence, 
+                ecological conservation, and economic systems, with a particular focus on how AI 
+                technologies are reshaping human-wildlife relations and conservation practices.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                The research draws on interdisciplinary frameworks from science and technology studies, 
-                political ecology, and critical data studies to examine the ethical, social, and 
-                environmental implications of AI-mediated conservation.
+                This academic inquiry journal, Praxis Nexus, documents his ongoing investigation 
+                as part of the EdD Cohort 2026, drawing on interdisciplinary frameworks from science 
+                and technology studies, political ecology, and critical data studies to examine the 
+                ethical, social, and environmental implications of AI-mediated conservation.
               </p>
             </TabsContent>
 

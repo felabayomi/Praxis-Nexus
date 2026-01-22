@@ -4,7 +4,7 @@ export const journalData: JournalEntry = {
   id: "edd-ai-inquiry-2026",
   projectTitle: "AI, Conservation, and the Reconfiguration of Human–Wildlife Relations",
   cohortTheme: "EdD Inquiry on AI's Ecological and Economic Entanglements",
-  author: "Felix Abayomi",
+  author: "Felix Olusola Abayomi",
   introduction: [
     {
       id: "intro-1",

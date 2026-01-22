@@ -35,7 +35,7 @@ export function JournalSidebar({ activeSection, onSectionChange }: JournalSideba
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-serif font-semibold text-sidebar-foreground">
-              AI Inquiry Journal
+              Praxis Nexus
             </span>
             <span className="text-xs text-sidebar-foreground/60">
               EdD Cohort 2026

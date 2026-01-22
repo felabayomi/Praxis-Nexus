@@ -90,7 +90,7 @@ export default function Home() {
               <div className="flex items-center gap-2">
                 <Leaf className="h-4 w-4 text-primary" />
                 <span className="font-serif text-sm font-medium hidden sm:inline">
-                  AI Inquiry Journal
+                  Praxis Nexus
                 </span>
               </div>
             </div>

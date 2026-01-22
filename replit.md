@@ -1,7 +1,7 @@
-# AI Inquiry Journal
+# Praxis Nexus
 
 ## Overview
-An academic journal web application for presenting EdD (Doctor of Education) inquiry research on AI's Ecological and Economic Entanglements. The journal presents Felix Abayomi's personal inquiry on "AI, Conservation, and the Reconfiguration of Human–Wildlife Relations."
+Praxis Nexus is an academic inquiry journal web application for presenting EdD (Doctor of Education) research on AI's Ecological and Economic Entanglements. The journal presents Felix Abayomi's personal inquiry on "AI, Conservation, and the Reconfiguration of Human–Wildlife Relations."
 
 ## Current State
 - Fully functional academic journal with elegant, scholarly design

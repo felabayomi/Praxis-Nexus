@@ -234,9 +234,21 @@ Respond in JSON format:
         year: r.year
       }));
 
-      const refSummaryForAI = refDatabase.slice(0, 150).map(r => 
-        `[${r.id}] ${r.inText}: "${r.title.substring(0, 60)}..."`
-      ).join('\n');
+      const getSimpleId = (fullId: string) => {
+        const match = fullId.match(/-([a-z]+\d+[a-z]*)/i);
+        return match ? match[1] : fullId.replace(/[^a-z0-9]/gi, '').substring(0, 20);
+      };
+      
+      const idMapping = new Map<string, typeof refDatabase[0]>();
+      refDatabase.forEach(r => {
+        const simpleId = getSimpleId(r.id);
+        idMapping.set(simpleId.toLowerCase(), r);
+      });
+      
+      const refSummaryForAI = refDatabase.slice(0, 200).map(r => {
+        const simpleId = getSimpleId(r.id);
+        return `[${simpleId}] ${r.inText}: "${r.title.substring(0, 70)}"`;
+      }).join('\n');
 
       console.log(`Auto-citing text, length: ${text.length}, available refs: ${references.length}`);
 
@@ -254,18 +266,21 @@ INSTRUCTIONS:
 1. Read the text carefully and identify statements that need citations
 2. For each statement that needs a citation, find the BEST matching reference from the database above
 3. Insert the citation in APA 7th edition format: (Author, Year) or Author (Year) as appropriate
-4. Only use references that are actually relevant to the statement
-5. If no suitable reference exists in the database, leave that statement uncited
-6. Preserve the original meaning and flow of the text
-7. Return the modified text with citations inserted
+4. IMPORTANT: Only use the exact citations from the database - use the exact "Author (Year)" format shown
+5. Only use references that are actually relevant to the statement
+6. If no suitable reference exists in the database, DO NOT invent citations - leave uncited
+7. Preserve the original meaning and flow of the text
+8. Return the modified text with citations inserted
+
+CRITICAL: In citationsUsed, you MUST include the exact refId (the ID after "[ID:" in the database) for each citation you use. This is required to generate the reference list.
 
 Respond in JSON format:
 {
   "citedText": "The complete text with citations inserted where appropriate",
   "citationsUsed": [
     {
-      "refId": "The reference ID from the database",
-      "inText": "Author (Year) format used",
+      "refId": "EXACT reference ID from database (e.g., 'smith2020' - the part after [ID:])",
+      "inText": "Exact Author (Year) format used in the text",
       "context": "Brief note on why this citation was placed here"
     }
   ],
@@ -288,17 +303,107 @@ Respond in JSON format:
 
       const result = JSON.parse(content);
       
-      const usedRefIds = new Set(result.citationsUsed?.map((c: any) => c.refId) || []);
-      const usedReferences = refDatabase
-        .filter(r => usedRefIds.has(r.id))
-        .map(r => ({
-          id: r.id,
-          inText: r.inText,
-          fullReference: r.fullRef,
-          authors: r.authors,
-          year: r.year,
-          title: r.title
-        }));
+      const usedRefIds = (result.citationsUsed?.map((c: any) => c.refId?.toLowerCase().trim()) || []).filter(Boolean);
+      console.log(`AI returned refIds: ${JSON.stringify(usedRefIds)}`);
+      
+      let usedReferences: {id: string; inText: string; fullReference: string; authors: string; year: string; title: string}[] = [];
+      
+      for (const usedId of usedRefIds) {
+        if (idMapping.has(usedId)) {
+          const r = idMapping.get(usedId)!;
+          console.log(`Matched ${usedId}: authors="${r.authors}", fullRef="${r.fullRef.substring(0, 100)}..."`);
+          usedReferences.push({
+            id: r.id,
+            inText: r.inText,
+            fullReference: r.fullRef,
+            authors: r.authors,
+            year: r.year,
+            title: r.title
+          });
+        } else {
+          console.log(`No direct match for ${usedId}, trying fuzzy match...`);
+          const matchedRef = refDatabase.find(r => {
+            const simpleId = getSimpleId(r.id).toLowerCase();
+            return simpleId === usedId || 
+                   simpleId.includes(usedId) || 
+                   usedId.includes(simpleId) ||
+                   r.id.toLowerCase().includes(usedId);
+          });
+          if (matchedRef && !usedReferences.find(u => u.id === matchedRef.id)) {
+            usedReferences.push({
+              id: matchedRef.id,
+              inText: matchedRef.inText,
+              fullReference: matchedRef.fullRef,
+              authors: matchedRef.authors,
+              year: matchedRef.year,
+              title: matchedRef.title
+            });
+          }
+        }
+      }
+
+      console.log(`First pass: found ${usedReferences.length} refs by ID mapping`);
+
+      if (usedReferences.length < (result.citationsUsed?.length || 0)) {
+        for (const citation of result.citationsUsed || []) {
+          const inTextLower = (citation.inText || '').toLowerCase().replace(/[()]/g, '');
+          const authorPart = inTextLower.split(',')[0].trim().split(' ')[0];
+          const yearPart = inTextLower.match(/\d{4}/)?.[0] || '';
+          
+          if (!authorPart || !yearPart) continue;
+          if (usedReferences.find(u => u.inText.toLowerCase().includes(authorPart) && u.year === yearPart)) continue;
+          
+          const matchingRef = refDatabase.find(r => {
+            const refAuthor = r.authors.split(',')[0].toLowerCase();
+            return refAuthor.includes(authorPart) && r.year === yearPart;
+          });
+          
+          if (matchingRef && !usedReferences.find(u => u.id === matchingRef.id)) {
+            usedReferences.push({
+              id: matchingRef.id,
+              inText: matchingRef.inText,
+              fullReference: matchingRef.fullRef,
+              authors: matchingRef.authors,
+              year: matchingRef.year,
+              title: matchingRef.title
+            });
+          }
+        }
+        console.log(`Second pass: found ${usedReferences.length} refs by author-year match`);
+      }
+
+      if (usedReferences.length === 0 && result.citedText) {
+        const citationMatches = result.citedText.match(/\(([^)]+,\s*\d{4}[^)]*)\)/g) || [];
+        for (const match of citationMatches) {
+          const inner = match.replace(/[()]/g, '');
+          const parts = inner.split(';').map((p: string) => p.trim());
+          for (const part of parts) {
+            const authorPart = part.split(',')[0].trim().toLowerCase();
+            const yearMatch = part.match(/\d{4}/)?.[0] || '';
+            if (authorPart && yearMatch) {
+              const matchingRef = refDatabase.find(r => {
+                const refAuthor = r.authors.split(',')[0].toLowerCase();
+                return refAuthor.includes(authorPart) && r.year === yearMatch;
+              });
+              if (matchingRef && !usedReferences.find(u => u.id === matchingRef.id)) {
+                usedReferences.push({
+                  id: matchingRef.id,
+                  inText: matchingRef.inText,
+                  fullReference: matchingRef.fullRef,
+                  authors: matchingRef.authors,
+                  year: matchingRef.year,
+                  title: matchingRef.title
+                });
+              }
+            }
+          }
+        }
+        console.log(`Third pass: found ${usedReferences.length} refs by parsing cited text`);
+      }
+
+      usedReferences = usedReferences.filter(r => r.authors && r.authors.trim() !== '');
+
+      console.log(`Auto-cite complete: ${result.citationsUsed?.length || 0} citations, ${usedReferences.length} valid references matched`);
 
       res.json({
         originalText: text,

@@ -60,14 +60,44 @@ function cleanBraces(text: string): string {
   return text.replace(/[{}]/g, '').trim();
 }
 
-function getFieldValue(entry: any, fieldName: string): string {
+function formatCreatorName(creator: any): string {
+  if (!creator || typeof creator !== 'object') return '';
+  
+  if (creator.name) return creator.name;
+  
+  const parts: string[] = [];
+  if (creator.firstName) parts.push(creator.firstName);
+  if (creator.prefix) parts.push(creator.prefix);
+  if (creator.lastName) parts.push(creator.lastName);
+  
+  if (parts.length > 0) return parts.join(' ');
+  
+  return '';
+}
+
+function getFieldValue(entry: any, fieldName: string, debug = false): string {
   const field = entry.fields?.[fieldName];
   if (!field) return '';
+  
   if (Array.isArray(field)) {
-    return field.map(f => typeof f === 'object' ? f.value || '' : f).join(' ');
+    if (fieldName === 'author') {
+      const names = field.map(f => formatCreatorName(f)).filter(Boolean);
+      return names.join(' and ');
+    }
+    
+    return field.map(f => {
+      if (typeof f === 'string') return f;
+      if (typeof f === 'object') {
+        return f.value || f.text || f.literal || '';
+      }
+      return String(f);
+    }).join(' ');
   }
-  if (typeof field === 'object') {
-    return field.value || '';
+  if (typeof field === 'object' && field !== null) {
+    if (fieldName === 'author') {
+      return formatCreatorName(field);
+    }
+    return field.value || field.text || field.literal || '';
   }
   return String(field);
 }
@@ -129,6 +159,22 @@ function buildSource(entry: any): string {
   return source;
 }
 
+function getCreators(entry: any): string {
+  if (entry.creators) {
+    const authors = entry.creators
+      .filter((c: any) => c.creatorType === 'author' || !c.creatorType)
+      .map((c: any) => {
+        if (c.name) return c.name;
+        if (c.lastName && c.firstName) return `${c.firstName} ${c.lastName}`;
+        if (c.lastName) return c.lastName;
+        return '';
+      })
+      .filter(Boolean);
+    if (authors.length > 0) return authors.join(' and ');
+  }
+  return '';
+}
+
 export function parseBibTeX(bibtexContent: string): ParsedReference[] {
   try {
     const parsed = BibTeXParser.parse(bibtexContent);
@@ -136,7 +182,12 @@ export function parseBibTeX(bibtexContent: string): ParsedReference[] {
     const references: ParsedReference[] = [];
     
     for (const entry of parsed.entries) {
-      const authors = cleanBraces(getFieldValue(entry, 'author'));
+      let authors = cleanBraces(getFieldValue(entry, 'author'));
+      
+      if (!authors) {
+        authors = getCreators(entry);
+      }
+      
       const title = cleanBraces(getFieldValue(entry, 'title'));
       const year = getFieldValue(entry, 'year') || '';
       
@@ -213,17 +264,19 @@ export function formatReferenceAPA(ref: ParsedReference): string {
 export function formatInTextCitation(ref: ParsedReference, includeYear: boolean = true): string {
   if (!ref.authors) return '';
   
-  const firstAuthor = ref.authors.split(',')[0].trim();
-  const authorCount = ref.authors.split('&').length + (ref.authors.includes(',') ? ref.authors.split(',').length - 1 : 0);
+  const authorStr = ref.authors;
+  
+  const authorParts = authorStr.split(/,\s*&\s*|\s*&\s*/).map(a => a.split(',')[0].trim()).filter(Boolean);
   
   let citation = '';
-  if (authorCount === 1) {
-    citation = firstAuthor;
-  } else if (authorCount === 2) {
-    const parts = ref.authors.split('&');
-    citation = `${parts[0].split(',')[0].trim()} & ${parts[1].split(',')[0].trim()}`;
+  if (authorParts.length === 0) {
+    citation = authorStr.split(',')[0].trim() || authorStr;
+  } else if (authorParts.length === 1) {
+    citation = authorParts[0];
+  } else if (authorParts.length === 2) {
+    citation = `${authorParts[0]} & ${authorParts[1]}`;
   } else {
-    citation = `${firstAuthor} et al.`;
+    citation = `${authorParts[0]} et al.`;
   }
   
   if (includeYear && ref.year) {

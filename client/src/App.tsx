@@ -8,6 +8,8 @@ import NotFound from "@/pages/not-found";
 import ProjectHub from "@/pages/ProjectHub";
 import Home from "@/pages/Home";
 import QuasiQualitative from "@/pages/QuasiQualitative";
+import Portfolio from "@/pages/Portfolio";
+import IntegratedEssay from "@/pages/IntegratedEssay";
 
 function Router() {
   return (
@@ -15,6 +17,8 @@ function Router() {
       <Route path="/" component={ProjectHub} />
       <Route path="/edd-inquiry" component={Home} />
       <Route path="/quasi-qualitative" component={QuasiQualitative} />
+      <Route path="/portfolio" component={Portfolio} />
+      <Route path="/integrated-essay" component={IntegratedEssay} />
       <Route component={NotFound} />
     </Switch>
   );

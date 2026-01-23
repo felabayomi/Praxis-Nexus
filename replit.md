@@ -23,6 +23,16 @@ Praxis Nexus is an academic research hub web application presenting multiple res
    - Landing Page → Access Code → Two Views (Reasoning / Paper)
    - **Reasoning View**: Research Question + 7 accordion sections + Tools (font size, audio, presentation, search)
    - **Paper View**: AI Dissertation Generator with chapter-by-chapter generation
+4. **Doctoral Portfolio (/portfolio)** - Blue/navy theme, serif typography
+   - Landing Page → Access Code (PORTFOLIO2026) → Three Strands
+   - **Knowledge Strand**: Paradigm Paper, Theoretical Framework, Literature Review, Research Design
+   - **Practice Strand**: Concept Papers, HWICRM Prototype Design Plan
+   - **Self-in-Context Strand**: Professional Reflection, Leadership Philosophy, Ecological Ethics
+   - Expandable artifacts with reflections, Appendix section
+5. **Integrated Essay (/integrated-essay)** - Teal/emerald theme, elegant typography
+   - Landing Page → Access Code (ESSAY2026) → AI Essay Generator
+   - 8 sections: Introduction, Knowledge Strand, Practice Strand, Self-in-Context, Strand Synthesis, Dissertation Connection, Growth Trajectory, Conclusion
+   - Section-by-section or bulk generation with citation matching
 
 ## Project Architecture
 

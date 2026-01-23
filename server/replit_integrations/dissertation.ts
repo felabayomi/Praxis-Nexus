@@ -274,4 +274,73 @@ Keep responses scholarly yet accessible.`;
       res.status(500).json({ error: "Failed to generate insight" });
     }
   });
+
+  app.post("/api/essay/generate-section", async (req: Request, res: Response) => {
+    try {
+      const { sectionId, sectionTitle, sectionDescription, promptGuidance, dissertationTitle, references } = req.body;
+
+      if (!sectionId || !sectionTitle) {
+        return res.status(400).json({ error: "Section ID and title are required" });
+      }
+
+      const refList = (references || []) as Reference[];
+      const refListWithAuthorYear = refList.map(ref => ({
+        ...ref,
+        authorYear: extractAuthorYear(ref.citation)
+      }));
+      
+      const availableCitations = refListWithAuthorYear
+        .filter(r => r.authorYear)
+        .map(r => `- ${r.authorYear}: "${r.citation.substring(0, 80)}..."`)
+        .join('\n');
+
+      const systemPrompt = `You are an expert academic writing assistant helping an EdD candidate write their Integrated Essay - a 10-15 page synthesis that connects doctoral learning across Knowledge, Practice, and Self-in-Context strands.
+
+The dissertation focus is: "${dissertationTitle}"
+
+CRITICAL CITATION REQUIREMENT:
+You MUST include in-text citations throughout the text using ONLY the sources listed below. This is mandatory. Format each citation as (Author, Year) in APA 7th edition style.
+
+AVAILABLE SOURCES TO CITE:
+${availableCitations}
+
+WRITING GUIDELINES:
+- Write in formal academic English with first-person scholarly voice
+- Follow APA 7th edition formatting
+- Be reflective yet rigorous
+- Connect personal growth to theoretical frameworks
+- INCLUDE CITATIONS from the list above where appropriate
+- Write 2-4 substantive paragraphs for this section
+
+SECTION: ${sectionTitle}
+PURPOSE: ${sectionDescription}
+GUIDANCE: ${promptGuidance}`;
+
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { 
+            role: "user", 
+            content: `Write the "${sectionTitle}" section of the Integrated Essay. Follow the guidance provided and include appropriate citations.` 
+          }
+        ],
+        max_tokens: 1500,
+        temperature: 0.7,
+      });
+
+      const content = response.choices[0]?.message?.content || "";
+      const usedCitationIds = findUsedCitations(content, refListWithAuthorYear);
+      
+      res.json({ 
+        content, 
+        sectionId, 
+        sectionTitle,
+        usedCitationIds 
+      });
+    } catch (error) {
+      console.error("Error generating essay section:", error);
+      res.status(500).json({ error: "Failed to generate essay section" });
+    }
+  });
 }

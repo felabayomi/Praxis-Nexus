@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Leaf, BookOpen, FlaskConical, ArrowRight } from "lucide-react";
+import { Leaf, BookOpen, FlaskConical, ArrowRight, FolderOpen, PenTool } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -36,6 +36,26 @@ const projects: ProjectCard[] = [
     route: "/quasi-qualitative",
     status: "active",
     color: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
+  },
+  {
+    id: "portfolio",
+    title: "Doctoral Portfolio",
+    subtitle: "Capstone Demonstration of Doctoral Learning",
+    description: "A comprehensive collection of artifacts and reflections documenting mastery across Knowledge, Practice, and Self-in-Context strands.",
+    icon: <FolderOpen className="h-6 w-6" />,
+    route: "/portfolio",
+    status: "active",
+    color: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+  },
+  {
+    id: "integrated-essay",
+    title: "Integrated Essay",
+    subtitle: "Synthesis of Doctoral Learning Across Three Strands",
+    description: "A 10-15 page synthesis essay connecting learning across Knowledge, Practice, and Self-in-Context to demonstrate dissertation readiness.",
+    icon: <PenTool className="h-6 w-6" />,
+    route: "/integrated-essay",
+    status: "active",
+    color: "bg-teal-500/10 text-teal-600 dark:text-teal-400",
   },
 ];
 
@@ -90,13 +110,16 @@ export default function ProjectHub() {
                           Coming Soon
                         </Badge>
                       )}
-                      {project.status === "active" && project.id === "edd-inquiry" && (
-                        <Badge variant="default" className="text-xs bg-emerald-600">
-                          Active
-                        </Badge>
-                      )}
-                      {project.status === "active" && project.id === "quasi-qualitative" && (
-                        <Badge variant="default" className="text-xs bg-violet-600">
+                      {project.status === "active" && (
+                        <Badge 
+                          variant="default" 
+                          className={`text-xs ${
+                            project.id === "edd-inquiry" ? "bg-emerald-600" :
+                            project.id === "quasi-qualitative" ? "bg-violet-600" :
+                            project.id === "portfolio" ? "bg-blue-600" :
+                            project.id === "integrated-essay" ? "bg-teal-600" : "bg-primary"
+                          }`}
+                        >
                           Active
                         </Badge>
                       )}

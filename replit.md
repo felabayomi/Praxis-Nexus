@@ -153,6 +153,16 @@ To add a new project:
 ## Adding New Months (EdD Inquiry)
 To add new months, update the `journalData` object in `client/src/lib/journalData.ts` and `server/storage.ts` with new month entries following the existing structure.
 
+## Master Reference List
+The Quasi-Qualitative project uses a master reference list (26 sources) for AI-powered citation matching. Located in `client/src/lib/quasiData.ts`, the AI draws from these sources when generating dissertation chapters. Sources cover:
+- Human-wildlife conflict research (Abrahms et al., Mekonen, Pooley et al., Redpath et al.)
+- Conservation and biodiversity (Arts et al., Knight et al., Stephenson et al.)
+- Theoretical frameworks (Bronfenbrenner, Naess, Leopold, Callicott)
+- Ecofeminism (Gaard, Plumwood, Warren)
+- Indigenous knowledge (Domínguez & Luoma, Tom et al.)
+- AI and technology ethics (Gregg et al., Haleem et al., Stilgoe et al.)
+- Research methodology (Grant & Osanloo, Vom Brocke et al.)
+
 ## Adding References
 When adding new references to `journalData.ts`, include the `type` field:
 ```typescript

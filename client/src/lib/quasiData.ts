@@ -304,13 +304,127 @@ export const quasiData = {
   references: [
     {
       id: "ref-1",
-      citation: "MeanThat. (2017). 5.3 Unstructured, semi-structured and structured interviews [Video]. YouTube.",
-      url: "https://youtu.be/gzwGEBJGz8s"
+      citation: "Abrahms, B., Carter, N. H., Clark-Wolf, T., Gaynor, K. M., Johansson, E., McInturff, A., Nisi, A. C., Rafiq, K., & West, L. (2023). Climate change as a global amplifier of human–wildlife conflict. Nature Climate Change, 13(3), 224–234.",
+      url: "https://doi.org/10.1038/s41558-023-01608-5"
     },
     {
       id: "ref-2",
-      citation: "PHILO-notes. (2022). What is pragmatism? [Video]. YouTube.",
-      url: "https://youtu.be/DlizC_dU7fQ?si=OQRd7wi0TgtngkoU"
+      citation: "Adomssent, M., Godemann, J., & Michelsen, G. (2007). Transferability of approaches to sustainable development at universities as a challenge. International Journal of Sustainability in Higher Education, 8(4), 385–402.",
+      url: "https://doi.org/10.1108/14676370710823517"
+    },
+    {
+      id: "ref-3",
+      citation: "Ansell, C., & Gash, A. (2007). Collaborative governance in theory and practice. Journal of Public Administration Research and Theory, 18(4), 543–571.",
+      url: "https://doi.org/10.1093/jopart/mum032"
+    },
+    {
+      id: "ref-4",
+      citation: "Arts, K., van der Wal, R., & Adams, W. M. (2015). Digital technology and the conservation of nature. Ambio, 44(Suppl 4), 661–673.",
+      url: "https://doi.org/10.1007/s13280-015-0705-1"
+    },
+    {
+      id: "ref-5",
+      citation: "Baxter, G., & Sommerville, I. (2011). Socio-technical systems: From design methods to systems engineering. Interacting with Computers, 23(1), 4–17.",
+      url: "https://doi.org/10.1016/j.intcom.2010.07.003"
+    },
+    {
+      id: "ref-6",
+      citation: "Biasetti, P., & Barbara, D. M. (2021). The ethical matrix as a tool for decision-making in conservation. Frontiers in Environmental Science, 9, 584636.",
+      url: "https://doi.org/10.3389/fenvs.2021.584636"
+    },
+    {
+      id: "ref-7",
+      citation: "Bronfenbrenner, U. (1979). The ecology of human development: Experiments by nature and design. Harvard University Press."
+    },
+    {
+      id: "ref-8",
+      citation: "Callicott, J. B. (1989). In defense of the land ethic: Essays in environmental philosophy. State University of New York Press."
+    },
+    {
+      id: "ref-9",
+      citation: "Domínguez, L., & Luoma, C. (2020). Decolonizing conservation policy: Indigenous knowledge and biodiversity justice. Environmental Science & Policy, 112, 25–32.",
+      url: "https://doi.org/10.1016/j.envsci.2020.06.015"
+    },
+    {
+      id: "ref-10",
+      citation: "Gaard, G. (2011). Ecofeminism revisited: Rejecting essentialism and re-placing species in a material feminist environmentalism. Feminist Formations, 23(2), 26–53.",
+      url: "https://doi.org/10.1353/ff.2011.0017"
+    },
+    {
+      id: "ref-11",
+      citation: "Grant, C., & Osanloo, A. (2014). Understanding, selecting, and integrating a theoretical framework in dissertation research. Administrative Issues Journal, 4(2), 12–26.",
+      url: "https://doi.org/10.5929/2014.4.2.9"
+    },
+    {
+      id: "ref-12",
+      citation: "Gregg, E. A., Steinberg, D., & Elzinga, C. (2022). Harnessing AI for conservation: Principles, practice, and priorities. Biodiversity and Conservation, 31, 2875–2892.",
+      url: "https://doi.org/10.1007/s10531-022-02461-w"
+    },
+    {
+      id: "ref-13",
+      citation: "Haleem, A., Javaid, M., & Vaishya, R. (2022). Ethical AI in sustainable environmental technologies. Journal of Cleaner Production, 330, 129849.",
+      url: "https://doi.org/10.1016/j.jclepro.2021.129849"
+    },
+    {
+      id: "ref-14",
+      citation: "Knight, A. T., Cowling, R. M., & Campbell, B. M. (2019). An operational model for implementing conservation action. Conservation Biology, 20(2), 408–419.",
+      url: "https://doi.org/10.1111/j.1523-1739.2006.00305.x"
+    },
+    {
+      id: "ref-15",
+      citation: "Leopold, A. (1949). A sand county almanac. Oxford University Press."
+    },
+    {
+      id: "ref-16",
+      citation: "Mekonen, S. (2020). Coexistence between human and wildlife: The nature, causes and mitigations of human-wildlife conflict around Bale Mountains National Park, Southeast Ethiopia. BMC Ecology, 20, 19.",
+      url: "https://doi.org/10.1186/s12898-020-00280-8"
+    },
+    {
+      id: "ref-17",
+      citation: "Naess, A., & Rothenberg, D. (1989). Ecology, community and lifestyle: Outline of an ecosophy. Cambridge University Press."
+    },
+    {
+      id: "ref-18",
+      citation: "Plumwood, V. (1993). Feminism and the mastery of nature. Routledge."
+    },
+    {
+      id: "ref-19",
+      citation: "Pooley, S., Barua, M., Beinart, W., Dickman, A., Holmes, G., Lorimer, J., & Marvin, G. (2021). An interdisciplinary review of current research and future directions in human–wildlife conflict. Conservation Biology, 35(3), 803–813.",
+      url: "https://doi.org/10.1111/cobi.13660"
+    },
+    {
+      id: "ref-20",
+      citation: "Redpath, S. M., Young, J., Evely, A., Adams, W. M., Sutherland, W. J., Whitehouse, A., ... & Gutiérrez, R. J. (2013). Understanding and managing conservation conflicts. Trends in Ecology & Evolution, 28(2), 100–109.",
+      url: "https://doi.org/10.1016/j.tree.2012.08.021"
+    },
+    {
+      id: "ref-21",
+      citation: "Samuelsson, M. (2022). Rethinking environmental education: Critical pedagogy and sustainability. Journal of Environmental Studies and Sciences, 12, 79–89.",
+      url: "https://doi.org/10.1007/s13412-021-00706-9"
+    },
+    {
+      id: "ref-22",
+      citation: "Stephenson, P. J., Brooks, T. M., Butchart, S. H. M., Cox, N. A., Hoffmann, M., Lamoreux, J. F., ... & Rodrigues, A. S. L. (2020). Priorities for the conservation of mammalian biodiversity. Oryx, 54(4), 593–605.",
+      url: "https://doi.org/10.1017/S0030605319000671"
+    },
+    {
+      id: "ref-23",
+      citation: "Stilgoe, J., Owen, R., & Macnaghten, P. (2013). Developing a framework for responsible innovation. Research Policy, 42(9), 1568–1580.",
+      url: "https://doi.org/10.1016/j.respol.2013.05.008"
+    },
+    {
+      id: "ref-24",
+      citation: "Tom, L., Bennett, N. J., & Mahajan, S. L. (2019). Indigenous knowledge and governance in conservation: Charting a path forward. Ecological Applications, 29(4), e01886.",
+      url: "https://doi.org/10.1002/eap.1886"
+    },
+    {
+      id: "ref-25",
+      citation: "Vom Brocke, J., Hevner, A. R., & Maedche, A. (2020). Design science research and analytics: The interplay. Journal of Business Analytics, 3(2), 81–91.",
+      url: "https://doi.org/10.1080/2573234X.2020.1760548"
+    },
+    {
+      id: "ref-26",
+      citation: "Warren, K. J. (2000). Ecofeminist philosophy: A western perspective on what it is and why it matters. Rowman & Littlefield."
     }
   ] as QuasiReference[]
 };

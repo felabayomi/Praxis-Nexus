@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { CitationAssistant } from "@/components/CitationAssistant";
 
 interface ProjectCard {
   id: string;
@@ -85,6 +86,7 @@ export default function ProjectHub() {
           </span>
         </div>
         <div className="flex items-center gap-2">
+          <CitationAssistant />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm" className="gap-2" data-testid="button-quick-jump">

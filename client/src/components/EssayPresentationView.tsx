@@ -18,11 +18,11 @@ interface EssayPresentationViewProps {
 }
 
 const TEMPLATES = [
-  { id: "teal", name: "Teal Scholarly", bg: "from-teal-900 via-emerald-800 to-slate-900", text: "text-white" },
-  { id: "academic", name: "Academic Navy", bg: "from-blue-900 via-blue-800 to-slate-900", text: "text-white" },
-  { id: "forest", name: "Forest Scholar", bg: "from-emerald-900 via-teal-800 to-slate-900", text: "text-white" },
-  { id: "minimal", name: "Clean Minimal", bg: "from-slate-100 via-white to-slate-50", text: "text-slate-900" },
-  { id: "sunset", name: "Warm Sunset", bg: "from-orange-900 via-amber-800 to-slate-900", text: "text-white" },
+  { id: "teal", name: "Teal Scholarly", bg: "from-slate-900 via-slate-800 to-teal-900", text: "text-white", accent: "text-teal-300" },
+  { id: "academic", name: "Academic Navy", bg: "from-slate-900 via-blue-900 to-slate-800", text: "text-white", accent: "text-blue-300" },
+  { id: "forest", name: "Forest Scholar", bg: "from-slate-900 via-emerald-900 to-slate-800", text: "text-white", accent: "text-emerald-300" },
+  { id: "minimal", name: "Clean Minimal", bg: "from-slate-100 via-white to-slate-50", text: "text-slate-900", accent: "text-slate-600" },
+  { id: "sunset", name: "Warm Sunset", bg: "from-slate-900 via-amber-900 to-slate-800", text: "text-white", accent: "text-amber-300" },
 ];
 
 interface Slide {
@@ -159,11 +159,15 @@ export function EssayPresentationView({ open, onClose, section }: EssayPresentat
   return (
     <div className="fixed inset-0 z-50 bg-black">
       <div className={`h-full w-full bg-gradient-to-br ${template.bg} ${template.text} flex flex-col`}>
-        <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+        <div className="absolute top-2 sm:top-4 right-2 sm:right-4 flex items-center gap-1 sm:gap-2 z-10">
           <select
             value={template.id}
             onChange={(e) => setTemplate(TEMPLATES.find(t => t.id === e.target.value) || TEMPLATES[0])}
-            className="bg-black/30 backdrop-blur text-white text-sm px-3 py-1.5 rounded border border-white/20"
+            className={`text-xs sm:text-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded border ${
+              template.id === 'minimal' 
+                ? 'bg-white/80 backdrop-blur text-slate-700 border-slate-300' 
+                : 'bg-black/30 backdrop-blur text-white border-white/20'
+            }`}
             data-testid="select-template"
           >
             {TEMPLATES.map(t => (
@@ -174,7 +178,7 @@ export function EssayPresentationView({ open, onClose, section }: EssayPresentat
             variant="ghost"
             size="icon"
             onClick={toggleFullscreen}
-            className="text-white"
+            className={`hidden sm:flex ${template.id === 'minimal' ? 'text-slate-700' : 'text-white'}`}
             data-testid="button-fullscreen"
           >
             <Maximize2 className="h-5 w-5" />
@@ -183,30 +187,30 @@ export function EssayPresentationView({ open, onClose, section }: EssayPresentat
             variant="ghost"
             size="icon"
             onClick={onClose}
-            className="text-white"
+            className={template.id === 'minimal' ? 'text-slate-700' : 'text-white'}
             data-testid="button-close-presentation"
           >
             <X className="h-5 w-5" />
           </Button>
         </div>
 
-        <div className="flex-1 flex items-center justify-center p-8">
-          <Card className="w-full max-w-4xl bg-black/20 backdrop-blur border-white/10 p-8">
-            <div className="space-y-6">
+        <div className="flex-1 flex items-center justify-center p-4 sm:p-8 overflow-y-auto">
+          <Card className="w-full max-w-4xl bg-black/20 backdrop-blur border-white/10 p-4 sm:p-8">
+            <div className="space-y-4 sm:space-y-6">
               <Badge 
                 variant="secondary" 
-                className="bg-white/10 text-white border-white/20"
+                className={`${template.id === 'minimal' ? 'bg-slate-200 text-slate-700 border-slate-300' : 'bg-white/10 text-white border-white/20'}`}
               >
                 {currentSlideData?.type === "title" ? "Title" : 
                  currentSlideData?.type === "synthesis" ? "Synthesis" : 
                  currentSlideData?.type === "references" ? "References" : "Section"}
               </Badge>
               
-              <h1 className="text-4xl font-serif font-bold leading-tight">
+              <h1 className={`text-2xl sm:text-3xl md:text-4xl font-serif font-bold leading-tight ${template.text}`}>
                 {displayTitle}
               </h1>
               
-              <p className="text-xl leading-relaxed opacity-90 whitespace-pre-line">
+              <p className={`text-base sm:text-lg md:text-xl leading-relaxed opacity-90 whitespace-pre-line ${template.text}`}>
                 {currentSlideData?.content}
               </p>
 
@@ -216,7 +220,7 @@ export function EssayPresentationView({ open, onClose, section }: EssayPresentat
                   size="sm"
                   onClick={() => generateAIHeading(currentSlide)}
                   disabled={generatingHeading === currentSlide}
-                  className="bg-white/10 border-white/20 text-white"
+                  className={`${template.id === 'minimal' ? 'bg-slate-100 border-slate-300 text-slate-700' : 'bg-white/10 border-white/20 text-white'}`}
                   data-testid="button-generate-heading"
                 >
                   {generatingHeading === currentSlide ? (
@@ -233,44 +237,50 @@ export function EssayPresentationView({ open, onClose, section }: EssayPresentat
           </Card>
         </div>
 
-        <div className="flex items-center justify-between p-4 border-t border-white/10">
+        <div className={`flex items-center justify-between p-3 sm:p-4 border-t ${template.id === 'minimal' ? 'border-slate-200' : 'border-white/10'}`}>
           <Button
             variant="ghost"
             onClick={prevSlide}
             disabled={currentSlide === 0}
-            className="text-white disabled:opacity-30"
+            className={`${template.id === 'minimal' ? 'text-slate-700 disabled:opacity-30' : 'text-white disabled:opacity-30'}`}
             data-testid="button-prev-slide"
           >
-            <ChevronLeft className="mr-2 h-5 w-5" />
-            Previous
+            <ChevronLeft className="h-5 w-5 sm:mr-2" />
+            <span className="hidden sm:inline">Previous</span>
           </Button>
 
-          <div className="flex items-center gap-2">
-            {slides.map((_, i) => (
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap justify-center max-w-[50%]">
+            {slides.length <= 10 ? slides.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setCurrentSlide(i)}
                 className={`w-2 h-2 rounded-full transition-all ${
-                  i === currentSlide ? 'bg-white w-4' : 'bg-white/40'
+                  i === currentSlide 
+                    ? (template.id === 'minimal' ? 'bg-slate-700 w-4' : 'bg-white w-4')
+                    : (template.id === 'minimal' ? 'bg-slate-400' : 'bg-white/40')
                 }`}
                 data-testid={`button-slide-${i}`}
               />
-            ))}
+            )) : (
+              <span className={`text-sm ${template.id === 'minimal' ? 'text-slate-600' : 'text-white/70'}`}>
+                {currentSlide + 1} / {slides.length}
+              </span>
+            )}
           </div>
 
           <Button
             variant="ghost"
             onClick={nextSlide}
             disabled={currentSlide === slides.length - 1}
-            className="text-white disabled:opacity-30"
+            className={`${template.id === 'minimal' ? 'text-slate-700 disabled:opacity-30' : 'text-white disabled:opacity-30'}`}
             data-testid="button-next-slide"
           >
-            Next
-            <ChevronRight className="ml-2 h-5 w-5" />
+            <span className="hidden sm:inline">Next</span>
+            <ChevronRight className="h-5 w-5 sm:ml-2" />
           </Button>
         </div>
 
-        <div className="absolute bottom-4 left-4 text-white/50 text-sm">
+        <div className={`absolute bottom-14 sm:bottom-4 left-4 text-sm ${template.id === 'minimal' ? 'text-slate-500' : 'text-white/50'}`}>
           Slide {currentSlide + 1} of {slides.length}
         </div>
       </div>

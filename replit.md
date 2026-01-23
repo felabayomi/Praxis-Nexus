@@ -39,9 +39,18 @@ Praxis Nexus is an academic research hub web application presenting multiple res
    - Search functionality (Ctrl+K) across all content
    - Appendix section with supplementary materials
 5. **Integrated Essay (/integrated-essay)** - Teal/emerald theme, elegant typography
-   - Landing Page → Access Code (ESSAY2026) → AI Essay Generator
-   - 8 sections: Introduction, Knowledge Strand, Practice Strand, Self-in-Context, Strand Synthesis, Dissertation Connection, Growth Trajectory, Conclusion
-   - Section-by-section or bulk generation with citation matching
+   - Landing Page → Access Code (ESSAY2026) → Two Views (Essay / Generator)
+   - **Essay View**: Full pre-written content with expandable sections
+     - 8 sections: Introduction, Knowledge Strand, Practice Strand, Self-in-Context, Strand Synthesis, Dissertation Connection, Growth Trajectory, Conclusion
+     - Reading time estimates per section and overall
+     - Per-section AI Presentation mode with 5 templates
+   - **Generator View**: AI Section Generator
+     - Generate AI-enhanced academic writing for each section
+     - Section-by-section or bulk generation with citation matching
+     - Shows only sources cited in generated content
+   - AI Audio Narration (EssayAIAudio component) using OpenAI TTS
+   - Search functionality (Ctrl+K) across all content
+   - 31 APA 7th edition references
 
 ## Project Architecture
 

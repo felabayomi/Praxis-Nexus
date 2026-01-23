@@ -4,10 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { EssaySearchDialog } from "@/components/EssaySearchDialog";
 import { SimpleTTS } from "@/components/SimpleTTS";
 import { AuthorModal } from "@/components/AuthorModal";
+import { EssayAIAudio } from "@/components/EssayAIAudio";
+import { EssayPresentationView } from "@/components/EssayPresentationView";
 import { 
   ArrowLeft, 
   BookOpen, 
@@ -24,9 +27,11 @@ import {
   Sparkles,
   Loader2,
   Check,
-  PenTool
+  PenTool,
+  Clock,
+  Presentation
 } from "lucide-react";
-import { integratedEssayData } from "@/lib/integratedEssayData";
+import { integratedEssayData, getSectionReadingTime, getTotalReadingTime, type EssaySection } from "@/lib/integratedEssayData";
 import { apiRequest } from "@/lib/queryClient";
 
 const ACCESS_CODE = "ESSAY2026";
@@ -59,6 +64,10 @@ export default function IntegratedEssay() {
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [authorModalOpen, setAuthorModalOpen] = useState(false);
+  const [presentationOpen, setPresentationOpen] = useState(false);
+  const [presentationSection, setPresentationSection] = useState<EssaySection | undefined>(undefined);
+  const [activeView, setActiveView] = useState<"essay" | "generator">("essay");
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
 
   const allUsedCitationIds = Object.values(sections)
     .filter(s => s.isGenerated && s.usedCitationIds)
@@ -119,6 +128,25 @@ export default function IntegratedEssay() {
     setFontSize(newSize);
     localStorage.setItem("essay_font_size", newSize.toString());
   };
+
+  const openSectionPresentation = (section: EssaySection) => {
+    setPresentationSection(section);
+    setPresentationOpen(true);
+  };
+
+  const openFullPresentation = () => {
+    setPresentationSection(undefined);
+    setPresentationOpen(true);
+  };
+
+  const toggleEssaySection = (sectionId: string) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [sectionId]: !prev[sectionId]
+    }));
+  };
+
+  const totalReadingTime = getTotalReadingTime();
 
   const generateSection = async (sectionId: string) => {
     const sectionInfo = integratedEssayData.sections.find(s => s.id === sectionId);
@@ -336,6 +364,9 @@ export default function IntegratedEssay() {
               </Button>
             </div>
             <SimpleTTS getText={getEssayText} />
+            <Button variant="ghost" size="icon" onClick={openFullPresentation} title="Presentation Mode" data-testid="button-presentation">
+              <Presentation className="h-4 w-4" />
+            </Button>
             <Button variant="ghost" size="icon" onClick={() => setSearchOpen(true)} data-testid="button-search">
               <Search className="h-4 w-4" />
             </Button>
@@ -351,7 +382,7 @@ export default function IntegratedEssay() {
       </header>
 
       <main className="container py-8 max-w-4xl" style={{ fontSize: `${fontSize}px` }}>
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-teal-500/10">
               <PenTool className="h-8 w-8 text-teal-600 dark:text-teal-400" />
@@ -360,13 +391,19 @@ export default function IntegratedEssay() {
           <h1 className="text-3xl font-serif font-bold text-teal-900 dark:text-teal-100 mb-2">
             {integratedEssayData.title}
           </h1>
-          <p className="text-lg text-muted-foreground mb-4">{integratedEssayData.subtitle}</p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-lg text-muted-foreground mb-2">{integratedEssayData.subtitle}</p>
+          <p className="text-sm text-muted-foreground mb-2">
             {integratedEssayData.author} • {integratedEssayData.affiliation}
           </p>
+          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+            <Clock className="h-4 w-4" />
+            <span>{totalReadingTime} min read</span>
+          </div>
         </div>
 
-        <Card className="mb-8">
+        <EssayAIAudio getEssayText={getEssayText} className="mb-6" />
+
+        <Card className="mb-6">
           <CardContent className="pt-6">
             <p className="text-muted-foreground leading-relaxed mb-4">{integratedEssayData.overview}</p>
             <div className="bg-teal-50 dark:bg-teal-950/30 rounded-lg p-4 border border-teal-200 dark:border-teal-800">
@@ -376,110 +413,190 @@ export default function IntegratedEssay() {
           </CardContent>
         </Card>
 
-        <Card className="mb-8">
-          <CardHeader>
-            <div className="flex items-center justify-between gap-4 flex-wrap">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500/10 text-teal-600 dark:text-teal-400">
-                  <Sparkles className="h-5 w-5" />
-                </div>
-                <div>
-                  <CardTitle className="font-serif">AI Essay Generator</CardTitle>
-                  <CardDescription>Generate your integrated essay section by section</CardDescription>
-                </div>
-              </div>
-              <Button
-                onClick={generateAllSections}
-                disabled={isGeneratingAll}
-                className="bg-teal-600 hover:bg-teal-700"
-                data-testid="button-generate-all"
-              >
-                {isGeneratingAll ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Generating...
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="mr-2 h-4 w-4" />
-                    Generate All Sections
-                  </>
-                )}
-              </Button>
+        <Tabs value={activeView} onValueChange={(v) => setActiveView(v as "essay" | "generator")} className="mb-6">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="essay" data-testid="tab-essay-view">
+              <FileText className="mr-2 h-4 w-4" />
+              Essay View
+            </TabsTrigger>
+            <TabsTrigger value="generator" data-testid="tab-generator-view">
+              <Sparkles className="mr-2 h-4 w-4" />
+              AI Generator
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="essay" className="mt-6">
+            <div className="space-y-4">
+              {integratedEssayData.sections.map((section, index) => {
+                const isExpanded = expandedSections[section.id] ?? true;
+                const readingTime = getSectionReadingTime(section);
+
+                return (
+                  <Card key={section.id} className="overflow-hidden">
+                    <CardHeader 
+                      className="cursor-pointer hover-elevate py-4"
+                      onClick={() => toggleEssaySection(section.id)}
+                    >
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400 text-sm font-semibold">
+                            {index + 1}
+                          </div>
+                          <div>
+                            <CardTitle className="text-base font-serif">{section.title}</CardTitle>
+                            <CardDescription className="text-sm flex items-center gap-2">
+                              {section.description}
+                              {readingTime > 0 && (
+                                <span className="flex items-center gap-1 text-xs">
+                                  <Clock className="h-3 w-3" />
+                                  {readingTime} min
+                                </span>
+                              )}
+                            </CardDescription>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {section.pageLength && (
+                            <Badge variant="secondary" className="text-xs">{section.pageLength}</Badge>
+                          )}
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={(e) => { e.stopPropagation(); openSectionPresentation(section); }}
+                            title="Present Section"
+                            data-testid={`button-present-${section.id}`}
+                          >
+                            <Presentation className="h-4 w-4" />
+                          </Button>
+                          <Button variant="ghost" size="icon">
+                            {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                          </Button>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    
+                    {isExpanded && section.content && (
+                      <CardContent className="pt-0">
+                        <div className="prose prose-sm dark:prose-invert max-w-none">
+                          {section.content.split('\n\n').map((paragraph, i) => (
+                            <p key={i} className="text-foreground leading-relaxed mb-4">{paragraph}</p>
+                          ))}
+                        </div>
+                      </CardContent>
+                    )}
+                  </Card>
+                );
+              })}
             </div>
-          </CardHeader>
-        </Card>
+          </TabsContent>
 
-        <div className="space-y-4">
-          {integratedEssayData.sections.map((section, index) => {
-            const sectionData = sections[section.id];
-            const isLoading = sectionData?.isLoading;
-            const isGenerated = sectionData?.isGenerated;
-            const isExpanded = sectionData?.isExpanded ?? false;
-
-            return (
-              <Card key={section.id} className={isGenerated ? "border-teal-500/30" : ""}>
-                <CardHeader className="py-4">
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400 text-sm font-semibold">
-                        {index + 1}
-                      </div>
-                      <div>
-                        <CardTitle className="text-base font-serif">{section.title}</CardTitle>
-                        <CardDescription className="text-sm">{section.description}</CardDescription>
-                      </div>
+          <TabsContent value="generator" className="mt-6">
+            <Card className="mb-6">
+              <CardHeader>
+                <div className="flex items-center justify-between gap-4 flex-wrap">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500/10 text-teal-600 dark:text-teal-400">
+                      <Sparkles className="h-5 w-5" />
                     </div>
-                    <div className="flex items-center gap-2">
-                      {isGenerated && (
-                        <Badge variant="secondary" className="bg-teal-500/10 text-teal-600">
-                          <Check className="mr-1 h-3 w-3" />
-                          Generated
-                        </Badge>
-                      )}
-                      {!isGenerated && !isLoading && (
-                        <Button
-                          size="sm"
-                          onClick={() => generateSection(section.id)}
-                          className="bg-teal-600 hover:bg-teal-700"
-                          data-testid={`button-generate-${section.id}`}
-                        >
-                          <Sparkles className="mr-2 h-3 w-3" />
-                          Generate
-                        </Button>
-                      )}
-                      {isLoading && (
-                        <Button size="sm" disabled>
-                          <Loader2 className="mr-2 h-3 w-3 animate-spin" />
-                          Generating...
-                        </Button>
-                      )}
-                      {isGenerated && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => toggleSection(section.id)}
-                        >
-                          {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                        </Button>
-                      )}
+                    <div>
+                      <CardTitle className="font-serif">AI Section Generator</CardTitle>
+                      <CardDescription>Generate AI-enhanced academic writing for each section</CardDescription>
                     </div>
                   </div>
-                </CardHeader>
-                
-                {isGenerated && isExpanded && (
-                  <CardContent className="pt-0">
-                    <div className="prose prose-sm dark:prose-invert max-w-none">
-                      {sectionData.content.split('\n\n').map((paragraph, i) => (
-                        <p key={i} className="text-foreground leading-relaxed mb-4">{paragraph}</p>
-                      ))}
-                    </div>
-                  </CardContent>
-                )}
-              </Card>
-            );
-          })}
-        </div>
+                  <Button
+                    onClick={generateAllSections}
+                    disabled={isGeneratingAll}
+                    className="bg-teal-600"
+                    data-testid="button-generate-all"
+                  >
+                    {isGeneratingAll ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Generating...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="mr-2 h-4 w-4" />
+                        Generate All Sections
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </CardHeader>
+            </Card>
+
+            <div className="space-y-4">
+              {integratedEssayData.sections.map((section, index) => {
+                const sectionData = sections[section.id];
+                const isLoading = sectionData?.isLoading;
+                const isGenerated = sectionData?.isGenerated;
+                const isExpanded = sectionData?.isExpanded ?? false;
+
+                return (
+                  <Card key={section.id} className={`overflow-hidden ${isGenerated ? "border-teal-500/30" : ""}`}>
+                    <CardHeader className="py-4">
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400 text-sm font-semibold">
+                            {index + 1}
+                          </div>
+                          <div>
+                            <CardTitle className="text-base font-serif">{section.title}</CardTitle>
+                            <CardDescription className="text-sm">{section.description}</CardDescription>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {isGenerated && (
+                            <Badge variant="secondary" className="bg-teal-500/10 text-teal-600">
+                              <Check className="mr-1 h-3 w-3" />
+                              Generated
+                            </Badge>
+                          )}
+                          {!isGenerated && !isLoading && (
+                            <Button
+                              size="sm"
+                              onClick={() => generateSection(section.id)}
+                              className="bg-teal-600"
+                              data-testid={`button-generate-${section.id}`}
+                            >
+                              <Sparkles className="mr-2 h-3 w-3" />
+                              Generate
+                            </Button>
+                          )}
+                          {isLoading && (
+                            <Button size="sm" disabled>
+                              <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                              Generating...
+                            </Button>
+                          )}
+                          {isGenerated && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => toggleSection(section.id)}
+                            >
+                              {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </CardHeader>
+                    
+                    {isGenerated && isExpanded && (
+                      <CardContent className="pt-0">
+                        <div className="prose prose-sm dark:prose-invert max-w-none">
+                          {sectionData.content.split('\n\n').map((paragraph, i) => (
+                            <p key={i} className="text-foreground leading-relaxed mb-4">{paragraph}</p>
+                          ))}
+                        </div>
+                      </CardContent>
+                    )}
+                  </Card>
+                );
+              })}
+            </div>
+          </TabsContent>
+        </Tabs>
 
         <Card className="mt-8 mb-10">
           <CardHeader>
@@ -538,6 +655,11 @@ export default function IntegratedEssay() {
 
       <EssaySearchDialog open={searchOpen} onOpenChange={setSearchOpen} generatedSections={sections} />
       <AuthorModal open={authorModalOpen} onOpenChange={setAuthorModalOpen} />
+      <EssayPresentationView 
+        open={presentationOpen} 
+        onClose={() => setPresentationOpen(false)} 
+        section={presentationSection}
+      />
     </div>
   );
 }

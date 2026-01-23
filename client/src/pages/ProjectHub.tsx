@@ -34,7 +34,7 @@ const projects: ProjectCard[] = [
     description: "A structured exploration of research methodology, developing topics and formulating research questions through quasi-qualitative approaches.",
     icon: <FlaskConical className="h-6 w-6" />,
     route: "/quasi-qualitative",
-    status: "coming-soon",
+    status: "active",
     color: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
   },
 ];
@@ -90,8 +90,13 @@ export default function ProjectHub() {
                           Coming Soon
                         </Badge>
                       )}
-                      {project.status === "active" && (
+                      {project.status === "active" && project.id === "edd-inquiry" && (
                         <Badge variant="default" className="text-xs bg-emerald-600">
+                          Active
+                        </Badge>
+                      )}
+                      {project.status === "active" && project.id === "quasi-qualitative" && (
+                        <Badge variant="default" className="text-xs bg-violet-600">
                           Active
                         </Badge>
                       )}

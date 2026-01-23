@@ -1,28 +1,272 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { FlaskConical, ArrowRight, ArrowLeft, Lock, Mail, BookOpen, Sparkles } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { 
+  FlaskConical, ArrowRight, ArrowLeft, Lock, Mail, 
+  BookOpen, Microscope, Users, Database, BarChart, Shield, FileText,
+  ChevronDown, ChevronUp, ExternalLink, HelpCircle
+} from "lucide-react";
+import { quasiData, QuasiSection, QuasiContentBlock } from "@/lib/quasiData";
 
 const ACCESS_CODE = "QUASI2026";
 const REMEMBER_KEY = "praxis-nexus-quasi-remember";
 
+const iconMap: Record<string, React.ReactNode> = {
+  BookOpen: <BookOpen className="h-5 w-5" />,
+  Microscope: <Microscope className="h-5 w-5" />,
+  Users: <Users className="h-5 w-5" />,
+  Database: <Database className="h-5 w-5" />,
+  BarChart: <BarChart className="h-5 w-5" />,
+  Shield: <Shield className="h-5 w-5" />,
+  FileText: <FileText className="h-5 w-5" />,
+};
+
+function ContentBlock({ block }: { block: QuasiContentBlock }) {
+  if (block.type === "question") {
+    return (
+      <div className="mb-6 last:mb-0">
+        <div className="flex items-start gap-3 mb-3">
+          <div className="flex-shrink-0 h-6 w-6 rounded-full bg-violet-500/10 flex items-center justify-center mt-0.5">
+            <HelpCircle className="h-3.5 w-3.5 text-violet-600 dark:text-violet-400" />
+          </div>
+          <p className="font-medium text-foreground">{block.question}</p>
+        </div>
+        <div className="pl-9">
+          <p className="text-muted-foreground leading-relaxed">{block.content}</p>
+        </div>
+      </div>
+    );
+  }
+  
+  if (block.type === "paragraph") {
+    return (
+      <p className="text-muted-foreground leading-relaxed mb-4 last:mb-0">
+        {block.content}
+      </p>
+    );
+  }
+
+  return null;
+}
+
+function SectionCard({ section, isExpanded, onToggle }: { 
+  section: QuasiSection; 
+  isExpanded: boolean;
+  onToggle: () => void;
+}) {
+  const icon = iconMap[section.icon];
+
+  return (
+    <Card 
+      className="overflow-hidden transition-all"
+      data-testid={`section-${section.id}`}
+    >
+      <CardHeader 
+        className="cursor-pointer hover-elevate"
+        onClick={onToggle}
+      >
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/10 text-violet-600 dark:text-violet-400">
+              {icon}
+            </div>
+            <CardTitle className="font-sans text-lg">{section.title}</CardTitle>
+          </div>
+          <Button variant="ghost" size="icon" className="shrink-0">
+            {isExpanded ? (
+              <ChevronUp className="h-5 w-5" />
+            ) : (
+              <ChevronDown className="h-5 w-5" />
+            )}
+          </Button>
+        </div>
+      </CardHeader>
+      {isExpanded && (
+        <CardContent className="pt-0">
+          <Separator className="mb-6" />
+          {section.content.map((block) => (
+            <ContentBlock key={block.id} block={block} />
+          ))}
+        </CardContent>
+      )}
+    </Card>
+  );
+}
+
+function QuasiContent() {
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(["theoretical-framework"]));
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const toggleSection = (sectionId: string) => {
+    setExpandedSections(prev => {
+      const next = new Set(prev);
+      if (next.has(sectionId)) {
+        next.delete(sectionId);
+      } else {
+        next.add(sectionId);
+      }
+      return next;
+    });
+  };
+
+  const expandAll = () => {
+    setExpandedSections(new Set(quasiData.sections.map(s => s.id)));
+  };
+
+  const collapseAll = () => {
+    setExpandedSections(new Set());
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-violet-50 via-background to-fuchsia-50 dark:from-violet-950/20 dark:via-background dark:to-fuchsia-950/20">
+      <header className="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-6 h-14 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="flex items-center gap-4">
+          <Link href="/">
+            <Button variant="ghost" size="sm" className="gap-2" data-testid="button-back-hub">
+              <ArrowLeft className="h-4 w-4" />
+              <span className="hidden sm:inline">Back to Hub</span>
+            </Button>
+          </Link>
+          <div className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-violet-500/10">
+              <FlaskConical className="h-4 w-4 text-violet-600 dark:text-violet-400" />
+            </div>
+            <span className="font-sans text-sm font-semibold hidden sm:inline" data-testid="text-project-name">
+              Quasi-Qualitative
+            </span>
+          </div>
+        </div>
+        <ThemeToggle />
+      </header>
+
+      <ScrollArea className="flex-1">
+        <div ref={contentRef} className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+          <header className="text-center mb-10">
+            <Badge variant="secondary" className="mb-4 bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-200 dark:border-violet-800">
+              Research Methodology
+            </Badge>
+            <h1 className="font-sans text-3xl sm:text-4xl font-bold text-foreground mb-3">
+              {quasiData.title}
+            </h1>
+            <p className="text-lg text-muted-foreground mb-4">
+              {quasiData.subtitle}
+            </p>
+            <p className="text-sm text-muted-foreground">
+              {quasiData.author} · {quasiData.affiliation}
+            </p>
+          </header>
+
+          <Card className="mb-8 border-violet-200 dark:border-violet-800 bg-violet-50/50 dark:bg-violet-950/20">
+            <CardHeader>
+              <div className="flex items-center gap-3 mb-2">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/20 text-violet-600 dark:text-violet-400">
+                  <HelpCircle className="h-5 w-5" />
+                </div>
+                <CardTitle className="font-sans text-lg">Guiding Research Question</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-foreground font-medium leading-relaxed mb-4 text-lg">
+                {quasiData.researchQuestion.main}
+              </p>
+              <Separator className="my-4" />
+              <p className="text-muted-foreground leading-relaxed">
+                {quasiData.researchQuestion.overview}
+              </p>
+            </CardContent>
+          </Card>
+
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="font-sans text-xl font-semibold text-foreground">
+              Study Components
+            </h2>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" onClick={expandAll} data-testid="button-expand-all">
+                Expand All
+              </Button>
+              <Button variant="outline" size="sm" onClick={collapseAll} data-testid="button-collapse-all">
+                Collapse All
+              </Button>
+            </div>
+          </div>
+
+          <div className="space-y-4 mb-10">
+            {quasiData.sections.map((section) => (
+              <SectionCard
+                key={section.id}
+                section={section}
+                isExpanded={expandedSections.has(section.id)}
+                onToggle={() => toggleSection(section.id)}
+              />
+            ))}
+          </div>
+
+          <Card className="mb-10">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/10 text-violet-600 dark:text-violet-400">
+                  <BookOpen className="h-5 w-5" />
+                </div>
+                <CardTitle className="font-sans text-lg">References</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {quasiData.references.map((ref) => (
+                  <div key={ref.id} className="flex items-start gap-3">
+                    <p className="text-muted-foreground leading-relaxed flex-1">
+                      {ref.citation}
+                      {ref.url && (
+                        <a 
+                          href={ref.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 ml-2 text-violet-600 dark:text-violet-400 hover:underline"
+                        >
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      )}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <footer className="text-center py-8 border-t border-border/50">
+            <p className="text-xs text-muted-foreground">
+              © Felix Abayomi 2026
+            </p>
+          </footer>
+        </div>
+      </ScrollArea>
+    </div>
+  );
+}
+
 export default function QuasiQualitative() {
-  const [showAccessScreen, setShowAccessScreen] = useState(false);
   const [hasAccess, setHasAccess] = useState(false);
+  const [showAccessScreen, setShowAccessScreen] = useState(false);
   const [accessCode, setAccessCode] = useState("");
   const [error, setError] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  const isRemembered = typeof window !== 'undefined' && localStorage.getItem(REMEMBER_KEY) === "true";
+  useEffect(() => {
+    if (typeof window !== 'undefined' && localStorage.getItem(REMEMBER_KEY) === "true") {
+      setHasAccess(true);
+    }
+  }, []);
 
   const handleEnterClick = () => {
-    if (isRemembered) {
+    if (typeof window !== 'undefined' && localStorage.getItem(REMEMBER_KEY) === "true") {
       setHasAccess(true);
       return;
     }
@@ -58,92 +302,7 @@ export default function QuasiQualitative() {
   };
 
   if (hasAccess) {
-    return (
-      <div className="min-h-screen flex flex-col bg-gradient-to-br from-violet-50 via-background to-fuchsia-50 dark:from-violet-950/20 dark:via-background dark:to-fuchsia-950/20">
-        <header className="flex items-center justify-between px-4 sm:px-6 h-14 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="flex items-center gap-4">
-            <Link href="/">
-              <Button variant="ghost" size="sm" className="gap-2" data-testid="button-back-hub">
-                <ArrowLeft className="h-4 w-4" />
-                <span className="hidden sm:inline">Back to Hub</span>
-              </Button>
-            </Link>
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-violet-500/10">
-                <FlaskConical className="h-4 w-4 text-violet-600 dark:text-violet-400" />
-              </div>
-              <span className="font-sans text-sm font-semibold" data-testid="text-project-name">
-                Quasi-Qualitative
-              </span>
-            </div>
-          </div>
-          <ThemeToggle />
-        </header>
-
-        <main className="flex-1 flex items-center justify-center px-4 sm:px-6 py-12">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="mb-8">
-              <div className="inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-violet-500/10 mb-6">
-                <Sparkles className="h-10 w-10 text-violet-600 dark:text-violet-400" />
-              </div>
-              <Badge variant="secondary" className="mb-4">
-                Coming Soon
-              </Badge>
-              <h1 className="font-sans text-3xl sm:text-4xl font-bold text-foreground mb-4">
-                Quasi-Qualitative Project
-              </h1>
-              <h2 className="text-xl text-muted-foreground mb-6">
-                Topic and Research Question Development
-              </h2>
-              <p className="text-muted-foreground leading-relaxed">
-                This project space is being prepared. Content will be added soon with a unique layout designed specifically for exploring research methodology and question development.
-              </p>
-            </div>
-
-            <Card className="text-left">
-              <CardHeader>
-                <CardTitle className="font-sans text-lg">What to Expect</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <div className="h-6 w-6 rounded-full bg-violet-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-semibold text-violet-600 dark:text-violet-400">1</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">A completely different visual design from the EdD Inquiry journal</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="h-6 w-6 rounded-full bg-violet-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-semibold text-violet-600 dark:text-violet-400">2</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Structured sections for developing research topics and questions</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="h-6 w-6 rounded-full bg-violet-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-semibold text-violet-600 dark:text-violet-400">3</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Interactive methodology exploration tools</p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="mt-8">
-              <Link href="/">
-                <Button variant="outline" className="gap-2">
-                  <ArrowLeft className="h-4 w-4" />
-                  Return to Project Hub
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </main>
-
-        <footer className="py-6 text-center border-t bg-background/80">
-          <p className="text-xs text-muted-foreground">
-            © Felix Abayomi 2026
-          </p>
-        </footer>
-      </div>
-    );
+    return <QuasiContent />;
   }
 
   return (
@@ -220,9 +379,9 @@ export default function QuasiQualitative() {
                 <Lock className="h-6 w-6 text-violet-600 dark:text-violet-400" />
               </div>
               <CardTitle className="font-sans text-2xl">Access Required</CardTitle>
-              <CardDescription>
+              <p className="text-sm text-muted-foreground mt-2">
                 This project is protected. Enter your access code to continue.
-              </CardDescription>
+              </p>
             </CardHeader>
             <CardContent className="space-y-6">
               <form onSubmit={handleCodeSubmit} className="space-y-4">

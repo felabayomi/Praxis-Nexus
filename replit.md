@@ -7,9 +7,10 @@ Praxis Nexus is an academic research hub web application presenting multiple res
 - Multi-project architecture with main hub landing page
 - Two projects configured:
   1. **EdD Inquiry on AI's Ecological and Economic Entanglements** (Active) - Access code: 150920
-  2. **Quasi-Qualitative Project** (Coming Soon) - Access code: QUASI2026
+  2. **Quasi-Qualitative Project** (Active) - Access code: QUASI2026
 - Each project has its own unique visual design and layout
 - Fully functional academic journal for EdD project with elegant, scholarly design
+- Fully functional quasi-qualitative methodology project with accordion-based layout
 - PWA support for home screen installation
 - Mobile-responsive design
 
@@ -19,7 +20,8 @@ Praxis Nexus is an academic research hub web application presenting multiple res
    - Landing Page → Access Code → Welcome Section → Content
    - Three cards: Overview, Monthly Inquiries, References
 3. **Quasi-Qualitative (/quasi-qualitative)** - Violet/purple theme, sans-serif typography
-   - Landing Page → Access Code → Content (placeholder for now)
+   - Landing Page → Access Code → Content
+   - Research Question card + 7 accordion sections
 
 ## Project Architecture
 
@@ -69,7 +71,12 @@ Praxis Nexus is an academic research hub web application presenting multiple res
 - Sans-serif typography for modern feel
 - FlaskConical icon branding
 - Different gradient backgrounds
-- Unique layout (to be developed with content)
+- Accordion-based expandable sections layout
+- Research Question card prominently displayed
+- Q&A format for each section with question icons
+- Expand All / Collapse All functionality
+- 7 main sections: Theoretical Framework, Research Design, Participants, Data Collection, Data Interpretation, Ethics, Chapter Summary
+- References section with external links
 
 ## Key Features (EdD Inquiry)
 - Collapsible sidebar navigation with reading time estimates

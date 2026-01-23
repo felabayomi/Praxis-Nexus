@@ -105,76 +105,79 @@ export default function SharePage() {
     const currentSlideData = slides[currentSlide];
 
     return (
-      <div className={`min-h-screen bg-gradient-to-br ${style.bg} ${style.text}`}>
-        <div className="absolute top-4 right-4 z-10">
-          <ThemeToggle />
-        </div>
-        
-        <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
+      <div className={`fixed inset-0 h-[100dvh] bg-gradient-to-br ${style.bg} ${style.text} flex flex-col`}>
+        {/* Header */}
+        <div className="flex items-center justify-between p-2 sm:p-4 shrink-0">
           <Badge variant="secondary" className="bg-white/20 text-white border-0">
             <BookOpen className="h-3 w-3 mr-1" />
             {projectNames[shareData.project] || shareData.project}
           </Badge>
+          <ThemeToggle />
         </div>
 
-        <div className="flex flex-col h-screen">
-          <div className="flex-1 flex items-center justify-center p-8">
-            <div className="max-w-4xl w-full">
-              {currentSlideData && (
-                <div className="text-center">
-                  <h1 className="text-3xl md:text-5xl font-bold mb-8 leading-tight">
-                    {currentSlideData.heading || currentSlideData.title}
-                  </h1>
-                  <div 
-                    className="text-lg md:text-xl opacity-90 leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: currentSlideData.content?.replace(/\n/g, '<br/>') || '' }}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="p-6 flex items-center justify-between">
-            <Button
-              variant="ghost"
-              size="lg"
-              onClick={() => setCurrentSlide(Math.max(0, currentSlide - 1))}
-              disabled={currentSlide === 0}
-              className="text-white hover:bg-white/20"
-              data-testid="button-prev-slide"
-            >
-              <ChevronLeft className="h-6 w-6 mr-2" />
-              Previous
-            </Button>
-
-            <div className="flex items-center gap-2">
-              {slides.map((_: any, i: number) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrentSlide(i)}
-                  className={`w-3 h-3 rounded-full transition-all ${
-                    i === currentSlide ? style.accent : 'bg-white/40'
-                  }`}
-                  data-testid={`button-slide-dot-${i}`}
+        {/* Slide Content */}
+        <div className="flex-1 flex items-center justify-center p-4 sm:p-8 overflow-y-auto min-h-0">
+          <div className="max-w-4xl w-full max-h-full">
+            {currentSlideData && (
+              <div className="text-center">
+                <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 sm:mb-8 leading-tight">
+                  {currentSlideData.heading || currentSlideData.title}
+                </h1>
+                <div 
+                  className="text-base sm:text-lg md:text-xl opacity-90 leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: currentSlideData.content?.replace(/\n/g, '<br/>') || '' }}
                 />
-              ))}
-            </div>
-
-            <Button
-              variant="ghost"
-              size="lg"
-              onClick={() => setCurrentSlide(Math.min(slides.length - 1, currentSlide + 1))}
-              disabled={currentSlide === slides.length - 1}
-              className="text-white hover:bg-white/20"
-              data-testid="button-next-slide"
-            >
-              Next
-              <ChevronRight className="h-6 w-6 ml-2" />
-            </Button>
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="absolute bottom-4 left-4 text-sm opacity-60">
+        {/* Footer Navigation */}
+        <div className="p-3 sm:p-6 flex items-center justify-between shrink-0">
+          <Button
+            variant="ghost"
+            size="default"
+            onClick={() => setCurrentSlide(Math.max(0, currentSlide - 1))}
+            disabled={currentSlide === 0}
+            className={`${template === 'clean-scholar' ? 'text-slate-700' : 'text-white'} hover:bg-white/20`}
+            data-testid="button-prev-slide"
+          >
+            <ChevronLeft className="h-5 w-5 sm:mr-2" />
+            <span className="hidden sm:inline">Previous</span>
+          </Button>
+
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap justify-center max-w-[40%]">
+            {slides.length <= 10 ? slides.map((_: any, i: number) => (
+              <button
+                key={i}
+                onClick={() => setCurrentSlide(i)}
+                className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${
+                  i === currentSlide ? style.accent : 'bg-white/40'
+                }`}
+                data-testid={`button-slide-dot-${i}`}
+              />
+            )) : (
+              <span className={`text-sm ${template === 'clean-scholar' ? 'text-slate-600' : 'text-white/70'}`}>
+                {currentSlide + 1} / {slides.length}
+              </span>
+            )}
+          </div>
+
+          <Button
+            variant="ghost"
+            size="default"
+            onClick={() => setCurrentSlide(Math.min(slides.length - 1, currentSlide + 1))}
+            disabled={currentSlide === slides.length - 1}
+            className={`${template === 'clean-scholar' ? 'text-slate-700' : 'text-white'} hover:bg-white/20`}
+            data-testid="button-next-slide"
+          >
+            <span className="hidden sm:inline">Next</span>
+            <ChevronRight className="h-5 w-5 sm:ml-2" />
+          </Button>
+        </div>
+
+        {/* Footer attribution */}
+        <div className={`absolute bottom-16 sm:bottom-4 left-4 text-xs sm:text-sm ${template === 'clean-scholar' ? 'text-slate-500' : 'opacity-60'}`}>
           Shared from Praxis Nexus • {shareData.title}
         </div>
       </div>

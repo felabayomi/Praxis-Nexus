@@ -5,10 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { PortfolioSearchDialog } from "@/components/PortfolioSearchDialog";
 import { SimpleTTS } from "@/components/SimpleTTS";
-import { PortfolioAIAudio } from "@/components/PortfolioAIAudio";
+import { PortfolioAudioPlayer } from "@/components/PortfolioAudioPlayer";
 import { PortfolioPresentationView } from "@/components/PortfolioPresentationView";
 import { AuthorModal } from "@/components/AuthorModal";
 import { 
@@ -330,7 +331,22 @@ export default function Portfolio() {
               </Button>
             </div>
             <SimpleTTS getText={getPortfolioText} />
-            <PortfolioAIAudio getText={getPortfolioText} sectionId="portfolio" />
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="ghost" size="icon" title="AI Audio (CarPlay compatible)" data-testid="button-ai-audio">
+                  <Headphones className="h-4 w-4" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle className="font-serif">AI Audio Narration</DialogTitle>
+                  <DialogDescription>
+                    Generate AI-narrated audio for this portfolio content.
+                  </DialogDescription>
+                </DialogHeader>
+                <PortfolioAudioPlayer sectionId="portfolio" />
+              </DialogContent>
+            </Dialog>
             <Button variant="ghost" size="icon" onClick={() => { setPresentationStrand(undefined); setPresentationOpen(true); }} title="Presentation Mode" data-testid="button-presentation">
               <Presentation className="h-4 w-4" />
             </Button>

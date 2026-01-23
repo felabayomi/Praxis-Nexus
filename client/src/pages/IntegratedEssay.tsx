@@ -5,11 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { EssaySearchDialog } from "@/components/EssaySearchDialog";
 import { SimpleTTS } from "@/components/SimpleTTS";
 import { AuthorModal } from "@/components/AuthorModal";
-import { EssayAIAudio } from "@/components/EssayAIAudio";
+import { EssayAudioPlayer } from "@/components/EssayAudioPlayer";
 import { EssayPresentationView } from "@/components/EssayPresentationView";
 import { 
   ArrowLeft, 
@@ -29,7 +30,8 @@ import {
   Check,
   PenTool,
   Clock,
-  Presentation
+  Presentation,
+  Headphones
 } from "lucide-react";
 import { integratedEssayData, getSectionReadingTime, getTotalReadingTime, type EssaySection } from "@/lib/integratedEssayData";
 import { apiRequest } from "@/lib/queryClient";
@@ -364,6 +366,22 @@ export default function IntegratedEssay() {
               </Button>
             </div>
             <SimpleTTS getText={getEssayText} />
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="ghost" size="icon" title="AI Audio (CarPlay compatible)" data-testid="button-ai-audio">
+                  <Headphones className="h-4 w-4" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle className="font-serif">AI Audio Narration</DialogTitle>
+                  <DialogDescription>
+                    Generate AI-narrated audio for this essay content.
+                  </DialogDescription>
+                </DialogHeader>
+                <EssayAudioPlayer sectionId="essay" />
+              </DialogContent>
+            </Dialog>
             <Button variant="ghost" size="icon" onClick={openFullPresentation} title="Presentation Mode" data-testid="button-presentation">
               <Presentation className="h-4 w-4" />
             </Button>
@@ -400,8 +418,6 @@ export default function IntegratedEssay() {
             <span>{totalReadingTime} min read</span>
           </div>
         </div>
-
-        <EssayAIAudio getEssayText={getEssayText} className="mb-6" />
 
         <Card className="mb-6">
           <CardContent className="pt-6">

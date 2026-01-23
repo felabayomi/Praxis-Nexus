@@ -529,19 +529,23 @@ export function PresentationView({ template, onClose, onChangeTemplate }: Presen
             <span className="hidden sm:inline">Previous</span>
           </Button>
 
-          <div className="flex items-center gap-2">
-            {slides.map((_, index) => (
+          <div className="flex items-center gap-1.5 sm:gap-2 max-w-[40%] flex-wrap justify-center">
+            {slides.length <= 10 ? slides.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
                 className={`transition-all duration-300 ${
                   index === currentSlide 
-                    ? `w-6 h-2 rounded-full ${style.footerIcon}` 
+                    ? `w-4 sm:w-6 h-2 rounded-full ${style.footerIcon}` 
                     : "w-2 h-2 rounded-full bg-muted-foreground/30 hover:bg-muted-foreground/50"
                 }`}
                 data-testid={`slide-indicator-${index}`}
               />
-            ))}
+            )) : (
+              <span className="text-sm text-muted-foreground font-medium">
+                {currentSlide + 1} / {slides.length}
+              </span>
+            )}
           </div>
 
           <Button

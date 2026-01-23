@@ -189,19 +189,25 @@ export function registerDissertationRoutes(app: Express): void {
 
 Your task is to transform the provided research content into formal academic prose that follows dissertation conventions.
 
+CRITICAL CITATION REQUIREMENT:
+You MUST include in-text citations throughout the text using ONLY the sources listed below. This is mandatory - do not write content without citations. Format each citation as (Author, Year) in APA 7th edition style.
+
+AVAILABLE SOURCES TO CITE (use these exact author-year formats):
+${availableCitations}
+
+EXAMPLES OF PROPER CITATION USE:
+- "Human-wildlife conflict has intensified due to climate change (Abrahms et al., 2023)."
+- "According to Bronfenbrenner (1979), ecological systems theory provides..."
+- "Conservation efforts require digital technology integration (Arts et al., 2015)."
+
 IMPORTANT GUIDELINES:
 - Write in formal academic English
 - Use third person perspective
 - Follow APA 7th edition formatting conventions
 - Maintain scholarly tone throughout
-- Be thorough but concise
-- Use proper transitions between sections
-- Connect ideas logically
+- INCLUDE CITATIONS from the list above in every major paragraph
+- Connect ideas logically with proper transitions
 - The output should feel like authentic dissertation writing
-
-AVAILABLE REFERENCES FOR CITATION:
-Use ONLY the following sources for in-text citations. Format as (Author, Year):
-${availableCitations}
 
 ${chapterPrompt}`;
 

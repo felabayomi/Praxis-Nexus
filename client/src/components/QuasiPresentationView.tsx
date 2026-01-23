@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { quasiData } from "@/lib/quasiData";
 import { apiRequest } from "@/lib/queryClient";
+import { ShareExportControls } from "./ShareExportControls";
 
 interface Slide {
   id: string;
@@ -203,6 +204,15 @@ export function QuasiPresentationView({ onClose }: QuasiPresentationViewProps) {
             <Sparkles className="h-4 w-4 sm:mr-2" />
             <span className="hidden sm:inline">AI Insights</span>
           </Button>
+          <ShareExportControls
+            type="presentation"
+            project="quasi-qualitative"
+            title={quasiData.title}
+            content={slides}
+            slides={slides}
+            template="violet"
+            className="text-violet-200"
+          />
           <Button
             variant="ghost"
             size="icon"

@@ -10,6 +10,7 @@ import {
   Loader2
 } from "lucide-react";
 import { integratedEssayData, type EssaySection } from "@/lib/integratedEssayData";
+import { ShareExportControls } from "./ShareExportControls";
 
 interface EssayPresentationViewProps {
   open: boolean;
@@ -174,6 +175,15 @@ export function EssayPresentationView({ open, onClose, section }: EssayPresentat
               <option key={t.id} value={t.id}>{t.name}</option>
             ))}
           </select>
+          <ShareExportControls
+            type="presentation"
+            project="integrated-essay"
+            title={section?.title || integratedEssayData.title}
+            content={slides}
+            slides={slides}
+            template={template.id}
+            className={template.id === 'minimal' ? 'text-slate-700' : 'text-white'}
+          />
           <Button
             variant="ghost"
             size="icon"

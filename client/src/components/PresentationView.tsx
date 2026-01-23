@@ -26,6 +26,7 @@ import {
 import { journalData } from "@/lib/journalData";
 import { apiRequest } from "@/lib/queryClient";
 import { TemplateStyle, templates } from "./TemplateSelector";
+import { ShareExportControls } from "./ShareExportControls";
 
 interface PresentationViewProps {
   template: TemplateStyle;
@@ -285,6 +286,14 @@ export function PresentationView({ template, onClose, onChangeTemplate }: Presen
           >
             <Palette className="h-4 w-4" />
           </Button>
+          <ShareExportControls
+            type="presentation"
+            project="edd-inquiry"
+            title={journalData.cohortTheme}
+            content={slides}
+            slides={slides}
+            template={template}
+          />
           <Button 
             size="icon" 
             variant="ghost" 

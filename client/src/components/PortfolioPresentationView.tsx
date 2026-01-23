@@ -10,6 +10,7 @@ import {
   Loader2
 } from "lucide-react";
 import { portfolioData, type PortfolioStrand } from "@/lib/portfolioData";
+import { ShareExportControls } from "./ShareExportControls";
 
 interface PortfolioPresentationViewProps {
   open: boolean;
@@ -187,6 +188,15 @@ export function PortfolioPresentationView({ open, onClose, strand }: PortfolioPr
               <option key={t.id} value={t.id}>{t.name}</option>
             ))}
           </select>
+          <ShareExportControls
+            type="presentation"
+            project="portfolio"
+            title={strand?.title || portfolioData.title}
+            content={slides}
+            slides={slides}
+            template={template.id}
+            className={template.id === 'minimal' ? 'text-slate-700' : 'text-white'}
+          />
           <Button
             variant="ghost"
             size="icon"

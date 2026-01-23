@@ -57,15 +57,6 @@ function getStrandColor(color: string) {
   }
 }
 
-function getStrandBorder(color: string) {
-  switch (color) {
-    case "blue": return "border-l-blue-500";
-    case "emerald": return "border-l-emerald-500";
-    case "violet": return "border-l-violet-500";
-    default: return "border-l-gray-500";
-  }
-}
-
 export default function Portfolio() {
   const [hasAccess, setHasAccess] = useState(false);
   const [showLanding, setShowLanding] = useState(true);
@@ -403,7 +394,7 @@ export default function Portfolio() {
                 const strandReadingTime = getStrandReadingTime(strand);
                 
                 return (
-                  <Card key={strand.id} className={`border-l-4 ${getStrandBorder(strand.color)}`}>
+                  <Card key={strand.id} className="overflow-hidden">
                     <CardHeader 
                       className="cursor-pointer hover-elevate"
                       onClick={() => toggleStrand(strand.id)}
@@ -533,7 +524,7 @@ export default function Portfolio() {
                 const isGenerating = generatingSynthesis === strand.id;
                 
                 return (
-                  <Card key={strand.id} className={`border-l-4 ${getStrandBorder(strand.color)}`}>
+                  <Card key={strand.id} className="overflow-hidden">
                     <CardHeader>
                       <div className="flex items-center justify-between gap-4">
                         <div className="flex items-center gap-3">

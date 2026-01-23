@@ -187,7 +187,7 @@ export function PortfolioPresentationView({ open, onClose, strand }: PortfolioPr
             variant="ghost"
             size="icon"
             onClick={toggleFullscreen}
-            className="text-white/80 hover:text-white"
+            className="text-white"
             data-testid="button-fullscreen"
           >
             <Maximize2 className="h-5 w-5" />
@@ -196,7 +196,7 @@ export function PortfolioPresentationView({ open, onClose, strand }: PortfolioPr
             variant="ghost"
             size="icon"
             onClick={onClose}
-            className="text-white/80 hover:text-white"
+            className="text-white"
             data-testid="button-close-presentation"
           >
             <X className="h-5 w-5" />
@@ -233,7 +233,7 @@ export function PortfolioPresentationView({ open, onClose, strand }: PortfolioPr
                   size="sm"
                   onClick={() => generateAIHeading(currentSlide)}
                   disabled={generatingHeading === currentSlide}
-                  className="bg-white/10 border-white/20 text-white/80 hover:bg-white/20"
+                  className="bg-white/10 border-white/20 text-white"
                   data-testid="button-generate-heading"
                 >
                   {generatingHeading === currentSlide ? (
@@ -255,7 +255,7 @@ export function PortfolioPresentationView({ open, onClose, strand }: PortfolioPr
             variant="ghost"
             onClick={prevSlide}
             disabled={currentSlide === 0}
-            className="text-white/80 hover:text-white disabled:opacity-30"
+            className="text-white disabled:opacity-30"
             data-testid="button-prev-slide"
           >
             <ChevronLeft className="mr-2 h-5 w-5" />
@@ -279,7 +279,7 @@ export function PortfolioPresentationView({ open, onClose, strand }: PortfolioPr
             variant="ghost"
             onClick={nextSlide}
             disabled={currentSlide === slides.length - 1}
-            className="text-white/80 hover:text-white disabled:opacity-30"
+            className="text-white disabled:opacity-30"
             data-testid="button-next-slide"
           >
             Next

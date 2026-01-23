@@ -24,11 +24,20 @@ Praxis Nexus is an academic research hub web application presenting multiple res
    - **Reasoning View**: Research Question + 7 accordion sections + Tools (font size, audio, presentation, search)
    - **Paper View**: AI Dissertation Generator with chapter-by-chapter generation
 4. **Doctoral Portfolio (/portfolio)** - Blue/navy theme, serif typography
-   - Landing Page → Access Code (PORTFOLIO2026) → Three Strands
-   - **Knowledge Strand**: Paradigm Paper, Theoretical Framework, Literature Review, Research Design
-   - **Practice Strand**: Concept Papers, HWICRM Prototype Design Plan
-   - **Self-in-Context Strand**: Professional Reflection, Leadership Philosophy, Ecological Ethics
-   - Expandable artifacts with reflections, Appendix section
+   - Landing Page → Access Code (PORTFOLIO2026) → Two Views (Portfolio / Paper)
+   - **Portfolio View**: Browse three strands with expandable artifacts and reflections
+     - **Knowledge Strand**: Paradigm Paper, Theoretical Framework, Literature Review, Research Design
+     - **Practice Strand**: Concept Papers, HWICRM Prototype Design Plan
+     - **Self-in-Context Strand**: Professional Reflection, Leadership Philosophy, Ecological Ethics
+     - Reading time estimates per strand and overall
+     - Per-strand AI Presentation mode with 5 templates
+   - **Paper View**: AI Strand Synthesis Generator
+     - Generate formal academic syntheses for each strand
+     - Citation matching using master reference list (21 APA sources)
+     - Shows only sources cited in generated syntheses
+   - AI Audio Narration (PortfolioAIAudio component) using OpenAI TTS
+   - Search functionality (Ctrl+K) across all content
+   - Appendix section with supplementary materials
 5. **Integrated Essay (/integrated-essay)** - Teal/emerald theme, elegant typography
    - Landing Page → Access Code (ESSAY2026) → AI Essay Generator
    - 8 sections: Introduction, Knowledge Strand, Practice Strand, Self-in-Context, Strand Synthesis, Dissertation Connection, Growth Trajectory, Conclusion

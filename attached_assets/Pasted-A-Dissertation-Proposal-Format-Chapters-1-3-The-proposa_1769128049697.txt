@@ -1,0 +1,78 @@
+A. Dissertation Proposal Format (Chapters 1–3)
+The proposal establishes your research design and theoretical foundation. It’s typically 40–60 pages and includes:
+Front Matter
+Title Page (per Antioch template)
+Abstract (150–250 words, concise summary of the study)
+Table of Contents
+List of Figures and Tables (if applicable)
+Chapter 1: Introduction
+Purpose: Establish the study’s background, problem, and significance.
+Typical structure:
+Introduction to the Study
+Background of the Problem
+Statement of the Problem
+Purpose of the Study
+Research Questions / Objectives
+Theoretical or Conceptual Framework
+Significance of the Study
+Assumptions, Limitations, and Delimitations
+Definitions of Key Terms
+Summary
+Chapter 2: Literature Review
+Purpose: Establish scholarly context and theoretical grounding.
+Typical structure:
+Introduction
+Overview of Major Theoretical and Conceptual Frameworks
+Review of Empirical Studies Related to the Topic
+Gaps and Synthesis Leading to the Study
+Conceptual Model or Integrative Framework (if used)
+Summary and Transition
+Chapter 3: Research Design and Methodology
+Purpose: Present the detailed design and rationale for your approach.
+Typical structure:
+Introduction
+Research Design (e.g., Design Science Research + Modified Delphi Study)
+Research Context and Setting
+Participants or Expert Panel (if applicable)
+Data Collection Methods
+Data Analysis Procedures
+Validity, Reliability, and Trustworthiness
+Ethical Considerations and IRB
+Summary and Transition
+📘 B. Full Dissertation Format (Chapters 1–5 or 6)
+After proposal approval and research completion, the full dissertation integrates findings, interpretation, and implications.
+Chapter 4: Findings / Results
+Purpose: Present analyzed data and key findings.
+Typical structure:
+Introduction
+Data Preparation and Analysis Overview
+Presentation of Results (aligned to each research question)
+Summary of Key Findings
+(For Design Science Research or innovation studies, this may include the artifact design, prototype evaluation, and Delphi consensus outcomes.)
+Chapter 5: Discussion and Interpretation
+Purpose: Interpret findings within theoretical and practical context.
+Typical structure:
+Introduction
+Interpretation of Key Findings
+Relationship to Theoretical Framework and Literature
+Implications for Practice, Policy, and Future Research
+Limitations of the Study
+Summary
+Chapter 6 (if required): Conclusions and Recommendations
+(Some Antioch committees combine this with Chapter 5, others require it as a standalone.)
+Typical structure:
+Summary of the Study
+Conclusions Drawn from Findings
+Practical Recommendations
+Directions for Future Research
+Final Reflections
+Back Matter
+References (APA 7th edition, double-spaced, hanging indent)
+Appendices (IRB materials, instruments, correspondence, prototypes, visual models, Delphi materials, etc.)
+🧾 Formatting Notes
+Typeface: 12-point Times New Roman (or approved equivalent)
+Margins: 1 inch on all sides
+Line Spacing: Double-spaced throughout (except tables, long quotes)
+Page Numbers: Bottom center, no “running head”
+Citation Style: APA 7th edition (strictly enforced)
+Binding Order: Title Page → Abstract → Acknowledgments (optional) → TOC → Chapters → References → Appendices

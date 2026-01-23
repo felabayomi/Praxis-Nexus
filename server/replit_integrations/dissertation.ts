@@ -6,13 +6,37 @@ const openai = new OpenAI({
   baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
 });
 
+interface Reference {
+  id: string;
+  citation: string;
+  authorYear?: string;
+}
+
+function extractAuthorYear(citation: string): string {
+  const match = citation.match(/^([^(]+)\s*\((\d{4}[a-z]?)\)/);
+  if (match) {
+    const authors = match[1].trim();
+    const year = match[2];
+    const firstAuthor = authors.split(',')[0].trim();
+    if (authors.includes('&') || authors.includes(',')) {
+      const authorCount = (authors.match(/&/g) || []).length + 1;
+      if (authorCount > 2) {
+        return `${firstAuthor} et al., ${year}`;
+      }
+    }
+    return `${firstAuthor}, ${year}`;
+  }
+  return "";
+}
+
 const CHAPTER_PROMPTS: Record<string, string> = {
   abstract: `Write a 150-250 word academic abstract for this dissertation proposal. The abstract should:
 - Concisely summarize the research problem and purpose
 - State the methodology briefly
 - Indicate the expected significance
 - Use third person, academic tone
-- Follow APA 7th edition style`,
+- Follow APA 7th edition style
+- Do NOT include citations in the abstract`,
 
   chapter1: `Write Chapter 1: Introduction for this dissertation. Structure it with these sections:
 - Introduction to the Study (set context)
@@ -26,7 +50,11 @@ const CHAPTER_PROMPTS: Record<string, string> = {
 - Definitions of Key Terms
 - Summary
 
-Use academic prose, APA 7th edition style, and connect to the source content provided.`,
+CITATION REQUIREMENTS:
+- Use in-text citations from the provided reference list where appropriate
+- Format citations as (Author, Year) following APA 7th edition
+- Include citations when discussing theories, concepts, or prior research
+- Aim to cite at least 3-5 relevant sources from the reference list`,
 
   chapter2: `Write Chapter 2: Literature Review for this dissertation. Structure it with:
 - Introduction
@@ -36,7 +64,12 @@ Use academic prose, APA 7th edition style, and connect to the source content pro
 - Conceptual Model or Integrative Framework (if applicable)
 - Summary and Transition to Chapter 3
 
-Draw from the theoretical framework content provided. Use scholarly language and APA 7th edition.`,
+CITATION REQUIREMENTS:
+- This chapter requires extensive citations from the provided reference list
+- Use in-text citations (Author, Year) throughout
+- Cite sources when discussing theories, frameworks, and empirical studies
+- Aim to cite at least 8-12 relevant sources from the reference list
+- Synthesize multiple sources to show connections in the literature`,
 
   chapter3: `Write Chapter 3: Research Design and Methodology for this dissertation. Structure it with:
 - Introduction
@@ -49,7 +82,11 @@ Draw from the theoretical framework content provided. Use scholarly language and
 - Ethical Considerations and IRB
 - Summary and Transition
 
-Use the methodology content provided as the foundation. Write in academic prose, APA 7th edition.`,
+CITATION REQUIREMENTS:
+- Cite methodological sources from the reference list to justify design choices
+- Use in-text citations (Author, Year) when discussing research methods
+- Reference sources that support data collection and analysis approaches
+- Aim to cite at least 5-8 relevant sources from the reference list`,
 
   chapter4: `Write Chapter 4: Findings/Results for this dissertation. Structure it with:
 - Introduction
@@ -57,7 +94,12 @@ Use the methodology content provided as the foundation. Write in academic prose,
 - Presentation of Results (aligned to each research question)
 - Summary of Key Findings
 
-Note: Since this is a proposal, write this as projected findings or placeholder structure. Use academic prose, APA 7th edition.`,
+Note: Since this is a proposal, write this as projected findings or placeholder structure.
+
+CITATION REQUIREMENTS:
+- Cite data analysis methods from the reference list
+- Use minimal citations in this chapter (primarily methodology references)
+- Aim to cite 2-3 relevant sources from the reference list`,
 
   chapter5: `Write Chapter 5: Discussion and Interpretation for this dissertation. Structure it with:
 - Introduction
@@ -67,7 +109,12 @@ Note: Since this is a proposal, write this as projected findings or placeholder 
 - Limitations of the Study
 - Summary
 
-Note: Since this is based on proposal content, discuss anticipated implications. Use academic prose, APA 7th edition.`,
+Note: Since this is based on proposal content, discuss anticipated implications.
+
+CITATION REQUIREMENTS:
+- Connect findings back to literature from the reference list
+- Use in-text citations when comparing to prior research
+- Aim to cite at least 5-8 relevant sources from the reference list`,
 
   chapter6: `Write Chapter 6: Conclusions and Recommendations for this dissertation. Structure it with:
 - Summary of the Study
@@ -76,13 +123,47 @@ Note: Since this is based on proposal content, discuss anticipated implications.
 - Directions for Future Research
 - Final Reflections
 
-Use scholarly, reflective academic language. APA 7th edition style.`,
+CITATION REQUIREMENTS:
+- Minimal citations in this chapter
+- Reference key sources when discussing future directions
+- Aim to cite 2-4 relevant sources from the reference list`,
 };
+
+function findUsedCitations(content: string, references: Reference[]): string[] {
+  const usedIds: string[] = [];
+  
+  for (const ref of references) {
+    const authorYear = ref.authorYear || extractAuthorYear(ref.citation);
+    if (!authorYear) continue;
+    
+    const firstAuthor = authorYear.split(',')[0].trim();
+    const year = authorYear.match(/\d{4}/)?.[0];
+    
+    if (year) {
+      const patterns = [
+        new RegExp(`\\(${firstAuthor}[^)]*${year}\\)`, 'i'),
+        new RegExp(`${firstAuthor}[^(]*\\(${year}\\)`, 'i'),
+        new RegExp(`\\(.*${year}.*\\)`, 'i'),
+      ];
+      
+      for (const pattern of patterns) {
+        if (pattern.test(content)) {
+          if (!usedIds.includes(ref.id)) {
+            usedIds.push(ref.id);
+          }
+          break;
+        }
+      }
+    }
+  }
+  
+  return usedIds;
+}
 
 export function registerDissertationRoutes(app: Express): void {
   app.post("/api/dissertation/generate-chapter", async (req: Request, res: Response) => {
     try {
-      const { chapterId, chapterTitle, chapterDescription, sourceContent, format } = req.body;
+      const { chapterId, chapterTitle, chapterDescription, sourceContent, format, references } = req.body;
 
       if (!chapterId || !sourceContent) {
         return res.status(400).json({ error: "Chapter ID and source content are required" });
@@ -92,6 +173,17 @@ export function registerDissertationRoutes(app: Express): void {
       if (!chapterPrompt) {
         return res.status(400).json({ error: "Invalid chapter ID" });
       }
+
+      const refList = (references || []) as Reference[];
+      const refListWithAuthorYear = refList.map(ref => ({
+        ...ref,
+        authorYear: extractAuthorYear(ref.citation)
+      }));
+      
+      const availableCitations = refListWithAuthorYear
+        .filter(r => r.authorYear)
+        .map(r => `- ${r.authorYear}: "${r.citation.substring(0, 80)}..."`)
+        .join('\n');
 
       const systemPrompt = `You are an expert academic writing assistant helping an EdD candidate format their research into a proper dissertation. 
 
@@ -107,6 +199,10 @@ IMPORTANT GUIDELINES:
 - Connect ideas logically
 - The output should feel like authentic dissertation writing
 
+AVAILABLE REFERENCES FOR CITATION:
+Use ONLY the following sources for in-text citations. Format as (Author, Year):
+${availableCitations}
+
 ${chapterPrompt}`;
 
       const response = await openai.chat.completions.create({
@@ -115,7 +211,7 @@ ${chapterPrompt}`;
           { role: "system", content: systemPrompt },
           { 
             role: "user", 
-            content: `Transform this research content into ${chapterTitle}:\n\n${sourceContent.substring(0, 12000)}` 
+            content: `Transform this research content into ${chapterTitle}:\n\n${sourceContent.substring(0, 10000)}` 
           }
         ],
         max_tokens: 3000,
@@ -123,7 +219,14 @@ ${chapterPrompt}`;
       });
 
       const content = response.choices[0]?.message?.content || "";
-      res.json({ content, chapterId, chapterTitle });
+      const usedCitationIds = findUsedCitations(content, refListWithAuthorYear);
+      
+      res.json({ 
+        content, 
+        chapterId, 
+        chapterTitle,
+        usedCitationIds 
+      });
     } catch (error) {
       console.error("Error generating chapter:", error);
       res.status(500).json({ error: "Failed to generate chapter" });

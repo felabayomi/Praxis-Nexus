@@ -32,6 +32,7 @@ interface ChapterContent {
   isGenerated: boolean;
   isLoading: boolean;
   isExpanded: boolean;
+  usedCitationIds: string[];
 }
 
 const CHAPTER_STRUCTURE = {
@@ -72,12 +73,14 @@ function getSourceContent(): string {
     }
   }
   
-  content += "\n## References\n\n";
-  for (const ref of quasiData.references) {
-    content += `${ref.citation}\n`;
-  }
-  
   return content;
+}
+
+function getReferencesForApi() {
+  return quasiData.references.map(ref => ({
+    id: ref.id,
+    citation: ref.citation,
+  }));
 }
 
 export function QuasiPaperView() {
@@ -86,6 +89,13 @@ export function QuasiPaperView() {
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
 
   const structure = CHAPTER_STRUCTURE[format];
+  
+  const allUsedCitationIds = Object.values(chapters)
+    .filter(c => c.isGenerated && c.usedCitationIds)
+    .flatMap(c => c.usedCitationIds);
+  const uniqueCitationIds = [...new Set(allUsedCitationIds)];
+  const usedReferences = quasiData.references.filter(ref => uniqueCitationIds.includes(ref.id));
+  const hasGeneratedContent = Object.values(chapters).some(c => c.isGenerated);
 
   const generateChapter = async (chapterId: string) => {
     const chapterInfo = structure.find(c => c.id === chapterId);
@@ -100,6 +110,7 @@ export function QuasiPaperView() {
         isLoading: true,
         isGenerated: false,
         isExpanded: true,
+        usedCitationIds: [],
       },
     }));
 
@@ -110,6 +121,7 @@ export function QuasiPaperView() {
         chapterDescription: chapterInfo.description,
         sourceContent: getSourceContent(),
         format,
+        references: getReferencesForApi(),
       });
 
       const data = await response.json();
@@ -122,6 +134,7 @@ export function QuasiPaperView() {
           isLoading: false,
           isGenerated: true,
           isExpanded: true,
+          usedCitationIds: data.usedCitationIds || [],
         },
       }));
     } catch (error) {
@@ -133,6 +146,7 @@ export function QuasiPaperView() {
           isLoading: false,
           isGenerated: false,
           isExpanded: true,
+          usedCitationIds: [],
         },
       }));
     }
@@ -180,7 +194,8 @@ export function QuasiPaperView() {
     
     content += "\nReferences\n";
     content += "-".repeat(40) + "\n\n";
-    for (const ref of quasiData.references) {
+    const downloadRefs = usedReferences.length > 0 ? usedReferences : quasiData.references;
+    for (const ref of downloadRefs) {
       content += ref.citation + "\n\n";
     }
 
@@ -347,21 +362,50 @@ export function QuasiPaperView() {
 
         <Card className="mb-10">
           <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/10 text-violet-600 dark:text-violet-400">
-                <BookOpen className="h-5 w-5" />
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/10 text-violet-600 dark:text-violet-400">
+                  <BookOpen className="h-5 w-5" />
+                </div>
+                <div>
+                  <CardTitle className="font-sans text-lg">References (APA 7th Edition)</CardTitle>
+                  {hasGeneratedContent && (
+                    <p className="text-sm text-muted-foreground">
+                      {usedReferences.length > 0 
+                        ? `${usedReferences.length} sources cited in generated chapters`
+                        : "No citations detected in generated content"}
+                    </p>
+                  )}
+                </div>
               </div>
-              <CardTitle className="font-sans text-lg">References (APA 7th Edition)</CardTitle>
+              {hasGeneratedContent && usedReferences.length > 0 && (
+                <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-600">
+                  {usedReferences.length} / {quasiData.references.length} sources used
+                </Badge>
+              )}
             </div>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {quasiData.references.map((ref) => (
-                <p key={ref.id} className="text-muted-foreground leading-relaxed pl-8 -indent-8">
+              {(hasGeneratedContent && usedReferences.length > 0 ? usedReferences : quasiData.references).map((ref) => (
+                <p 
+                  key={ref.id} 
+                  className={`leading-relaxed pl-8 -indent-8 ${
+                    hasGeneratedContent && usedReferences.length > 0 
+                      ? "text-foreground" 
+                      : "text-muted-foreground"
+                  }`}
+                  data-testid={`reference-${ref.id}`}
+                >
                   {ref.citation}
                 </p>
               ))}
             </div>
+            {hasGeneratedContent && usedReferences.length === 0 && (
+              <p className="text-sm text-muted-foreground italic mt-4">
+                Showing all available references. Generate chapters to see which sources are cited.
+              </p>
+            )}
           </CardContent>
         </Card>
 

@@ -1,9 +1,16 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Leaf, BookOpen, FlaskConical, ArrowRight, FolderOpen, PenTool } from "lucide-react";
+import { Leaf, BookOpen, FlaskConical, ArrowRight, FolderOpen, PenTool, ChevronDown } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 
 interface ProjectCard {
   id: string;
@@ -60,6 +67,12 @@ const projects: ProjectCard[] = [
 ];
 
 export default function ProjectHub() {
+  const [, navigate] = useLocation();
+
+  const handleProjectSelect = (route: string) => {
+    navigate(route);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <header className="flex items-center justify-between px-4 sm:px-6 h-14 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -71,7 +84,38 @@ export default function ProjectHub() {
             Praxis Nexus
           </span>
         </div>
-        <ThemeToggle />
+        <div className="flex items-center gap-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="gap-2" data-testid="button-quick-jump">
+                <span className="hidden sm:inline">Quick Jump</span>
+                <span className="sm:hidden">Projects</span>
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-64">
+              {projects.map((project, index) => (
+                <div key={project.id}>
+                  <DropdownMenuItem
+                    onClick={() => handleProjectSelect(project.route)}
+                    className="cursor-pointer py-3"
+                    data-testid={`menu-item-${project.id}`}
+                  >
+                    <div className={`flex h-8 w-8 items-center justify-center rounded-md mr-3 ${project.color}`}>
+                      {project.icon}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-sm truncate">{project.title.length > 30 ? project.title.substring(0, 30) + "..." : project.title}</p>
+                      <p className="text-xs text-muted-foreground truncate">{project.subtitle}</p>
+                    </div>
+                  </DropdownMenuItem>
+                  {index < projects.length - 1 && <DropdownMenuSeparator />}
+                </div>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-12">

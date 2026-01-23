@@ -20,8 +20,9 @@ Praxis Nexus is an academic research hub web application presenting multiple res
    - Landing Page → Access Code → Welcome Section → Content
    - Three cards: Overview, Monthly Inquiries, References
 3. **Quasi-Qualitative (/quasi-qualitative)** - Violet/purple theme, sans-serif typography
-   - Landing Page → Access Code → Content
-   - Research Question card + 7 accordion sections
+   - Landing Page → Access Code → Two Views (Reasoning / Paper)
+   - **Reasoning View**: Research Question + 7 accordion sections + Tools (font size, audio, presentation, search)
+   - **Paper View**: AI Dissertation Generator with chapter-by-chapter generation
 
 ## Project Architecture
 
@@ -53,6 +54,7 @@ Praxis Nexus is an academic research hub web application presenting multiple res
 - **server/storage.ts** - In-memory storage for journal entries
 - **server/replit_integrations/ai-presentation.ts** - OpenAI integration for AI insights and slide headings
 - **server/replit_integrations/tts.ts** - OpenAI TTS for audio narration (CarPlay compatible)
+- **server/replit_integrations/dissertation.ts** - AI dissertation chapter generation
 
 ### Shared
 - **shared/schema.ts** - TypeScript interfaces for journal data types
@@ -71,12 +73,21 @@ Praxis Nexus is an academic research hub web application presenting multiple res
 - Sans-serif typography for modern feel
 - FlaskConical icon branding
 - Different gradient backgrounds
-- Accordion-based expandable sections layout
-- Research Question card prominently displayed
-- Q&A format for each section with question icons
-- Expand All / Collapse All functionality
+- **Two-View System** accessible via tabs:
+  1. **Reasoning View**: 
+     - Accordion-based expandable sections
+     - Research Question card prominently displayed
+     - Q&A format for each section with question icons
+     - Expand All / Collapse All functionality
+     - Tools: Font size control, TTS, AI Audio, Presentation mode, Search (Ctrl+K)
+  2. **Paper View**:
+     - AI Dissertation Generator
+     - Transforms Q&A content into formal academic chapters
+     - Supports Proposal format (Chapters 1-3) or Full Dissertation (Chapters 1-6)
+     - Generate individual chapters or all at once
+     - Print and Download functionality
 - 7 main sections: Theoretical Framework, Research Design, Participants, Data Collection, Data Interpretation, Ethics, Chapter Summary
-- References section with external links
+- References section with APA 7th edition formatting and external links
 
 ## Key Features (EdD Inquiry)
 - Collapsible sidebar navigation with reading time estimates

@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { registerPresentationRoutes } from "./replit_integrations/ai-presentation";
 import { registerTTSRoutes } from "./replit_integrations/tts";
 import { registerCitationRoutes } from "./replit_integrations/citation-assistant";
+import { registerDissertationRoutes } from "./replit_integrations/dissertation";
 import { sendContactEmail } from "./email";
 import { contactFormSchema } from "@shared/contactSchema";
 
@@ -14,6 +15,7 @@ export async function registerRoutes(
   registerPresentationRoutes(app);
   registerTTSRoutes(app);
   registerCitationRoutes(app);
+  registerDissertationRoutes(app);
   
   app.get("/api/journal", async (req, res) => {
     try {

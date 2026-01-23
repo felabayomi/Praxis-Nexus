@@ -171,7 +171,7 @@ export function PortfolioPresentationView({ open, onClose, strand }: PortfolioPr
   const displayTitle = aiHeadings[currentSlide] || currentSlideData?.title;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black">
+    <div className="fixed inset-0 z-50 bg-black h-[100dvh]">
       <div className={`h-full w-full bg-gradient-to-br ${template.bg} ${template.text} flex flex-col`}>
         <div className="absolute top-2 sm:top-4 right-2 sm:right-4 flex items-center gap-1 sm:gap-2 z-10">
           <select
@@ -217,8 +217,8 @@ export function PortfolioPresentationView({ open, onClose, strand }: PortfolioPr
           </Button>
         </div>
 
-        <div className="flex-1 flex items-center justify-center p-4 sm:p-8 overflow-y-auto">
-          <Card className={`max-w-4xl w-full p-4 sm:p-8 md:p-12 bg-black/20 backdrop-blur-sm border-white/10 ${template.text}`}>
+        <div className="flex-1 flex items-center justify-center p-2 sm:p-4 md:p-8 overflow-y-auto min-h-0">
+          <Card className={`max-w-4xl w-full max-h-full overflow-y-auto p-4 sm:p-8 md:p-12 bg-black/20 backdrop-blur-sm border-white/10 ${template.text}`}>
             <div className="text-center space-y-4 sm:space-y-6 md:space-y-8">
               {currentSlideData?.strandColor && (
                 <Badge 
@@ -264,7 +264,7 @@ export function PortfolioPresentationView({ open, onClose, strand }: PortfolioPr
           </Card>
         </div>
 
-        <div className={`flex items-center justify-between p-3 sm:p-4 border-t ${template.id === 'minimal' ? 'border-slate-200' : 'border-white/10'}`}>
+        <div className={`flex items-center justify-between p-3 sm:p-4 border-t shrink-0 ${template.id === 'minimal' ? 'border-slate-200' : 'border-white/10'}`}>
           <Button
             variant="ghost"
             onClick={prevSlide}

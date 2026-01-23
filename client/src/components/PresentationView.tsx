@@ -245,12 +245,12 @@ export function PresentationView({ template, onClose, onChangeTemplate }: Presen
 
   return (
     <div 
-      className="fixed inset-0 z-50 bg-gradient-to-br from-background via-background to-muted/50 flex flex-col"
+      className="fixed inset-0 z-50 bg-gradient-to-br from-background via-background to-muted/50 flex flex-col h-[100dvh]"
       onKeyDown={handleKeyDown}
       tabIndex={0}
       data-testid="presentation-view"
     >
-      <header className="flex items-center justify-between px-4 md:px-6 py-3 border-b bg-card/80 backdrop-blur-sm">
+      <header className="flex items-center justify-between px-2 sm:px-4 md:px-6 py-2 sm:py-3 border-b bg-card/80 backdrop-blur-sm shrink-0">
         <div className="flex items-center gap-3">
           <div className={`h-8 w-8 rounded-full ${style.footerIcon} flex items-center justify-center`}>
             <Icon className="h-4 w-4 text-white" />
@@ -323,10 +323,10 @@ export function PresentationView({ template, onClose, onChangeTemplate }: Presen
         />
       </div>
 
-      <main className="flex-1 flex items-stretch p-4 md:p-8 overflow-hidden gap-6">
+      <main className="flex-1 flex items-stretch p-2 sm:p-4 md:p-8 overflow-hidden gap-4 md:gap-6 min-h-0">
         <div className={`flex-1 flex items-center justify-center ${showAI && slide.type === "content" ? "lg:flex-[2]" : ""}`}>
           {slide.type === "title" ? (
-            <Card className={`w-full max-w-5xl aspect-[16/9] relative overflow-hidden border-0 shadow-2xl ${style.titleBg}`}>
+            <Card className={`w-full max-w-5xl md:aspect-[16/9] h-full md:h-auto max-h-full relative overflow-hidden border-0 shadow-2xl ${style.titleBg}`}>
               <div className="absolute inset-0 opacity-20">
                 <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                   <defs>
@@ -369,7 +369,7 @@ export function PresentationView({ template, onClose, onChangeTemplate }: Presen
             </Card>
           ) : (
             <Card 
-              className={`w-full max-w-5xl min-h-[400px] max-h-[80vh] relative overflow-hidden border shadow-xl flex flex-col`}
+              className={`w-full max-w-5xl h-full max-h-full relative overflow-hidden border shadow-xl flex flex-col`}
               style={{
                 background: style.pattern + ", hsl(var(--card))"
               }}
@@ -525,7 +525,7 @@ export function PresentationView({ template, onClose, onChangeTemplate }: Presen
         )}
       </main>
 
-      <footer className="px-4 md:px-6 py-4 border-t bg-card/80 backdrop-blur-sm">
+      <footer className="px-2 sm:px-4 md:px-6 py-2 sm:py-4 border-t bg-card/80 backdrop-blur-sm shrink-0">
         <div className="flex items-center justify-between max-w-5xl mx-auto">
           <Button
             variant="outline"

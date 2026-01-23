@@ -158,7 +158,7 @@ export function EssayPresentationView({ open, onClose, section }: EssayPresentat
   const displayTitle = aiHeadings[currentSlide] || currentSlideData?.title;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black">
+    <div className="fixed inset-0 z-50 bg-black h-[100dvh]">
       <div className={`h-full w-full bg-gradient-to-br ${template.bg} ${template.text} flex flex-col`}>
         <div className="absolute top-2 sm:top-4 right-2 sm:right-4 flex items-center gap-1 sm:gap-2 z-10">
           <select
@@ -204,8 +204,8 @@ export function EssayPresentationView({ open, onClose, section }: EssayPresentat
           </Button>
         </div>
 
-        <div className="flex-1 flex items-center justify-center p-4 sm:p-8 overflow-y-auto">
-          <Card className="w-full max-w-4xl bg-black/20 backdrop-blur border-white/10 p-4 sm:p-8">
+        <div className="flex-1 flex items-center justify-center p-2 sm:p-4 md:p-8 overflow-y-auto min-h-0">
+          <Card className="w-full max-w-4xl max-h-full overflow-y-auto bg-black/20 backdrop-blur border-white/10 p-4 sm:p-8">
             <div className="space-y-4 sm:space-y-6">
               <Badge 
                 variant="secondary" 
@@ -247,7 +247,7 @@ export function EssayPresentationView({ open, onClose, section }: EssayPresentat
           </Card>
         </div>
 
-        <div className={`flex items-center justify-between p-3 sm:p-4 border-t ${template.id === 'minimal' ? 'border-slate-200' : 'border-white/10'}`}>
+        <div className={`flex items-center justify-between p-3 sm:p-4 border-t shrink-0 ${template.id === 'minimal' ? 'border-slate-200' : 'border-white/10'}`}>
           <Button
             variant="ghost"
             onClick={prevSlide}

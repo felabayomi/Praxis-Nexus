@@ -175,8 +175,8 @@ export function QuasiPresentationView({ onClose }: QuasiPresentationViewProps) {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 bg-gradient-to-br from-violet-900 via-purple-900 to-fuchsia-900 flex flex-col">
-      <header className="flex items-center justify-between px-2 sm:px-4 h-12 sm:h-14 bg-black/20 backdrop-blur">
+    <div className="fixed inset-0 z-50 bg-gradient-to-br from-violet-900 via-purple-900 to-fuchsia-900 flex flex-col h-[100dvh]">
+      <header className="flex items-center justify-between px-2 sm:px-4 h-12 sm:h-14 bg-black/20 backdrop-blur shrink-0">
         <div className="flex items-center gap-2 sm:gap-4">
           <Badge variant="secondary" className="bg-violet-500/20 text-violet-200 text-xs sm:text-sm">
             {slide.slideNumber} / {totalSlides}
@@ -238,7 +238,7 @@ export function QuasiPresentationView({ onClose }: QuasiPresentationViewProps) {
         </div>
       </header>
 
-      <main className="flex-1 flex items-center justify-center p-4 sm:p-8 overflow-y-auto">
+      <main className="flex-1 flex items-center justify-center p-2 sm:p-4 md:p-8 overflow-y-auto min-h-0">
         <div className="max-w-4xl w-full">
           {slide.type === "title" ? (
             <div className="text-center space-y-4 sm:space-y-6">
@@ -306,7 +306,7 @@ export function QuasiPresentationView({ onClose }: QuasiPresentationViewProps) {
         </div>
       </main>
 
-      <footer className="flex items-center justify-between px-4 sm:px-8 h-14 sm:h-16 bg-black/20 backdrop-blur">
+      <footer className="flex items-center justify-between px-4 sm:px-8 h-14 sm:h-16 bg-black/20 backdrop-blur shrink-0">
         <Button
           variant="ghost"
           size="default"

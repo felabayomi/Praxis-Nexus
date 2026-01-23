@@ -131,9 +131,7 @@ function buildSource(entry: any): string {
 
 export function parseBibTeX(bibtexContent: string): ParsedReference[] {
   try {
-    const parsed = BibTeXParser.parse(bibtexContent, { 
-      errorHandler: (err) => console.warn('BibTeX parse warning:', err) 
-    });
+    const parsed = BibTeXParser.parse(bibtexContent);
     
     const references: ParsedReference[] = [];
     

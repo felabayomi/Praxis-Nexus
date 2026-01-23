@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import type { Express, Request, Response } from "express";
+import { loadDefaultReferences, searchReferences, formatReferenceAPA, formatInTextCitation, parseBibTeX, ParsedReference } from "../utils/bibtexParser";
 
 const openai = new OpenAI({
   apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY,
@@ -10,17 +11,83 @@ interface CitationSuggestion {
   statement: string;
   reason: string;
   suggestion: string;
+  matchedReferences?: {
+    inText: string;
+    fullReference: string;
+    authors: string;
+    year: string;
+    title: string;
+  }[];
 }
 
 interface CitationAnalysis {
   suggestions: CitationSuggestion[];
   apaFormatTips: string[];
   overallFeedback: string;
+  referenceCount?: number;
 }
 
-const MAX_TEXT_LENGTH = 15000; // Limit input to prevent API issues
+const MAX_TEXT_LENGTH = 15000;
 
 export function registerCitationRoutes(app: Express): void {
+  app.get("/api/references", async (_req: Request, res: Response) => {
+    try {
+      const references = loadDefaultReferences();
+      res.json({ 
+        count: references.length,
+        references: references.slice(0, 50).map(ref => ({
+          id: ref.id,
+          authors: ref.authors,
+          year: ref.year,
+          title: ref.title,
+          inText: formatInTextCitation(ref),
+          fullReference: formatReferenceAPA(ref)
+        }))
+      });
+    } catch (error) {
+      console.error("Error loading references:", error);
+      res.status(500).json({ error: "Failed to load references" });
+    }
+  });
+
+  app.get("/api/references/count", async (_req: Request, res: Response) => {
+    try {
+      const references = loadDefaultReferences();
+      res.json({ count: references.length });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to count references", count: 0 });
+    }
+  });
+
+  app.post("/api/references/search", async (req: Request, res: Response) => {
+    try {
+      const { query } = req.body;
+      if (!query) {
+        return res.status(400).json({ error: "Query is required" });
+      }
+      
+      const references = loadDefaultReferences();
+      const results = searchReferences(query, references);
+      
+      res.json({
+        query,
+        count: results.length,
+        references: results.map(ref => ({
+          id: ref.id,
+          authors: ref.authors,
+          year: ref.year,
+          title: ref.title,
+          inText: formatInTextCitation(ref),
+          fullReference: formatReferenceAPA(ref),
+          abstract: ref.abstract?.substring(0, 200) + (ref.abstract && ref.abstract.length > 200 ? '...' : '')
+        }))
+      });
+    } catch (error) {
+      console.error("Reference search error:", error);
+      res.status(500).json({ error: "Failed to search references" });
+    }
+  });
+
   app.post("/api/citation/analyze", async (req: Request, res: Response) => {
     try {
       const { text } = req.body;
@@ -35,19 +102,29 @@ export function registerCitationRoutes(app: Express): void {
         });
       }
 
-      console.log(`Analyzing text for citations, length: ${text.length}`);
+      const references = loadDefaultReferences();
+      const refSummary = references.slice(0, 100).map(r => 
+        `- ${formatInTextCitation(r)}: ${r.title.substring(0, 80)}`
+      ).join('\n');
+
+      console.log(`Analyzing text for citations, length: ${text.length}, refs: ${references.length}`);
 
       const response = await openai.chat.completions.create({
         model: "gpt-4o-mini",
         messages: [
           {
             role: "system",
-            content: `You are an academic writing assistant specializing in APA 7th edition citations. Analyze the provided text and:
+            content: `You are an academic writing assistant specializing in APA 7th edition citations. You have access to a reference database with ${references.length} sources.
 
+Here are some available references you can suggest:
+${refSummary}
+
+Analyze the provided text and:
 1. Identify statements that may need citations (claims, statistics, definitions, theories, research findings)
-2. For each, explain why a citation is needed and suggest how to find an appropriate source
-3. Check if existing in-text citations follow APA 7th format
-4. Provide overall feedback on citation practices
+2. For each, explain why a citation is needed
+3. If a relevant source from the database matches, include its in-text citation format
+4. Check if existing in-text citations follow APA 7th format
+5. Provide overall feedback on citation practices
 
 Respond in JSON format:
 {
@@ -55,7 +132,8 @@ Respond in JSON format:
     {
       "statement": "The exact statement that needs a citation",
       "reason": "Why this needs a citation",
-      "suggestion": "How to improve or where to find sources"
+      "suggestion": "How to improve or which specific source from the database to use",
+      "matchedReference": "If applicable: Author (Year) format from the database"
     }
   ],
   "apaFormatTips": ["Any APA 7th formatting issues found"],
@@ -75,7 +153,8 @@ Respond in JSON format:
         return res.status(500).json({ error: "No response from AI" });
       }
 
-      const analysis: CitationAnalysis = JSON.parse(content);
+      const analysis = JSON.parse(content) as CitationAnalysis;
+      analysis.referenceCount = references.length;
       res.json(analysis);
     } catch (error) {
       console.error("Citation analysis error:", error);

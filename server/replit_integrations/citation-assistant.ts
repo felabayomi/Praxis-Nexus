@@ -245,9 +245,10 @@ Respond in JSON format:
         idMapping.set(simpleId.toLowerCase(), r);
       });
       
-      const refSummaryForAI = refDatabase.slice(0, 200).map(r => {
+      const refSummaryForAI = refDatabase.slice(0, 250).map(r => {
         const simpleId = getSimpleId(r.id);
-        return `[${simpleId}] ${r.inText}: "${r.title.substring(0, 70)}"`;
+        const keywordsSnippet = r.keywords.substring(0, 120).replace(/\s+/g, ' ');
+        return `[${simpleId}] ${r.inText}: "${r.title.substring(0, 80)}" | ${keywordsSnippet}`;
       }).join('\n');
 
       console.log(`Auto-citing text, length: ${text.length}, available refs: ${references.length}`);
@@ -257,34 +258,55 @@ Respond in JSON format:
         messages: [
           {
             role: "system",
-            content: `You are an academic writing assistant. Your task is to insert appropriate in-text citations from the user's reference database into their text.
+            content: `You are an expert academic citation assistant specializing in doctoral-level scholarly writing. Your task is to insert appropriate in-text citations from the reference database into the user's text.
 
 REFERENCE DATABASE (${references.length} sources):
 ${refSummaryForAI}
 
-INSTRUCTIONS:
-1. Read the text carefully and identify statements that need citations
-2. For each statement that needs a citation, find the BEST matching reference from the database above
-3. Insert the citation in APA 7th edition format: (Author, Year) or Author (Year) as appropriate
-4. IMPORTANT: Only use the exact citations from the database - use the exact "Author (Year)" format shown
-5. Only use references that are actually relevant to the statement
-6. If no suitable reference exists in the database, DO NOT invent citations - leave uncited
-7. Preserve the original meaning and flow of the text
-8. Return the modified text with citations inserted
+CITATION MATCHING RULES - READ CAREFULLY:
 
-CRITICAL: In citationsUsed, you MUST include the exact refId (the ID after "[ID:" in the database) for each citation you use. This is required to generate the reference list.
+1. **CONCEPTUAL MATCHING IS CRITICAL**: Match citations based on the CONCEPTUAL PURPOSE of the statement, not just topic keywords.
+
+2. **DISTINGUISH STATEMENT TYPES**:
+   - THEORETICAL statements (defining concepts, explaining frameworks, discussing methodologies) → cite THEORETICAL/FOUNDATIONAL sources
+   - EMPIRICAL statements (describing phenomena, presenting data, discussing findings) → cite EMPIRICAL/RESEARCH sources
+   - APPLICATION statements (applying theory to practice) → can cite both appropriately
+
+3. **EXAMPLES OF CORRECT MATCHING**:
+   - "Intersectionality as a Black feminist methodology..." → cite intersectionality THEORY authors (Crenshaw, Collins, hooks, Stewart)
+   - "Queer theory challenges regimes of the normal..." → cite QUEER THEORY authors (Butler, Sedgwick, Alexander)
+   - "Human-wildlife conflict affects rural communities..." → cite HWC EMPIRICAL researchers
+   - "Applying intersectionality to conservation..." → cite both theory source AND conservation source
+
+4. **EXAMPLES OF INCORRECT MATCHING (AVOID THESE)**:
+   - Using a conservation study to support a claim about Black feminist methodology
+   - Using an HWC source to support a claim about queer/quare theory concepts
+   - Using empirical studies to define theoretical frameworks
+
+5. **WHEN IN DOUBT**:
+   - Look at the source title and keywords - does it discuss THEORY or FINDINGS?
+   - A source about "Human-Wildlife Interaction" is NOT about intersectionality theory
+   - A source about methodology is different from a source using that methodology
+
+FORMATTING:
+- Use APA 7th edition format: (Author, Year) or Author (Year)
+- Use the exact citation format from the database
+- If no suitable reference exists, DO NOT invent citations - leave uncited
+- Preserve original meaning and flow
+
+CRITICAL: In citationsUsed, include the exact refId from the database for each citation.
 
 Respond in JSON format:
 {
   "citedText": "The complete text with citations inserted where appropriate",
   "citationsUsed": [
     {
-      "refId": "EXACT reference ID from database (e.g., 'smith2020' - the part after [ID:])",
-      "inText": "Exact Author (Year) format used in the text",
-      "context": "Brief note on why this citation was placed here"
+      "refId": "EXACT reference ID from database (e.g., 'smith2020')",
+      "inText": "Exact Author (Year) format used",
+      "context": "Brief note explaining WHY this source matches the conceptual purpose of the statement"
     }
   ],
-  "unchangedStatements": ["Any statements that needed citations but no matching reference was found"],
+  "unchangedStatements": ["Statements needing citations but no conceptually appropriate match found"],
   "summary": "Brief summary of changes made"
 }`
           },

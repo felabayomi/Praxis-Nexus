@@ -10,6 +10,7 @@ import Home from "@/pages/Home";
 import QuasiQualitative from "@/pages/QuasiQualitative";
 import Portfolio from "@/pages/Portfolio";
 import IntegratedEssay from "@/pages/IntegratedEssay";
+import SharePage from "@/pages/SharePage";
 
 function Router() {
   return (
@@ -19,6 +20,7 @@ function Router() {
       <Route path="/quasi-qualitative" component={QuasiQualitative} />
       <Route path="/portfolio" component={Portfolio} />
       <Route path="/integrated-essay" component={IntegratedEssay} />
+      <Route path="/share/:token" component={SharePage} />
       <Route component={NotFound} />
     </Switch>
   );

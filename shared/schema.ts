@@ -41,3 +41,14 @@ export interface JournalEntry {
   months: JournalMonth[];
   references: Reference[];
 }
+
+export interface ShareLink {
+  id: string;
+  token: string;
+  type: 'presentation' | 'audio';
+  project: 'edd-inquiry' | 'quasi-qualitative' | 'portfolio' | 'integrated-essay';
+  title: string;
+  content: any;
+  createdAt: Date;
+  expiresAt?: Date;
+}

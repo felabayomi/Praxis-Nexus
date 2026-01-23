@@ -93,7 +93,7 @@ export function QuasiPaperView() {
   const allUsedCitationIds = Object.values(chapters)
     .filter(c => c.isGenerated && c.usedCitationIds)
     .flatMap(c => c.usedCitationIds);
-  const uniqueCitationIds = [...new Set(allUsedCitationIds)];
+  const uniqueCitationIds = Array.from(new Set(allUsedCitationIds));
   const usedReferences = quasiData.references.filter(ref => uniqueCitationIds.includes(ref.id));
   const hasGeneratedContent = Object.values(chapters).some(c => c.isGenerated);
 

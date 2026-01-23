@@ -85,7 +85,9 @@ Praxis Nexus is an academic research hub web application presenting multiple res
      - Transforms Q&A content into formal academic chapters
      - Supports Proposal format (Chapters 1-3) or Full Dissertation (Chapters 1-6)
      - Generate individual chapters or all at once
-     - Print and Download functionality
+     - **Citation Matching**: AI uses in-text citations from master reference list
+     - **Dynamic References**: Shows only sources cited in generated chapters
+     - Print and Download functionality (includes only cited sources)
 - 7 main sections: Theoretical Framework, Research Design, Participants, Data Collection, Data Interpretation, Ethics, Chapter Summary
 - References section with APA 7th edition formatting and external links
 

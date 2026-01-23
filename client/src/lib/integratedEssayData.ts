@@ -23,7 +23,7 @@ export const integratedEssayData = {
   
   overview: "The Integrated Essay is the analytical and reflective centerpiece of the doctoral portfolio. It synthesizes learning across the three strands (Knowledge, Practice, Self-in-Context) and demonstrates readiness for dissertation work.",
 
-  dissertationTitle: "Designing and Recommending a Pragmatic Prototype for Human–Wildlife Interaction and Conflict Resolution: A Socio-Technical Design Science Approach",
+  dissertationTitle: "Evaluating and Recommending a Pragmatic Mobile App Prototype for Human–Wildlife Conflict Prevention and Resolution: A Socio-Technical Design Science Approach",
 
   coreRequirements: [
     "Demonstrate integration across the program strands",
@@ -41,7 +41,7 @@ export const integratedEssayData = {
       promptGuidance: "Introduce the purpose of the integrated essay: to synthesize doctoral learning across Knowledge, Practice, and Self-in-Context strands. Preview how this learning culminates in dissertation readiness.",
       content: `The Doctor of Education in Educational and Professional Practice at Antioch University has provided me with an intellectual and professional space to integrate theory, practice, and self-awareness as a scholar-practitioner. The Integrated Essay represents both reflection and synthesis—an analysis of how my learning across the program's three strands—Knowledge, Practice, and Self-in-Context—has culminated in a coherent scholarly identity and research agenda. Each strand has contributed to my capacity to design, implement, and evaluate complex systems-oriented solutions within my field of human–wildlife conflict resolution and environmental governance.
 
-Through this learning journey, I have come to understand knowledge as relational, dynamic, and pragmatic. The Ed.D. program has challenged me to link philosophical reflection with professional innovation, producing scholarship that serves practical ends while maintaining ethical and ecological sensitivity. The evolution of my scholarly practice has led directly to my dissertation, titled Designing and Recommending a Pragmatic Prototype for Human–Wildlife Interaction and Conflict Resolution: A Socio-Technical Design Science Approach. This study exemplifies my integration of theory and practice, grounded in Pragmatism and Socio-Technical Systems Theory, and implemented through a Design Science Research (DSR) methodology.`
+Through this learning journey, I have come to understand knowledge as relational, dynamic, and pragmatic. The Ed.D. program has challenged me to link philosophical reflection with professional innovation, producing scholarship that serves practical ends while maintaining ethical and ecological sensitivity. The evolution of my scholarly practice has led directly to my dissertation, titled Evaluating and Recommending a Pragmatic Mobile App Prototype for Human–Wildlife Conflict Prevention and Resolution: A Socio-Technical Design Science Approach. This study exemplifies my integration of theory and practice, grounded in Pragmatism and Socio-Technical Systems Theory, and implemented through a Design Science Research (DSR) methodology.`
     },
     {
       id: "knowledge-strand",
@@ -102,8 +102,8 @@ This integration is not merely conceptual—it represents a transformation in ho
       title: "Connection to Dissertation Design",
       description: "How doctoral learning culminates in the dissertation focus.",
       pageLength: "1–1.5 pages",
-      promptGuidance: "Explain how coursework, paradigm development, and professional experience culminate in the dissertation: 'Designing and Recommending a Pragmatic Prototype for Human–Wildlife Interaction and Conflict Resolution: A Socio-Technical Design Science Approach.' Connect pragmatism, DSR, and socio-technical systems theory.",
-      content: `My forthcoming dissertation embodies this integrated identity. Grounded in Pragmatism and informed by Socio-Technical Systems Theory, it applies Design Science Research and the Modified Delphi method to develop a prototype for real-time human–wildlife conflict resolution. This research seeks not only to advance digital innovation in conservation governance but also to model an ethically grounded, participatory approach to technological design.
+      promptGuidance: "Explain how coursework, paradigm development, and professional experience culminate in the dissertation: 'Evaluating and Recommending a Pragmatic Mobile App Prototype for Human–Wildlife Conflict Prevention and Resolution: A Socio-Technical Design Science Approach.' Connect pragmatism, DSR, and socio-technical systems theory.",
+      content: `My forthcoming dissertation embodies this integrated identity. Grounded in Pragmatism and informed by Socio-Technical Systems Theory, it applies Design Science Research and the Modified Delphi method to evaluate and recommend a pragmatic mobile app prototype for human–wildlife conflict prevention and resolution. This research seeks not only to advance digital innovation in conservation governance but also to model an ethically grounded, participatory approach to technological design.
 
 The dissertation design reflects the synthesis of all three strands: the Knowledge strand's theoretical and methodological grounding, the Practice strand's applied innovation, and the Self-in-Context strand's ethical reflexivity. Through this research, I aim to demonstrate how scholar-practitioners can bridge academic inquiry and professional practice in service of both human communities and ecological systems.`
     },
@@ -125,7 +125,7 @@ The progression from foundational coursework through the paradigm paper, theoret
       promptGuidance: "Conclude by affirming readiness for dissertation work. Summarize how the integrated learning across strands prepares for rigorous, ethical, and impactful research. Articulate commitment to scholar-practitioner identity and contribution to professional practice.",
       content: `Ultimately, the integration of Knowledge, Practice, and Self-in-Context has prepared me to contribute meaningfully to both scholarship and practice. It has taught me that rigorous research and moral imagination are not opposing forces but complementary sources of wisdom. The Antioch Ed.D. experience has affirmed that to educate, to design, and to lead are all acts of stewardship—toward knowledge, toward community, and toward the living world we share.
 
-I am ready to undertake dissertation research that honors this integrated learning. Through the design and recommendation of a pragmatic prototype for human–wildlife coexistence, I will demonstrate how scholar-practitioners can generate knowledge that matters—knowledge that works in the world and serves the flourishing of all beings.`
+I am ready to undertake dissertation research that honors this integrated learning. Through the evaluation and recommendation of a pragmatic mobile app prototype for human–wildlife conflict prevention and resolution, I will demonstrate how scholar-practitioners can generate knowledge that matters—knowledge that works in the world and serves the flourishing of all beings.`
     }
   ] as EssaySection[],
 

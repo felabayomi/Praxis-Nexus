@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { PortfolioSearchDialog } from "@/components/PortfolioSearchDialog";
+import { SimpleTTS } from "@/components/SimpleTTS";
+import { AuthorModal } from "@/components/AuthorModal";
 import { 
   ArrowLeft, 
   BookOpen, 
@@ -18,8 +21,6 @@ import {
   Printer,
   Download,
   Search,
-  Volume2,
-  Presentation,
   Type,
   Plus,
   Minus,
@@ -70,6 +71,8 @@ export default function Portfolio() {
   });
   const [expandedArtifacts, setExpandedArtifacts] = useState<Record<string, boolean>>({});
   const [fontSize, setFontSize] = useState(16);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [authorModalOpen, setAuthorModalOpen] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -81,6 +84,28 @@ export default function Portfolio() {
     if (savedFontSize) {
       setFontSize(parseInt(savedFontSize));
     }
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  const getPortfolioText = useCallback(() => {
+    let text = `${portfolioData.title}. ${portfolioData.overview}. `;
+    for (const strand of portfolioData.strands) {
+      text += `${strand.title}. ${strand.description}. `;
+      for (const artifact of strand.artifacts) {
+        text += `${artifact.title}. ${artifact.reflection}. `;
+      }
+    }
+    return text;
   }, []);
 
   const handleAccessSubmit = () => {
@@ -198,7 +223,7 @@ export default function Portfolio() {
                   </label>
                   <Button 
                     onClick={handleAccessSubmit} 
-                    className="w-full bg-blue-600 hover:bg-blue-700"
+                    className="w-full bg-blue-600"
                     data-testid="button-submit-code"
                   >
                     Access Portfolio
@@ -207,7 +232,7 @@ export default function Portfolio() {
               ) : (
                 <Button 
                   onClick={() => setShowLanding(false)} 
-                  className="w-full bg-blue-600 hover:bg-blue-700"
+                  className="w-full bg-blue-600"
                   data-testid="button-enter-project"
                 >
                   Enter Portfolio
@@ -215,7 +240,7 @@ export default function Portfolio() {
               )}
               <div className="pt-4 border-t border-blue-500/20">
                 <Link href="/">
-                  <Button variant="ghost" className="w-full text-blue-300 hover:text-white hover:bg-blue-800/30">
+                  <Button variant="ghost" className="w-full text-blue-300">
                     <ArrowLeft className="mr-2 h-4 w-4" />
                     Back to Hub
                   </Button>
@@ -248,14 +273,18 @@ export default function Portfolio() {
           </div>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1 border rounded-md px-2 py-1">
-              <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => handleFontSizeChange(-1)} data-testid="button-font-decrease">
+              <Button variant="ghost" size="sm" onClick={() => handleFontSizeChange(-1)} data-testid="button-font-decrease">
                 <Minus className="h-3 w-3" />
               </Button>
               <Type className="h-4 w-4 text-muted-foreground" />
-              <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => handleFontSizeChange(1)} data-testid="button-font-increase">
+              <Button variant="ghost" size="sm" onClick={() => handleFontSizeChange(1)} data-testid="button-font-increase">
                 <Plus className="h-3 w-3" />
               </Button>
             </div>
+            <SimpleTTS getText={getPortfolioText} />
+            <Button variant="ghost" size="icon" onClick={() => setSearchOpen(true)} data-testid="button-search">
+              <Search className="h-4 w-4" />
+            </Button>
             <Button variant="ghost" size="icon" onClick={handlePrint} data-testid="button-print">
               <Printer className="h-4 w-4" />
             </Button>
@@ -414,10 +443,13 @@ export default function Portfolio() {
 
         <footer className="text-center py-8 border-t border-border/50">
           <p className="text-xs text-muted-foreground">
-            © Felix Abayomi 2026
+            © <button onClick={() => setAuthorModalOpen(true)} className="hover:underline cursor-pointer" data-testid="button-author">Felix Abayomi</button> 2026
           </p>
         </footer>
       </main>
+
+      <PortfolioSearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
+      <AuthorModal open={authorModalOpen} onOpenChange={setAuthorModalOpen} />
     </div>
   );
 }

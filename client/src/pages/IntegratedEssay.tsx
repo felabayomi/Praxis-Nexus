@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { EssaySearchDialog } from "@/components/EssaySearchDialog";
+import { SimpleTTS } from "@/components/SimpleTTS";
+import { AuthorModal } from "@/components/AuthorModal";
 import { 
   ArrowLeft, 
   BookOpen, 
@@ -14,6 +17,7 @@ import {
   ChevronUp,
   Printer,
   Download,
+  Search,
   Type,
   Plus,
   Minus,
@@ -53,6 +57,8 @@ export default function IntegratedEssay() {
   const [fontSize, setFontSize] = useState(16);
   const [sections, setSections] = useState<Record<string, SectionContent>>({});
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [authorModalOpen, setAuthorModalOpen] = useState(false);
 
   const allUsedCitationIds = Object.values(sections)
     .filter(s => s.isGenerated && s.usedCitationIds)
@@ -72,6 +78,29 @@ export default function IntegratedEssay() {
       setFontSize(parseInt(savedFontSize));
     }
   }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  const getEssayText = useCallback(() => {
+    let text = `${integratedEssayData.title}. ${integratedEssayData.overview}. `;
+    for (const section of integratedEssayData.sections) {
+      text += `${section.title}. ${section.description}. `;
+      const sectionData = sections[section.id];
+      if (sectionData?.isGenerated && sectionData.content) {
+        text += sectionData.content + ". ";
+      }
+    }
+    return text;
+  }, [sections]);
 
   const handleAccessSubmit = () => {
     if (accessCode === ACCESS_CODE) {
@@ -248,7 +277,7 @@ export default function IntegratedEssay() {
                   </label>
                   <Button 
                     onClick={handleAccessSubmit} 
-                    className="w-full bg-teal-600 hover:bg-teal-700"
+                    className="w-full bg-teal-600"
                     data-testid="button-submit-code"
                   >
                     Access Essay
@@ -257,7 +286,7 @@ export default function IntegratedEssay() {
               ) : (
                 <Button 
                   onClick={() => setShowLanding(false)} 
-                  className="w-full bg-teal-600 hover:bg-teal-700"
+                  className="w-full bg-teal-600"
                   data-testid="button-enter-project"
                 >
                   Enter Essay
@@ -265,7 +294,7 @@ export default function IntegratedEssay() {
               )}
               <div className="pt-4 border-t border-teal-500/20">
                 <Link href="/">
-                  <Button variant="ghost" className="w-full text-teal-300 hover:text-white hover:bg-teal-800/30">
+                  <Button variant="ghost" className="w-full text-teal-300">
                     <ArrowLeft className="mr-2 h-4 w-4" />
                     Back to Hub
                   </Button>
@@ -298,14 +327,18 @@ export default function IntegratedEssay() {
           </div>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1 border rounded-md px-2 py-1">
-              <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => handleFontSizeChange(-1)} data-testid="button-font-decrease">
+              <Button variant="ghost" size="sm" onClick={() => handleFontSizeChange(-1)} data-testid="button-font-decrease">
                 <Minus className="h-3 w-3" />
               </Button>
               <Type className="h-4 w-4 text-muted-foreground" />
-              <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => handleFontSizeChange(1)} data-testid="button-font-increase">
+              <Button variant="ghost" size="sm" onClick={() => handleFontSizeChange(1)} data-testid="button-font-increase">
                 <Plus className="h-3 w-3" />
               </Button>
             </div>
+            <SimpleTTS getText={getEssayText} />
+            <Button variant="ghost" size="icon" onClick={() => setSearchOpen(true)} data-testid="button-search">
+              <Search className="h-4 w-4" />
+            </Button>
             <Button variant="ghost" size="icon" onClick={handlePrint} data-testid="button-print">
               <Printer className="h-4 w-4" />
             </Button>
@@ -498,10 +531,13 @@ export default function IntegratedEssay() {
 
         <footer className="text-center py-8 border-t border-border/50">
           <p className="text-xs text-muted-foreground">
-            © Felix Abayomi 2026
+            © <button onClick={() => setAuthorModalOpen(true)} className="hover:underline cursor-pointer" data-testid="button-author">Felix Abayomi</button> 2026
           </p>
         </footer>
       </main>
+
+      <EssaySearchDialog open={searchOpen} onOpenChange={setSearchOpen} generatedSections={sections} />
+      <AuthorModal open={authorModalOpen} onOpenChange={setAuthorModalOpen} />
     </div>
   );
 }

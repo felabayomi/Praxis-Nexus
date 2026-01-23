@@ -212,7 +212,7 @@ IMPORTANT GUIDELINES:
 ${chapterPrompt}`;
 
       const response = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: "gpt-4o",
         messages: [
           { role: "system", content: systemPrompt },
           { 
@@ -258,7 +258,7 @@ Respond in JSON format with keys: keyInsight, thematicConnection, discussionQues
 Keep responses scholarly yet accessible.`;
 
       const response = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: "gpt-4o",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: content.substring(0, 2000) }

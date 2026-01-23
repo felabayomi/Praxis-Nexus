@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Loader2, BookCheck, AlertCircle, CheckCircle, Sparkles, Search, Database, Copy, BookOpen } from "lucide-react";
+import { Loader2, BookCheck, AlertCircle, CheckCircle, Sparkles, Search, Database, Copy, BookOpen, FileText, List } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -18,22 +18,9 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
+import { Separator } from "@/components/ui/separator";
 
 const AUTHOR_MODE_KEY = "praxis-nexus-author-mode";
-
-interface CitationSuggestion {
-  statement: string;
-  reason: string;
-  suggestion: string;
-  matchedReference?: string;
-}
-
-interface CitationAnalysis {
-  suggestions: CitationSuggestion[];
-  apaFormatTips: string[];
-  overallFeedback: string;
-  referenceCount?: number;
-}
 
 interface SearchResult {
   id: string;
@@ -45,12 +32,28 @@ interface SearchResult {
   abstract?: string;
 }
 
+interface CitationUsed {
+  refId: string;
+  inText: string;
+  context: string;
+}
+
+interface AutoCiteResult {
+  originalText: string;
+  citedText: string;
+  citationsUsed: CitationUsed[];
+  references: SearchResult[];
+  unchangedStatements: string[];
+  summary: string;
+  totalReferencesAvailable: number;
+}
+
 export function CitationAssistant() {
   const [text, setText] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const [analysis, setAnalysis] = useState<CitationAnalysis | null>(null);
+  const [autoCiteResult, setAutoCiteResult] = useState<AutoCiteResult | null>(null);
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isAuthorMode, setIsAuthorMode] = useState(() => {
@@ -85,27 +88,27 @@ export function CitationAssistant() {
     return null;
   }
 
-  const handleAnalyze = async () => {
+  const handleAutoCite = async () => {
     if (!text.trim()) return;
     
-    setIsAnalyzing(true);
+    setIsProcessing(true);
     setError(null);
-    setAnalysis(null);
+    setAutoCiteResult(null);
 
     try {
-      const response = await apiRequest("POST", "/api/citation/analyze", { text });
+      const response = await apiRequest("POST", "/api/citation/auto-cite", { text });
       const result = await response.json();
       
       if (result.error) {
         setError(result.error);
       } else {
-        setAnalysis(result);
+        setAutoCiteResult(result);
       }
     } catch (err) {
-      console.error("Citation analysis error:", err);
-      setError("Failed to analyze text. Please try again.");
+      console.error("Auto-cite error:", err);
+      setError("Failed to process text. Please try again.");
     } finally {
-      setIsAnalyzing(false);
+      setIsProcessing(false);
     }
   };
 
@@ -130,9 +133,20 @@ export function CitationAssistant() {
     }
   };
 
-  const copyToClipboard = (text: string, type: string) => {
-    navigator.clipboard.writeText(text);
+  const copyToClipboard = (textToCopy: string, type: string) => {
+    navigator.clipboard.writeText(textToCopy);
     toast({ title: "Copied!", description: `${type} copied to clipboard` });
+  };
+
+  const copyAllResults = () => {
+    if (!autoCiteResult) return;
+    
+    const refList = autoCiteResult.references
+      .map(r => r.fullReference)
+      .join('\n\n');
+    
+    const fullOutput = `${autoCiteResult.citedText}\n\n---\n\nReferences\n\n${refList}`;
+    copyToClipboard(fullOutput, "Cited text and references");
   };
 
   return (
@@ -148,7 +162,7 @@ export function CitationAssistant() {
           )}
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-2xl max-h-[90vh]">
+      <DialogContent className="max-w-3xl max-h-[90vh]">
         <DialogHeader>
           <DialogTitle className="font-serif flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-primary" />
@@ -156,15 +170,15 @@ export function CitationAssistant() {
           </DialogTitle>
           <DialogDescription className="flex items-center gap-2">
             <Database className="h-3 w-3" />
-            {refCount?.count ? `${refCount.count} references available` : 'Loading references...'}
+            {refCount?.count ? `${refCount.count} references available for auto-citation` : 'Loading references...'}
           </DialogDescription>
         </DialogHeader>
         
-        <Tabs defaultValue="analyze" className="w-full">
+        <Tabs defaultValue="autocite" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="analyze" className="gap-2" data-testid="tab-analyze">
-              <BookCheck className="h-4 w-4" />
-              Analyze Text
+            <TabsTrigger value="autocite" className="gap-2" data-testid="tab-autocite">
+              <FileText className="h-4 w-4" />
+              Auto-Cite Text
             </TabsTrigger>
             <TabsTrigger value="search" className="gap-2" data-testid="tab-search">
               <Search className="h-4 w-4" />
@@ -172,129 +186,208 @@ export function CitationAssistant() {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="analyze" className="space-y-4 mt-4">
-            <Textarea
-              placeholder="Paste your academic text here to analyze for citation needs..."
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              className="min-h-[120px] resize-none"
-              data-testid="textarea-citation-input"
-            />
-            
-            <Button 
-              onClick={handleAnalyze} 
-              disabled={!text.trim() || isAnalyzing}
-              className="w-full gap-2"
-              data-testid="button-analyze-citations"
-            >
-              {isAnalyzing ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Analyzing with {refCount?.count || 0} references...
-                </>
-              ) : (
-                <>
-                  <BookCheck className="h-4 w-4" />
-                  Check Citations & Match References
-                </>
-              )}
-            </Button>
-
-            {error && (
-              <Card className="border-destructive">
-                <CardContent className="pt-4">
-                  <p className="text-sm text-destructive flex items-center gap-2">
-                    <AlertCircle className="h-4 w-4" />
-                    {error}
+          <TabsContent value="autocite" className="space-y-4 mt-4">
+            {!autoCiteResult ? (
+              <>
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">
+                    Paste your text below. The AI will identify statements needing citations and automatically insert them from your reference database.
                   </p>
-                </CardContent>
-              </Card>
-            )}
+                  <Textarea
+                    placeholder="Paste your academic text here..."
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    className="min-h-[180px] resize-none"
+                    data-testid="textarea-citation-input"
+                  />
+                  <p className="text-xs text-muted-foreground text-right">
+                    {text.length} / 15,000 characters
+                  </p>
+                </div>
+                
+                <Button 
+                  onClick={handleAutoCite} 
+                  disabled={!text.trim() || isProcessing}
+                  className="w-full gap-2"
+                  data-testid="button-auto-cite"
+                >
+                  {isProcessing ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Adding citations from {refCount?.count || 0} references...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="h-4 w-4" />
+                      Auto-Cite My Text
+                    </>
+                  )}
+                </Button>
 
-            {analysis && (
-              <ScrollArea className="h-[280px]">
-                <div className="space-y-4 pr-4">
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm font-medium flex items-center gap-2">
-                        <CheckCircle className="h-4 w-4 text-primary" />
-                        Overall Assessment
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground">{analysis.overallFeedback}</p>
+                {error && (
+                  <Card className="border-destructive">
+                    <CardContent className="pt-4">
+                      <p className="text-sm text-destructive flex items-center gap-2">
+                        <AlertCircle className="h-4 w-4" />
+                        {error}
+                      </p>
                     </CardContent>
                   </Card>
+                )}
+              </>
+            ) : (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-500" />
+                    <span className="text-sm font-medium">
+                      {autoCiteResult.citationsUsed.length} citations added
+                    </span>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => setAutoCiteResult(null)}
+                      data-testid="button-edit-text"
+                    >
+                      Edit Original
+                    </Button>
+                    <Button 
+                      size="sm"
+                      className="gap-1"
+                      onClick={copyAllResults}
+                      data-testid="button-copy-all"
+                    >
+                      <Copy className="h-3 w-3" />
+                      Copy All
+                    </Button>
+                  </div>
+                </div>
 
-                  {analysis.suggestions.length > 0 && (
+                <p className="text-sm text-muted-foreground italic">
+                  {autoCiteResult.summary}
+                </p>
+
+                <Separator />
+
+                <ScrollArea className="h-[300px]">
+                  <div className="space-y-4 pr-4">
                     <Card>
                       <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium">
-                          Statements That May Need Citations ({analysis.suggestions.length})
-                        </CardTitle>
+                        <div className="flex items-center justify-between">
+                          <CardTitle className="text-sm font-medium flex items-center gap-2">
+                            <FileText className="h-4 w-4" />
+                            Cited Text
+                          </CardTitle>
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            className="gap-1 h-7 text-xs"
+                            onClick={() => copyToClipboard(autoCiteResult.citedText, "Cited text")}
+                            data-testid="button-copy-cited-text"
+                          >
+                            <Copy className="h-3 w-3" />
+                            Copy
+                          </Button>
+                        </div>
                       </CardHeader>
-                      <CardContent className="space-y-4">
-                        {analysis.suggestions.map((suggestion, index) => (
-                          <div key={index} className="border-l-2 border-primary/30 pl-4 space-y-1">
-                            <p className="text-sm font-medium text-foreground">
-                              "{suggestion.statement}"
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              <strong>Why:</strong> {suggestion.reason}
-                            </p>
-                            <p className="text-xs text-primary">
-                              <strong>Suggestion:</strong> {suggestion.suggestion}
-                            </p>
-                            {suggestion.matchedReference && (
-                              <div className="flex items-center gap-2 mt-2">
-                                <Badge variant="default" className="text-xs">Match</Badge>
-                                <span className="text-xs font-medium">{suggestion.matchedReference}</span>
+                      <CardContent>
+                        <div className="text-sm leading-relaxed whitespace-pre-wrap bg-muted/50 p-3 rounded-md">
+                          {autoCiteResult.citedText}
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {autoCiteResult.references.length > 0 && (
+                      <Card>
+                        <CardHeader className="pb-2">
+                          <div className="flex items-center justify-between">
+                            <CardTitle className="text-sm font-medium flex items-center gap-2">
+                              <List className="h-4 w-4" />
+                              References ({autoCiteResult.references.length})
+                            </CardTitle>
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
+                              className="gap-1 h-7 text-xs"
+                              onClick={() => {
+                                const refs = autoCiteResult.references.map(r => r.fullReference).join('\n\n');
+                                copyToClipboard(refs, "References list");
+                              }}
+                              data-testid="button-copy-references"
+                            >
+                              <Copy className="h-3 w-3" />
+                              Copy All
+                            </Button>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="space-y-3">
+                          {autoCiteResult.references.map((ref, index) => (
+                            <div 
+                              key={ref.id || index} 
+                              className="text-sm border-l-2 border-primary/30 pl-3 hover-elevate p-2 rounded-r-md"
+                            >
+                              <div className="flex items-start justify-between gap-2">
+                                <p className="text-sm leading-relaxed" style={{ textIndent: '-0.5rem', paddingLeft: '0.5rem' }}>
+                                  {ref.fullReference}
+                                </p>
                                 <Button 
                                   variant="ghost" 
-                                  size="icon" 
-                                  className="h-5 w-5"
-                                  onClick={() => copyToClipboard(`(${suggestion.matchedReference})`, "Citation")}
+                                  size="icon"
+                                  className="h-6 w-6 shrink-0"
+                                  onClick={() => copyToClipboard(ref.fullReference, "Reference")}
                                 >
                                   <Copy className="h-3 w-3" />
                                 </Button>
                               </div>
-                            )}
-                          </div>
-                        ))}
-                      </CardContent>
-                    </Card>
-                  )}
-
-                  {analysis.apaFormatTips.length > 0 && (
-                    <Card>
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium">APA 7th Format Tips</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <ul className="space-y-1">
-                          {analysis.apaFormatTips.map((tip, index) => (
-                            <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
-                              <Badge variant="outline" className="mt-0.5 shrink-0">Tip</Badge>
-                              {tip}
-                            </li>
+                            </div>
                           ))}
-                        </ul>
-                      </CardContent>
-                    </Card>
-                  )}
+                        </CardContent>
+                      </Card>
+                    )}
 
-                  {analysis.suggestions.length === 0 && analysis.apaFormatTips.length === 0 && (
-                    <Card className="border-green-500/30 bg-green-500/5">
-                      <CardContent className="pt-4">
-                        <p className="text-sm text-green-600 dark:text-green-400 flex items-center gap-2">
-                          <CheckCircle className="h-4 w-4" />
-                          Your text appears well-cited with proper APA formatting!
-                        </p>
-                      </CardContent>
-                    </Card>
-                  )}
-                </div>
-              </ScrollArea>
+                    {autoCiteResult.unchangedStatements.length > 0 && (
+                      <Card className="border-amber-500/30">
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-sm font-medium flex items-center gap-2 text-amber-600 dark:text-amber-400">
+                            <AlertCircle className="h-4 w-4" />
+                            Statements Without Matching References
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <ul className="space-y-2">
+                            {autoCiteResult.unchangedStatements.map((statement, index) => (
+                              <li key={index} className="text-sm text-muted-foreground">
+                                • {statement}
+                              </li>
+                            ))}
+                          </ul>
+                          <p className="text-xs text-muted-foreground mt-3 italic">
+                            Consider adding sources to your reference database or finding manual citations for these.
+                          </p>
+                        </CardContent>
+                      </Card>
+                    )}
+
+                    {autoCiteResult.citationsUsed.length > 0 && (
+                      <Card>
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-sm font-medium">Citation Details</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                          {autoCiteResult.citationsUsed.map((citation, index) => (
+                            <div key={index} className="flex items-start gap-2 text-xs">
+                              <Badge variant="outline" className="shrink-0">{citation.inText}</Badge>
+                              <span className="text-muted-foreground">{citation.context}</span>
+                            </div>
+                          ))}
+                        </CardContent>
+                      </Card>
+                    )}
+                  </div>
+                </ScrollArea>
+              </div>
             )}
           </TabsContent>
 

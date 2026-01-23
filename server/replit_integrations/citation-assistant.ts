@@ -207,4 +207,111 @@ Respond in JSON format:
       res.status(500).json({ error: "Failed to format citation" });
     }
   });
+
+  app.post("/api/citation/auto-cite", async (req: Request, res: Response) => {
+    try {
+      const { text } = req.body;
+
+      if (!text) {
+        return res.status(400).json({ error: "Text is required" });
+      }
+
+      if (text.length > MAX_TEXT_LENGTH) {
+        return res.status(400).json({ 
+          error: `Text too long. Maximum ${MAX_TEXT_LENGTH} characters allowed.` 
+        });
+      }
+
+      const references = loadDefaultReferences();
+      
+      const refDatabase = references.map(r => ({
+        id: r.id,
+        inText: formatInTextCitation(r),
+        fullRef: formatReferenceAPA(r),
+        keywords: `${r.authors} ${r.title} ${r.keywords || ''} ${r.abstract?.substring(0, 200) || ''}`.toLowerCase(),
+        title: r.title,
+        authors: r.authors,
+        year: r.year
+      }));
+
+      const refSummaryForAI = refDatabase.slice(0, 150).map(r => 
+        `[${r.id}] ${r.inText}: "${r.title.substring(0, 60)}..."`
+      ).join('\n');
+
+      console.log(`Auto-citing text, length: ${text.length}, available refs: ${references.length}`);
+
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [
+          {
+            role: "system",
+            content: `You are an academic writing assistant. Your task is to insert appropriate in-text citations from the user's reference database into their text.
+
+REFERENCE DATABASE (${references.length} sources):
+${refSummaryForAI}
+
+INSTRUCTIONS:
+1. Read the text carefully and identify statements that need citations
+2. For each statement that needs a citation, find the BEST matching reference from the database above
+3. Insert the citation in APA 7th edition format: (Author, Year) or Author (Year) as appropriate
+4. Only use references that are actually relevant to the statement
+5. If no suitable reference exists in the database, leave that statement uncited
+6. Preserve the original meaning and flow of the text
+7. Return the modified text with citations inserted
+
+Respond in JSON format:
+{
+  "citedText": "The complete text with citations inserted where appropriate",
+  "citationsUsed": [
+    {
+      "refId": "The reference ID from the database",
+      "inText": "Author (Year) format used",
+      "context": "Brief note on why this citation was placed here"
+    }
+  ],
+  "unchangedStatements": ["Any statements that needed citations but no matching reference was found"],
+  "summary": "Brief summary of changes made"
+}`
+          },
+          {
+            role: "user",
+            content: `Please add citations from my reference database to this text:\n\n${text}`
+          }
+        ],
+        response_format: { type: "json_object" }
+      });
+
+      const content = response.choices[0]?.message?.content;
+      if (!content) {
+        return res.status(500).json({ error: "No response from AI" });
+      }
+
+      const result = JSON.parse(content);
+      
+      const usedRefIds = new Set(result.citationsUsed?.map((c: any) => c.refId) || []);
+      const usedReferences = refDatabase
+        .filter(r => usedRefIds.has(r.id))
+        .map(r => ({
+          id: r.id,
+          inText: r.inText,
+          fullReference: r.fullRef,
+          authors: r.authors,
+          year: r.year,
+          title: r.title
+        }));
+
+      res.json({
+        originalText: text,
+        citedText: result.citedText,
+        citationsUsed: result.citationsUsed || [],
+        references: usedReferences,
+        unchangedStatements: result.unchangedStatements || [],
+        summary: result.summary,
+        totalReferencesAvailable: references.length
+      });
+    } catch (error) {
+      console.error("Auto-citation error:", error);
+      res.status(500).json({ error: "Failed to auto-cite text" });
+    }
+  });
 }

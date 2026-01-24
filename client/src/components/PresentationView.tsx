@@ -73,30 +73,52 @@ function createSlides(sectionId?: string): Slide[] {
     });
 
     let slideNum = 2;
+    
+    // Create ONE slide per section, combining all content intelligently
     month.sections.forEach((section) => {
-      // Add section title slide
-      const contentTexts: string[] = [];
+      const paragraphs: string[] = [];
+      const listItems: string[] = [];
+      
+      // Separate paragraphs and list items
       section.content.forEach(item => {
         if (item.type === "paragraph" && item.content) {
-          contentTexts.push(item.content);
+          paragraphs.push(item.content);
         } else if (item.type === "list" && item.items) {
-          contentTexts.push(...item.items);
+          listItems.push(...item.items);
         }
       });
 
-      // Create content slides from the section
-      contentTexts.forEach((text, index) => {
+      // Combine content for this section
+      let combinedContent = "";
+      
+      // Add paragraphs first
+      if (paragraphs.length > 0) {
+        combinedContent = paragraphs.join("\n\n");
+      }
+      
+      // Add list items as bullet points
+      if (listItems.length > 0) {
+        const bulletList = listItems.map(item => `• ${item}`).join("\n\n");
+        if (combinedContent) {
+          combinedContent += "\n\n" + bulletList;
+        } else {
+          combinedContent = bulletList;
+        }
+      }
+
+      // Create a single slide for this section
+      if (combinedContent) {
         slides.push({
-          id: `${section.id}-${index}`,
+          id: section.id,
           type: "content",
-          title: index === 0 ? section.title : undefined,
-          content: text,
+          title: section.title,
+          content: combinedContent,
           slideNumber: slideNum++
         });
-      });
+      }
     });
   } else {
-    // Default: Introduction slides
+    // Default: Introduction slides - group every 2-3 paragraphs together
     slides.push({
       id: "title-slide",
       type: "title",
@@ -106,15 +128,22 @@ function createSlides(sectionId?: string): Slide[] {
       slideNumber: 1
     });
 
-    journalData.introduction.forEach((section, index) => {
+    // Group introduction paragraphs (2-3 per slide for better pacing)
+    const introContent = journalData.introduction;
+    const paragraphsPerSlide = 2;
+    
+    for (let i = 0; i < introContent.length; i += paragraphsPerSlide) {
+      const group = introContent.slice(i, i + paragraphsPerSlide);
+      const combinedContent = group.map(p => p.content).join("\n\n");
+      
       slides.push({
-        id: section.id,
+        id: `intro-group-${i}`,
         type: "content",
-        title: index === 0 ? "Introduction and Context" : undefined,
-        content: section.content,
-        slideNumber: index + 2
+        title: i === 0 ? "Introduction and Context" : undefined,
+        content: combinedContent,
+        slideNumber: Math.floor(i / paragraphsPerSlide) + 2
       });
-    });
+    }
   }
 
   return slides;
@@ -447,9 +476,13 @@ export function PresentationView({ template, onClose, onChangeTemplate, section 
                 )}
                 
                 <div className="flex-1 overflow-y-auto pr-2">
-                  <p className="font-serif text-base md:text-lg lg:text-xl leading-relaxed text-foreground/90">
-                    {slide.content}
-                  </p>
+                  <div className="font-serif text-base md:text-lg lg:text-xl leading-relaxed text-foreground/90 space-y-4">
+                    {slide.content?.split('\n\n').map((paragraph, idx) => (
+                      <p key={idx} className={paragraph.startsWith('•') ? 'pl-2' : ''}>
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
                 </div>
                 
                 <div className="flex items-center justify-between pt-4 border-t border-border/50 mt-4 shrink-0">

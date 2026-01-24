@@ -233,6 +233,32 @@ export const journalData: JournalEntry = {
     },
     {
       id: "ref-5",
+      authors: "Griffin, G.",
+      year: "2024",
+      title: "Conservation technology: How technology protects wildlife",
+      source: "Forestry.com",
+      type: "website"
+    },
+    {
+      id: "ref-6",
+      authors: "Hanna, M. G., Pantanowitz, L., Jackson, B., Palmer, O., Visweswaran, S., Pantanowitz, J., Deebajah, M., & Rashidi, H. H.",
+      year: "2025",
+      title: "Ethical and bias considerations in artificial intelligence/machine learning",
+      source: "Modern Pathology, 38(3)",
+      doi: "10.1016/j.modpat.2024.100686",
+      type: "journal"
+    },
+    {
+      id: "ref-7",
+      authors: "Harris, N. C., Wilkinson, C. E., Fleury, G., & Nhleko, Z. N.",
+      year: "2023",
+      title: "Responsibility, equity, justice, and inclusion in dynamic human–wildlife interactions",
+      source: "Frontiers in Ecology and the Environment",
+      doi: "10.1002/fee.2603",
+      type: "journal"
+    },
+    {
+      id: "ref-8",
       authors: "Latour, B.",
       year: "2004",
       title: "Why has critique run out of steam? From matters of fact to matters of concern",
@@ -241,7 +267,15 @@ export const journalData: JournalEntry = {
       type: "journal"
     },
     {
-      id: "ref-6",
+      id: "ref-9",
+      authors: "Madden, F.",
+      year: "2007",
+      title: "Human-wildlife conflict: A case for global collaboration",
+      source: "Report",
+      type: "report"
+    },
+    {
+      id: "ref-10",
       authors: "Olawade, D. B., Wada, O. Z., Ige, A. O., Egbewole, B. I., Olojo, A., & Oladapo, B. I.",
       year: "2024",
       title: "Artificial intelligence in environmental monitoring: Advancements, challenges, and future directions",
@@ -250,7 +284,7 @@ export const journalData: JournalEntry = {
       type: "journal"
     },
     {
-      id: "ref-7",
+      id: "ref-11",
       authors: "Pedrazzi, L., Naik, H., Sandbrook, C., Lurgi, M., Fürtbauer, I., & King, A.",
       year: "2025",
       title: "Advancing animal behaviour research using drone technology",
@@ -259,7 +293,7 @@ export const journalData: JournalEntry = {
       type: "journal"
     },
     {
-      id: "ref-8",
+      id: "ref-12",
       authors: "Priyambodo, P., Rustiati, E. L., Alfandy, D. D., Hamidatul 'Aliyah, S., & Permatasari, N.",
       year: "2026",
       title: "Global research trends on human-elephant conflicts and sustainable plantation management: A 30-year bibliometric study",
@@ -268,7 +302,16 @@ export const journalData: JournalEntry = {
       type: "journal"
     },
     {
-      id: "ref-9",
+      id: "ref-13",
+      authors: "Rands, M. R. W., Adams, W. M., Bennun, L., Butchart, S. H. M., Clements, A., Coomes, D., Entwistle, A., Hodge, I., Kapos, V., Scharlemann, J. P. W., Sutherland, W. J., & Vira, B.",
+      year: "2010",
+      title: "Biodiversity conservation: Challenges beyond 2010",
+      source: "Science, 329(5997), 1298–1303",
+      doi: "10.1126/science.1189138",
+      type: "journal"
+    },
+    {
+      id: "ref-14",
       authors: "Sandbrook, C., Fisher, J. A., Holmes, G., Luque-Lora, R., & Keane, A.",
       year: "2019",
       title: "The global conservation movement is diverse but not divided",
@@ -277,13 +320,40 @@ export const journalData: JournalEntry = {
       type: "journal"
     },
     {
-      id: "ref-10",
+      id: "ref-15",
+      authors: "Srivastava, S.",
+      year: "2023",
+      title: "On the edge of the wild: Confrontation between humans and wildlife – A qualitative study of human wildlife conflict",
+      source: "Jaipuria Institute of Management, Jaipur",
+      doi: "10.2139/ssrn.4513132",
+      type: "report"
+    },
+    {
+      id: "ref-16",
+      authors: "Stilgoe, J., Owen, R., & Macnaghten, P.",
+      year: "2013",
+      title: "Developing a framework for responsible innovation",
+      source: "Research Policy, 42(9), 1568–1580",
+      doi: "10.1016/j.respol.2013.05.008",
+      type: "journal"
+    },
+    {
+      id: "ref-17",
       authors: "Willer, D., Short, S., Khripko, D., Bremner, J., Aldridge, D., Sutherland, W., & Petrovan, S.",
       year: "2025",
       title: "Challenges and opportunities in leveraging an existing systematic evidence database for mitigating hazards to the global food system",
       source: "Royal Society Open Science, 12",
       doi: "10.1098/rsos.241645",
       type: "journal"
+    },
+    {
+      id: "ref-18",
+      authors: "Woodroffe, R., Thirgood, S., & Rabinowitz, A.",
+      year: "2005",
+      title: "People and wildlife, conflict or co-existence?",
+      source: "Cambridge University Press",
+      doi: "10.1017/CBO9780511614774",
+      type: "book"
     }
   ]
 };

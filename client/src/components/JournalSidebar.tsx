@@ -17,13 +17,15 @@ import {
   Calendar,
   Leaf,
   ChevronRight,
-  Clock
+  Clock,
+  Brain
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import { 
   getIntroductionReadingTime, 
   getMonthReadingTime, 
   getReferencesReadingTime,
+  getInquiryQuestionsReadingTime,
   formatReadingTime,
   getTotalReadingTime
 } from "@/lib/journalUtils";
@@ -36,6 +38,7 @@ interface JournalSidebarProps {
 
 export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCenter }: JournalSidebarProps) {
   const introTime = getIntroductionReadingTime(journalData);
+  const inquiryTime = getInquiryQuestionsReadingTime(journalData);
   const refsTime = getReferencesReadingTime(journalData);
   const totalTime = getTotalReadingTime(journalData);
 
@@ -99,6 +102,24 @@ export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCente
                       </span>
                     </div>
                     {activeSection === "introduction" && (
+                      <ChevronRight className="ml-auto h-4 w-4" />
+                    )}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem className="ml-4">
+                  <SidebarMenuButton
+                    onClick={() => onSectionChange("inquiry-questions")}
+                    className={activeSection === "inquiry-questions" ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""}
+                    data-testid="nav-inquiry-questions"
+                  >
+                    <Brain className="h-4 w-4" />
+                    <div className="flex flex-col items-start gap-0.5 flex-1">
+                      <span>Inquiry Question(s)</span>
+                      <span className="text-xs text-sidebar-foreground/50">
+                        {formatReadingTime(inquiryTime)}
+                      </span>
+                    </div>
+                    {activeSection === "inquiry-questions" && (
                       <ChevronRight className="ml-auto h-4 w-4" />
                     )}
                   </SidebarMenuButton>

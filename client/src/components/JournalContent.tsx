@@ -24,7 +24,11 @@ import {
   Headphones,
   Plus,
   Minus,
-  Type
+  Type,
+  Cpu,
+  Home,
+  TrendingUp,
+  MessageCircle
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import {
@@ -48,6 +52,7 @@ import {
   getIntroductionReadingTime, 
   getMonthReadingTime, 
   getReferencesReadingTime,
+  getInquiryQuestionsReadingTime,
   formatReadingTime 
 } from "@/lib/journalUtils";
 import type { ContentSection, MonthSection, Reference } from "@shared/schema";
@@ -122,6 +127,10 @@ const iconMap: Record<string, React.ReactNode> = {
   "book-open": <BookOpen className="h-5 w-5" />,
   "target": <Target className="h-5 w-5" />,
   "refresh-cw": <RefreshCw className="h-5 w-5" />,
+  "cpu": <Cpu className="h-5 w-5" />,
+  "home": <Home className="h-5 w-5" />,
+  "trending-up": <TrendingUp className="h-5 w-5" />,
+  "message-circle": <MessageCircle className="h-5 w-5" />,
 };
 
 function ContentBlock({ section, fontSize }: { section: ContentSection; fontSize: number }) {
@@ -252,6 +261,7 @@ function getSortedReferences(references: Reference[]): Reference[] {
 export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCenter, onSectionChange }: JournalContentProps) {
   const month = journalData.months.find((m) => m.id === activeSection);
   const introTime = getIntroductionReadingTime(journalData);
+  const inquiryTime = getInquiryQuestionsReadingTime(journalData);
   const refsTime = getReferencesReadingTime(journalData);
   
   // Font size state with localStorage persistence (with SSR safety check)
@@ -545,6 +555,79 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                 >
                   {section.content}
                 </p>
+              ))}
+            </div>
+          </article>
+        )}
+
+        {activeSection === "inquiry-questions" && journalData.inquiryQuestions && (
+          <article data-testid="section-inquiry-questions">
+            <div className="mb-6">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onSectionChange?.("overview")}
+                className="gap-2"
+                data-testid="button-back-to-overview-iq"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to Overview
+              </Button>
+            </div>
+            <header className="mb-10">
+              <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Badge variant="secondary">
+                    Inquiry Question(s)
+                  </Badge>
+                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <Clock className="h-3 w-3" />
+                    <span>{formatReadingTime(inquiryTime)}</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <FontSizeControl fontSize={fontSize} onFontSizeChange={setFontSize} />
+                  <TextToSpeech sectionId="inquiry-questions" />
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="ghost" size="icon" title="AI Audio (CarPlay compatible)" data-testid="button-ai-audio-iq">
+                        <Headphones className="h-4 w-4" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle className="font-serif">AI Audio Narration</DialogTitle>
+                      </DialogHeader>
+                      <AudioPlayer sectionId="inquiry-questions" />
+                    </DialogContent>
+                  </Dialog>
+                  {onOpenPresentation && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onOpenPresentation("inquiry-questions")}
+                      className="flex items-center gap-2"
+                      data-testid="button-presentation-iq"
+                    >
+                      <Presentation className="h-4 w-4" />
+                      <span className="hidden sm:inline">Presentation View</span>
+                    </Button>
+                  )}
+                </div>
+              </div>
+              <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3 leading-tight">
+                Framing the Inquiry
+              </h1>
+              <h2 className="font-serif text-xl md:text-2xl text-muted-foreground mb-4">
+                AI, Ecology, and Economy in Human–Wildlife Conflict
+              </h2>
+            </header>
+
+            <Separator className="mb-8" />
+
+            <div className="space-y-6">
+              {journalData.inquiryQuestions.map((section) => (
+                <MonthSectionCard key={section.id} section={section} fontSize={fontSize} />
               ))}
             </div>
           </article>

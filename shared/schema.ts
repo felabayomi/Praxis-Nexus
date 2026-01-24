@@ -38,6 +38,7 @@ export interface JournalEntry {
   cohortTheme: string;
   author: string;
   introduction: ContentSection[];
+  inquiryQuestions?: MonthSection[];
   months: JournalMonth[];
   references: Reference[];
 }

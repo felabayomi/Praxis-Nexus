@@ -45,11 +45,18 @@ export function getReferencesReadingTime(journal: JournalEntry): number {
   return calculateReadingTime(countWords(text));
 }
 
+export function getInquiryQuestionsReadingTime(journal: JournalEntry): number {
+  if (!journal.inquiryQuestions) return 0;
+  const text = journal.inquiryQuestions.map(s => getContentText(s.content)).join(" ");
+  return calculateReadingTime(countWords(text));
+}
+
 export function getTotalReadingTime(journal: JournalEntry): number {
   const introTime = getIntroductionReadingTime(journal);
+  const inquiryTime = getInquiryQuestionsReadingTime(journal);
   const monthsTime = journal.months.reduce((acc, month) => acc + getMonthReadingTime(month), 0);
   const refsTime = getReferencesReadingTime(journal);
-  return introTime + monthsTime + refsTime;
+  return introTime + inquiryTime + monthsTime + refsTime;
 }
 
 export interface SearchResult {

@@ -37,6 +37,100 @@ export const journalData: JournalEntry = {
       content: "By noticing these tensions and reflecting on them early, I aim not to resolve them but to bring them into sharper focus. This inquiry is a process of staying with complexity, recognizing that AI in environmental systems is neither inherently liberatory nor inherently extractive—but deeply contextual, political, and relational (Arts et al., 2015; Crawford, 2021; Latour, 2004; Sandbrook et al., 2019)."
     }
   ],
+  inquiryQuestions: [
+    {
+      id: "iq-framing",
+      title: "Framing the Inquiry: AI, Ecology, and Economy in Human–Wildlife Conflict",
+      icon: "brain",
+      content: [
+        {
+          id: "iq-intro",
+          type: "paragraph",
+          content: "This inquiry explores how ecological disruption and economic development together intensify human–wildlife conflict and how AI tools might mediate these tensions. At its core, the inquiry asks:"
+        },
+        {
+          id: "iq-questions",
+          type: "list",
+          content: "",
+          items: [
+            "How do resource use, habitat change, and economic development contribute to human–wildlife conflict?",
+            "How do ecological impacts intersect with economic consequences such as livelihoods, funding, and industry practices?",
+            "How might AI tools reshape monitoring, mitigation, and investment decisions affecting both wildlife and human communities?"
+          ]
+        }
+      ]
+    },
+    {
+      id: "iq-conflict",
+      title: "Conflict Lens",
+      icon: "alert-triangle",
+      content: [
+        {
+          id: "iq-conflict-1",
+          type: "paragraph",
+          content: "Research shows that land-use change, deforestation, and agricultural expansion lead to shrinking wildlife habitats, forcing animals into closer contact with humans (Akbaş & Koklu, 2025; Priyambodo et al., 2026; Woodroffe & Rabinowitz, 2005). This intensifies crop damage, livestock predation, and retaliatory killings of wildlife, escalating ecological degradation and social unrest."
+        }
+      ]
+    },
+    {
+      id: "iq-livelihoods",
+      title: "Livelihoods Lens",
+      icon: "home",
+      content: [
+        {
+          id: "iq-livelihoods-1",
+          type: "paragraph",
+          content: "Human–wildlife conflict (HWC) disproportionately affects rural communities whose livelihoods depend on agriculture or pastoralism. Crop losses, reduced income, and food insecurity are common, especially in regions where conservation policies limit traditional mitigation practices (Olawade et al., 2024; Sandbrook et al., 2019; Madden, 2007; Srivastava, 2023). The economic burden falls unequally, often exacerbating pre-existing inequities (Harris & Nhleko, 2023)."
+        }
+      ]
+    },
+    {
+      id: "iq-investment",
+      title: "Investment Lens",
+      icon: "trending-up",
+      content: [
+        {
+          id: "iq-investment-1",
+          type: "paragraph",
+          content: "Public and private investments—whether in conservation, agriculture, or infrastructure—play a pivotal role. Decisions about where to fund roads, mines, or wildlife corridors influence the scale and geography of HWC. Similarly, global funding for conservation and the design of economic incentives can either support coexistence or deepen conflict (Bogomolni et al., 2025; Willer et al., 2025; Rands & Vira, 2010)."
+        }
+      ]
+    },
+    {
+      id: "iq-ai-role",
+      title: "The Role of AI",
+      icon: "cpu",
+      content: [
+        {
+          id: "iq-ai-1",
+          type: "paragraph",
+          content: "AI tools are increasingly used in wildlife monitoring (e.g., drones, camera traps), conflict prediction, and policy modelling. These technologies can enhance early-warning systems and inform targeted interventions. However, they also raise ethical questions around surveillance, data ownership, and unequal access (Crawford, 2021; Pedrazzi et al., 2025; Stilgoe et al., 2013). Economically, AI may shift how resources are allocated—potentially prioritising technocratic solutions over community-led approaches."
+        }
+      ]
+    },
+    {
+      id: "iq-reflection",
+      title: "Reflection Notes for Discussion",
+      icon: "message-circle",
+      content: [
+        {
+          id: "iq-ref-insight",
+          type: "paragraph",
+          content: "Emerging Insight: Human–wildlife conflict cannot be understood solely as an ecological or economic problem; it is a deeply entangled socio-ecological challenge shaped by policy, investment, and power."
+        },
+        {
+          id: "iq-ref-tension",
+          type: "paragraph",
+          content: "Unresolved Tension: The same AI systems that promise predictive efficiency and improved conservation outcomes may reinforce extractive, top-down decision-making that excludes local voices."
+        },
+        {
+          id: "iq-ref-question",
+          type: "paragraph",
+          content: "One Question I'm Not Ready to Answer: How can AI systems be co-designed with communities to ensure they serve both ecological sustainability and human dignity?"
+        }
+      ]
+    }
+  ],
   months: [
     {
       id: "month-1",

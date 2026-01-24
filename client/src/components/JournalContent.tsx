@@ -36,6 +36,7 @@ import { journalData } from "@/lib/journalData";
 import { TextToSpeech } from "@/components/TextToSpeech";
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { CitationAssistant } from "@/components/CitationAssistant";
+import { ShareExportControls } from "@/components/ShareExportControls";
 import {
   Dialog,
   DialogContent,
@@ -590,6 +591,13 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                       <AudioPlayer sectionId="references" />
                     </DialogContent>
                   </Dialog>
+                  <ShareExportControls 
+                    type="references"
+                    project="edd-inquiry"
+                    title="EdD Inquiry References"
+                    content={journalData.references}
+                    variant="icon"
+                  />
                   <CitationAssistant />
                 </div>
               </div>

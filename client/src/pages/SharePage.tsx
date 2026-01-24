@@ -240,5 +240,107 @@ export default function SharePage() {
     );
   }
 
+  if (shareData.type === 'references') {
+    const references = shareData.content.references || [];
+    
+    const projectColors: Record<string, { accent: string; bg: string }> = {
+      'edd-inquiry': { accent: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-500/10' },
+      'quasi-qualitative': { accent: 'text-violet-600 dark:text-violet-400', bg: 'bg-violet-500/10' },
+      'portfolio': { accent: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-500/10' },
+      'integrated-essay': { accent: 'text-teal-600 dark:text-teal-400', bg: 'bg-teal-500/10' },
+    };
+    
+    const colors = projectColors[shareData.project] || projectColors['edd-inquiry'];
+
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="absolute top-4 right-4">
+          <ThemeToggle />
+        </div>
+
+        <div className="max-w-4xl mx-auto px-4 py-8 sm:py-12">
+          <div className="text-center mb-8">
+            <Badge variant="secondary" className="mb-4">
+              <BookOpen className="h-3 w-3 mr-1" />
+              {projectNames[shareData.project] || shareData.project}
+            </Badge>
+            <h1 className="text-2xl sm:text-3xl font-semibold mb-2">{shareData.title}</h1>
+            <p className="text-muted-foreground">
+              {references.length} references • APA 7th Edition
+            </p>
+          </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${colors.bg} ${colors.accent}`}>
+                  <BookOpen className="h-4 w-4" />
+                </div>
+                References
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {references.map((ref: any, index: number) => (
+                  <div 
+                    key={ref.id || index} 
+                    className="pl-8 -indent-8 text-sm leading-relaxed"
+                    data-testid={`reference-${index}`}
+                  >
+                    {ref.citation ? (
+                      <>
+                        <span>{ref.citation}</span>
+                        {ref.url && (
+                          <a 
+                            href={ref.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`ml-1 ${colors.accent} hover:underline`}
+                          >
+                            {ref.url}
+                          </a>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <span className="font-medium">{ref.authors}</span>
+                        <span> ({ref.year}). </span>
+                        {ref.type === 'book' || ref.type === 'report' ? (
+                          <em>{ref.title}</em>
+                        ) : (
+                          <span>{ref.title}</span>
+                        )}
+                        <span>. </span>
+                        {ref.type === 'journal' ? (
+                          <em>{ref.source}</em>
+                        ) : (
+                          <span>{ref.source}</span>
+                        )}
+                        {ref.doi && (
+                          <a 
+                            href={ref.doi.startsWith('http') ? ref.doi : `https://doi.org/${ref.doi}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`ml-1 ${colors.accent} hover:underline break-all`}
+                          >
+                            {ref.doi.startsWith('http') ? ref.doi : `https://doi.org/${ref.doi}`}
+                          </a>
+                        )}
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <p className="text-center text-sm text-muted-foreground mt-8">
+            Shared from Praxis Nexus
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return null;
 }

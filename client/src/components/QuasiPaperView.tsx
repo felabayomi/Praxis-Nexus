@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { quasiData } from "@/lib/quasiData";
 import { apiRequest } from "@/lib/queryClient";
+import { ShareExportControls } from "@/components/ShareExportControls";
 
 type PaperFormat = "proposal" | "full";
 
@@ -378,11 +379,20 @@ export function QuasiPaperView() {
                   )}
                 </div>
               </div>
-              {hasGeneratedContent && usedReferences.length > 0 && (
-                <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-600">
-                  {usedReferences.length} / {quasiData.references.length} sources used
-                </Badge>
-              )}
+              <div className="flex items-center gap-2">
+                {hasGeneratedContent && usedReferences.length > 0 && (
+                  <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-600">
+                    {usedReferences.length} / {quasiData.references.length} sources used
+                  </Badge>
+                )}
+                <ShareExportControls 
+                  type="references"
+                  project="quasi-qualitative"
+                  title="Quasi-Qualitative References"
+                  content={hasGeneratedContent && usedReferences.length > 0 ? usedReferences : quasiData.references}
+                  variant="icon"
+                />
+              </div>
             </div>
           </CardHeader>
           <CardContent>

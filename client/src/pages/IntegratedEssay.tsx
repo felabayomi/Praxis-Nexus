@@ -35,6 +35,7 @@ import {
 } from "lucide-react";
 import { integratedEssayData, getSectionReadingTime, getTotalReadingTime, type EssaySection } from "@/lib/integratedEssayData";
 import { apiRequest } from "@/lib/queryClient";
+import { ShareExportControls } from "@/components/ShareExportControls";
 
 const ACCESS_CODE = "ESSAY2026";
 const STORAGE_KEY = "integrated_essay_access";
@@ -632,11 +633,20 @@ export default function IntegratedEssay() {
                   )}
                 </div>
               </div>
-              {hasGeneratedContent && usedReferences.length > 0 && (
-                <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-600">
-                  {usedReferences.length} / {integratedEssayData.references.length} sources used
-                </Badge>
-              )}
+              <div className="flex items-center gap-2">
+                {hasGeneratedContent && usedReferences.length > 0 && (
+                  <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-600">
+                    {usedReferences.length} / {integratedEssayData.references.length} sources used
+                  </Badge>
+                )}
+                <ShareExportControls 
+                  type="references"
+                  project="integrated-essay"
+                  title="Integrated Essay References"
+                  content={hasGeneratedContent && usedReferences.length > 0 ? usedReferences : integratedEssayData.references}
+                  variant="icon"
+                />
+              </div>
             </div>
           </CardHeader>
           <CardContent>

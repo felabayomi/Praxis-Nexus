@@ -12,6 +12,7 @@ import { SimpleTTS } from "@/components/SimpleTTS";
 import { PortfolioAudioPlayer } from "@/components/PortfolioAudioPlayer";
 import { PortfolioPresentationView } from "@/components/PortfolioPresentationView";
 import { AuthorModal } from "@/components/AuthorModal";
+import { ShareExportControls } from "@/components/ShareExportControls";
 import { 
   ArrowLeft, 
   BookOpen, 
@@ -609,11 +610,20 @@ export default function Portfolio() {
 
             <Card className="mt-8">
               <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400">
-                    <BookOpen className="h-5 w-5" />
+                <div className="flex items-center justify-between gap-4 flex-wrap">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                      <BookOpen className="h-5 w-5" />
+                    </div>
+                    <CardTitle className="font-serif">Reference List (APA 7th Edition)</CardTitle>
                   </div>
-                  <CardTitle className="font-serif">Reference List (APA 7th Edition)</CardTitle>
+                  <ShareExportControls 
+                    type="references"
+                    project="portfolio"
+                    title="Portfolio References"
+                    content={portfolioData.references}
+                    variant="icon"
+                  />
                 </div>
               </CardHeader>
               <CardContent>

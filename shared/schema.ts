@@ -45,7 +45,7 @@ export interface JournalEntry {
 export interface ShareLink {
   id: string;
   token: string;
-  type: 'presentation' | 'audio';
+  type: 'presentation' | 'audio' | 'references';
   project: 'edd-inquiry' | 'quasi-qualitative' | 'portfolio' | 'integrated-essay';
   title: string;
   content: any;

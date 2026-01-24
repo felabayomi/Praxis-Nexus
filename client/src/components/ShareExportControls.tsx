@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 
 interface ShareExportControlsProps {
-  type: 'presentation' | 'audio';
+  type: 'presentation' | 'audio' | 'references';
   project: 'edd-inquiry' | 'quasi-qualitative' | 'portfolio' | 'integrated-essay';
   title: string;
   content: any;
@@ -49,9 +49,14 @@ export function ShareExportControls({
   const handleCreateShareLink = async () => {
     setIsCreating(true);
     try {
-      const shareContent = type === 'presentation' 
-        ? { slides: slides || content, template: template || 'forest-canopy' }
-        : content;
+      let shareContent;
+      if (type === 'presentation') {
+        shareContent = { slides: slides || content, template: template || 'forest-canopy' };
+      } else if (type === 'references') {
+        shareContent = { references: content };
+      } else {
+        shareContent = content;
+      }
 
       const response = await fetch("/api/share/create", {
         method: "POST",

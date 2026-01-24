@@ -61,6 +61,9 @@ function createSlides(sectionId?: string): Slide[] {
     ? journalData.months.find(m => m.id === sectionId) 
     : null;
 
+  // Check if this is the inquiry-questions section
+  const isInquiryQuestions = sectionId === "inquiry-questions";
+
   if (month) {
     // Create slides for the specific month
     slides.push({
@@ -76,6 +79,62 @@ function createSlides(sectionId?: string): Slide[] {
     
     // Create ONE slide per section, combining all content intelligently
     month.sections.forEach((section) => {
+      const paragraphs: string[] = [];
+      const listItems: string[] = [];
+      
+      // Separate paragraphs and list items
+      section.content.forEach(item => {
+        if (item.type === "paragraph" && item.content) {
+          paragraphs.push(item.content);
+        } else if (item.type === "list" && item.items) {
+          listItems.push(...item.items);
+        }
+      });
+
+      // Combine content for this section
+      let combinedContent = "";
+      
+      // Add paragraphs first
+      if (paragraphs.length > 0) {
+        combinedContent = paragraphs.join("\n\n");
+      }
+      
+      // Add list items as bullet points
+      if (listItems.length > 0) {
+        const bulletList = listItems.map(item => `• ${item}`).join("\n\n");
+        if (combinedContent) {
+          combinedContent += "\n\n" + bulletList;
+        } else {
+          combinedContent = bulletList;
+        }
+      }
+
+      // Create a single slide for this section
+      if (combinedContent) {
+        slides.push({
+          id: section.id,
+          type: "content",
+          title: section.title,
+          content: combinedContent,
+          slideNumber: slideNum++
+        });
+      }
+    });
+  } else if (isInquiryQuestions && journalData.inquiryQuestions) {
+    // Create slides for the Inquiry Questions section
+    slides.push({
+      id: "title-slide",
+      type: "title",
+      title: "Framing the Inquiry",
+      subtitle: "AI, Ecology, and Economy in Human–Wildlife Conflict",
+      author: journalData.author,
+      slideNumber: 1
+    });
+
+    let slideNum = 2;
+    
+    // Create ONE slide per section, combining all content intelligently
+    journalData.inquiryQuestions.forEach((section) => {
       const paragraphs: string[] = [];
       const listItems: string[] = [];
       

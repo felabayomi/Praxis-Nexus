@@ -54,7 +54,7 @@ import type { ContentSection, MonthSection, Reference } from "@shared/schema";
 
 interface JournalContentProps {
   activeSection: string;
-  onOpenPresentation?: () => void;
+  onOpenPresentation?: (section?: string) => void;
   onOpenInfoCenter?: () => void;
   onSectionChange?: (section: string) => void;
 }
@@ -512,7 +512,7 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={onOpenPresentation}
+                      onClick={() => onOpenPresentation("introduction")}
                       className="flex items-center gap-2"
                       data-testid="button-presentation-mode"
                     >
@@ -664,7 +664,7 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={onOpenPresentation}
+                      onClick={() => onOpenPresentation(month.id)}
                       className="flex items-center gap-2"
                       data-testid="button-presentation-mode"
                     >

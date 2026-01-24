@@ -33,6 +33,7 @@ export default function Home() {
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateStyle>("forest");
   const [hasPreference, setHasPreference] = useState(false);
   const [showInfoCenter, setShowInfoCenter] = useState(false);
+  const [presentationSection, setPresentationSection] = useState<string>("introduction");
 
   useEffect(() => {
     const saved = localStorage.getItem(TEMPLATE_STORAGE_KEY);
@@ -66,7 +67,10 @@ export default function Home() {
     "--sidebar-width-icon": "3.5rem",
   };
 
-  const handleOpenPresentation = () => {
+  const handleOpenPresentation = (section?: string) => {
+    if (section) {
+      setPresentationSection(section);
+    }
     if (hasPreference) {
       setShowPresentation(true);
     } else {
@@ -125,6 +129,7 @@ export default function Home() {
         template={selectedTemplate}
         onClose={handleClosePresentation}
         onChangeTemplate={handleChangeTemplate}
+        section={presentationSection}
       />
     );
   }

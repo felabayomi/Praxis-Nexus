@@ -32,6 +32,7 @@ interface PresentationViewProps {
   template: TemplateStyle;
   onClose: () => void;
   onChangeTemplate: () => void;
+  section?: string;
 }
 
 interface Slide {
@@ -52,27 +53,69 @@ interface SlideInsight {
   inquiryGuidance: string;
 }
 
-function createSlides(): Slide[] {
+function createSlides(sectionId?: string): Slide[] {
   const slides: Slide[] = [];
   
-  slides.push({
-    id: "title-slide",
-    type: "title",
-    title: journalData.cohortTheme,
-    subtitle: journalData.projectTitle,
-    author: journalData.author,
-    slideNumber: 1
-  });
+  // Find if this is a month section
+  const month = sectionId?.startsWith("month-") 
+    ? journalData.months.find(m => m.id === sectionId) 
+    : null;
 
-  journalData.introduction.forEach((section, index) => {
+  if (month) {
+    // Create slides for the specific month
     slides.push({
-      id: section.id,
-      type: "content",
-      title: index === 0 ? "Introduction and Context" : undefined,
-      content: section.content,
-      slideNumber: index + 2
+      id: "title-slide",
+      type: "title",
+      title: `Month ${month.monthNumber}: ${month.title}`,
+      subtitle: month.theme,
+      author: journalData.author,
+      slideNumber: 1
     });
-  });
+
+    let slideNum = 2;
+    month.sections.forEach((section) => {
+      // Add section title slide
+      const contentTexts: string[] = [];
+      section.content.forEach(item => {
+        if (item.type === "paragraph" && item.content) {
+          contentTexts.push(item.content);
+        } else if (item.type === "list" && item.items) {
+          contentTexts.push(...item.items);
+        }
+      });
+
+      // Create content slides from the section
+      contentTexts.forEach((text, index) => {
+        slides.push({
+          id: `${section.id}-${index}`,
+          type: "content",
+          title: index === 0 ? section.title : undefined,
+          content: text,
+          slideNumber: slideNum++
+        });
+      });
+    });
+  } else {
+    // Default: Introduction slides
+    slides.push({
+      id: "title-slide",
+      type: "title",
+      title: journalData.cohortTheme,
+      subtitle: journalData.projectTitle,
+      author: journalData.author,
+      slideNumber: 1
+    });
+
+    journalData.introduction.forEach((section, index) => {
+      slides.push({
+        id: section.id,
+        type: "content",
+        title: index === 0 ? "Introduction and Context" : undefined,
+        content: section.content,
+        slideNumber: index + 2
+      });
+    });
+  }
 
   return slides;
 }
@@ -128,8 +171,8 @@ const templateStyles = {
   }
 };
 
-export function PresentationView({ template, onClose, onChangeTemplate }: PresentationViewProps) {
-  const [slides, setSlides] = useState<Slide[]>(createSlides());
+export function PresentationView({ template, onClose, onChangeTemplate, section }: PresentationViewProps) {
+  const [slides, setSlides] = useState<Slide[]>(createSlides(section));
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showAI, setShowAI] = useState(true);
@@ -144,6 +187,14 @@ export function PresentationView({ template, onClose, onChangeTemplate }: Presen
   const style = templateStyles[template];
   const Icon = templateIcons[template];
   const templateInfo = templates.find(t => t.id === template)!;
+
+  // Regenerate slides when section changes
+  useEffect(() => {
+    setSlides(createSlides(section));
+    setCurrentSlide(0);
+    setInsightCache({});
+    setHeadingCache({});
+  }, [section]);
 
   useEffect(() => {
     const slideIndex = currentSlide;

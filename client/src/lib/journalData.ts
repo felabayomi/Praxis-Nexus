@@ -140,7 +140,7 @@ export const journalData: JournalEntry = {
         {
           id: "mp-intro-1",
           type: "paragraph",
-          content: "February advances the inquiry from initial question framing into a focused examination of the infrastructures and capital flows that sustain AI deployment in conservation and ecological governance. Building on the cohort synthesis, this phase treats AI not as a neutral tool, but as a socio-technical system embedded in power relations, policy narratives, and economic priorities (Baxter & Sommerville, 2011). Central tensions remain visible: AI promises efficiency and predictive capacity, yet may reinforce extractive systems, marginalize Indigenous epistemologies, and externalize ecological costs (Crawford, 2021). The purpose of this phase is to sharpen the analytical frame by examining how material and financial structures shape what AI does and whom it serves (Reynolds, 2024)."
+          content: "This phase advances the inquiry from initial question framing into a focused examination of the infrastructures and capital flows that sustain AI deployment in conservation and ecological governance. Building on the cohort synthesis, this phase treats AI not as a neutral tool, but as a socio-technical system embedded in power relations, policy narratives, and economic priorities (Baxter & Sommerville, 2011). Central tensions remain visible: AI promises efficiency and predictive capacity, yet may reinforce extractive systems, marginalize Indigenous epistemologies, and externalize ecological costs (Crawford, 2021). The purpose of this phase is to sharpen the analytical frame by examining how material and financial structures shape what AI does and whom it serves (Reynolds, 2024)."
         }
       ]
     },
@@ -206,13 +206,13 @@ export const journalData: JournalEntry = {
     },
     {
       id: "mp-milestone",
-      title: "End-of-Month Milestone",
+      title: "Milestone",
       icon: "target",
       content: [
         {
           id: "mp-milestone-1",
           type: "paragraph",
-          content: "By the end of February, the inquiry demonstrates a more precise articulation of the research questions, supported by documented case evidence and identified thematic patterns. Rather than producing closure, this phase clarifies tensions between ecological sustainability and capital-driven deployment, establishing a structured foundation for deeper analytical synthesis in the following stage (Hill, 2021)."
+          content: "At this stage, the inquiry demonstrates a more precise articulation of the research questions, supported by documented case evidence and identified thematic patterns. Rather than producing closure, this phase clarifies tensions between ecological sustainability and capital-driven deployment, establishing a structured foundation for deeper analytical synthesis in the following stage (Hill, 2021)."
         }
       ]
     }

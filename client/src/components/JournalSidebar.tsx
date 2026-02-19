@@ -207,12 +207,12 @@ export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCente
                     <SidebarMenuItem key={month.id} className="ml-4">
                       <SidebarMenuButton
                         onClick={() => onSectionChange(month.id)}
-                        className={activeSection === month.id ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""}
+                        className={`${activeSection === month.id ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""} h-auto whitespace-normal`}
                         data-testid={`nav-${month.id}`}
                       >
-                        <Calendar className="h-4 w-4" />
-                        <div className="flex flex-col items-start gap-0.5 flex-1">
-                          <span className="text-sm">Month {month.monthNumber}: {month.title}</span>
+                        <Calendar className="h-4 w-4 shrink-0" />
+                        <div className="flex flex-col items-start gap-0.5 flex-1 min-w-0">
+                          <span className="text-sm leading-tight">Month {month.monthNumber}: {month.title}</span>
                           <span className="text-xs text-sidebar-foreground/50">
                             {formatReadingTime(monthTime)}
                           </span>

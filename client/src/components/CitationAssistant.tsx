@@ -71,7 +71,7 @@ export function CitationAssistant() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === 'y') {
         e.preventDefault();
         setIsAuthorMode(prev => {
           const newValue = !prev;

@@ -160,7 +160,7 @@ Praxis Nexus is an academic research hub web application presenting multiple res
 
 ## AI Citation Assistant
 - **Hidden from readers by default** - only visible in "Author Mode"
-- Toggle Author Mode: Press **Ctrl+Shift+A** (Windows/Linux) or **Cmd+Shift+A** (Mac)
+- Toggle Author Mode: Press **Ctrl+Shift+Y** (Windows/Linux) or **Cmd+Shift+Y** (Mac)
 - Author Mode persists in localStorage until toggled off
 - Analyzes text for statements that may need citations
 - Checks APA 7th format in existing citations

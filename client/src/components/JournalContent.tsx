@@ -53,6 +53,7 @@ import {
   getMonthReadingTime, 
   getReferencesReadingTime,
   getInquiryQuestionsReadingTime,
+  getMethodsPathwayReadingTime,
   formatReadingTime 
 } from "@/lib/journalUtils";
 import type { ContentSection, MonthSection, Reference } from "@shared/schema";
@@ -262,6 +263,7 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
   const month = journalData.months.find((m) => m.id === activeSection);
   const introTime = getIntroductionReadingTime(journalData);
   const inquiryTime = getInquiryQuestionsReadingTime(journalData);
+  const methodsTime = getMethodsPathwayReadingTime(journalData);
   const refsTime = getReferencesReadingTime(journalData);
   
   // Font size state with localStorage persistence (with SSR safety check)
@@ -627,6 +629,79 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
 
             <div className="space-y-6">
               {journalData.inquiryQuestions.map((section) => (
+                <MonthSectionCard key={section.id} section={section} fontSize={fontSize} />
+              ))}
+            </div>
+          </article>
+        )}
+
+        {activeSection === "methods-pathway" && journalData.methodsPathway && (
+          <article data-testid="section-methods-pathway">
+            <div className="mb-6">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onSectionChange?.("overview")}
+                className="gap-2"
+                data-testid="button-back-to-overview-mp"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to Overview
+              </Button>
+            </div>
+            <header className="mb-10">
+              <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Badge variant="secondary">
+                    Methods / Learning Pathway
+                  </Badge>
+                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <Clock className="h-3 w-3" />
+                    <span>{formatReadingTime(methodsTime)}</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <FontSizeControl fontSize={fontSize} onFontSizeChange={setFontSize} />
+                  <TextToSpeech sectionId="methods-pathway" />
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="ghost" size="icon" title="AI Audio (CarPlay compatible)" data-testid="button-ai-audio-mp">
+                        <Headphones className="h-4 w-4" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle className="font-serif">AI Audio Narration</DialogTitle>
+                      </DialogHeader>
+                      <AudioPlayer sectionId="methods-pathway" />
+                    </DialogContent>
+                  </Dialog>
+                  {onOpenPresentation && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onOpenPresentation("methods-pathway")}
+                      className="flex items-center gap-2"
+                      data-testid="button-presentation-mp"
+                    >
+                      <Presentation className="h-4 w-4" />
+                      <span className="hidden sm:inline">Presentation View</span>
+                    </Button>
+                  )}
+                </div>
+              </div>
+              <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3 leading-tight">
+                Methods / Learning Pathway
+              </h1>
+              <h2 className="font-serif text-xl md:text-2xl text-muted-foreground mb-4">
+                AI, Ecology, and Economy in Human–Wildlife Conflict
+              </h2>
+            </header>
+
+            <Separator className="mb-8" />
+
+            <div className="space-y-6">
+              {journalData.methodsPathway.map((section) => (
                 <MonthSectionCard key={section.id} section={section} fontSize={fontSize} />
               ))}
             </div>

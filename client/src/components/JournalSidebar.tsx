@@ -18,7 +18,8 @@ import {
   Leaf,
   ChevronRight,
   Clock,
-  Brain
+  Brain,
+  Compass
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import { 
@@ -26,6 +27,7 @@ import {
   getMonthReadingTime, 
   getReferencesReadingTime,
   getInquiryQuestionsReadingTime,
+  getMethodsPathwayReadingTime,
   formatReadingTime,
   getTotalReadingTime
 } from "@/lib/journalUtils";
@@ -39,6 +41,7 @@ interface JournalSidebarProps {
 export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCenter }: JournalSidebarProps) {
   const introTime = getIntroductionReadingTime(journalData);
   const inquiryTime = getInquiryQuestionsReadingTime(journalData);
+  const methodsTime = getMethodsPathwayReadingTime(journalData);
   const refsTime = getReferencesReadingTime(journalData);
   const totalTime = getTotalReadingTime(journalData);
 
@@ -120,6 +123,24 @@ export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCente
                       </span>
                     </div>
                     {activeSection === "inquiry-questions" && (
+                      <ChevronRight className="ml-auto h-4 w-4" />
+                    )}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem className="ml-4">
+                  <SidebarMenuButton
+                    onClick={() => onSectionChange("methods-pathway")}
+                    className={activeSection === "methods-pathway" ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""}
+                    data-testid="nav-methods-pathway"
+                  >
+                    <Compass className="h-4 w-4" />
+                    <div className="flex flex-col items-start gap-0.5 flex-1">
+                      <span>Methods / Learning Pathway</span>
+                      <span className="text-xs text-sidebar-foreground/50">
+                        {formatReadingTime(methodsTime)}
+                      </span>
+                    </div>
+                    {activeSection === "methods-pathway" && (
                       <ChevronRight className="ml-auto h-4 w-4" />
                     )}
                   </SidebarMenuButton>

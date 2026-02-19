@@ -39,6 +39,7 @@ export interface JournalEntry {
   author: string;
   introduction: ContentSection[];
   inquiryQuestions?: MonthSection[];
+  methodsPathway?: MonthSection[];
   months: JournalMonth[];
   references: Reference[];
 }

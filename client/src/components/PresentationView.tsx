@@ -176,6 +176,56 @@ function createSlides(sectionId?: string): Slide[] {
         });
       }
     });
+  } else if (sectionId === "methods-pathway" && journalData.methodsPathway) {
+    // Create slides for the Methods / Learning Pathway section
+    slides.push({
+      id: "title-slide",
+      type: "title",
+      title: "Methods / Learning Pathway",
+      subtitle: "AI, Ecology, and Economy in Human–Wildlife Conflict",
+      author: journalData.author,
+      slideNumber: 1
+    });
+
+    let slideNum = 2;
+    
+    journalData.methodsPathway.forEach((section) => {
+      const paragraphs: string[] = [];
+      const listItems: string[] = [];
+      
+      section.content.forEach(item => {
+        if (item.type === "paragraph" && item.content) {
+          paragraphs.push(item.content);
+        } else if (item.type === "list" && item.items) {
+          listItems.push(...item.items);
+        }
+      });
+
+      let combinedContent = "";
+      
+      if (paragraphs.length > 0) {
+        combinedContent = paragraphs.join("\n\n");
+      }
+      
+      if (listItems.length > 0) {
+        const bulletList = listItems.map(item => `• ${item}`).join("\n\n");
+        if (combinedContent) {
+          combinedContent += "\n\n" + bulletList;
+        } else {
+          combinedContent = bulletList;
+        }
+      }
+
+      if (combinedContent) {
+        slides.push({
+          id: section.id,
+          type: "content",
+          title: section.title,
+          content: combinedContent,
+          slideNumber: slideNum++
+        });
+      }
+    });
   } else {
     // Default: Introduction slides - group every 2-3 paragraphs together
     slides.push({

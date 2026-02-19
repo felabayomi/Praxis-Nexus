@@ -131,6 +131,219 @@ export const journalData: JournalEntry = {
       ]
     }
   ],
+  methodsPathway: [
+    {
+      id: "mp-framing",
+      title: "Framing the Inquiry: AI, Ecology, and Economy in Human–Wildlife Conflict",
+      icon: "brain",
+      content: [
+        {
+          id: "mp-intro-1",
+          type: "paragraph",
+          content: "This inquiry examines how ecological disruption and economic development intersect to intensify human–wildlife conflict (HWC), and how artificial intelligence (AI) technologies may mediate, reshape, or potentially exacerbate these tensions. Rather than treating AI as a neutral technical instrument, the study situates it within broader systems of infrastructure, capital investment, governance, and power. The methodological approach therefore integrates ecological analysis, political economy, and ethical inquiry."
+        },
+        {
+          id: "mp-intro-2",
+          type: "paragraph",
+          content: "At its core, the inquiry is guided by three interrelated questions:"
+        },
+        {
+          id: "mp-intro-questions",
+          type: "list",
+          content: "",
+          items: [
+            "How do resource use, habitat change, and economic development contribute to human–wildlife conflict?",
+            "How do ecological impacts intersect with economic consequences such as livelihoods, funding structures, and industry practices?",
+            "How might AI tools reshape monitoring, mitigation, and investment decisions affecting both wildlife and human communities?"
+          ]
+        },
+        {
+          id: "mp-intro-3",
+          type: "paragraph",
+          content: "These questions frame HWC as a socio-ecological phenomenon shaped by land-use change, economic incentives, and policy priorities. AI technologies—such as predictive analytics, wildlife monitoring systems, and automated detection tools—are analyzed not only for their technical capabilities but also for their material requirements, governance implications, and ethical consequences."
+        },
+        {
+          id: "mp-intro-4",
+          type: "paragraph",
+          content: "The learning pathway proceeds through three primary analytical lenses—conflict, livelihoods, and investment—while maintaining sustained attention to the role of AI across each domain. Structured reflection and case comparison support the development of a coherent analytical framework that prepares the inquiry for deeper synthesis."
+        }
+      ]
+    },
+    {
+      id: "mp-conflict",
+      title: "Conflict Lens",
+      icon: "alert-triangle",
+      content: [
+        {
+          id: "mp-conflict-1",
+          type: "paragraph",
+          content: "The conflict lens centers the ecological dimensions of human–wildlife conflict. Research demonstrates that deforestation, agricultural expansion, mining, infrastructure development, and urban encroachment shrink wildlife habitats and disrupt migratory pathways. As habitats fragment and ecological corridors are severed, animals are forced into closer proximity with human settlements. The result is increased crop damage, livestock predation, retaliatory killings, and cycles of ecological degradation and social unrest."
+        },
+        {
+          id: "mp-conflict-2",
+          type: "paragraph",
+          content: "This lens examines how land-use decisions and resource extraction are embedded within broader development models that prioritize economic growth. Infrastructure projects such as roads, dams, or industrial expansion reshape landscapes in ways that intensify human–wildlife interaction. Conflict therefore emerges not as an isolated ecological problem but as a structural outcome of development pathways and governance choices."
+        },
+        {
+          id: "mp-conflict-3",
+          type: "paragraph",
+          content: "Within this analytical frame, AI-enabled monitoring systems are examined for their capacity to identify conflict hotspots, predict animal movement, and inform targeted interventions. Tools such as drones, camera traps, acoustic sensors, and predictive modeling platforms promise enhanced data accuracy and early-warning capabilities. However, the inquiry interrogates whether these tools address root causes—such as habitat loss and economic expansion—or primarily respond to symptoms of deeper ecological disruption."
+        },
+        {
+          id: "mp-conflict-4",
+          type: "paragraph",
+          content: "The conflict lens therefore situates AI within a landscape already shaped by structural pressures. It asks whether technological intervention meaningfully reduces ecological harm or whether it operates within—and potentially stabilizes—development models that continue to generate conflict."
+        }
+      ]
+    },
+    {
+      id: "mp-livelihoods",
+      title: "Livelihoods Lens",
+      icon: "home",
+      content: [
+        {
+          id: "mp-livelihoods-1",
+          type: "paragraph",
+          content: "The livelihoods lens foregrounds the human dimensions of HWC, particularly the disproportionate burden borne by rural and agrarian communities. Crop destruction, livestock loss, reduced income, and food insecurity frequently accompany intensified wildlife encounters. In many regions, conservation policies restrict traditional mitigation strategies, further constraining community responses."
+        },
+        {
+          id: "mp-livelihoods-2",
+          type: "paragraph",
+          content: "Economic vulnerability is unevenly distributed. Smallholder farmers and pastoralists often absorb the costs of conservation-driven land use restrictions while receiving limited compensation. As a result, conflict becomes both ecological and socio-economic. The livelihoods lens examines how governance structures allocate risk and responsibility and how economic losses are addressed—or neglected—within conservation policy."
+        },
+        {
+          id: "mp-livelihoods-3",
+          type: "paragraph",
+          content: "AI tools enter this landscape as potential mediators. Predictive systems may reduce crop loss through early-warning alerts, while monitoring technologies can inform more targeted interventions. Yet these tools also introduce new dynamics. Data ownership, surveillance practices, and access to predictive analytics may concentrate authority among state agencies, private firms, or international organizations. Communities may become subjects of technological monitoring rather than partners in co-design."
+        },
+        {
+          id: "mp-livelihoods-4",
+          type: "paragraph",
+          content: "This strand of the inquiry emphasizes relational accountability. It asks whether AI systems are designed with communities in ways that respect local knowledge, cultural practices, and autonomy. It also interrogates whether AI adoption shifts attention away from structural economic inequities toward technocratic management of conflict. By centering livelihoods, the inquiry ensures that technological evaluation remains grounded in human dignity and distributive justice."
+        }
+      ]
+    },
+    {
+      id: "mp-investment",
+      title: "Investment Lens",
+      icon: "trending-up",
+      content: [
+        {
+          id: "mp-investment-1",
+          type: "paragraph",
+          content: "The investment lens examines how financial flows shape ecological outcomes and technological deployment. Public funding, philanthropic conservation finance, development spending, and private capital investments influence where and how AI systems are implemented. Decisions to fund surveillance infrastructure, predictive analytics, or broadband expansion are not neutral; they reflect priorities about efficiency, innovation, and measurable outcomes."
+        },
+        {
+          id: "mp-investment-2",
+          type: "paragraph",
+          content: "Infrastructure investments—such as roads, mining operations, or agricultural intensification—often contribute directly to habitat fragmentation and conflict escalation. At the same time, funding streams may support AI-driven monitoring initiatives framed as sustainable solutions. This duality raises a central question: do investment priorities address the structural drivers of conflict, or do they favor technological mitigation within growth-oriented development models?"
+        },
+        {
+          id: "mp-investment-3",
+          type: "paragraph",
+          content: "The inquiry maps capital flows associated with AI deployment in conservation contexts. It analyzes how public–private partnerships, venture capital, and philanthropic initiatives influence the design and uptake of technological tools. Particular attention is given to the narratives accompanying these investments—innovation, modernization, green growth—and how they align or conflict with ecological resilience goals."
+        },
+        {
+          id: "mp-investment-4",
+          type: "paragraph",
+          content: "This lens also considers the material resource demands of AI infrastructure. Data centers, cloud computing systems, satellite networks, and sensor arrays require energy, land, water, and mineral extraction. The ecological footprint of these systems complicates claims that AI inherently advances sustainability. Investment decisions therefore shape not only technological adoption but also resource competition and environmental impact."
+        }
+      ]
+    },
+    {
+      id: "mp-ai-role",
+      title: "The Role of AI Across Lenses",
+      icon: "cpu",
+      content: [
+        {
+          id: "mp-ai-1",
+          type: "paragraph",
+          content: "Across conflict, livelihoods, and investment lenses, AI emerges as both opportunity and tension. On one hand, AI tools offer enhanced monitoring accuracy, improved predictive modeling, and data-driven policy insights. They may enable more targeted interventions, reduce unnecessary harm, and inform adaptive management strategies."
+        },
+        {
+          id: "mp-ai-2",
+          type: "paragraph",
+          content: "On the other hand, AI systems depend on infrastructure expansion and capital investment that carry ecological and social consequences. High-energy computing, broadband expansion into remote areas, and extraction of rare earth minerals for hardware production introduce new environmental pressures. Moreover, algorithmic systems can centralize authority, privilege quantitative indicators, and marginalize relational or Indigenous knowledge systems."
+        },
+        {
+          id: "mp-ai-3",
+          type: "paragraph",
+          content: "A recurring tension surfaces: Is AI serving ecological resilience, or reinforcing capital accumulation under sustainability rhetoric? The inquiry does not assume a singular answer. Instead, it evaluates AI deployment through evidence-based analysis of infrastructure demands, funding structures, governance arrangements, and community inclusion."
+        },
+        {
+          id: "mp-ai-4",
+          type: "paragraph",
+          content: "Ethical concerns remain central. Surveillance technologies raise questions about consent and autonomy. Data ownership and governance frameworks influence who benefits from predictive capabilities. Co-design processes become critical to ensuring that AI supports rather than overrides community knowledge and agency."
+        }
+      ]
+    },
+    {
+      id: "mp-reflective",
+      title: "Reflective Practice and Evidence Development",
+      icon: "compass",
+      content: [
+        {
+          id: "mp-reflective-1",
+          type: "paragraph",
+          content: "The learning pathway integrates structured reflection with empirical case analysis. Each week involves engagement with scholarly literature, policy documents, technological case studies, or tool experimentation. Following each engagement, reflective analysis documents emerging insights, contradictions, and unresolved questions."
+        },
+        {
+          id: "mp-reflective-2",
+          type: "paragraph",
+          content: "This iterative reflection strengthens interpretive rigor and builds a cumulative evidence base. Rather than pursuing breadth, the inquiry prioritizes depth and coherence. Reflections trace how ecological impacts intersect with economic incentives and how AI systems mediate these intersections."
+        },
+        {
+          id: "mp-reflective-3",
+          type: "paragraph",
+          content: "Case evidence is gathered through disciplined selection of two to three relevant examples of AI-enabled conservation or conflict mitigation initiatives. Each case is analyzed using a consistent framework: ecological context, infrastructural requirements, funding sources, governance structure, community involvement, and preliminary outcomes. This comparative approach enables identification of patterns and divergences across contexts."
+        },
+        {
+          id: "mp-reflective-4",
+          type: "paragraph",
+          content: "Peer dialogue further supports thematic clustering and pattern recognition. Differences in interpretation are treated as analytically generative, clarifying assumptions and expanding conceptual range."
+        }
+      ]
+    },
+    {
+      id: "mp-emerging",
+      title: "Emerging Insight and Ongoing Tensions",
+      icon: "sparkles",
+      content: [
+        {
+          id: "mp-emerging-1",
+          type: "paragraph",
+          content: "An emerging insight from this phase is that human–wildlife conflict cannot be reduced to a single domain. It is a deeply entangled socio-ecological challenge shaped by land-use policy, economic development, infrastructure investment, governance structures, and technological mediation. AI tools operate within these systems rather than outside them."
+        },
+        {
+          id: "mp-emerging-2",
+          type: "paragraph",
+          content: "An unresolved tension remains visible. The same AI systems that promise predictive efficiency and improved conservation outcomes may also reinforce extractive, top-down decision-making. Efficiency gains may obscure inequitable power distributions or shift attention away from structural ecological degradation."
+        },
+        {
+          id: "mp-emerging-3",
+          type: "paragraph",
+          content: "One persistent question continues to guide the inquiry: How can AI systems be co-designed with communities to ensure they serve both ecological sustainability and human dignity? This question foregrounds relational accountability and resists technological determinism."
+        }
+      ]
+    },
+    {
+      id: "mp-conclusion",
+      title: "Conclusion of Methods Phase",
+      icon: "target",
+      content: [
+        {
+          id: "mp-conclusion-1",
+          type: "paragraph",
+          content: "The Methods / Learning Pathway establishes a structured and ethically attentive framework for analyzing AI within human–wildlife conflict. By integrating ecological disruption, economic incentives, capital investment, and governance dynamics, the inquiry moves beyond simplistic technological evaluation toward systemic analysis."
+        },
+        {
+          id: "mp-conclusion-2",
+          type: "paragraph",
+          content: "This phase does not seek definitive answers. Instead, it strengthens the analytical frame, clarifies tensions, and builds an evidence foundation for subsequent synthesis. Through disciplined reflection, comparative case analysis, and multi-lens evaluation, the inquiry prepares to advance toward deeper examination of ecological impacts, justice implications, and the political economy of AI-enabled conservation."
+        }
+      ]
+    }
+  ],
   months: [
     {
       id: "month-1",

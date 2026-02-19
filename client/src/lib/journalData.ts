@@ -133,122 +133,86 @@ export const journalData: JournalEntry = {
   ],
   methodsPathway: [
     {
-      id: "mp-framing",
-      title: "Framing the Inquiry: AI, Ecology, and Economy in Human–Wildlife Conflict",
+      id: "mp-intro",
+      title: "Introduction and Context",
       icon: "brain",
       content: [
         {
           id: "mp-intro-1",
           type: "paragraph",
-          content: "This inquiry examines how ecological disruption and economic development intersect to intensify human–wildlife conflict (HWC), and how artificial intelligence (AI) technologies may mediate, reshape, or potentially exacerbate these tensions. Rather than treating AI as a neutral technical instrument, the study situates it within broader systems of infrastructure, capital investment, governance, and power (Crawford, 2021). The methodological approach integrates ecological analysis, political economy, and ethical inquiry (Stilgoe et al., 2013)."
-        },
-        {
-          id: "mp-intro-2",
-          type: "paragraph",
-          content: "The inquiry is guided by three central questions:"
-        },
-        {
-          id: "mp-intro-questions",
-          type: "list",
-          content: "",
-          items: [
-            "How do resource use, habitat change, and economic development contribute to human–wildlife conflict? (Treves & Karanth, 2003)",
-            "How do ecological impacts intersect with economic consequences such as livelihoods, funding structures, and industry practices? (Distefano, 2005)",
-            "How might AI tools reshape monitoring, mitigation, and investment decisions affecting both wildlife and human communities? (Reynolds, 2024)"
-          ]
-        },
-        {
-          id: "mp-intro-3",
-          type: "paragraph",
-          content: "These questions frame HWC as a socio-ecological phenomenon shaped by land-use change, economic incentives, and governance priorities. AI technologies\u2014such as predictive analytics, wildlife monitoring systems, and automated detection tools\u2014are evaluated not only for technical performance but also for their infrastructural demands, governance implications, and distributive consequences (Ullah et al., 2024)."
-        },
-        {
-          id: "mp-intro-4",
-          type: "paragraph",
-          content: "The learning pathway proceeds through three interconnected lenses: conflict, livelihoods, and investment."
+          content: "February advances the inquiry from initial question framing into a focused examination of the infrastructures and capital flows that sustain AI deployment in conservation and ecological governance. Building on the cohort synthesis, this phase treats AI not as a neutral tool, but as a socio-technical system embedded in power relations, policy narratives, and economic priorities (Baxter & Sommerville, 2011). Central tensions remain visible: AI promises efficiency and predictive capacity, yet may reinforce extractive systems, marginalize Indigenous epistemologies, and externalize ecological costs (Crawford, 2021). The purpose of this phase is to sharpen the analytical frame by examining how material and financial structures shape what AI does and whom it serves (Reynolds, 2024)."
         }
       ]
     },
     {
-      id: "mp-conflict",
-      title: "Conflict Lens",
-      icon: "alert-triangle",
+      id: "mp-lenses",
+      title: "Inquiry Focus and Analytical Lenses",
+      icon: "search",
       content: [
         {
-          id: "mp-conflict-1",
+          id: "mp-lenses-1",
           type: "paragraph",
-          content: "Human\u2013wildlife conflict is strongly linked to habitat loss, agricultural expansion, infrastructure development, and extractive land-use practices (Treves & Karanth, 2003). As ecosystems fragment, wildlife movement shifts toward human settlements, resulting in crop damage, livestock predation, and retaliatory killings (Madden, 2007). Conflict therefore reflects structural development choices rather than isolated ecological incidents."
-        },
-        {
-          id: "mp-conflict-2",
-          type: "paragraph",
-          content: "This lens examines how economic growth models reshape landscapes and intensify human\u2013wildlife interaction (Woodroffe et al., 2005). AI tools\u2014such as drones, camera traps, and predictive systems\u2014are increasingly used to identify conflict hotspots and improve early-warning systems (Pedrazzi et al., 2025). While these tools may enhance monitoring, the inquiry questions whether they address underlying drivers such as habitat destruction and infrastructure expansion, or primarily manage the symptoms of deeper ecological disruption."
+          content: "The inquiry centers on wildlife monitoring and human\u2013wildlife conflict within broader ecological governance systems. Two analytical lenses guide the work: resources and investments. The resources lens examines energy demand, digital infrastructure expansion, and ecological pressures associated with AI systems (Alotaibi & Nassif, 2024). The investments lens traces conservation funding, development finance, and private capital flows that influence technology adoption and problem framing (Reim & Eckerwall, 2023). Together, these lenses situate AI within political economy and governance structures rather than treating it as a purely technical intervention (Denzin & Cannella, 2024)."
         }
       ]
     },
     {
-      id: "mp-livelihoods",
-      title: "Livelihoods Lens",
-      icon: "home",
+      id: "mp-framework",
+      title: "Methodological Framework",
+      icon: "compass",
       content: [
         {
-          id: "mp-livelihoods-1",
+          id: "mp-framework-1",
           type: "paragraph",
-          content: "Human\u2013wildlife conflict disproportionately affects rural communities dependent on agriculture and pastoralism (Li et al., 2023). Crop loss, livestock predation, and food insecurity often compound pre-existing economic vulnerability. Conservation policies may restrict traditional mitigation strategies, placing disproportionate burdens on local populations (Bennett & Dearden, 2014)."
-        },
-        {
-          id: "mp-livelihoods-2",
-          type: "paragraph",
-          content: "AI systems may offer tools for reducing losses through predictive alerts or improved data collection (Akba\u015f & Koklu, 2025). However, these systems also introduce questions of data ownership, surveillance, and access to technological infrastructure (Hanna et al., 2025). Authority may shift toward state agencies, private firms, or external experts, potentially marginalizing community knowledge and decision-making."
-        },
-        {
-          id: "mp-livelihoods-3",
-          type: "paragraph",
-          content: "This lens foregrounds relational accountability. It asks whether AI systems are co-designed with affected communities and whether technological interventions support human dignity and distributive justice (Tom et al., 2019). The inquiry remains attentive to the risk that AI may reframe conflict as a technocratic management issue rather than a structural socio-economic challenge."
+          content: "Four methodological strands structure the learning pathway. Infrastructure mapping identifies the material systems\u2014data centers, cloud computing, sensors, satellites, and broadband networks\u2014that enable AI-enabled conservation (Stephenson & Januchowski-Hartley, 2020). Capital flow analysis traces funding streams and investment incentives that shape deployment priorities (Ullah & Xiong, 2024). Policy alignment review examines how AI is justified within environmental and national strategy documents, including sustainability and innovation narratives (Stilgoe & Macnaghten, 2013). Power dynamics assessment analyzes who controls infrastructure, funding decisions, and environmental data, with attention to Indigenous knowledge inclusion and relational accountability (Zidny & Eilks, 2020). These strands provide a structured architecture for evidence gathering and critical interpretation."
         }
       ]
     },
     {
-      id: "mp-investment",
-      title: "Investment Lens",
+      id: "mp-resources",
+      title: "Analytical Focus: Resources",
+      icon: "cpu",
+      content: [
+        {
+          id: "mp-resources-1",
+          type: "paragraph",
+          content: "Through the resources lens, the inquiry evaluates AI\u2019s ecological footprint, including energy intensity, carbon emissions, and infrastructure embedded within conservation landscapes (Olawade & Oladapo, 2024). It considers whether AI reduces ecological pressure or displaces environmental costs into energy systems and digital expansion (Griffin, 2024). Resource governance is also examined, particularly who controls access to environmental data and predictive tools, and how authority is redistributed through technological systems (Abrahms & West, 2023)."
+        }
+      ]
+    },
+    {
+      id: "mp-investments",
+      title: "Analytical Focus: Investments",
       icon: "trending-up",
       content: [
         {
-          id: "mp-investment-1",
+          id: "mp-investments-1",
           type: "paragraph",
-          content: "Financial flows significantly shape both ecological disruption and technological deployment (Reynolds, 2024). Public funding, conservation finance, development spending, and private capital influence where AI systems are implemented and which problems are prioritized. Investments in roads, mining, agriculture, or broadband infrastructure can intensify habitat fragmentation while simultaneously funding AI-based mitigation tools."
-        },
-        {
-          id: "mp-investment-2",
-          type: "paragraph",
-          content: "The inquiry examines whether funding priorities align with ecological resilience or reflect innovation-driven growth narratives (Griffin, 2024). AI infrastructure\u2014including data centers, cloud systems, and sensor networks\u2014requires energy, land, and mineral extraction, raising questions about its environmental footprint (Crawford, 2021)."
-        },
-        {
-          id: "mp-investment-3",
-          type: "paragraph",
-          content: "This lens asks a central political economy question: Is AI serving ecological sustainability, or reinforcing capital accumulation under the language of green innovation?"
+          content: "Through the investments lens, the inquiry investigates how funding priorities shape AI deployment. Public budgets, philanthropic finance, and private investments are analyzed to determine which technological applications are prioritized and why (Reim & Eckerwall, 2023). The inquiry interrogates whether AI adoption aligns with ecological resilience or reflects economic growth narratives and innovation-driven incentives (Zacher & Rudolph, 2024). Policy alignment is assessed to identify tensions between sustainability commitments and infrastructural realities (Crawford, 2021)."
         }
       ]
     },
     {
-      id: "mp-emerging",
-      title: "Emerging Insight and Tension",
+      id: "mp-reflective",
+      title: "Reflective Practice and Knowledge Development",
       icon: "sparkles",
       content: [
         {
-          id: "mp-emerging-1",
+          id: "mp-reflective-1",
           type: "paragraph",
-          content: "An emerging insight is that human\u2013wildlife conflict cannot be understood as solely ecological or economic. It is a deeply entangled socio-ecological challenge shaped by policy, infrastructure investment, funding priorities, and governance structures."
-        },
+          content: "The learning pathway is sustained through structured weekly engagement and reflection. Each week includes focused examination of a case or source followed by interpretive reflection addressing ecological limits, funding rationales, and power dynamics. Peer dialogue supports thematic clustering around relational ethics, governance, digital equity, and Indigenous knowledge integration (Datta & Starlight, 2024). The inquiry platform functions as an evolving archive, enabling tagged reflections and mid-phase synthesis to identify emerging patterns and unresolved tensions (Bryant & Charmaz, 2024)."
+        }
+      ]
+    },
+    {
+      id: "mp-milestone",
+      title: "End-of-Month Milestone",
+      icon: "target",
+      content: [
         {
-          id: "mp-emerging-2",
+          id: "mp-milestone-1",
           type: "paragraph",
-          content: "A central tension remains unresolved. AI systems that promise predictive efficiency and improved conservation outcomes may also reinforce top-down decision-making and extractive development models. Technological intervention may enhance monitoring while leaving structural drivers of conflict intact."
-        },
-        {
-          id: "mp-emerging-3",
-          type: "paragraph",
-          content: "The guiding question moving forward is therefore ethical and relational: How can AI systems be designed and governed in ways that prioritize ecological sustainability, community dignity, and shared accountability rather than efficiency alone?"
+          content: "By the end of February, the inquiry demonstrates a more precise articulation of the research questions, supported by documented case evidence and identified thematic patterns. Rather than producing closure, this phase clarifies tensions between ecological sustainability and capital-driven deployment, establishing a structured foundation for deeper analytical synthesis in the following stage (Hill, 2021)."
         }
       ]
     }
@@ -573,22 +537,59 @@ export const journalData: JournalEntry = {
     },
     {
       id: "ref-19",
-      authors: "Treves, A., & Karanth, K. U.",
-      year: "2003",
-      title: "Human-carnivore conflict and perspectives on carnivore management worldwide",
-      source: "Conservation Biology, 17(6), 1491–1499",
+      authors: "Baxter, G., & Sommerville, I.",
+      year: "2011",
+      title: "Socio-technical systems: From design methods to systems engineering",
+      source: "Interacting with Computers, 23(1), 4–17",
+      doi: "10.1016/j.intcom.2010.07.003",
       type: "journal"
     },
     {
       id: "ref-20",
-      authors: "Distefano, E.",
-      year: "2005",
-      title: "Human-Wildlife Conflict worldwide: Collection of case studies, analysis of management strategies and good practices",
-      source: "FAO Report",
-      type: "report"
+      authors: "Reynolds, S. A., Beery, S., Burgess, N., Burgman, M., Butchart, S. H. M., Cooke, S. J., ... & Sutherland, W. J.",
+      year: "2024",
+      title: "The potential for AI to revolutionize conservation: A horizon scan",
+      source: "Trends in Ecology & Evolution",
+      doi: "10.1016/j.tree.2024.11.013",
+      type: "journal"
     },
     {
       id: "ref-21",
+      authors: "Alotaibi, E., & Nassif, N.",
+      year: "2024",
+      title: "Artificial intelligence in environmental monitoring: In-depth analysis",
+      source: "Discover Artificial Intelligence, 4(1), 84",
+      doi: "10.1007/s44163-024-00198-1",
+      type: "journal"
+    },
+    {
+      id: "ref-22",
+      authors: "Reim, W., Andersson, E., & Eckerwall, K.",
+      year: "2023",
+      title: "Enabling collaboration on digital platforms: A study of digital twins",
+      source: "International Journal of Production Research, 61(12), 3926–3942",
+      doi: "10.1080/00207543.2022.2116499",
+      type: "journal"
+    },
+    {
+      id: "ref-23",
+      authors: "Denzin, N. K., Lincoln, Y. S., Giardina, M. D., & Cannella, G. S.",
+      year: "2024",
+      title: "The SAGE handbook of qualitative research",
+      source: "Los Angeles: SAGE (Sixth edition)",
+      type: "book"
+    },
+    {
+      id: "ref-24",
+      authors: "Stephenson, P. J., Stengel, C., & Januchowski-Hartley, F.",
+      year: "2020",
+      title: "An inventory of biodiversity data sources for conservation monitoring",
+      source: "PLOS ONE, 15",
+      doi: "10.1371/journal.pone.0242923",
+      type: "journal"
+    },
+    {
+      id: "ref-25",
       authors: "Ullah, F., Saqib, S., & Xiong, Y.",
       year: "2024",
       title: "Integrating artificial intelligence in biodiversity conservation: Bridging classical and modern approaches",
@@ -597,39 +598,57 @@ export const journalData: JournalEntry = {
       type: "journal"
     },
     {
-      id: "ref-22",
-      authors: "Reynolds, S. A., Beery, S., Burgess, N., Burgman, M., Butchart, S. H. M., Cooke, S. J., Coomes, D., Danielsen, F., Minin, E. D., Durán, A. P., ... & Sutherland, W. J.",
-      year: "2024",
-      title: "The potential for AI to revolutionize conservation: A horizon scan",
-      source: "Trends in Ecology & Evolution",
-      doi: "10.1016/j.tree.2024.11.013",
+      id: "ref-26",
+      authors: "Zidny, R., Sjöström, J., & Eilks, I.",
+      year: "2020",
+      title: "A multi-perspective reflection on how indigenous knowledge and related ideas can improve science education for sustainability",
+      source: "Science & Education, 29(1), 145–185",
+      doi: "10.1007/s11191-019-00100-x",
       type: "journal"
     },
     {
-      id: "ref-23",
-      authors: "Li, M., Jiang, W., Li, B., & Butt, N.",
+      id: "ref-27",
+      authors: "Abrahms, B., Carter, N. H., Clark-Wolf, T., Gaynor, K. M., Johansson, E., McInturff, A., Nisi, A. C., Rafiq, K., & West, L.",
       year: "2023",
-      title: "Social and cultural aspects of human-wildlife conflicts: Understanding people's attitudes to crop-raiding animals and other wildlife in agricultural systems of the Tibetan Plateau",
-      source: "Integrative Conservation, 2(4), 214–225",
-      doi: "10.1002/inc3.30",
+      title: "Climate change as a global amplifier of human–wildlife conflict",
+      source: "Nature Climate Change, 13(3), 224–234",
+      doi: "10.1038/s41558-023-01608-5",
       type: "journal"
     },
     {
-      id: "ref-24",
-      authors: "Bennett, N. J., & Dearden, P.",
-      year: "2014",
-      title: "Why local people do not support conservation: Community perceptions of marine protected area livelihood impacts, governance and management in Thailand",
-      source: "Marine Policy, 44, 107–116",
-      doi: "10.1016/j.marpol.2013.08.017",
+      id: "ref-28",
+      authors: "Zacher, H., Kühner, C., Katz, I. M., & Rudolph, C. W.",
+      year: "2024",
+      title: "Leadership and environmental sustainability: An integrative conceptual model of multilevel antecedents and consequences of leader green behavior",
+      source: "Group & Organization Management, 49(2), 365–394",
+      doi: "10.1177/10596011241229891",
       type: "journal"
     },
     {
-      id: "ref-25",
-      authors: "Tom, M. N., Huaman, E. S., & McCarty, T. L.",
-      year: "2019",
-      title: "Indigenous knowledges as vital contributions to sustainability",
-      source: "International Review of Education, 65(1), 1–18",
-      doi: "10.1007/s11159-019-09770-9",
+      id: "ref-29",
+      authors: "Datta, R., & Starlight, T.",
+      year: "2024",
+      title: "Building a meaningful bridge between indigenous and western worldviews: Through decolonial conversation",
+      source: "International Journal of Qualitative Methods, 23",
+      doi: "10.1177/16094069241235564",
+      type: "journal"
+    },
+    {
+      id: "ref-30",
+      authors: "Bryant, A., & Charmaz, K.",
+      year: "2024",
+      title: "The SAGE handbook of grounded theory",
+      source: "SAGE Publications",
+      doi: "10.4135/9781848607941",
+      type: "book"
+    },
+    {
+      id: "ref-31",
+      authors: "Hill, C. M.",
+      year: "2021",
+      title: "Conflict is integral to human-wildlife coexistence",
+      source: "Frontiers in Conservation Science",
+      doi: "10.3389/fcosc.2021.734314",
       type: "journal"
     }
   ]

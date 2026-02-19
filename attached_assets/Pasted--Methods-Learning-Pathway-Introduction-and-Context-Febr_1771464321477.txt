@@ -1,0 +1,68 @@
+## Methods / Learning Pathway
+
+### Introduction and Context
+
+February advances the inquiry from initial question framing into a focused examination of the infrastructures and capital flows that sustain AI deployment in conservation and ecological governance. Building on the cohort synthesis, this phase treats AI not as a neutral tool, but as a socio-technical system embedded in power relations, policy narratives, and economic priorities (Baxter & Sommerville, 2011). Central tensions remain visible: AI promises efficiency and predictive capacity, yet may reinforce extractive systems, marginalize Indigenous epistemologies, and externalize ecological costs (Crawford, 2021). The purpose of this phase is to sharpen the analytical frame by examining how material and financial structures shape what AI does and whom it serves (Reynolds, 2024).
+
+### Inquiry Focus and Analytical Lenses
+
+The inquiry centers on wildlife monitoring and human–wildlife conflict within broader ecological governance systems. Two analytical lenses guide the work: resources and investments. The resources lens examines energy demand, digital infrastructure expansion, and ecological pressures associated with AI systems (Alotaibi & Nassif, 2024). The investments lens traces conservation funding, development finance, and private capital flows that influence technology adoption and problem framing (Reim & Eckerwall, 2023). Together, these lenses situate AI within political economy and governance structures rather than treating it as a purely technical intervention (Denzin & Cannella, 2024).
+
+### Methodological Framework
+
+Four methodological strands structure the learning pathway. Infrastructure mapping identifies the material systems—data centers, cloud computing, sensors, satellites, and broadband networks—that enable AI-enabled conservation (Stephenson & Januchowski-Hartley, 2020). Capital flow analysis traces funding streams and investment incentives that shape deployment priorities (Ullah & Xiong, 2024). Policy alignment review examines how AI is justified within environmental and national strategy documents, including sustainability and innovation narratives (Stilgoe & Macnaghten, 2013). Power dynamics assessment analyzes who controls infrastructure, funding decisions, and environmental data, with attention to Indigenous knowledge inclusion and relational accountability (Zidny & Eilks, 2020). These strands provide a structured architecture for evidence gathering and critical interpretation.
+
+### Analytical Focus: Resources
+
+Through the resources lens, the inquiry evaluates AI’s ecological footprint, including energy intensity, carbon emissions, and infrastructure embedded within conservation landscapes (Olawade & Oladapo, 2024). It considers whether AI reduces ecological pressure or displaces environmental costs into energy systems and digital expansion (Griffin, 2024). Resource governance is also examined, particularly who controls access to environmental data and predictive tools, and how authority is redistributed through technological systems (Abrahms & West, 2023).
+
+### Analytical Focus: Investments
+
+Through the investments lens, the inquiry investigates how funding priorities shape AI deployment. Public budgets, philanthropic finance, and private investments are analyzed to determine which technological applications are prioritized and why (Reim & Eckerwall, 2023). The inquiry interrogates whether AI adoption aligns with ecological resilience or reflects economic growth narratives and innovation-driven incentives (Zacher & Rudolph, 2024). Policy alignment is assessed to identify tensions between sustainability commitments and infrastructural realities (Crawford, 2021).
+
+### Reflective Practice and Knowledge Development
+
+The learning pathway is sustained through structured weekly engagement and reflection. Each week includes focused examination of a case or source followed by interpretive reflection addressing ecological limits, funding rationales, and power dynamics. Peer dialogue supports thematic clustering around relational ethics, governance, digital equity, and Indigenous knowledge integration (Datta & Starlight, 2024). The inquiry platform functions as an evolving archive, enabling tagged reflections and mid-phase synthesis to identify emerging patterns and unresolved tensions (Bryant & Charmaz, 2024).
+
+### End-of-Month Milestone
+
+By the end of February, the inquiry demonstrates a more precise articulation of the research questions, supported by documented case evidence and identified thematic patterns. Rather than producing closure, this phase clarifies tensions between ecological sustainability and capital-driven deployment, establishing a structured foundation for deeper analytical synthesis in the following stage (Hill, 2021).
+
+
+---
+
+References
+
+Baxter, G. & Sommerville, I. (2011). Socio-technical systems: From design methods to systems engineering. *Interacting with Computers, 23(1), 4-17*. https://doi.org/10.1016/j.intcom.2010.07.003
+
+Crawford, K. (2021). *The atlas of AI: Power, politics, and the planetary costs of artificial intelligence*. Yale University Press. https://books.google.com/books?id=XvEdEAAAQBAJ\&printsec=frontcover\&source=gbs_ViewAPI\&hl=en\#v=onepage\&q\&f=false
+
+Reynolds, S. A., Beery, S., Burgess, N., Burgman, M., Butchart, S. H. M., Cooke, S. J., Coomes, D., Danielsen, F., Minin, E. D., Durán, A. P., Gassert, F., Hinsley, A., Jaffer, S., Jones, J. P. G., Li, B. V., Aodha, O. M., Madhavapeddy, A., O'Donnell, S. A. L., Oxbury, W. M., ... Sutherland, W. J. (2024). The potential for AI to revolutionize conservation: a horizon scan. *Trends in Ecology & Evolution*. https://doi.org/10.1016/j.tree.2024.11.013
+
+Alotaibi, E. & Nassif, N. (2024). Artificial intelligence in environmental monitoring: in-depth analysis. *Discover Artificial Intelligence, 4(1), 84*. https://doi.org/10.1007/s44163-024-00198-1
+
+Reim, W., Andersson, E., & Eckerwall, K. (2023). Enabling collaboration on digital platforms: a study of digital twins. *International Journal of Production Research, 61(12), 3926-3942*. https://doi.org/10.1080/00207543.2022.2116499
+
+Denzin, N. K., Lincoln, Y. S., Giardina, M. D., & Cannella, G. S. (2024). *The SAGE handbook of qualitative research*. (Sixth edition). Los Angeles: SAGE. https://antioch.on.worldcat.org/oclc/1342621695
+
+Stephenson, P. J., Stengel, C., & Januchowski-Hartley, F. (2020). An inventory of biodiversity data sources for conservation monitoring. *PLOS ONE, 15*. https://doi.org/10.1371/journal.pone.0242923
+
+Ullah, F., Saqib, S., & Xiong, Y. (2024). Integrating artificial intelligence in biodiversity conservation: bridging classical and modern approaches. *Biodiversity and Conservation*. https://doi.org/10.1007/s10531-024-02977-9
+
+Stilgoe, J., Owen, R., & Macnaghten, P. (2013). Developing a framework for responsible innovation. *Research Policy, 42(9), 1568-1580*. https://doi.org/10.1016/j.respol.2013.05.008
+
+Zidny, R., Sjöström, J., & Eilks, I. (2020). A multi-perspective reflection on how indigenous knowledge and related ideas can improve science education for sustainability. *Science & Education, 29(1), 145-185*. https://doi.org/10.1007/s11191-019-00100-x
+
+Olawade, D. B., Wada, O. Z., Ige, A. O., Egbewole, B. I., Olojo, A., & Oladapo, B. I. (2024). Artificial intelligence in environmental monitoring: Advancements, challenges, and future directions. *Hygiene and Environmental Health Advances, 12, 100114*. https://doi.org/10.1016/j.heha.2024.100114
+
+Griffin, G. (2024). Conservation technology: How technology protects wildlife. https://forestry.com/wildlife-management/human-wildlife-interaction/conservation-technology-how-technology-protects-wildlife/
+
+Abrahms, B., Carter, N. H., Clark-Wolf, T., Gaynor, K. M., Johansson, E., McInturff, A., Nisi, A. C., Rafiq, K., & West, L. (2023). Climate change as a global amplifier of human–wildlife conflict. *Nature Climate Change, 13(3), 224-234*. https://doi.org/10.1038/s41558-023-01608-5
+
+Zacher, H., Kühner, C., Katz, I. M., & Rudolph, C. W. (2024). Leadership and environmental sustainability: An integrative conceptual model of multilevel antecedents and consequences of leader green behavior. *Group & Organization Management, 49(2), 365-394*. https://doi.org/10.1177/10596011241229891
+
+Datta, R. & Starlight, T. (2024). Building a meaningful bridge between indigenous and western worldviews: Through decolonial conversation. *International Journal of Qualitative Methods, 23, 16094069241235564*. https://doi.org/10.1177/16094069241235564
+
+Bryant, A. & Charmaz, K. (2024). The SAGE handbook of grounded theory. https://doi.org/10.4135/9781848607941
+
+Hill, C. M. (2021). Conflict is integral to human-wildlife coexistence. https://doi.org/10.3389/fcosc.2021.734314

@@ -374,6 +374,104 @@ export const journalData: JournalEntry = {
           ]
         }
       ]
+    },
+    {
+      id: "month-2",
+      monthNumber: 2,
+      title: "Exploration",
+      theme: "Widening the Field of Vision",
+      sections: [
+        {
+          id: "m2-opening",
+          title: "Opening Reflection",
+          icon: "eye",
+          content: [
+            {
+              id: "m2-o1",
+              type: "paragraph",
+              content: "This phase feels less like building an argument and more like widening my field of vision. I am not trying to prove anything yet. I am trying to notice. This stage is about slowing down enough to see how AI actually shows up in practice\u2014how it is embedded in infrastructure, funding priorities, environmental governance, and everyday systems that often remain invisible."
+            },
+            {
+              id: "m2-o2",
+              type: "paragraph",
+              content: "As I experiment with tools and examine cases, I am paying attention to what becomes visible when I look closely."
+            }
+          ]
+        },
+        {
+          id: "m2-strengths",
+          title: "What Strengths and Limitations Became Visible?",
+          icon: "search",
+          content: [
+            {
+              id: "m2-s1",
+              type: "paragraph",
+              content: "One strength that stands out is AI\u2019s capacity to process complex environmental data at scale. Monitoring wildlife movement, predicting conflict patterns, and modeling habitat change can produce forms of visibility that were previously difficult or slow to achieve. There is genuine potential in this capacity for early warning and informed decision-making."
+            },
+            {
+              id: "m2-s2",
+              type: "paragraph",
+              content: "At the same time, the limitations are equally clear. These systems depend on high energy demand, infrastructure pressure, and sustained technology deployment that carry their own ecological footprint. AI appears efficient at the level of output, but when I widen the lens to include resource competition, funding priorities, and infrastructure investment, the picture becomes more complicated. The \u201csolution\u201d is rarely neutral. It is always attached to capital flows, policy alignment, and governance structures that shape who benefits and who bears the cost."
+            }
+          ]
+        },
+        {
+          id: "m2-surprises",
+          title: "What Surprised or Unsettled Me?",
+          icon: "alert-triangle",
+          content: [
+            {
+              id: "m2-su1",
+              type: "paragraph",
+              content: "What unsettles me most is how quickly technological expansion is framed as inevitable. The language of innovation and optimization often bypasses shared governance and resource management questions. I notice how easily AI is presented as the logical next step in conservation and environmental governance, rather than as a choice that requires deliberation."
+            },
+            {
+              id: "m2-su2",
+              type: "paragraph",
+              content: "I am also unsettled by how invisible certain costs remain. Energy demand, material extraction, and infrastructure expansion are rarely foregrounded in discussions about conservation AI. This invisibility reinforces my concern that ecological impacts can be displaced while economic incentives remain central."
+            },
+            {
+              id: "m2-su3",
+              type: "paragraph",
+              content: "At a more personal level, I feel the tension between curiosity and caution. I am genuinely interested in what AI can make visible in ecological systems. Yet I am equally aware that technological systems can reshape governance in ways that reduce adaptive capacity or amplify systemic risk if power dynamics are not examined carefully."
+            }
+          ]
+        },
+        {
+          id: "m2-patterns",
+          title: "What Patterns Am I Noticing Across Systems?",
+          icon: "trending-up",
+          content: [
+            {
+              id: "m2-p1",
+              type: "paragraph",
+              content: "Across cases and readings, I am noticing a recurring pattern: technology deployment follows funding priorities more than ecological need. Infrastructure investment tends to cluster where capital is already concentrated. Policy alignment often emphasizes growth, innovation, and competitiveness rather than long-term sustainability pathways or intergenerational outcomes."
+            },
+            {
+              id: "m2-p2",
+              type: "paragraph",
+              content: "I am also seeing that AI intensifies existing structures rather than replacing them. Where power dynamics are already unequal, AI can reinforce those asymmetries through data ownership, infrastructure control, and access to predictive tools. Where governance is participatory and shared, AI has the potential to support resilience strategies. The technology itself does not determine the outcome; the economic and political context does."
+            }
+          ]
+        },
+        {
+          id: "m2-where",
+          title: "Where I Am in the Inquiry",
+          icon: "compass",
+          content: [
+            {
+              id: "m2-w1",
+              type: "paragraph",
+              content: "At this stage, I am not drawing final conclusions. Instead, I am building intellectual texture. My inquiry question feels clearer, but also more layered. I now see more sharply how the resources and investments lenses are foundational to understanding AI\u2019s ecological and economic impacts. Before I can fully analyze habitat change, conflict frequency, or livelihoods, I need to understand the infrastructure investment and capital architecture that make AI deployment possible."
+            },
+            {
+              id: "m2-w2",
+              type: "paragraph",
+              content: "This stage is about exposure and disciplined curiosity. I am learning to hold complexity without rushing to resolution. The joy of inquiry, at this point, is not excitement about technological novelty, but the deeper satisfaction of noticing patterns, naming tensions, and allowing my questions to mature before I attempt to answer them."
+            }
+          ]
+        }
+      ]
     }
   ],
   references: [

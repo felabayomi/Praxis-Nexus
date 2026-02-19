@@ -1,0 +1,83 @@
+Methods / Learning Pathway
+Framing the Inquiry
+AI, Ecology, and Economy in Human–Wildlife Conflict
+
+This inquiry examines how ecological disruption and economic development intersect to intensify human–wildlife conflict (HWC), and how artificial intelligence (AI) technologies may mediate, reshape, or potentially exacerbate these tensions. Rather than treating AI as a neutral technical instrument, the study situates it within broader systems of infrastructure, capital investment, governance, and power (Crawford, 2021). The methodological approach integrates ecological analysis, political economy, and ethical inquiry (Stilgoe et al., 2013).
+
+The inquiry is guided by three central questions:
+
+How do resource use, habitat change, and economic development contribute to human–wildlife conflict? (Treves & Karanth, 2003)
+
+How do ecological impacts intersect with economic consequences such as livelihoods, funding structures, and industry practices? (Distefano, 2005)
+
+How might AI tools reshape monitoring, mitigation, and investment decisions affecting both wildlife and human communities? (Reynolds, 2024)
+
+These questions frame HWC as a socio-ecological phenomenon shaped by land-use change, economic incentives, and governance priorities. AI technologies—such as predictive analytics, wildlife monitoring systems, and automated detection tools—are evaluated not only for technical performance but also for their infrastructural demands, governance implications, and distributive consequences (Ullah et al., 2024).
+
+The learning pathway proceeds through three interconnected lenses: conflict, livelihoods, and investment.
+
+Conflict Lens
+
+Human–wildlife conflict is strongly linked to habitat loss, agricultural expansion, infrastructure development, and extractive land-use practices (Treves & Karanth, 2003). As ecosystems fragment, wildlife movement shifts toward human settlements, resulting in crop damage, livestock predation, and retaliatory killings (Madden, 2007). Conflict therefore reflects structural development choices rather than isolated ecological incidents.
+
+This lens examines how economic growth models reshape landscapes and intensify human–wildlife interaction (Woodroffe et al., 2005). AI tools—such as drones, camera traps, and predictive systems—are increasingly used to identify conflict hotspots and improve early-warning systems (Pedrazzi et al., 2025). While these tools may enhance monitoring, the inquiry questions whether they address underlying drivers such as habitat destruction and infrastructure expansion, or primarily manage the symptoms of deeper ecological disruption.
+
+Livelihoods Lens
+
+Human–wildlife conflict disproportionately affects rural communities dependent on agriculture and pastoralism (Li et al., 2023). Crop loss, livestock predation, and food insecurity often compound pre-existing economic vulnerability. Conservation policies may restrict traditional mitigation strategies, placing disproportionate burdens on local populations (Bennett & Dearden, 2014).
+
+AI systems may offer tools for reducing losses through predictive alerts or improved data collection (Akbaş & Koklu, 2025). However, these systems also introduce questions of data ownership, surveillance, and access to technological infrastructure (Hanna et al., 2025). Authority may shift toward state agencies, private firms, or external experts, potentially marginalizing community knowledge and decision-making.
+
+This lens foregrounds relational accountability. It asks whether AI systems are co-designed with affected communities and whether technological interventions support human dignity and distributive justice (Tom et al., 2019). The inquiry remains attentive to the risk that AI may reframe conflict as a technocratic management issue rather than a structural socio-economic challenge.
+
+Investment Lens
+
+Financial flows significantly shape both ecological disruption and technological deployment (Reynolds, 2024). Public funding, conservation finance, development spending, and private capital influence where AI systems are implemented and which problems are prioritized. Investments in roads, mining, agriculture, or broadband infrastructure can intensify habitat fragmentation while simultaneously funding AI-based mitigation tools.
+
+The inquiry examines whether funding priorities align with ecological resilience or reflect innovation-driven growth narratives (Griffin, 2024). AI infrastructure—including data centers, cloud systems, and sensor networks—requires energy, land, and mineral extraction, raising questions about its environmental footprint (Crawford, 2021).
+
+This lens asks a central political economy question: Is AI serving ecological sustainability, or reinforcing capital accumulation under the language of green innovation?
+
+Emerging Insight and Tension
+
+An emerging insight is that human–wildlife conflict cannot be understood as solely ecological or economic. It is a deeply entangled socio-ecological challenge shaped by policy, infrastructure investment, funding priorities, and governance structures.
+
+A central tension remains unresolved. AI systems that promise predictive efficiency and improved conservation outcomes may also reinforce top-down decision-making and extractive development models. Technological intervention may enhance monitoring while leaving structural drivers of conflict intact.
+
+The guiding question moving forward is therefore ethical and relational:
+
+How can AI systems be designed and governed in ways that prioritize ecological sustainability, community dignity, and shared accountability rather than efficiency alone?
+
+---
+
+References
+
+Crawford, K. (2021). *The atlas of AI: Power, politics, and the planetary costs of artificial intelligence*. Yale University Press. https://books.google.com/books?id=XvEdEAAAQBAJ\&printsec=frontcover\&source=gbs_ViewAPI\&hl=en\#v=onepage\&q\&f=false
+
+Stilgoe, J., Owen, R., & Macnaghten, P. (2013). Developing a framework for responsible innovation. *Research Policy, 42(9), 1568-1580*. https://doi.org/10.1016/j.respol.2013.05.008
+
+Treves, A. & Karanth, K. U. (2003). Human-carnivore conflict and perspectives on carnivore management worldwide. *Conservation Biology, 17(6), 1491-1499*. https://antioch.on.worldcat.org/oclc/9984462754
+
+Distefano, E. (2005). Human-Wildlife Conflict worldwide: collection of case studies, analysis of management strategies and good practices. https://www.semanticscholar.org/paper/Human-Wildlife-Conflict-worldwide\%3A-collection-of-of-Distefano/75202accfe3e96ba7aef9b2f8fde1abb346e64ca
+
+Reynolds, S. A., Beery, S., Burgess, N., Burgman, M., Butchart, S. H. M., Cooke, S. J., Coomes, D., Danielsen, F., Minin, E. D., Durán, A. P., Gassert, F., Hinsley, A., Jaffer, S., Jones, J. P. G., Li, B. V., Aodha, O. M., Madhavapeddy, A., O'Donnell, S. A. L., Oxbury, W. M., ... Sutherland, W. J. (2024). The potential for AI to revolutionize conservation: a horizon scan. *Trends in Ecology & Evolution*. https://doi.org/10.1016/j.tree.2024.11.013
+
+Ullah, F., Saqib, S., & Xiong, Y. (2024). Integrating artificial intelligence in biodiversity conservation: bridging classical and modern approaches. *Biodiversity and Conservation*. https://doi.org/10.1007/s10531-024-02977-9
+
+Madden, F. (2007). HUMAN-WILDLIFE CONFLICT: a CASE FOR GLOBAL COLLABORATION.
+
+Woodroffe, R., Thirgood, S., & Rabinowitz, A. (2005). *People and wildlife, conflict or co-existence?*. Cambridge: Cambridge University Press. https://doi.org/10.1017/CBO9780511614774
+
+Pedrazzi, L., Naik, H., Sandbrook, C., Lurgi, M., Fürtbauer, I., & King, A. (2025). Advancing animal behaviour research using drone technology. *Animal Behaviour, 222, 123147*. https://doi.org/10.1016/j.anbehav.2025.123147
+
+Li, M., Jiang, W., Li, B., & Butt, N. (2023). Social and cultural aspects of human-wildlife conflicts: Understanding people's attitudes to crop-raiding animals and other wildlife in agricultural systems of the Tibetan Plateau. *Integrative Conservation, 2(4), 214-225*. https://doi.org/10.1002/inc3.30
+
+Bennett, N. J. & Dearden, P. (2014). Why local people do not support conservation: Community perceptions of marine protected area livelihood impacts, governance and management in Thailand. *Marine Policy, 44, 107-116*. https://doi.org/10.1016/j.marpol.2013.08.017
+
+Hanna, M. G., Pantanowitz, L., Jackson, B., Palmer, O., Visweswaran, S., Pantanowitz, J., Deebajah, M., & Rashidi, H. H. (2025). Ethical and bias considerations in artificial intelligence/machine learning. *Modern Pathology, 38(3)*. https://doi.org/10.1016/j.modpat.2024.100686
+
+Tom, M. N., Huaman, E. S., & McCarty, T. L. (2019). Indigenous knowledges as vital contributions to sustainability. *International Review of Education, 65(1), 1-18*. https://doi.org/10.1007/s11159-019-09770-9
+
+Griffin, G. (2024). Conservation technology: How technology protects wildlife. https://forestry.com/wildlife-management/human-wildlife-interaction/conservation-technology-how-technology-protects-wildlife/
+
+Akbaş, I. & Koklu, M. (2025). Artificial intelligence and deep learning approaches to human-wildlife conflict: a bibliometric analysis (2015-2024). https://www.researchgate.net/publication/395854212_Artificial_Intelligence_and_Deep_Learning_Approaches_to_Human-Wildlife_Conflict_A_Bibliometric_Analysis_2015-2024

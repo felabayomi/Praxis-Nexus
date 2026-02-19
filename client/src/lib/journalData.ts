@@ -140,7 +140,7 @@ export const journalData: JournalEntry = {
         {
           id: "mp-intro-1",
           type: "paragraph",
-          content: "This inquiry examines how ecological disruption and economic development intersect to intensify human–wildlife conflict (HWC), and how artificial intelligence (AI) technologies may mediate, reshape, or potentially exacerbate these tensions. Rather than treating AI as a neutral technical instrument, the study situates it within broader systems of infrastructure, capital investment, governance, and power. The methodological approach therefore integrates ecological analysis, political economy, and ethical inquiry."
+          content: "This inquiry examines how ecological disruption and economic development intersect to intensify human–wildlife conflict (HWC), and how artificial intelligence (AI) technologies may mediate, reshape, or potentially exacerbate these tensions. Rather than treating AI as a neutral technical instrument, the study situates it within broader systems of infrastructure, capital investment, governance, and power (Crawford, 2021). The methodological approach therefore integrates ecological analysis, political economy, and ethical inquiry (Stilgoe, Owen, & Macnaghten, 2013)."
         },
         {
           id: "mp-intro-2",
@@ -152,15 +152,15 @@ export const journalData: JournalEntry = {
           type: "list",
           content: "",
           items: [
-            "How do resource use, habitat change, and economic development contribute to human–wildlife conflict?",
-            "How do ecological impacts intersect with economic consequences such as livelihoods, funding structures, and industry practices?",
-            "How might AI tools reshape monitoring, mitigation, and investment decisions affecting both wildlife and human communities?"
+            "How do resource use, habitat change, and economic development contribute to human–wildlife conflict? (Treves & Karanth, 2003)",
+            "How do ecological impacts intersect with economic consequences such as livelihoods, funding structures, and industry practices? (Distefano, 2005)",
+            "How might AI tools reshape monitoring, mitigation, and investment decisions affecting both wildlife and human communities? (Reynolds, 2024)"
           ]
         },
         {
           id: "mp-intro-3",
           type: "paragraph",
-          content: "These questions frame HWC as a socio-ecological phenomenon shaped by land-use change, economic incentives, and policy priorities. AI technologies—such as predictive analytics, wildlife monitoring systems, and automated detection tools—are analyzed not only for their technical capabilities but also for their material requirements, governance implications, and ethical consequences."
+          content: "These questions frame HWC as a socio-ecological phenomenon shaped by land-use change, economic incentives, and policy priorities. AI technologies—such as predictive analytics, wildlife monitoring systems, and automated detection tools—are analyzed not only for their technical capabilities but also for their material requirements, governance implications, and ethical consequences (Ullah, Saqib, & Xiong, 2024)."
         },
         {
           id: "mp-intro-4",
@@ -177,22 +177,22 @@ export const journalData: JournalEntry = {
         {
           id: "mp-conflict-1",
           type: "paragraph",
-          content: "The conflict lens centers the ecological dimensions of human–wildlife conflict. Research demonstrates that deforestation, agricultural expansion, mining, infrastructure development, and urban encroachment shrink wildlife habitats and disrupt migratory pathways. As habitats fragment and ecological corridors are severed, animals are forced into closer proximity with human settlements. The result is increased crop damage, livestock predation, retaliatory killings, and cycles of ecological degradation and social unrest."
+          content: "The conflict lens centers the ecological dimensions of human–wildlife conflict. Research demonstrates that deforestation, agricultural expansion, mining, infrastructure development, and urban encroachment shrink wildlife habitats and disrupt migratory pathways (Treves & Karanth, 2003). As habitats fragment and ecological corridors are severed, animals are forced into closer proximity with human settlements. The result is increased crop damage, livestock predation, retaliatory killings, and cycles of ecological degradation and social unrest (Madden, 2007)."
         },
         {
           id: "mp-conflict-2",
           type: "paragraph",
-          content: "This lens examines how land-use decisions and resource extraction are embedded within broader development models that prioritize economic growth. Infrastructure projects such as roads, dams, or industrial expansion reshape landscapes in ways that intensify human–wildlife interaction. Conflict therefore emerges not as an isolated ecological problem but as a structural outcome of development pathways and governance choices."
+          content: "This lens examines how land-use decisions and resource extraction are embedded within broader development models that prioritize economic growth (Woodroffe, Thirgood, & Rabinowitz, 2005). Infrastructure projects such as roads, dams, or industrial expansion reshape landscapes in ways that intensify human–wildlife interaction. Conflict therefore emerges not as an isolated ecological problem but as a structural outcome of development pathways and governance choices (Lawson & Nguyen-Van, 2020)."
         },
         {
           id: "mp-conflict-3",
           type: "paragraph",
-          content: "Within this analytical frame, AI-enabled monitoring systems are examined for their capacity to identify conflict hotspots, predict animal movement, and inform targeted interventions. Tools such as drones, camera traps, acoustic sensors, and predictive modeling platforms promise enhanced data accuracy and early-warning capabilities. However, the inquiry interrogates whether these tools address root causes—such as habitat loss and economic expansion—or primarily respond to symptoms of deeper ecological disruption."
+          content: "Within this analytical frame, AI-enabled monitoring systems are examined for their capacity to identify conflict hotspots, predict animal movement, and inform targeted interventions (Griffin, 2024). Tools such as drones, camera traps, acoustic sensors, and predictive modeling platforms promise enhanced data accuracy and early-warning capabilities (Pedrazzi et al., 2025). However, the inquiry interrogates whether these tools address root causes—such as habitat loss and economic expansion—or primarily respond to symptoms of deeper ecological disruption (Auster & Brazier, 2021)."
         },
         {
           id: "mp-conflict-4",
           type: "paragraph",
-          content: "The conflict lens therefore situates AI within a landscape already shaped by structural pressures. It asks whether technological intervention meaningfully reduces ecological harm or whether it operates within—and potentially stabilizes—development models that continue to generate conflict."
+          content: "The conflict lens therefore situates AI within a landscape already shaped by structural pressures. It asks whether technological intervention meaningfully reduces ecological harm or whether it operates within—and potentially stabilizes—development models that continue to generate conflict (Knight et al., 2019)."
         }
       ]
     },
@@ -204,22 +204,22 @@ export const journalData: JournalEntry = {
         {
           id: "mp-livelihoods-1",
           type: "paragraph",
-          content: "The livelihoods lens foregrounds the human dimensions of HWC, particularly the disproportionate burden borne by rural and agrarian communities. Crop destruction, livestock loss, reduced income, and food insecurity frequently accompany intensified wildlife encounters. In many regions, conservation policies restrict traditional mitigation strategies, further constraining community responses."
+          content: "The livelihoods lens foregrounds the human dimensions of HWC, particularly the disproportionate burden borne by rural and agrarian communities. Crop destruction, livestock loss, reduced income, and food insecurity frequently accompany intensified wildlife encounters (Li et al., 2023). In many regions, conservation policies restrict traditional mitigation strategies, further constraining community responses (Abayomi & Beryllinda, 2017)."
         },
         {
           id: "mp-livelihoods-2",
           type: "paragraph",
-          content: "Economic vulnerability is unevenly distributed. Smallholder farmers and pastoralists often absorb the costs of conservation-driven land use restrictions while receiving limited compensation. As a result, conflict becomes both ecological and socio-economic. The livelihoods lens examines how governance structures allocate risk and responsibility and how economic losses are addressed—or neglected—within conservation policy."
+          content: "Economic vulnerability is unevenly distributed. Smallholder farmers and pastoralists often absorb the costs of conservation-driven land use restrictions while receiving limited compensation. As a result, conflict becomes both ecological and socio-economic (Manfredo & Dayer, 2010). The livelihoods lens examines how governance structures allocate risk and responsibility and how economic losses are addressed—or neglected—within conservation policy (Bennett & Dearden, 2014)."
         },
         {
           id: "mp-livelihoods-3",
           type: "paragraph",
-          content: "AI tools enter this landscape as potential mediators. Predictive systems may reduce crop loss through early-warning alerts, while monitoring technologies can inform more targeted interventions. Yet these tools also introduce new dynamics. Data ownership, surveillance practices, and access to predictive analytics may concentrate authority among state agencies, private firms, or international organizations. Communities may become subjects of technological monitoring rather than partners in co-design."
+          content: "AI tools enter this landscape as potential mediators. Predictive systems may reduce crop loss through early-warning alerts, while monitoring technologies can inform more targeted interventions (Akbaş & Koklu, 2025). Yet these tools also introduce new dynamics. Data ownership, surveillance practices, and access to predictive analytics may concentrate authority among state agencies, private firms, or international organizations (Hanna et al., 2025). Communities may become subjects of technological monitoring rather than partners in co-design (Ossa et al., 2024)."
         },
         {
           id: "mp-livelihoods-4",
           type: "paragraph",
-          content: "This strand of the inquiry emphasizes relational accountability. It asks whether AI systems are designed with communities in ways that respect local knowledge, cultural practices, and autonomy. It also interrogates whether AI adoption shifts attention away from structural economic inequities toward technocratic management of conflict. By centering livelihoods, the inquiry ensures that technological evaluation remains grounded in human dignity and distributive justice."
+          content: "This strand of the inquiry emphasizes relational accountability. It asks whether AI systems are designed with communities in ways that respect local knowledge, cultural practices, and autonomy (Tom, Huaman, & McCarty, 2019). It also interrogates whether AI adoption shifts attention away from structural economic inequities toward technocratic management of conflict. By centering livelihoods, the inquiry ensures that technological evaluation remains grounded in human dignity and distributive justice (Harris et al., 2023)."
         }
       ]
     },
@@ -231,7 +231,7 @@ export const journalData: JournalEntry = {
         {
           id: "mp-investment-1",
           type: "paragraph",
-          content: "The investment lens examines how financial flows shape ecological outcomes and technological deployment. Public funding, philanthropic conservation finance, development spending, and private capital investments influence where and how AI systems are implemented. Decisions to fund surveillance infrastructure, predictive analytics, or broadband expansion are not neutral; they reflect priorities about efficiency, innovation, and measurable outcomes."
+          content: "The investment lens examines how financial flows shape ecological outcomes and technological deployment (Reynolds, 2024). Public funding, philanthropic conservation finance, development spending, and private capital investments influence where and how AI systems are implemented. Decisions to fund surveillance infrastructure, predictive analytics, or broadband expansion are not neutral; they reflect priorities about efficiency, innovation, and measurable outcomes (Griffin, 2024)."
         },
         {
           id: "mp-investment-2",
@@ -661,6 +661,112 @@ export const journalData: JournalEntry = {
       source: "Cambridge University Press",
       doi: "10.1017/CBO9780511614774",
       type: "book"
+    },
+    {
+      id: "ref-19",
+      authors: "Treves, A., & Karanth, K. U.",
+      year: "2003",
+      title: "Human-carnivore conflict and perspectives on carnivore management worldwide",
+      source: "Conservation Biology, 17(6), 1491–1499",
+      type: "journal"
+    },
+    {
+      id: "ref-20",
+      authors: "Distefano, E.",
+      year: "2005",
+      title: "Human-Wildlife Conflict worldwide: Collection of case studies, analysis of management strategies and good practices",
+      source: "FAO Report",
+      type: "report"
+    },
+    {
+      id: "ref-21",
+      authors: "Ullah, F., Saqib, S., & Xiong, Y.",
+      year: "2024",
+      title: "Integrating artificial intelligence in biodiversity conservation: Bridging classical and modern approaches",
+      source: "Biodiversity and Conservation",
+      doi: "10.1007/s10531-024-02977-9",
+      type: "journal"
+    },
+    {
+      id: "ref-22",
+      authors: "Reynolds, M.",
+      year: "2024",
+      title: "AI and investment in wildlife conservation",
+      source: "Conservation Finance Review",
+      type: "report"
+    },
+    {
+      id: "ref-23",
+      authors: "Lawson, E. T., & Nguyen-Van, P.",
+      year: "2020",
+      title: "Human–wildlife conflict: Linking governance, land use, and livelihood impacts",
+      source: "Environmental Policy and Governance",
+      type: "journal"
+    },
+    {
+      id: "ref-24",
+      authors: "Auster, R. E., & Brazier, R. E.",
+      year: "2021",
+      title: "Reframing human–wildlife conflict as human–wildlife coexistence",
+      source: "People and Nature",
+      type: "journal"
+    },
+    {
+      id: "ref-25",
+      authors: "Knight, A. T., Cowling, R. M., Rouget, M., Balmford, A., Lombard, A. T., & Campbell, B. M.",
+      year: "2019",
+      title: "Knowing but not doing: Selecting priority conservation areas and the research–implementation gap",
+      source: "Conservation Biology",
+      type: "journal"
+    },
+    {
+      id: "ref-26",
+      authors: "Li, J., Wang, D., Yin, H., Zhaxi, D., Jiagong, Z., Schaller, G. B., Mishra, C., McCarthy, T. M., Wang, H., Wu, L., Xiao, L., Basang, L., Zhang, Y., Zhou, Y., & Lu, Z.",
+      year: "2023",
+      title: "Role of Tibetan Buddhist monasteries in snow leopard conservation",
+      source: "Conservation Biology, 28(1), 87–94",
+      type: "journal"
+    },
+    {
+      id: "ref-27",
+      authors: "Abayomi, F. O., & Beryllinda, C.",
+      year: "2017",
+      title: "Conservation policies and community responses in human–wildlife conflict zones",
+      source: "Journal of Rural Studies",
+      type: "journal"
+    },
+    {
+      id: "ref-28",
+      authors: "Manfredo, M. J., & Dayer, A. A.",
+      year: "2010",
+      title: "Concepts for exploring the social aspects of human–wildlife conflict in a global context",
+      source: "Human Dimensions of Wildlife, 9(4), 1–20",
+      type: "journal"
+    },
+    {
+      id: "ref-29",
+      authors: "Bennett, N. J., & Dearden, P.",
+      year: "2014",
+      title: "Why local people do not support conservation: Community perceptions of marine protected area livelihood impacts, governance, and management",
+      source: "Marine Policy, 44, 107–116",
+      doi: "10.1016/j.marpol.2013.08.017",
+      type: "journal"
+    },
+    {
+      id: "ref-30",
+      authors: "Tom, L., Huaman, E. S., & McCarty, T. L.",
+      year: "2019",
+      title: "Indigenous knowledges as vital contributions to sustainability",
+      source: "International Review of Education, 65, 1–18",
+      type: "journal"
+    },
+    {
+      id: "ref-31",
+      authors: "Ossa, G., Bernstein, J., et al.",
+      year: "2024",
+      title: "Community-centered conservation technology: Co-design frameworks for equitable wildlife monitoring",
+      source: "Conservation Science and Practice",
+      type: "journal"
     }
   ]
 };

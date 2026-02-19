@@ -1,0 +1,59 @@
+Methods / Learning Pathway Framing the Inquiry AI, Ecology, and Economy in Human–Wildlife Conflict
+
+This inquiry examines how ecological disruption and economic development intersect to intensify human–wildlife conflict (HWC), and how artificial intelligence (AI) technologies may mediate, reshape, or potentially exacerbate these tensions. Rather than treating AI as a neutral technical instrument, the study situates it within broader systems of infrastructure, capital investment, governance, and power (Crawford, 2021). The methodological approach therefore integrates ecological analysis, political economy, and ethical inquiry (Stilgoe, Owen, & Macnaghten, 2013).
+
+At its core, the inquiry is guided by three interrelated questions:
+
+How do resource use, habitat change, and economic development contribute to human–wildlife conflict? (Treves & Karanth, 2003)
+
+How do ecological impacts intersect with economic consequences such as livelihoods, funding structures, and industry practices? (Distefano, 2005)
+
+How might AI tools reshape monitoring, mitigation, and investment decisions affecting both wildlife and human communities? (Reynolds, 2024)
+
+These questions frame HWC as a socio-ecological phenomenon shaped by land-use change, economic incentives, and policy priorities. AI technologies—such as predictive analytics, wildlife monitoring systems, and automated detection tools—are analyzed not only for their technical capabilities but also for their material requirements, governance implications, and ethical consequences (Ullah, Saqib, & Xiong, 2024).
+
+The learning pathway proceeds through three primary analytical lenses—conflict, livelihoods, and investment—while maintaining sustained attention to the role of AI across each domain. Structured reflection and case comparison support the development of a coherent analytical framework that prepares the inquiry for deeper synthesis [...]
+
+Conflict Lens
+
+The conflict lens centers the ecological dimensions of human–wildlife conflict. Research demonstrates that deforestation, agricultural expansion, mining, infrastructure development, and urban encroachment shrink wildlife habitats and disrupt migratory pathways (Treves & Karanth, 2003). As habitats fragment and ecological corridors are severed, animals are forced into closer proximity with human settlements. The result is increased crop damage, livestock predation, retaliatory killings, and cycles of ecological degradation and social unrest (Madden, 2007).
+
+This lens examines how land-use decisions and resource extraction are embedded within broader development models that prioritize economic growth (Woodroffe, Thirgood, & Rabinowitz, 2005). Infrastructure projects such as roads, dams, or industrial expansion reshape landscapes in ways that intensify human–wildlife interaction. Conflict therefore emerges not as an isolated ecological problem but as a structural outcome of development pathways and governance choices (Lawson & Nguyen-Van, 2020).
+
+Within this analytical frame, AI-enabled monitoring systems are examined for their capacity to identify conflict hotspots, predict animal movement, and inform targeted interventions (Griffin, 2024). Tools such as drones, camera traps, acoustic sensors, and predictive modeling platforms promise enhanced data accuracy and early-warning capabilities (Pedrazzi et al., 2025). However, the inquiry interrogates whether these tools address root causes—such as habitat loss and economic expansion—or primarily respond to symptoms of deeper ecological disruption (Auster & Brazier, 2021).
+
+The conflict lens therefore situates AI within a landscape already shaped by structural pressures. It asks whether technological intervention meaningfully reduces ecological harm or whether it operates within—and potentially stabilizes—development models that continue to generate conflict (Knight et al., 2019).
+
+Livelihoods Lens
+
+The livelihoods lens foregrounds the human dimensions of HWC, particularly the disproportionate burden borne by rural and agrarian communities. Crop destruction, livestock loss, reduced income, and food insecurity frequently accompany intensified wildlife encounters (Li et al., 2023). In many regions, conservation policies restrict traditional mitigation strategies, further constraining community responses (Abayomi & Beryllinda, 2017).
+
+Economic vulnerability is unevenly distributed. Smallholder farmers and pastoralists often absorb the costs of conservation-driven land use restrictions while receiving limited compensation. As a result, conflict becomes both ecological and socio-economic (Manfredo & Dayer, 2010). The livelihoods lens examines how governance structures allocate risk and responsibility and how economic losses are addressed—or neglected—within conservation policy (Bennett & Dearden, 2014).
+
+AI tools enter this landscape as potential mediators. Predictive systems may reduce crop loss through early-warning alerts, while monitoring technologies can inform more targeted interventions (Akbaş & Koklu, 2025). Yet these tools also introduce new dynamics. Data ownership, surveillance practices, and access to predictive analytics may concentrate authority among state agencies, private firms, or international organizations (Hanna et al., 2025). Communities may become subjects of technological monitoring rather than partners in co-design (Ossa et al., 2024).
+
+This strand of the inquiry emphasizes relational accountability. It asks whether AI systems are designed with communities in ways that respect local knowledge, cultural practices, and autonomy (Tom, Huaman, & McCarty, 2019). It also interrogates whether AI adoption shifts attention away from structural economic inequities toward technocratic management of conflict. By centering livelihoods, the inquiry ensures that technological evaluation remains grounded in human dignity and distributive justice (Harris et al., 2023).
+
+Investment Lens
+
+The investment lens examines how financial flows shape ecological outcomes and technological deployment (Reynolds, 2024). Public funding, philanthropic conservation finance, development spending, and private capital investments influence where and how AI systems are implemented. Decisions to fund surveillance infrastructure, predictive analytics, or broadband expansion are not neutral; they reflect priorities about efficiency, innovation, and measurable outcomes (Griffin, 2024).
+
+[...]
+
+---
+
+References
+
+Crawford, K. (2021). *The atlas of AI: Power, politics, and the planetary costs of artificial intelligence*. Yale University Press. https://books.google.com/books?id=XvEdEAAAQBAJ\&printsec=frontcover\&source=gbs_ViewAPI\&hl=en\#v=onepage\&q\&f=false
+
+Stilgoe, J., Owen, R., & Macnaghten, P. (2013). Developing a framework for responsible innovation. *Research Policy, 42(9), 1568-1580*. https://doi.org/10.1016/j.respol.2013.05.008
+
+Treves, A. & Karanth, K. U. (2003). Human-carnivore conflict and perspectives on carnivore management worldwide. *Conservation Biology, 17(6), 1491-1499*. https://antioch.on.worldcat.org/oclc/9984462754
+
+Distefano, E. (2005). Human-Wildlife Conflict worldwide: collection of case studies, analysis of management strategies and good practices. https://www.semanticscholar.org/paper/Human-Wildlife-Conflict-worldwide\%3A-collection-of-of-Distefano/75202accfe3e96ba7aef9b2f8fde1abb346e64ca
+
+Ullah, F., Saqib, S., & Xiong, Y. (2024). Integrating artificial intelligence in biodiversity conservation: bridging classical and modern approaches. *Biodiversity and Conservation*. https://doi.org/10.1007/s10531-024-02977-9
+
+Pedrazzi, L., Naik, H., Sandbrook, C., Lurgi, M., Fürtbauer, I., & King, A. (2025). Advancing animal behaviour research using drone technology. *Animal Behaviour, 222, 123147*. https://doi.org/10.1016/j.anbehav.2025.123147
+
+Hanna, M. G., Pantanowitz, L., Jackson, B., Palmer, O., Visweswaran, S., Pantanowitz, J., Deebajah, M., & Rashidi, H. H. (2025). Ethical and bias considerations in artificial intelligence/machine learning. *Modern Pathology, 38(3)*. https://doi.org/10.1016/j.modpat.2024.100686

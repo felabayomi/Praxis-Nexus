@@ -140,6 +140,20 @@ export function getAllTextForTTS(journal: JournalEntry, sectionId: string): stri
     return journal.introduction.map(s => s.content).join(" ");
   }
   
+  if (sectionId === "inquiry-questions" && journal.inquiryQuestions) {
+    return journal.inquiryQuestions.map(section => {
+      const content = getContentText(section.content);
+      return `${section.title}. ${content}`;
+    }).join(" ");
+  }
+
+  if (sectionId === "methods-pathway" && journal.methodsPathway) {
+    return journal.methodsPathway.map(section => {
+      const content = getContentText(section.content);
+      return `${section.title}. ${content}`;
+    }).join(" ");
+  }
+
   if (sectionId === "references") {
     return journal.references.map(r => 
       `${r.authors}, ${r.year}. ${r.title}. ${r.source}.`

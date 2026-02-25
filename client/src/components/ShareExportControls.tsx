@@ -21,7 +21,7 @@ import {
 
 interface ShareExportControlsProps {
   type: 'presentation' | 'audio' | 'references';
-  project: 'edd-inquiry' | 'quasi-qualitative' | 'portfolio' | 'integrated-essay';
+  project: 'edd-inquiry' | 'quasi-qualitative' | 'portfolio' | 'integrated-essay' | 'waci' | 'nesri';
   title: string;
   content: any;
   slides?: any[];

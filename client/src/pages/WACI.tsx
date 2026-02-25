@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { WACIPresentationView, type Slide } from "@/components/WACIPresentationView";
 import { WACIAIAudio } from "@/components/WACIAIAudio";
+import { ShareExportControls } from "@/components/ShareExportControls";
 
 interface ContentEntry {
   id: string;
@@ -366,6 +367,13 @@ export default function WACI() {
         <div className="flex items-center gap-3">
           {activeContent && activeEntry && (
             <>
+              <ShareExportControls
+                type="presentation"
+                project="waci"
+                title={activeEntry.title}
+                content={activeEntry.slides}
+                slides={activeEntry.slides}
+              />
               <Button
                 variant="ghost"
                 size="icon"

@@ -4,11 +4,14 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   Globe, ArrowLeft, Shield, MapPin, Users, Leaf, BookOpen, Handshake,
   Target, Rocket, GraduationCap, TrendingUp, MessageCircle, Star,
-  Mail, ExternalLink, ChevronDown, ChevronUp, Megaphone, ArrowRight
+  Mail, ExternalLink, ChevronDown, ChevronUp, Megaphone, ArrowRight,
+  Presentation
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { WACIPresentationView, type Slide } from "@/components/WACIPresentationView";
+import { WACIAIAudio } from "@/components/WACIAIAudio";
 
 interface ContentEntry {
   id: string;
@@ -18,6 +21,8 @@ interface ContentEntry {
   badge: string;
   badgeColor: string;
   component: () => JSX.Element;
+  slides: Slide[];
+  getAllText: () => string;
 }
 
 function VolunteerCheckin() {
@@ -93,7 +98,7 @@ function VolunteerCheckin() {
               <span>Building Momentum</span>
             </div>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-3">A Year of Momentum</h2>
-            <p className="text-muted-foreground">We did not just grow numbers \u2014 we deepened impact.</p>
+            <p className="text-muted-foreground">We did not just grow numbers — we deepened impact.</p>
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             <Card>
@@ -131,7 +136,7 @@ function VolunteerCheckin() {
                   ))}
                 </ul>
                 <p className="text-xs text-muted-foreground mt-4 italic">
-                  Our digital ecosystem is no longer just informational \u2014 it is interactive.
+                  Our digital ecosystem is no longer just informational — it is interactive.
                 </p>
               </CardContent>
             </Card>
@@ -177,7 +182,7 @@ function VolunteerCheckin() {
               <span>Strategic Direction</span>
             </div>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-3">Strategic Priorities</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">The Year of Alignment and Scale \u2014 not about doing more, but doing what matters with focus and excellence.</p>
+            <p className="text-muted-foreground max-w-xl mx-auto">The Year of Alignment and Scale — not about doing more, but doing what matters with focus and excellence.</p>
           </div>
           <div className="space-y-4">
             {strategicPriorities.map((priority) => (
@@ -260,7 +265,7 @@ function VolunteerCheckin() {
             WACI is not just an organization. It is a movement.
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-            A movement of people who believe Africa's wildlife deserves protection \u2014 and that local voices matter. Let us lead boldly. Let us collaborate deeply. Let us make this transformational.
+            A movement of people who believe Africa's wildlife deserves protection — and that local voices matter. Let us lead boldly. Let us collaborate deeply. Let us make this transformational.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-muted-foreground">
             <span>Deeper collaboration</span>
@@ -277,23 +282,58 @@ function VolunteerCheckin() {
   );
 }
 
+const volunteerCheckinSlides: Slide[] = [
+  { title: "WACI Volunteer & Partner Check-in", content: "Q1 2026\nWildlife of Africa Conservation Initiative\n\nWelcome, WACI family. Today is about alignment, momentum, and strengthening the mission that unites us — protecting Africa's wildlife through education, community leadership, and global collaboration.", type: "title" },
+  { title: "Why We Exist", content: "Our Mission: To educate, inspire, and mobilize individuals and communities to protect Africa's wildlife and ecosystems.\n\nOur Vision: A thriving Africa where humans and wildlife coexist harmoniously.\n\nWACI was never just about conservation projects. It was about building a movement — led by empowered local voices and supported by global action.", type: "section" },
+  { title: "A Year of Momentum", content: "What We Strengthened:\n\n• Expanded #VoicesForWildlife storytelling\n• Increased volunteer engagement\n• Strengthened digital platform engagement\n• Deepened community conversations\n• Expanded conservation education efforts\n\nWe didn't just grow numbers — we deepened impact.", type: "section" },
+  { title: "#VoicesForWildlife", content: "Amplifying Authentic Conservation Stories\n\n• Local conservation leaders highlighted\n• Community-driven narratives\n• Cross-continental engagement\n• A platform for visibility and funding\n\nStories move people. #VoicesForWildlife is more than a campaign — it's our heartbeat.", type: "section" },
+  { title: "Our Digital Platform Growth", content: "Platform Highlights:\n\n• Story submission & sharing system\n• Blog integration\n• Secure donation processing\n• Newsletter growth\n• Social sharing integration\n\nOur digital ecosystem is no longer just informational — it's interactive.", type: "section" },
+  { title: "Where We Are Now", content: "Current Focus Areas:\n\n• Wildlife education\n• Human-wildlife coexistence\n• Youth engagement\n• Rescue & rehabilitation awareness\n• Community partnerships\n\nWe are now positioned to move from awareness into measurable outcomes.", type: "section" },
+  { title: "Strategic Priorities", content: "This Is Our Year of Alignment & Scale\n\n1. Community-Led Conservation Expansion\n2. Human-Wildlife Conflict Mitigation Programs\n3. WACI Training University Activation\n4. Digital Growth & Fundraising Pipeline\n5. Stronger Strategic Partnerships\n\nNot about doing more — it's about doing what matters with focus and excellence.", type: "section" },
+  { title: "Priority 1: Community-Led Conservation", content: "Action Steps:\n\n• Identify 3–5 grassroots initiatives to support\n• Develop micro-grant strategy\n• Feature local leaders quarterly\n\nThe future of conservation in Africa must be led locally. Our role is to empower, amplify, and resource.", type: "priority" },
+  { title: "Priority 2: Human-Wildlife Coexistence", content: "Focus Areas:\n\n• Education & engagement\n• Beehive fence advocacy\n• Community deterrent strategies\n• Policy awareness\n\nConflict is not solved with distance — it is solved with understanding and innovation.", type: "priority" },
+  { title: "Priority 3: WACI Training University", content: "Goals:\n\n• Launch structured online modules\n• Recruit volunteer facilitators\n• Develop youth conservation track\n• Offer certification pathways\n\nWe are not only protecting wildlife — we are training the next generation of conservation leaders.", type: "priority" },
+  { title: "Priority 4: Digital & Fundraising Growth", content: "Targets:\n\n• Increase story submissions\n• Grow newsletter base\n• Strengthen recurring donations\n• Expand global visibility\n\nVisibility fuels sustainability. When our impact is seen, support follows.", type: "priority" },
+  { title: "Priority 5: Partnerships", content: "We're Looking For:\n\n• University collaborations\n• NGO alliances\n• CSR partnerships\n• Research partnerships\n• Volunteer leaders\n\nWACI is a platform. Partnerships are how we multiply impact.", type: "priority" },
+  { title: "Your Role", content: "How You Can Plug In:\n\n• Lead a regional initiative\n• Submit or feature a story\n• Join Training University facilitation\n• Recruit new volunteers\n• Support fundraising campaigns\n\nWACI grows when you step forward.", type: "section" },
+  { title: "Closing & Call to Action", content: "WACI is not just an organization. It is a movement of people who believe Africa's wildlife deserves protection — and that local voices matter.\n\n• Deeper collaboration\n• Clearer impact\n• Stronger community\n• Louder voices for wildlife\n\nLet's lead boldly. Let's collaborate deeply. Let's make this transformational.", type: "closing" },
+];
+
+function getVolunteerCheckinText(): string {
+  return volunteerCheckinSlides.map(s => `${s.title}\n\n${s.content}`).join("\n\n---\n\n");
+}
+
 const contentEntries: ContentEntry[] = [
   {
     id: "volunteer-checkin-q1-2026",
     title: "Volunteer and Partner Check-in",
-    subtitle: "Q1 2026 \u2014 Alignment, Momentum, and Strengthening the Mission",
+    subtitle: "Q1 2026 — Alignment, Momentum, and Strengthening the Mission",
     date: "Q1 2026",
     badge: "Meeting Deck",
     badgeColor: "bg-orange-600",
     component: VolunteerCheckin,
+    slides: volunteerCheckinSlides,
+    getAllText: getVolunteerCheckinText,
   },
 ];
 
 export default function WACI() {
   const [, navigate] = useLocation();
   const [activeContent, setActiveContent] = useState<string | null>(null);
+  const [showPresentation, setShowPresentation] = useState(false);
 
   const activeEntry = contentEntries.find((e) => e.id === activeContent);
+
+  if (showPresentation && activeEntry) {
+    return (
+      <WACIPresentationView
+        open={true}
+        onClose={() => setShowPresentation(false)}
+        slides={activeEntry.slides}
+        title={activeEntry.title}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-orange-50 to-white dark:from-gray-950 dark:to-gray-900">
@@ -324,6 +364,20 @@ export default function WACI() {
           )}
         </div>
         <div className="flex items-center gap-3">
+          {activeContent && activeEntry && (
+            <>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowPresentation(true)}
+                title="Presentation Mode"
+                data-testid="button-waci-presentation"
+              >
+                <Presentation className="h-4 w-4" />
+              </Button>
+              <WACIAIAudio getText={activeEntry.getAllText} sectionId={activeEntry.id} />
+            </>
+          )}
           <span className="text-xs text-muted-foreground hidden sm:inline font-medium">WACI</span>
           <ThemeToggle />
         </div>

@@ -3,11 +3,15 @@ import { useLocation } from "wouter";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   Trees, ArrowLeft, BookOpen, Scale, Sprout, Heart, Globe, Users,
-  Lightbulb, GraduationCap, Feather, Mail, ArrowRight
+  Lightbulb, GraduationCap, Feather, Mail, ArrowRight, Presentation,
+  Shield, Stethoscope, HandHeart, Megaphone, Target
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { WACIPresentationView, type Slide } from "@/components/WACIPresentationView";
+import { WACIAIAudio } from "@/components/WACIAIAudio";
+import { ShareExportControls } from "@/components/ShareExportControls";
 
 interface ContentEntry {
   id: string;
@@ -17,6 +21,8 @@ interface ContentEntry {
   badge: string;
   badgeColor: string;
   component: () => JSX.Element;
+  slides: Slide[];
+  getAllText: () => string;
 }
 
 function FoundingVision() {
@@ -131,7 +137,330 @@ function FoundingVision() {
   );
 }
 
+function WelfareFoundation() {
+  const traditionalFocus = [
+    "Species survival",
+    "Population recovery",
+    "Habitat restoration",
+    "Biodiversity metrics",
+    "Ecosystem balance",
+  ];
+
+  const missingFoundation = [
+    "Stress during research capture",
+    "Trauma in relocation",
+    "Welfare in monitoring practices",
+    "Humane conflict mitigation",
+    "Ethical field protocols",
+  ];
+
+  const ethicalResearch = [
+    "Minimally invasive monitoring",
+    "Humane capture and tagging methods",
+    "Stress-reduction protocols",
+    "Welfare review boards",
+    "Community consultation",
+    "Transparent reporting",
+  ];
+
+  const conflictLens = [
+    "Non-lethal deterrents",
+    "Beehive fences",
+    "Early-warning systems",
+    "Education and coexistence",
+    "Compensation frameworks",
+  ];
+
+  const globalImpact = [
+    "Public trust increases",
+    "Funding confidence grows",
+    "Youth engagement strengthens",
+    "Partnerships expand",
+    "Policy influence improves",
+  ];
+
+  const callToAction = [
+    "Embed welfare into research",
+    "Share ethical case studies",
+    "Collaborate on humane innovation",
+    "Amplify stories through #VoicesForWildlife",
+  ];
+
+  return (
+    <div className="space-y-0">
+      <section className="px-4 sm:px-6 py-12 bg-amber-500/5 dark:bg-amber-950/20 border-y border-amber-200/50 dark:border-amber-900/30">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-lg font-serif leading-relaxed text-foreground mb-4">
+            What if conservation science put animal welfare first — not as a footnote, not as an afterthought, but as the foundation?
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            For decades, conservation has focused on ecosystems, species numbers, habitat restoration, and biodiversity metrics. These are essential. They matter deeply. But somewhere along the way, the individual animal — the living, feeling being — sometimes became secondary to the system.
+          </p>
+        </div>
+      </section>
+
+      <section className="px-4 sm:px-6 py-16">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-serif text-lg flex items-center gap-2">
+                  <Target className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                  The Traditional Model
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-4">Conservation has historically focused on:</p>
+                <ul className="space-y-2.5">
+                  {traditionalFocus.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <Sprout className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-muted-foreground mt-4 italic">These priorities are valid and necessary. But they are not complete.</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-serif text-lg flex items-center gap-2">
+                  <Heart className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                  The Missing Foundation
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-4">Where is the individual animal?</p>
+                <ul className="space-y-2.5">
+                  {missingFoundation.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <Sprout className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-muted-foreground mt-4 italic">Sometimes the individual becomes invisible inside the data.</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 sm:px-6 py-16 bg-muted/30">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 text-amber-700 dark:text-amber-400 rounded-full text-sm font-medium mb-4">
+              <Lightbulb className="h-4 w-4" />
+              <span>A New Framework</span>
+            </div>
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-3">What If Welfare Was the Starting Point?</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">Not a regulation. Not a compliance box. But a guiding philosophy.</p>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-6">
+            <Card className="text-center">
+              <CardContent className="pt-6">
+                <div className="flex h-12 w-12 mx-auto items-center justify-center rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 mb-4">
+                  <Globe className="h-6 w-6" />
+                </div>
+                <h3 className="font-serif font-semibold mb-2">Ecological Integrity</h3>
+                <p className="text-sm text-muted-foreground">Protecting the health and resilience of whole ecosystems.</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center">
+              <CardContent className="pt-6">
+                <div className="flex h-12 w-12 mx-auto items-center justify-center rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 mb-4">
+                  <BookOpen className="h-6 w-6" />
+                </div>
+                <h3 className="font-serif font-semibold mb-2">Scientific Rigor</h3>
+                <p className="text-sm text-muted-foreground">Evidence-based approaches grounded in robust methodology.</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center">
+              <CardContent className="pt-6">
+                <div className="flex h-12 w-12 mx-auto items-center justify-center rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 mb-4">
+                  <Heart className="h-6 w-6" />
+                </div>
+                <h3 className="font-serif font-semibold mb-2">Animal Well-being</h3>
+                <p className="text-sm text-muted-foreground">Respecting the welfare of every individual living being.</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 sm:px-6 py-16">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-serif text-lg flex items-center gap-2">
+                  <Stethoscope className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                  Ethical Research in Practice
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2.5">
+                  {ethicalResearch.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <Sprout className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-muted-foreground mt-4 italic">Ethical science does not weaken conservation. It strengthens trust.</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-serif text-lg flex items-center gap-2">
+                  <HandHeart className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                  Conflict Through a Welfare Lens
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2.5">
+                  {conflictLens.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <Sprout className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-muted-foreground mt-4 italic">Conflict solutions should protect farmers and prevent suffering for wildlife.</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 sm:px-6 py-16 bg-amber-500/5 dark:bg-amber-950/20 border-y border-amber-200/50 dark:border-amber-900/30">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <GraduationCap className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                <h2 className="font-serif text-2xl font-bold text-foreground">Education as the Foundation</h2>
+              </div>
+              <p className="text-muted-foreground mb-4">Train conservationists differently through:</p>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-2 text-sm text-foreground">
+                  <Sprout className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+                  <span>Training University programmes</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-foreground">
+                  <Sprout className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+                  <span>Ethical fieldwork modules</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-foreground">
+                  <Sprout className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+                  <span>Community-led case studies</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-foreground">
+                  <Sprout className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+                  <span>Welfare-integrated conservation research</span>
+                </li>
+              </ul>
+              <p className="text-xs text-muted-foreground mt-4 italic">If we train the next generation differently, the field evolves.</p>
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <Globe className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                <h2 className="font-serif text-2xl font-bold text-foreground">Why This Matters Globally</h2>
+              </div>
+              <p className="text-muted-foreground mb-4">When welfare is prioritised:</p>
+              <ul className="space-y-3">
+                {globalImpact.map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-sm text-foreground">
+                    <Sprout className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs text-muted-foreground mt-4 italic">Ethics is strategic. Compassion builds credibility.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 sm:px-6 py-16">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Megaphone className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+              <h2 className="font-serif text-2xl font-bold text-foreground">Join Us in Redefining Conservation</h2>
+            </div>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+            {callToAction.map((item) => (
+              <Card key={item} className="text-center">
+                <CardContent className="pt-6 pb-4">
+                  <p className="text-sm font-medium text-foreground">{item}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 sm:px-6 py-16 bg-muted/30">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-6">
+            Conservation is not just about saving species.
+          </h2>
+          <p className="text-2xl font-serif font-bold text-amber-700 dark:text-amber-400 mb-6">
+            It is about respecting life.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            Because ethics is not a barrier to science. It is what gives science its legitimacy.
+          </p>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+const foundingVisionSlides: Slide[] = [
+  { title: "NESRI — Founding Vision", content: "Nature Ethics Research Institute\n\nEthical Frameworks for Environmental Stewardship\n\nA research initiative dedicated to exploring the ethical dimensions of human-nature relationships, environmental justice, and responsible stewardship of ecological systems.", type: "title" },
+  { title: "Our Mission & Vision", content: "Mission: To advance ethical thinking about the natural world through interdisciplinary research, education, and community-centred scholarship.\n\nVision: A world where environmental decisions are guided by ethical responsibility, ecological wisdom, and respect for all living systems.", type: "section" },
+  { title: "Guiding Principles", content: "Ethical Inquiry: Every intervention in natural systems carries moral weight.\n\nRelational Responsibility: Humans are not separate from nature.\n\nInclusive Voices: Environmental ethics must include indigenous, local, and marginalised perspectives.\n\nGentle Scholarship: Rigorous inquiry does not require aggression.", type: "section" },
+  { title: "Research Areas", content: "Environmental Ethics \u2022 Ecological Stewardship \u2022 Human\u2013Nature Relationships \u2022 Environmental Justice \u2022 Community-Centred Conservation \u2022 Research and Scholarship\n\nExploring the ethical questions that emerge at the intersection of ecology, justice, and human responsibility.", type: "section" },
+];
+
+const welfareSlides: Slide[] = [
+  { title: "What If Conservation Science Put Animal Welfare First?", content: "Nature Ethics Research Institute\n\nConservation Science With Welfare at the Foundation\n\nToday we challenge how we think about conservation science — and invite us to imagine something better.", type: "title" },
+  { title: "The Traditional Model", content: "Conservation Has Focused On:\n\n\u2022 Species survival\n\u2022 Population recovery\n\u2022 Habitat restoration\n\u2022 Biodiversity metrics\n\u2022 Ecosystem balance\n\nThese priorities are valid and necessary. But they are not complete.", type: "section" },
+  { title: "The Missing Foundation", content: "Where Is the Individual Animal?\n\n\u2022 Stress during research capture\n\u2022 Trauma in relocation\n\u2022 Welfare in monitoring practices\n\u2022 Humane conflict mitigation\n\u2022 Ethical field protocols\n\nSometimes the individual becomes invisible inside the data.", type: "section" },
+  { title: "The Question", content: "What If Welfare Was the Starting Point?\n\nNot a regulation.\nNot a compliance box.\nBut a guiding philosophy.\n\nWhat if compassion shaped methodology from the beginning?", type: "section" },
+  { title: "A New Conservation Framework", content: "Ecosystem + Species + Individual Welfare\n\nThree pillars:\n1. Ecological Integrity\n2. Scientific Rigor\n3. Animal Well-being\n\nThese are not competing priorities. They strengthen each other.", type: "section" },
+  { title: "What Ethical Research Looks Like", content: "\u2022 Minimally invasive monitoring\n\u2022 Humane capture and tagging methods\n\u2022 Stress-reduction protocols\n\u2022 Welfare review boards\n\u2022 Community consultation\n\u2022 Transparent reporting\n\nEthical science does not weaken conservation. It strengthens trust.", type: "section" },
+  { title: "Human-Wildlife Conflict Through a Welfare Lens", content: "\u2022 Non-lethal deterrents\n\u2022 Beehive fences\n\u2022 Early-warning systems\n\u2022 Education and coexistence\n\u2022 Compensation frameworks\n\nConflict solutions should protect farmers and prevent suffering for wildlife.", type: "section" },
+  { title: "Education as the Foundation", content: "Train Conservationists Differently\n\n\u2022 Training University programmes\n\u2022 Ethical fieldwork modules\n\u2022 Community-led case studies\n\u2022 Welfare-integrated conservation research\n\nIf we train the next generation differently, the field evolves.", type: "section" },
+  { title: "Why This Matters Globally", content: "When welfare is prioritised:\n\n\u2022 Public trust increases\n\u2022 Funding confidence grows\n\u2022 Youth engagement strengthens\n\u2022 Partnerships expand\n\u2022 Policy influence improves\n\nEthics is strategic. Compassion builds credibility.", type: "section" },
+  { title: "The Future We're Building", content: "\u2022 Research grounded in respect\n\u2022 Conservation rooted in compassion\n\u2022 Communities empowered to lead\n\u2022 Wildlife protected with dignity\n\nThis is not idealism. It is the next evolution of conservation science.", type: "section" },
+  { title: "Join Us in Redefining Conservation", content: "\u2022 Embed welfare into research\n\u2022 Share ethical case studies\n\u2022 Collaborate on humane innovation\n\u2022 Amplify stories through #VoicesForWildlife\n\nWe don't have to choose between science and compassion. We choose both.", type: "closing" },
+  { title: "Conservation Is Not Just About Saving Species", content: "It Is About Respecting Life.\n\nBecause ethics is not a barrier to science.\nIt is what gives science its legitimacy.\n\n#Conservation #EthicalResearch #WildlifeProtection", type: "closing" },
+];
+
+function getFoundingVisionText(): string {
+  return foundingVisionSlides.map(s => `${s.title}\n\n${s.content}`).join("\n\n---\n\n");
+}
+
+function getWelfareText(): string {
+  return welfareSlides.map(s => `${s.title}\n\n${s.content}`).join("\n\n---\n\n");
+}
+
 const contentEntries: ContentEntry[] = [
+  {
+    id: "welfare-foundation",
+    title: "What If Conservation Science Put Animal Welfare First?",
+    subtitle: "Conservation Science With Welfare at the Foundation",
+    date: "2026",
+    badge: "Thought Leadership",
+    badgeColor: "bg-amber-600",
+    component: WelfareFoundation,
+    slides: welfareSlides,
+    getAllText: getWelfareText,
+  },
   {
     id: "founding-vision",
     title: "Founding Vision",
@@ -140,14 +469,28 @@ const contentEntries: ContentEntry[] = [
     badge: "Overview",
     badgeColor: "bg-amber-600",
     component: FoundingVision,
+    slides: foundingVisionSlides,
+    getAllText: getFoundingVisionText,
   },
 ];
 
 export default function NESRI() {
   const [, navigate] = useLocation();
   const [activeContent, setActiveContent] = useState<string | null>(null);
+  const [showPresentation, setShowPresentation] = useState(false);
 
   const activeEntry = contentEntries.find((e) => e.id === activeContent);
+
+  if (showPresentation && activeEntry) {
+    return (
+      <WACIPresentationView
+        open={true}
+        onClose={() => setShowPresentation(false)}
+        slides={activeEntry.slides}
+        title={activeEntry.title}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-amber-50 to-white dark:from-gray-950 dark:to-gray-900">
@@ -178,6 +521,27 @@ export default function NESRI() {
           )}
         </div>
         <div className="flex items-center gap-3">
+          {activeContent && activeEntry && (
+            <>
+              <ShareExportControls
+                type="presentation"
+                project="nesri"
+                title={activeEntry.title}
+                content={activeEntry.slides}
+                slides={activeEntry.slides}
+              />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowPresentation(true)}
+                title="Presentation Mode"
+                data-testid="button-nesri-presentation"
+              >
+                <Presentation className="h-4 w-4" />
+              </Button>
+              <WACIAIAudio getText={activeEntry.getAllText} sectionId={activeEntry.id} />
+            </>
+          )}
           <span className="text-xs text-muted-foreground hidden sm:inline font-medium">NESRI</span>
           <ThemeToggle />
         </div>

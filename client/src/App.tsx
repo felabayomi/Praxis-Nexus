@@ -11,6 +11,8 @@ import QuasiQualitative from "@/pages/QuasiQualitative";
 import Portfolio from "@/pages/Portfolio";
 import IntegratedEssay from "@/pages/IntegratedEssay";
 import SharePage from "@/pages/SharePage";
+import NESRI from "@/pages/NESRI";
+import WACI from "@/pages/WACI";
 
 function Router() {
   return (
@@ -20,6 +22,8 @@ function Router() {
       <Route path="/quasi-qualitative" component={QuasiQualitative} />
       <Route path="/portfolio" component={Portfolio} />
       <Route path="/integrated-essay" component={IntegratedEssay} />
+      <Route path="/nesri" component={NESRI} />
+      <Route path="/waci" component={WACI} />
       <Route path="/share/:token" component={SharePage} />
       <Route component={NotFound} />
     </Switch>

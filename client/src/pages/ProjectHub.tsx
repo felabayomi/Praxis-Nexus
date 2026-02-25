@@ -72,7 +72,7 @@ const projects: ProjectCard[] = [
     description: "A research initiative exploring the ethical dimensions of human–nature relationships, environmental justice, and responsible stewardship of ecological systems.",
     icon: <Trees className="h-6 w-6" />,
     route: "/nesri",
-    status: "coming-soon",
+    status: "active",
     color: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
   },
   {
@@ -82,7 +82,7 @@ const projects: ProjectCard[] = [
     description: "A conservation-focused initiative dedicated to understanding and addressing wildlife preservation challenges across the African continent through community-centred approaches.",
     icon: <Globe className="h-6 w-6" />,
     route: "/waci",
-    status: "coming-soon",
+    status: "active",
     color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
   },
 ];

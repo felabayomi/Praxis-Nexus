@@ -52,6 +52,13 @@ Praxis Nexus is an academic research hub web application presenting multiple res
    - Search functionality (Ctrl+K) across all content
    - 31 APA 7th edition references
 
+6. **Nature Ethics Research Institute** (/nesri) - Coming Soon
+   - Amber/gold theme
+   - Ethical frameworks for environmental stewardship
+7. **Wildlife of Africa Conservation Initiative** (/waci) - Coming Soon
+   - Orange theme
+   - Conservation challenges across the African continent
+
 ## Project Architecture
 
 ### Routes

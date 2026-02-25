@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Leaf, BookOpen, FlaskConical, ArrowRight, FolderOpen, PenTool, ChevronDown } from "lucide-react";
+import { Leaf, BookOpen, FlaskConical, ArrowRight, FolderOpen, PenTool, ChevronDown, Trees, Globe } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -65,6 +65,26 @@ const projects: ProjectCard[] = [
     status: "active",
     color: "bg-teal-500/10 text-teal-600 dark:text-teal-400",
   },
+  {
+    id: "nesri",
+    title: "Nature Ethics Research Institute",
+    subtitle: "NESRI — Ethical Frameworks for Environmental Stewardship",
+    description: "A research initiative exploring the ethical dimensions of human–nature relationships, environmental justice, and responsible stewardship of ecological systems.",
+    icon: <Trees className="h-6 w-6" />,
+    route: "/nesri",
+    status: "coming-soon",
+    color: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  },
+  {
+    id: "waci",
+    title: "Wildlife of Africa Conservation Initiative",
+    subtitle: "WACI — Protecting Africa's Biodiversity Heritage",
+    description: "A conservation-focused initiative dedicated to understanding and addressing wildlife preservation challenges across the African continent through community-centred approaches.",
+    icon: <Globe className="h-6 w-6" />,
+    route: "/waci",
+    status: "coming-soon",
+    color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+  },
 ];
 
 export default function ProjectHub() {
@@ -96,7 +116,7 @@ export default function ProjectHub() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-64">
-              {projects.map((project, index) => (
+              {projects.filter(p => p.status === "active").map((project, index, arr) => (
                 <div key={project.id}>
                   <DropdownMenuItem
                     onClick={() => handleProjectSelect(project.route)}
@@ -111,7 +131,7 @@ export default function ProjectHub() {
                       <p className="text-xs text-muted-foreground truncate">{project.subtitle}</p>
                     </div>
                   </DropdownMenuItem>
-                  {index < projects.length - 1 && <DropdownMenuSeparator />}
+                  {index < arr.length - 1 && <DropdownMenuSeparator />}
                 </div>
               ))}
             </DropdownMenuContent>
@@ -138,11 +158,11 @@ export default function ProjectHub() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            {projects.map((project) => (
-              <Link key={project.id} href={project.route}>
+            {projects.map((project) => {
+              const cardContent = (
                 <Card 
-                  className={`h-full hover-elevate cursor-pointer transition-all ${
-                    project.status === "coming-soon" ? "opacity-75" : ""
+                  className={`h-full transition-all ${
+                    project.status === "coming-soon" ? "opacity-75" : "hover-elevate cursor-pointer"
                   }`}
                   data-testid={`card-project-${project.id}`}
                 >
@@ -163,7 +183,9 @@ export default function ProjectHub() {
                             project.id === "edd-inquiry" ? "bg-emerald-600" :
                             project.id === "quasi-qualitative" ? "bg-violet-600" :
                             project.id === "portfolio" ? "bg-blue-600" :
-                            project.id === "integrated-essay" ? "bg-teal-600" : "bg-primary"
+                            project.id === "integrated-essay" ? "bg-teal-600" :
+                            project.id === "nesri" ? "bg-amber-600" :
+                            project.id === "waci" ? "bg-orange-600" : "bg-primary"
                           }`}
                         >
                           Active
@@ -192,8 +214,18 @@ export default function ProjectHub() {
                     </Button>
                   </CardContent>
                 </Card>
-              </Link>
-            ))}
+              );
+
+              if (project.status === "coming-soon") {
+                return <div key={project.id}>{cardContent}</div>;
+              }
+
+              return (
+                <Link key={project.id} href={project.route}>
+                  {cardContent}
+                </Link>
+              );
+            })}
           </div>
 
           <div className="mt-16 text-center border-t border-border/50 pt-8">

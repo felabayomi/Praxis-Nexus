@@ -123,7 +123,7 @@ function FoundingVision() {
             Ethics is not a constraint on conservation. It is the foundation.
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            NESRI invites scholars, practitioners, and communities to engage with the difficult, necessary questions about how we live alongside the natural world \u2014 and how we might do so more justly.
+            NESRI invites scholars, practitioners, and communities to engage with the difficult, necessary questions about how we live alongside the natural world — and how we might do so more justly.
           </p>
         </div>
       </section>
@@ -197,7 +197,7 @@ export default function NESRI() {
                 Ethical Frameworks for Environmental Stewardship
               </p>
               <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                NESRI is a research initiative dedicated to exploring the ethical dimensions of human\u2013nature relationships, environmental justice, and responsible stewardship of ecological systems.
+                NESRI is a research initiative dedicated to exploring the ethical dimensions of human–nature relationships, environmental justice, and responsible stewardship of ecological systems.
               </p>
             </div>
           </section>

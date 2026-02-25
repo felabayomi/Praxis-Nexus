@@ -343,7 +343,7 @@ export default function WACI() {
                 Protecting Africa's Biodiversity Heritage
               </p>
               <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                WACI was never just about conservation projects. It was about building a movement \u2014 led by empowered local voices and supported by global action.
+                WACI was never just about conservation projects. It was about building a movement — led by empowered local voices and supported by global action.
               </p>
             </div>
           </section>
@@ -386,9 +386,13 @@ export default function WACI() {
                   <Mail className="h-4 w-4" />
                   wildlifeaboutafrica@gmail.com
                 </a>
-                <a href="https://afwildlife.org" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-orange-700 dark:text-orange-400 hover:underline" data-testid="link-waci-website">
+                <a href="https://wacihub.org" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-orange-700 dark:text-orange-400 hover:underline" data-testid="link-waci-website">
                   <ExternalLink className="h-4 w-4" />
-                  afwildlife.org
+                  wacihub.org
+                </a>
+                <a href="https://wacicrew.org" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-orange-700 dark:text-orange-400 hover:underline" data-testid="link-waci-crew">
+                  <ExternalLink className="h-4 w-4" />
+                  wacicrew.org
                 </a>
               </div>
               <p className="text-xs text-muted-foreground mt-4 italic">Stay connected. Stay active. Stay aligned.</p>

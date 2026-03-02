@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { 
   FlaskConical, ArrowRight, ArrowLeft, Lock, Mail, 
   Brain, FileText, ClipboardList, BookOpen, CheckSquare, MessageSquare, ExternalLink,
-  Code2, Shield, CheckCircle2, AlertCircle
+  Code2, Shield, CheckCircle2, AlertCircle, ShieldCheck
 } from "lucide-react";
 import { QuasiReasoningView } from "@/components/QuasiReasoningView";
 import { QuasiPaperView } from "@/components/QuasiPaperView";
@@ -24,7 +24,7 @@ const ACCESS_CODE = "QUASI2026";
 const REMEMBER_KEY = "praxis-nexus-quasi-remember";
 
 type ViewMode = "reasoning" | "paper";
-type ActiveSection = null | "project" | "interview-protocol" | "coding-sheet" | "recruitment-consent";
+type ActiveSection = null | "project" | "interview-protocol" | "coding-sheet" | "recruitment-consent" | "data-security";
 
 function InterviewProtocol() {
   const questions = [
@@ -464,6 +464,145 @@ function RecruitmentConsent() {
   );
 }
 
+function DataSecurityPlan() {
+  const sections = [
+    {
+      id: "d1",
+      title: "D1. Purpose",
+      content: "This appendix documents the procedures used to protect participant confidentiality and ensure responsible handling of interview data for this qualitative pilot study. The plan addresses data collection, storage, de-identification, access control, retention, and disposal.",
+    },
+    {
+      id: "d2",
+      title: "D2. Data Types Collected",
+      content: "The study collects the following data:",
+      bullets: [
+        "Audio recordings of two semi-structured interviews (if participants consent to recording)",
+        "Interview transcripts generated from recordings (or detailed notes if recording is declined)",
+        "Researcher analytic materials, including coding notes, memos, and theme development worksheets",
+      ],
+      note: "No sensitive personal identifiers are intentionally collected. Participants are instructed not to provide exact addresses, employer names, or other identifying details during the interview.",
+    },
+    {
+      id: "d3",
+      title: "D3. De-Identification Procedures",
+      content: "To minimize identification risk:",
+      numbered: [
+        "Participants are assigned pseudonyms (e.g., Participant A and Participant B).",
+        "During transcription, direct identifiers are removed or generalized (e.g., \"my workplace\" instead of the employer name; \"local park\" instead of a named location).",
+        "Any incidental identifying information is redacted from excerpts used in the findings chapter.",
+        "Only de-identified excerpts are included in Chapter 4 and Chapter 5.",
+      ],
+    },
+    {
+      id: "d4",
+      title: "D4. Data Storage and Access Control",
+      content: "All digital files are stored in a password-protected folder on the researcher's personal device and/or in encrypted cloud storage with multi-factor authentication enabled (if used). Access is restricted to the researcher only. No data are stored on shared or public computers.",
+    },
+    {
+      id: "d5",
+      title: "D5. Data Transmission",
+      content: "If interviews are conducted online, the researcher minimizes exposure risk by:",
+      bullets: [
+        "conducting interviews in a private setting,",
+        "avoiding collection of unnecessary identifying information, and",
+        "downloading and storing audio files only within the secure storage location described above.",
+      ],
+      note: "Transcripts and recordings are not shared through unsecured channels.",
+    },
+    {
+      id: "d6",
+      title: "D6. Retention and Disposal",
+      bullets: [
+        "Audio recordings are deleted after transcription is completed and verified for accuracy.",
+        "De-identified transcripts and analytic notes are retained only as long as needed to complete the course project and associated writing.",
+        "At the conclusion of the project (or per course requirements), transcripts and analytic materials are securely deleted (digital deletion from primary storage and cloud recycle bins).",
+      ],
+    },
+    {
+      id: "d7",
+      title: "D7. Confidentiality Limits",
+      content: "Confidentiality is maintained to the extent possible within a small pilot study. Because the participants are immediate family members, extra care is taken to protect privacy in reporting by avoiding descriptions that could reveal identity (e.g., unique workplace details, exact locations, or highly specific personal narratives).",
+    },
+    {
+      id: "d8",
+      title: "D8. Researcher Responsibility Statement",
+      content: "The researcher is responsible for ensuring that confidentiality practices are followed consistently, that data are not used beyond the stated purpose of the study, and that reporting is limited to de-identified, relevant excerpts that support the thematic findings.",
+      isHighlighted: true,
+    },
+  ];
+
+  return (
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-violet-50 via-background to-fuchsia-50 dark:from-violet-950/20 dark:via-background dark:to-fuchsia-950/20">
+      <main className="flex-1 py-8 sm:py-12 px-4 sm:px-6">
+        <div className="max-w-3xl mx-auto space-y-6">
+          <div className="text-center space-y-3">
+            <Badge className="bg-violet-600">Appendix D</Badge>
+            <h1 className="font-sans text-2xl sm:text-3xl font-bold text-foreground" data-testid="text-security-title">
+              Data Security and De-Identification Plan
+            </h1>
+            <p className="text-muted-foreground text-sm">Qualitative Pilot Study</p>
+          </div>
+
+          {sections.map((section) => (
+            <Card
+              key={section.id}
+              className={
+                section.isHighlighted
+                  ? "border-violet-300 dark:border-violet-800 bg-violet-50/50 dark:bg-violet-950/20"
+                  : "border-violet-200 dark:border-violet-900/50"
+              }
+              data-testid={`card-${section.id}`}
+            >
+              <CardHeader className="bg-violet-500/5 dark:bg-violet-950/30 pb-3">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+                  <CardTitle className="font-sans text-lg">{section.title}</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-4 space-y-3">
+                {section.content && (
+                  <p className="text-sm leading-relaxed text-muted-foreground">{section.content}</p>
+                )}
+                {section.bullets && (
+                  <ul className="space-y-2 pl-1">
+                    {section.bullets.map((bullet, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <span className="text-violet-500 mt-1.5 shrink-0">•</span>
+                        <span className="leading-relaxed">{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {section.numbered && (
+                  <ol className="space-y-2 pl-1">
+                    {section.numbered.map((item, i) => (
+                      <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
+                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-violet-500/10 text-violet-600 dark:text-violet-400 text-xs font-semibold shrink-0">
+                          {i + 1}
+                        </span>
+                        <span className="leading-relaxed pt-0.5">{item}</span>
+                      </li>
+                    ))}
+                  </ol>
+                )}
+                {section.note && (
+                  <p className="text-sm text-muted-foreground leading-relaxed italic border-l-2 border-violet-300 dark:border-violet-700 pl-3 mt-3">
+                    {section.note}
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+
+          <footer className="text-center pt-4 pb-8 border-t border-border/50">
+            <p className="text-xs text-muted-foreground">&copy; Felix Abayomi 2026</p>
+          </footer>
+        </div>
+      </main>
+    </div>
+  );
+}
+
 function QuasiContent() {
   const [viewMode, setViewMode] = useState<ViewMode>("reasoning");
   const [showPresentation, setShowPresentation] = useState(false);
@@ -664,6 +803,32 @@ function QuasiHub({ onSelectSection }: { onSelectSection: (section: ActiveSectio
               </div>
             </CardHeader>
           </Card>
+
+          <Card
+            className="cursor-pointer transition-all hover:shadow-md hover:border-violet-300 dark:hover:border-violet-700"
+            onClick={() => onSelectSection("data-security")}
+            data-testid="card-data-security"
+          >
+            <CardHeader>
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/10 text-violet-600 dark:text-violet-400">
+                      <ShieldCheck className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <Badge className="bg-violet-600 mb-1">Appendix D</Badge>
+                    </div>
+                  </div>
+                  <CardTitle className="font-sans text-xl mb-1">Data Security and De-Identification Plan</CardTitle>
+                  <CardDescription>
+                    Data protection procedures including de-identification, storage, access control, retention, disposal, and researcher responsibility statement.
+                  </CardDescription>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground shrink-0 mt-1" />
+              </div>
+            </CardHeader>
+          </Card>
         </div>
       </section>
 
@@ -818,6 +983,30 @@ export default function QuasiQualitative() {
             </div>
           </header>
           <RecruitmentConsent />
+        </div>
+      );
+    }
+
+    if (activeSection === "data-security") {
+      return (
+        <div className="min-h-screen flex flex-col bg-gradient-to-br from-violet-50 via-background to-fuchsia-50 dark:from-violet-950/20 dark:via-background dark:to-fuchsia-950/20">
+          <header className="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-6 h-14 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setActiveSection(null)}
+              className="gap-2"
+              data-testid="button-back-quasi-hub-6"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span className="hidden sm:inline">Back to Quasi-Qualitative</span>
+            </Button>
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-muted-foreground hidden sm:inline font-medium">Appendix D</span>
+              <ThemeToggle />
+            </div>
+          </header>
+          <DataSecurityPlan />
         </div>
       );
     }

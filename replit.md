@@ -20,7 +20,7 @@ Praxis Nexus is an academic research hub web application presenting multiple res
    - Landing Page → Access Code → Welcome Section → Content
    - Three cards: Overview, Monthly Inquiries, References
 3. **Quasi-Qualitative (/quasi-qualitative)** - Violet/purple theme, sans-serif typography
-   - Landing Page → Access Code → Hub Page (four cards) → Content
+   - Landing Page → Access Code → Hub Page (five cards) → Content
    - **Card 1: Quasi-Qualitative Research** → Two Views (Reasoning / Paper)
      - **Reasoning View**: Research Question + 7 accordion sections + Tools (font size, audio, presentation, search)
      - **Paper View**: AI Dissertation Generator with chapter-by-chapter generation
@@ -42,6 +42,15 @@ Praxis Nexus is an academic research hub web application presenting multiple res
      - C2 Verbal Informed Consent Script (read before interview)
      - C3 Short Written Consent Form (study title, procedures, risks, confidentiality, signatures)
      - C4 Special Note for Family Participants
+   - **Card 5: Data Security and De-Identification Plan** (Appendix D) → Read-only scholarly view
+     - D1 Purpose
+     - D2 Data Types Collected
+     - D3 De-Identification Procedures (4 numbered steps)
+     - D4 Data Storage and Access Control
+     - D5 Data Transmission
+     - D6 Retention and Disposal
+     - D7 Confidentiality Limits
+     - D8 Researcher Responsibility Statement
    - **Interview Responses Viewer** — View all submitted responses with transcript editing
      - Expandable response cards per participant
      - Add/edit full interview transcripts for recorded oral answers

@@ -1,0 +1,33 @@
+Appendix D
+Data Security and De-Identification Plan (Qualitative Pilot Study)
+D1. Purpose
+This appendix documents the procedures used to protect participant confidentiality and ensure responsible handling of interview data for this qualitative pilot study. The plan addresses data collection, storage, de-identification, access control, retention, and disposal.
+D2. Data Types Collected
+The study collects the following data:
+•	Audio recordings of two semi-structured interviews (if participants consent to recording)
+•	Interview transcripts generated from recordings (or detailed notes if recording is declined)
+•	Researcher analytic materials, including coding notes, memos, and theme development worksheets
+No sensitive personal identifiers are intentionally collected. Participants are instructed not to provide exact addresses, employer names, or other identifying details during the interview.
+D3. De-Identification Procedures
+To minimize identification risk:
+1.	Participants are assigned pseudonyms (e.g., Participant A and Participant B).
+2.	During transcription, direct identifiers are removed or generalized (e.g., “my workplace” instead of the employer name; “local park” instead of a named location).
+3.	Any incidental identifying information is redacted from excerpts used in the findings chapter.
+4.	Only de-identified excerpts are included in Chapter 4 and Chapter 5.
+D4. Data Storage and Access Control
+All digital files are stored in a password-protected folder on the researcher’s personal device and/or in encrypted cloud storage with multi-factor authentication enabled (if used). Access is restricted to the researcher only. No data are stored on shared or public computers.
+D5. Data Transmission
+If interviews are conducted online, the researcher minimizes exposure risk by:
+•	conducting interviews in a private setting,
+•	avoiding collection of unnecessary identifying information, and
+•	downloading and storing audio files only within the secure storage location described above.
+Transcripts and recordings are not shared through unsecured channels.
+D6. Retention and Disposal
+•	Audio recordings are deleted after transcription is completed and verified for accuracy.
+•	De-identified transcripts and analytic notes are retained only as long as needed to complete the course project and associated writing.
+•	At the conclusion of the project (or per course requirements), transcripts and analytic materials are securely deleted (digital deletion from primary storage and cloud recycle bins).
+D7. Confidentiality Limits
+Confidentiality is maintained to the extent possible within a small pilot study. Because the participants are immediate family members, extra care is taken to protect privacy in reporting by avoiding descriptions that could reveal identity (e.g., unique workplace details, exact locations, or highly specific personal narratives).
+D8. Researcher Responsibility Statement
+The researcher is responsible for ensuring that confidentiality practices are followed consistently, that data are not used beyond the stated purpose of the study, and that reporting is limited to de-identified, relevant excerpts that support the thematic findings.
+

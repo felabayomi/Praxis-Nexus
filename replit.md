@@ -37,11 +37,12 @@ Praxis Nexus is an academic research hub web application presenting multiple res
      - B3 Theme Development Worksheet (3-6 themes)
      - B4 Analytic Integrity Note
      - Data saved to localStorage
-   - **Card 4: Recruitment Script and Informed Consent** (Appendix C) → Read-only scholarly view
-     - C1 Recruitment Script (Email/Text/Verbal Invitation)
-     - C2 Verbal Informed Consent Script (read before interview)
-     - C3 Short Written Consent Form (study title, procedures, risks, confidentiality, signatures)
-     - C4 Special Note for Family Participants
+   - **Card 4: Recruitment Script and Informed Consent** (Appendix C) → Fillable interactive form
+     - Per-participant forms (Participant A / Participant B) with localStorage persistence
+     - C1 Recruitment Script (Email/Text/Verbal Invitation) — read-only
+     - C2 Verbal Informed Consent Script — fillable radio buttons (Participation Yes/No, Audio Recording Yes/No)
+     - C3 Short Written Consent Form — fillable checkboxes (audio permission, consent agreement) + text/date inputs (participant name, date, signatures)
+     - C4 Special Note for Family Participants — read-only
    - **Card 5: Data Security and De-Identification Plan** (Appendix D) → Read-only scholarly view
      - D1 Purpose
      - D2 Data Types Collected

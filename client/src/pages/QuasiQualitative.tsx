@@ -249,7 +249,60 @@ function InterviewProtocol() {
   );
 }
 
+const CONSENT_STORAGE_KEY = "praxis-consent-forms";
+
+interface ConsentFormData {
+  participantId: string;
+  c2Participation: string;
+  c2AudioRecording: string;
+  c3AudioPermission: string;
+  c3ConsentAgreed: boolean;
+  c3ParticipantName: string;
+  c3ParticipantDate: string;
+  c3ParticipantSignature: string;
+  c3ResearcherSignature: string;
+  c3ResearcherDate: string;
+}
+
+const EMPTY_CONSENT: ConsentFormData = {
+  participantId: "",
+  c2Participation: "",
+  c2AudioRecording: "",
+  c3AudioPermission: "",
+  c3ConsentAgreed: false,
+  c3ParticipantName: "",
+  c3ParticipantDate: "",
+  c3ParticipantSignature: "",
+  c3ResearcherSignature: "",
+  c3ResearcherDate: "",
+};
+
 function RecruitmentConsent() {
+  const [forms, setForms] = useState<ConsentFormData[]>([{ ...EMPTY_CONSENT, participantId: "A" }, { ...EMPTY_CONSENT, participantId: "B" }]);
+  const [activeForm, setActiveForm] = useState(0);
+  useEffect(() => {
+    const saved = localStorage.getItem(CONSENT_STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) setForms(parsed);
+      } catch { /* ignore */ }
+    }
+  }, []);
+
+  const save = (updated: ConsentFormData[]) => {
+    setForms(updated);
+    localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(updated));
+  };
+
+  const updateField = (field: keyof ConsentFormData, value: string | boolean) => {
+    const updated = [...forms];
+    updated[activeForm] = { ...updated[activeForm], [field]: value };
+    save(updated);
+  };
+
+  const form = forms[activeForm];
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-violet-50 via-background to-fuchsia-50 dark:from-violet-950/20 dark:via-background dark:to-fuchsia-950/20">
       <main className="flex-1 py-8 sm:py-12 px-4 sm:px-6">
@@ -260,6 +313,21 @@ function RecruitmentConsent() {
               Recruitment Script and Informed Consent
             </h1>
             <p className="text-muted-foreground text-sm">Qualitative Pilot Study</p>
+          </div>
+
+          <div className="flex items-center gap-2 flex-wrap">
+            {forms.map((f, i) => (
+              <Button
+                key={i}
+                variant={activeForm === i ? "default" : "outline"}
+                size="sm"
+                onClick={() => setActiveForm(i)}
+                className={activeForm === i ? "bg-violet-600" : ""}
+                data-testid={`button-consent-form-${i}`}
+              >
+                Participant {f.participantId || String.fromCharCode(65 + i)}
+              </Button>
+            ))}
           </div>
 
           <Card className="border-violet-200 dark:border-violet-900/50" data-testid="card-c1-recruitment">
@@ -309,29 +377,37 @@ function RecruitmentConsent() {
               <p className="text-sm leading-relaxed italic">"Do you have any questions?"</p>
               <p className="text-sm leading-relaxed italic">"Do you consent to participate in this interview?"</p>
               <p className="text-sm leading-relaxed italic">"Do you consent to audio recording?"</p>
-              <div className="mt-4 p-4 rounded-lg bg-muted/40 border border-border/50">
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">Record Responses</p>
+              <div className="mt-4 p-4 rounded-lg bg-muted/40 border border-border/50 space-y-4">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Record Responses</p>
                 <div className="flex flex-wrap gap-6">
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium">Participation</p>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Participation</Label>
                     <div className="flex gap-3">
-                      <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
-                        <CheckSquare className="h-3.5 w-3.5" /> Yes
-                      </span>
-                      <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
-                        <CheckSquare className="h-3.5 w-3.5" /> No
-                      </span>
+                      <label className={`flex items-center gap-2 px-3 py-2 rounded-lg border cursor-pointer transition-all text-sm ${form.c2Participation === "yes" ? "border-violet-400 bg-violet-500/10" : "border-border hover:border-violet-300"}`}>
+                        <input type="radio" className="sr-only" checked={form.c2Participation === "yes"} onChange={() => updateField("c2Participation", "yes")} data-testid="radio-c2-participation-yes" />
+                        <CheckCircle2 className={`h-4 w-4 ${form.c2Participation === "yes" ? "text-violet-600" : "text-muted-foreground/40"}`} />
+                        Yes
+                      </label>
+                      <label className={`flex items-center gap-2 px-3 py-2 rounded-lg border cursor-pointer transition-all text-sm ${form.c2Participation === "no" ? "border-red-400 bg-red-500/10" : "border-border hover:border-red-300"}`}>
+                        <input type="radio" className="sr-only" checked={form.c2Participation === "no"} onChange={() => updateField("c2Participation", "no")} data-testid="radio-c2-participation-no" />
+                        <AlertCircle className={`h-4 w-4 ${form.c2Participation === "no" ? "text-red-600" : "text-muted-foreground/40"}`} />
+                        No
+                      </label>
                     </div>
                   </div>
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium">Audio Recording</p>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Audio Recording</Label>
                     <div className="flex gap-3">
-                      <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
-                        <CheckSquare className="h-3.5 w-3.5" /> Yes
-                      </span>
-                      <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
-                        <CheckSquare className="h-3.5 w-3.5" /> No
-                      </span>
+                      <label className={`flex items-center gap-2 px-3 py-2 rounded-lg border cursor-pointer transition-all text-sm ${form.c2AudioRecording === "yes" ? "border-violet-400 bg-violet-500/10" : "border-border hover:border-violet-300"}`}>
+                        <input type="radio" className="sr-only" checked={form.c2AudioRecording === "yes"} onChange={() => updateField("c2AudioRecording", "yes")} data-testid="radio-c2-audio-yes" />
+                        <CheckCircle2 className={`h-4 w-4 ${form.c2AudioRecording === "yes" ? "text-violet-600" : "text-muted-foreground/40"}`} />
+                        Yes
+                      </label>
+                      <label className={`flex items-center gap-2 px-3 py-2 rounded-lg border cursor-pointer transition-all text-sm ${form.c2AudioRecording === "no" ? "border-red-400 bg-red-500/10" : "border-border hover:border-red-300"}`}>
+                        <input type="radio" className="sr-only" checked={form.c2AudioRecording === "no"} onChange={() => updateField("c2AudioRecording", "no")} data-testid="radio-c2-audio-no" />
+                        <AlertCircle className={`h-4 w-4 ${form.c2AudioRecording === "no" ? "text-red-600" : "text-muted-foreground/40"}`} />
+                        No
+                      </label>
                     </div>
                   </div>
                 </div>
@@ -365,35 +441,30 @@ function RecruitmentConsent() {
                     The purpose of this study is to explore how everyday residents who encounter wildlife describe the ways a mobile app for reporting encounters and receiving guidance could help prevent or mitigate human–wildlife conflict.
                   </p>
                 </div>
-
                 <div>
                   <p className="text-sm font-semibold text-foreground mb-1">Procedures</p>
                   <p className="text-sm leading-relaxed text-muted-foreground">
                     If you agree to participate, you will complete one interview lasting approximately 30–45 minutes. The interview will include questions about your experiences with wildlife encounters and your views on what features or guidance would be useful in a mobile app.
                   </p>
                 </div>
-
                 <div>
                   <p className="text-sm font-semibold text-foreground mb-1">Voluntary Participation</p>
                   <p className="text-sm leading-relaxed text-muted-foreground">
                     Your participation is voluntary. You may skip any question and you may stop participation at any time without penalty.
                   </p>
                 </div>
-
                 <div>
                   <p className="text-sm font-semibold text-foreground mb-1">Risks and Discomforts</p>
                   <p className="text-sm leading-relaxed text-muted-foreground">
                     This study involves minimal risk. Some questions may involve recalling stressful encounters. You may pause, skip questions, or stop at any time.
                   </p>
                 </div>
-
                 <div>
                   <p className="text-sm font-semibold text-foreground mb-1">Benefits</p>
                   <p className="text-sm leading-relaxed text-muted-foreground">
                     There may be no direct benefit to you. However, your input may help inform practical ideas for user-centered technology to support safer human–wildlife interactions.
                   </p>
                 </div>
-
                 <div>
                   <p className="text-sm font-semibold text-foreground mb-1">Confidentiality</p>
                   <p className="text-sm leading-relaxed text-muted-foreground">
@@ -404,37 +475,46 @@ function RecruitmentConsent() {
 
               <div className="mt-4 p-4 rounded-lg bg-muted/40 border border-border/50 space-y-3">
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Audio Recording Permission</p>
-                <div className="space-y-1.5">
-                  <span className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <CheckSquare className="h-3.5 w-3.5" /> I agree to be audio-recorded.
-                  </span>
-                  <span className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <CheckSquare className="h-3.5 w-3.5" /> I do not agree to be audio-recorded.
-                  </span>
+                <div className="space-y-2">
+                  <label className={`flex items-center gap-3 px-3 py-2.5 rounded-lg border cursor-pointer transition-all ${form.c3AudioPermission === "agree" ? "border-violet-400 bg-violet-500/10" : "border-border hover:border-violet-300"}`}>
+                    <Checkbox checked={form.c3AudioPermission === "agree"} onCheckedChange={() => updateField("c3AudioPermission", form.c3AudioPermission === "agree" ? "" : "agree")} data-testid="checkbox-c3-audio-agree" />
+                    <span className="text-sm">I agree to be audio-recorded.</span>
+                  </label>
+                  <label className={`flex items-center gap-3 px-3 py-2.5 rounded-lg border cursor-pointer transition-all ${form.c3AudioPermission === "disagree" ? "border-red-400 bg-red-500/10" : "border-border hover:border-red-300"}`}>
+                    <Checkbox checked={form.c3AudioPermission === "disagree"} onCheckedChange={() => updateField("c3AudioPermission", form.c3AudioPermission === "disagree" ? "" : "disagree")} data-testid="checkbox-c3-audio-disagree" />
+                    <span className="text-sm">I do not agree to be audio-recorded.</span>
+                  </label>
                 </div>
               </div>
 
-              <div className="mt-4 p-4 rounded-lg bg-violet-50 dark:bg-violet-950/30 border border-violet-200 dark:border-violet-900/50 space-y-3">
+              <div className="mt-4 p-4 rounded-lg bg-violet-50 dark:bg-violet-950/30 border border-violet-200 dark:border-violet-900/50 space-y-4">
                 <p className="text-xs font-medium text-violet-700 dark:text-violet-300 uppercase tracking-wider">Consent Statement</p>
-                <p className="text-sm leading-relaxed text-muted-foreground italic">
-                  I have read (or have read to me) the information above. I have had the opportunity to ask questions. I agree to participate in this study voluntarily.
-                </p>
+                <label className={`flex items-start gap-3 px-3 py-2.5 rounded-lg border cursor-pointer transition-all ${form.c3ConsentAgreed ? "border-violet-400 bg-violet-500/10" : "border-border hover:border-violet-300"}`}>
+                  <Checkbox checked={form.c3ConsentAgreed} onCheckedChange={(checked) => updateField("c3ConsentAgreed", checked === true)} className="mt-0.5" data-testid="checkbox-c3-consent" />
+                  <span className="text-sm leading-relaxed text-muted-foreground">
+                    I have read (or have read to me) the information above. I have had the opportunity to ask questions. I agree to participate in this study voluntarily.
+                  </span>
+                </label>
                 <div className="grid sm:grid-cols-2 gap-4 pt-2">
-                  <div className="space-y-1">
-                    <p className="text-xs text-muted-foreground">Participant Name (printed)</p>
-                    <div className="h-8 border-b border-dashed border-muted-foreground/40" />
+                  <div className="space-y-1.5">
+                    <Label className="text-xs text-muted-foreground">Participant Name (printed)</Label>
+                    <Input value={form.c3ParticipantName} onChange={(e) => updateField("c3ParticipantName", e.target.value)} placeholder="Full name" className="h-9 text-sm" data-testid="input-c3-participant-name" />
                   </div>
-                  <div className="space-y-1">
-                    <p className="text-xs text-muted-foreground">Date</p>
-                    <div className="h-8 border-b border-dashed border-muted-foreground/40" />
+                  <div className="space-y-1.5">
+                    <Label className="text-xs text-muted-foreground">Date</Label>
+                    <Input type="date" value={form.c3ParticipantDate} onChange={(e) => updateField("c3ParticipantDate", e.target.value)} className="h-9 text-sm" data-testid="input-c3-participant-date" />
                   </div>
-                  <div className="space-y-1">
-                    <p className="text-xs text-muted-foreground">Participant Signature</p>
-                    <div className="h-8 border-b border-dashed border-muted-foreground/40" />
+                  <div className="space-y-1.5">
+                    <Label className="text-xs text-muted-foreground">Participant Signature</Label>
+                    <Input value={form.c3ParticipantSignature} onChange={(e) => updateField("c3ParticipantSignature", e.target.value)} placeholder="Type name as signature" className="h-9 text-sm italic" data-testid="input-c3-participant-sig" />
                   </div>
-                  <div className="space-y-1">
-                    <p className="text-xs text-muted-foreground">Researcher Signature</p>
-                    <div className="h-8 border-b border-dashed border-muted-foreground/40" />
+                  <div className="space-y-1.5">
+                    <Label className="text-xs text-muted-foreground">Researcher Signature</Label>
+                    <Input value={form.c3ResearcherSignature} onChange={(e) => updateField("c3ResearcherSignature", e.target.value)} placeholder="Type name as signature" className="h-9 text-sm italic" data-testid="input-c3-researcher-sig" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs text-muted-foreground">Researcher Date</Label>
+                    <Input type="date" value={form.c3ResearcherDate} onChange={(e) => updateField("c3ResearcherDate", e.target.value)} className="h-9 text-sm" data-testid="input-c3-researcher-date" />
                   </div>
                 </div>
               </div>

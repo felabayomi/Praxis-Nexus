@@ -10,7 +10,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { 
   FlaskConical, ArrowRight, ArrowLeft, Lock, Mail, 
-  Brain, FileText, ClipboardList, BookOpen, CheckSquare, MessageSquare
+  Brain, FileText, ClipboardList, BookOpen, CheckSquare, MessageSquare, ExternalLink
 } from "lucide-react";
 import { QuasiReasoningView } from "@/components/QuasiReasoningView";
 import { QuasiPaperView } from "@/components/QuasiPaperView";
@@ -381,6 +381,14 @@ function QuasiHub({ onSelectSection }: { onSelectSection: (section: ActiveSectio
                   <CardDescription>
                     Qualitative pilot study interview guide with 12 structured questions covering wildlife encounters, risk perception, app features, trust, privacy, and ideal workflows.
                   </CardDescription>
+                  <div className="mt-3" onClick={(e) => e.stopPropagation()}>
+                    <Link href="/interview">
+                      <Button variant="outline" size="sm" className="gap-2 text-violet-600 dark:text-violet-400 border-violet-300 dark:border-violet-700 hover:bg-violet-500/10" data-testid="link-fillable-form">
+                        <ExternalLink className="h-3.5 w-3.5" />
+                        Open Fillable Form for Participants
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
                 <ArrowRight className="h-5 w-5 text-muted-foreground shrink-0 mt-1" />
               </div>

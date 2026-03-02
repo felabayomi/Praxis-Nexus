@@ -20,15 +20,17 @@ Praxis Nexus is an academic research hub web application presenting multiple res
    - Landing Page → Access Code → Welcome Section → Content
    - Three cards: Overview, Monthly Inquiries, References
 3. **Quasi-Qualitative (/quasi-qualitative)** - Violet/purple theme, sans-serif typography
-   - Landing Page → Access Code → Hub Page (two cards) → Content
+   - Landing Page → Access Code → Hub Page (three cards) → Content
    - **Card 1: Quasi-Qualitative Research** → Two Views (Reasoning / Paper)
      - **Reasoning View**: Research Question + 7 accordion sections + Tools (font size, audio, presentation, search)
      - **Paper View**: AI Dissertation Generator with chapter-by-chapter generation
-   - **Card 2: Semi-Structured Interview Protocol** (Appendix A) → Read-only view
-     - Includes "View Responses" button to see submitted interview data + add transcripts
+   - **Card 2: Semi-Structured Interview Protocol** (Appendix A) → Dynamic view
+     - Shows read-only protocol AND submitted responses with transcript editing in one view
      - Includes "Open Fillable Form" button linking to /interview
+     - Responses auto-display below the protocol as they are submitted
    - **Card 3: Coding Sheet and Codebook** (Appendix B) → Interactive fillable tool
      - Per-participant coding sheets (Participant A/B profiles)
+     - **"Import from Responses" button** — auto-populates coding sheets from interview responses
      - Option summary for structured responses
      - Qualitative Evidence Log (add excerpts, codes, analytic memos)
      - B2 Codebook: 8 domains, 40+ open coding categories

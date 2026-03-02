@@ -17,7 +17,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import {
   Save, Loader2, Plus, Trash2, User, ClipboardList, BookOpen, FileText,
-  ChevronDown, ChevronUp, Lightbulb
+  ChevronDown, ChevronUp, Lightbulb, Download, RefreshCw
 } from "lucide-react";
 
 interface ParticipantProfile {
@@ -174,11 +174,62 @@ const CODEBOOK = [
 
 const STORAGE_KEY = "praxis-coding-sheets";
 
+interface InterviewResponseData {
+  id: number;
+  participant_id: string;
+  submitted_at: string;
+  q1_options: string[];
+  q2_options: string[];
+  q3_risk: string | null;
+  q3_probe: string | null;
+  q4_options: string[];
+  q5_options: string[];
+  q6_options: string[];
+  q7_rank1: string | null;
+  q7_rank2: string | null;
+  q7_rank3: string | null;
+  q8_answer: string | null;
+  q8_probe: string | null;
+  q9_answer: string | null;
+  q10_options: string[];
+  q11_options: string[];
+}
+
+function mapResponseToSheet(resp: InterviewResponseData): Partial<CodingSheetData> {
+  return {
+    profile: {
+      participantId: resp.participant_id,
+      approximateAge: "",
+      role: "",
+      interviewDate: new Date(resp.submitted_at).toLocaleDateString(),
+      interviewMode: "",
+      duration: "",
+    },
+    q1Options: resp.q1_options || [],
+    q2Options: resp.q2_options || [],
+    q3Risk: resp.q3_risk || "",
+    q3Explanation: resp.q3_probe || "",
+    q4Options: resp.q4_options || [],
+    q5Top1: (resp.q5_options || [])[0] || "",
+    q5Top2: (resp.q5_options || [])[1] || "",
+    q6Options: resp.q6_options || [],
+    q7Rank1: resp.q7_rank1 || "",
+    q7Rank2: resp.q7_rank2 || "",
+    q7Rank3: resp.q7_rank3 || "",
+    q8Answer: resp.q8_answer || "",
+    q8Conditions: resp.q8_probe || "",
+    q9Answer: resp.q9_answer || "",
+    q10Options: resp.q10_options || [],
+    q11Options: resp.q11_options || [],
+  };
+}
+
 export function CodingSheet() {
   const [sheets, setSheets] = useState<CodingSheetData[]>([]);
   const [activeSheet, setActiveSheet] = useState<number>(0);
   const [showCodebook, setShowCodebook] = useState(false);
   const [showThemes, setShowThemes] = useState(false);
+  const [importLoading, setImportLoading] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -223,6 +274,36 @@ export function CodingSheet() {
     const updated = sheets.filter((_, i) => i !== index);
     save(updated);
     if (activeSheet >= updated.length) setActiveSheet(updated.length - 1);
+  };
+
+  const importFromResponses = async () => {
+    setImportLoading(true);
+    try {
+      const res = await fetch("/api/interview/responses");
+      if (!res.ok) throw new Error("Failed to fetch responses");
+      const responses: InterviewResponseData[] = await res.json();
+      if (responses.length === 0) {
+        toast({ title: "No responses found", description: "No interview responses have been submitted yet." });
+        setImportLoading(false);
+        return;
+      }
+      const newSheets: CodingSheetData[] = responses.map((resp) => {
+        const mapped = mapResponseToSheet(resp);
+        return {
+          ...createEmptySheet(),
+          ...mapped,
+        };
+      });
+      save(newSheets);
+      setActiveSheet(0);
+      toast({
+        title: "Responses imported",
+        description: `${responses.length} response(s) mapped to coding sheets. Option summaries have been auto-filled.`,
+      });
+    } catch {
+      toast({ title: "Import failed", description: "Could not fetch interview responses.", variant: "destructive" });
+    }
+    setImportLoading(false);
   };
 
   const updateSheet = (data: Partial<CodingSheetData>) => {
@@ -344,6 +425,19 @@ export function CodingSheet() {
         <Button variant="outline" size="sm" onClick={addSheet} className="gap-1.5" data-testid="button-add-sheet">
           <Plus className="h-3.5 w-3.5" /> Add Participant
         </Button>
+        <div className="ml-auto">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={importFromResponses}
+            disabled={importLoading}
+            className="gap-1.5 text-violet-600 dark:text-violet-400 border-violet-300 dark:border-violet-700 hover:bg-violet-500/10"
+            data-testid="button-import-responses"
+          >
+            {importLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Download className="h-3.5 w-3.5" />}
+            Import from Responses
+          </Button>
+        </div>
       </div>
 
       <Card data-testid="card-profile">

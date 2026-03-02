@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { 
   FlaskConical, ArrowRight, ArrowLeft, Lock, Mail, 
   Brain, FileText, ClipboardList, BookOpen, CheckSquare, MessageSquare, ExternalLink,
-  Database, Code2
+  Code2
 } from "lucide-react";
 import { QuasiReasoningView } from "@/components/QuasiReasoningView";
 import { QuasiPaperView } from "@/components/QuasiPaperView";
@@ -24,7 +24,7 @@ const ACCESS_CODE = "QUASI2026";
 const REMEMBER_KEY = "praxis-nexus-quasi-remember";
 
 type ViewMode = "reasoning" | "paper";
-type ActiveSection = null | "project" | "interview-protocol" | "responses" | "coding-sheet";
+type ActiveSection = null | "project" | "interview-protocol" | "coding-sheet";
 
 function InterviewProtocol() {
   const questions = [
@@ -388,13 +388,9 @@ function QuasiHub({ onSelectSection }: { onSelectSection: (section: ActiveSectio
                     <Link href="/interview">
                       <Button variant="outline" size="sm" className="gap-2 text-violet-600 dark:text-violet-400 border-violet-300 dark:border-violet-700 hover:bg-violet-500/10" data-testid="link-fillable-form">
                         <ExternalLink className="h-3.5 w-3.5" />
-                        Open Fillable Form for Participants
+                        Open Fillable Form
                       </Button>
                     </Link>
-                    <Button variant="outline" size="sm" className="gap-2 text-violet-600 dark:text-violet-400 border-violet-300 dark:border-violet-700 hover:bg-violet-500/10" onClick={() => onSelectSection("responses")} data-testid="link-view-responses">
-                      <Database className="h-3.5 w-3.5" />
-                      View Responses
-                    </Button>
                   </div>
                 </div>
                 <ArrowRight className="h-5 w-5 text-muted-foreground shrink-0 mt-1" />
@@ -530,30 +526,9 @@ export default function QuasiQualitative() {
             </div>
           </header>
           <InterviewProtocol />
-        </div>
-      );
-    }
-
-    if (activeSection === "responses") {
-      return (
-        <div className="min-h-screen flex flex-col bg-gradient-to-br from-violet-50 via-background to-fuchsia-50 dark:from-violet-950/20 dark:via-background dark:to-fuchsia-950/20">
-          <header className="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-6 h-14 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setActiveSection(null)}
-              className="gap-2"
-              data-testid="button-back-quasi-hub-3"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              <span className="hidden sm:inline">Back to Quasi-Qualitative</span>
-            </Button>
-            <div className="flex items-center gap-3">
-              <span className="text-xs text-muted-foreground hidden sm:inline font-medium">Responses</span>
-              <ThemeToggle />
-            </div>
-          </header>
-          <InterviewResponses />
+          <div className="border-t-4 border-violet-200 dark:border-violet-900">
+            <InterviewResponses />
+          </div>
         </div>
       );
     }

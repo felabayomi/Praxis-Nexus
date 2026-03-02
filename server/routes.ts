@@ -6,6 +6,7 @@ import { registerTTSRoutes } from "./replit_integrations/tts";
 import { registerCitationRoutes } from "./replit_integrations/citation-assistant";
 import { registerDissertationRoutes } from "./replit_integrations/dissertation";
 import { registerShareRoutes } from "./replit_integrations/share";
+import { registerInterviewRoutes } from "./replit_integrations/interview";
 import { sendContactEmail } from "./email";
 import { contactFormSchema } from "@shared/contactSchema";
 
@@ -18,6 +19,7 @@ export async function registerRoutes(
   registerCitationRoutes(app);
   registerDissertationRoutes(app);
   registerShareRoutes(app);
+  registerInterviewRoutes(app);
   
   app.get("/api/journal", async (req, res) => {
     try {

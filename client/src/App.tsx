@@ -13,6 +13,7 @@ import IntegratedEssay from "@/pages/IntegratedEssay";
 import SharePage from "@/pages/SharePage";
 import NESRI from "@/pages/NESRI";
 import WACI from "@/pages/WACI";
+import InterviewForm from "@/pages/InterviewForm";
 
 function Router() {
   return (
@@ -24,6 +25,7 @@ function Router() {
       <Route path="/integrated-essay" component={IntegratedEssay} />
       <Route path="/nesri" component={NESRI} />
       <Route path="/waci" component={WACI} />
+      <Route path="/interview" component={InterviewForm} />
       <Route path="/share/:token" component={SharePage} />
       <Route component={NotFound} />
     </Switch>

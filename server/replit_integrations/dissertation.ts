@@ -94,9 +94,12 @@ CITATION REQUIREMENTS:
 - Presentation of Results (aligned to each research question)
 - Summary of Key Findings
 
-IMPORTANT: If interview response data is included in the source content, use it as the PRIMARY basis for this chapter. Present actual participant responses, identify patterns across participants, organize findings thematically, and use direct quotes or paraphrased evidence from the interview data. Do NOT write projected or hypothetical findings when real data is available.
+MODE INSTRUCTIONS:
+If interview response data (participant answers, transcripts, quotes) is included in the source content:
+  → Write EVIDENCE-BASED findings. Present actual participant responses organized thematically. Include direct quotes with participant pseudonyms (e.g., "Participant A stated..."). Identify patterns, convergences, and divergences across participants. Each finding must be grounded in real data.
 
-If NO interview data is provided, clearly state that this chapter requires data collection to be completed first, and outline the planned structure for presenting findings.
+If NO interview data is provided:
+  → Write an Antioch-style TEMPLATE/SHELL chapter. Provide the full structural outline with section headings, placeholder guidance for where themes and quotes will go (e.g., "[Theme 1: Insert emergent theme here]", "[Insert participant quote illustrating this finding]"), and methodological notes about how findings will be organized once data collection is complete. Make it a usable scaffold the researcher can fill in.
 
 CITATION REQUIREMENTS:
 - Cite data analysis methods from the reference list
@@ -111,9 +114,12 @@ CITATION REQUIREMENTS:
 - Limitations of the Study
 - Summary
 
-IMPORTANT: If interview response data and findings are included in the source content, interpret the ACTUAL findings. Connect real participant responses to the theoretical framework and existing literature. Discuss what the data reveals about the research questions. Do NOT write anticipated or projected implications when real data is available.
+MODE INSTRUCTIONS:
+If interview response data and findings are included in the source content:
+  → Write EVIDENCE-BASED discussion. Interpret actual findings by connecting participant responses to the theoretical framework and existing literature. Discuss what the real data reveals about the research questions. Ground every claim in evidence.
 
-If NO interview data is provided, clearly state that this chapter requires Chapter 4 findings to be completed first.
+If NO interview data is provided:
+  → Write an Antioch-style TEMPLATE/SHELL chapter. Provide full structural scaffolding with section headings and placeholder guidance (e.g., "[Discuss how findings relate to Bronfenbrenner's ecological systems theory]", "[Connect participant responses to existing literature on human-wildlife conflict]"). Include notes on what the discussion will address once Chapter 4 findings are available.
 
 CITATION REQUIREMENTS:
 - Connect findings back to literature from the reference list
@@ -127,9 +133,12 @@ CITATION REQUIREMENTS:
 - Directions for Future Research
 - Final Reflections
 
-IMPORTANT: If interview response data and findings are included in the source content, draw conclusions from the ACTUAL findings. Base recommendations on real evidence from participants. Do NOT write hypothetical conclusions when real data is available.
+MODE INSTRUCTIONS:
+If interview response data and findings are included in the source content:
+  → Write EVIDENCE-BASED conclusions. Draw conclusions from actual findings. Base practical recommendations on real participant evidence. Ground future research directions in what the data revealed.
 
-If NO interview data is provided, clearly state that this chapter requires Chapters 4-5 to be completed first.
+If NO interview data is provided:
+  → Write an Antioch-style TEMPLATE/SHELL chapter. Provide the full structural outline with placeholder guidance (e.g., "[Summarize key findings from Chapter 4]", "[Base recommendations on participant-identified needs]"). Include notes on what each section will contain once Chapters 4-5 are finalized.
 
 CITATION REQUIREMENTS:
 - Minimal citations in this chapter

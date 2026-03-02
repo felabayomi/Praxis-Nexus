@@ -94,7 +94,9 @@ CITATION REQUIREMENTS:
 - Presentation of Results (aligned to each research question)
 - Summary of Key Findings
 
-Note: Since this is a proposal, write this as projected findings or placeholder structure.
+IMPORTANT: If interview response data is included in the source content, use it as the PRIMARY basis for this chapter. Present actual participant responses, identify patterns across participants, organize findings thematically, and use direct quotes or paraphrased evidence from the interview data. Do NOT write projected or hypothetical findings when real data is available.
+
+If NO interview data is provided, clearly state that this chapter requires data collection to be completed first, and outline the planned structure for presenting findings.
 
 CITATION REQUIREMENTS:
 - Cite data analysis methods from the reference list
@@ -109,7 +111,9 @@ CITATION REQUIREMENTS:
 - Limitations of the Study
 - Summary
 
-Note: Since this is based on proposal content, discuss anticipated implications.
+IMPORTANT: If interview response data and findings are included in the source content, interpret the ACTUAL findings. Connect real participant responses to the theoretical framework and existing literature. Discuss what the data reveals about the research questions. Do NOT write anticipated or projected implications when real data is available.
+
+If NO interview data is provided, clearly state that this chapter requires Chapter 4 findings to be completed first.
 
 CITATION REQUIREMENTS:
 - Connect findings back to literature from the reference list
@@ -122,6 +126,10 @@ CITATION REQUIREMENTS:
 - Practical Recommendations
 - Directions for Future Research
 - Final Reflections
+
+IMPORTANT: If interview response data and findings are included in the source content, draw conclusions from the ACTUAL findings. Base recommendations on real evidence from participants. Do NOT write hypothetical conclusions when real data is available.
+
+If NO interview data is provided, clearly state that this chapter requires Chapters 4-5 to be completed first.
 
 CITATION REQUIREMENTS:
 - Minimal citations in this chapter

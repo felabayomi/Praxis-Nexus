@@ -19,7 +19,10 @@ import {
   BookOpen,
   Printer,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  AlertTriangle,
+  CheckCircle2,
+  Database
 } from "lucide-react";
 import { quasiData } from "@/lib/quasiData";
 import { apiRequest } from "@/lib/queryClient";
@@ -176,6 +179,8 @@ export function QuasiPaperView() {
     setIsGeneratingAll(true);
     
     for (const chapter of structure) {
+      const needsData = ["chapter4", "chapter5", "chapter6"].includes(chapter.id);
+      if (needsData && !interviewData) continue;
       await generateChapter(chapter.id);
     }
     
@@ -274,6 +279,36 @@ export function QuasiPaperView() {
               )}
             </Button>
           </div>
+
+          {format === "full" && (
+            <div className={`mt-6 flex items-start gap-3 p-4 rounded-lg border ${
+              interviewData 
+                ? "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-900/50" 
+                : "bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-900/50"
+            }`} data-testid="interview-data-status">
+              {interviewData ? (
+                <>
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium text-emerald-700 dark:text-emerald-300">Interview data available</p>
+                    <p className="text-xs text-emerald-600/80 dark:text-emerald-400/80 mt-0.5">
+                      Chapters 4-6 will use actual participant responses and transcripts to generate findings, discussion, and conclusions.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium text-amber-700 dark:text-amber-300">No interview responses yet</p>
+                    <p className="text-xs text-amber-600/80 dark:text-amber-400/80 mt-0.5">
+                      Chapters 4 (Findings), 5 (Discussion), and 6 (Conclusions) require interview data. Submit responses through the Interview Form (Appendix A) first, then return here to generate data-driven chapters.
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
         </header>
 
         <Card className="mb-6 border-violet-200 dark:border-violet-800">
@@ -308,21 +343,39 @@ export function QuasiPaperView() {
             const isExpanded = chapterData?.isExpanded ?? false;
             const isLoading = chapterData?.isLoading ?? false;
             const isGenerated = chapterData?.isGenerated ?? false;
+            const needsData = ["chapter4", "chapter5", "chapter6"].includes(chapter.id);
+            const dataUnavailable = needsData && !interviewData;
 
             return (
-              <Card key={chapter.id} className="overflow-visible" data-testid={`chapter-${chapter.id}`}>
+              <Card key={chapter.id} className={`overflow-visible ${dataUnavailable ? "opacity-75" : ""}`} data-testid={`chapter-${chapter.id}`}>
                 <CardHeader 
                   className="cursor-pointer hover-elevate"
                   onClick={() => isGenerated && toggleChapter(chapter.id)}
                 >
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/10 text-violet-600 dark:text-violet-400 font-semibold">
+                      <div className={`flex h-10 w-10 items-center justify-center rounded-lg font-semibold ${
+                        dataUnavailable 
+                          ? "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                          : "bg-violet-500/10 text-violet-600 dark:text-violet-400"
+                      }`}>
                         {index + 1}
                       </div>
                       <div>
                         <CardTitle className="font-sans text-lg">{chapter.title}</CardTitle>
                         <p className="text-sm text-muted-foreground">{chapter.description}</p>
+                        {dataUnavailable && (
+                          <p className="text-xs text-amber-600 dark:text-amber-400 mt-1 flex items-center gap-1">
+                            <AlertTriangle className="h-3 w-3" />
+                            Requires interview responses
+                          </p>
+                        )}
+                        {needsData && interviewData && !isGenerated && (
+                          <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-1 flex items-center gap-1">
+                            <Database className="h-3 w-3" />
+                            Will use participant data
+                          </p>
+                        )}
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -334,6 +387,7 @@ export function QuasiPaperView() {
                             e.stopPropagation();
                             generateChapter(chapter.id);
                           }}
+                          disabled={dataUnavailable}
                           data-testid={`button-generate-${chapter.id}`}
                         >
                           <Sparkles className="h-4 w-4 mr-2" />

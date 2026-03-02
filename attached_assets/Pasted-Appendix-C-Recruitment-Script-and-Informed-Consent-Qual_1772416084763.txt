@@ -1,0 +1,43 @@
+Appendix C
+Recruitment Script and Informed Consent (Qualitative Pilot Study)
+C1. Recruitment Script (Email/Text/Verbal Invitation)
+Hello,
+I am conducting a small-scale qualitative pilot study for a course project that explores how everyday residents who encounter wildlife perceive the potential usefulness of a mobile application for reporting wildlife encounters and receiving practical guidance. Participation involves a one-time semi-structured interview lasting approximately 30–45 minutes.
+Your participation is completely voluntary. You may choose not to participate or to stop at any time. If you agree, the interview may be audio-recorded to support accurate transcription. Your name will not be used in any written report, and identifying details will be removed.
+If you are interested in participating, please let me know and we can schedule a time that works for you. Thank you.
+Sincerely,
+Felix O. Abayomi
+C2. Verbal Informed Consent Script (Read Before Interview Begins)
+Thank you for agreeing to participate. I am conducting a qualitative pilot study for a course project on how everyday residents perceive the usefulness of a mobile app for reporting wildlife encounters and receiving guidance.
+Participation is voluntary. You may skip any question, take a break, or stop the interview at any time without any penalty or negative consequences. The interview will last about 30–45 minutes.
+With your permission, I would like to audio-record this interview so I can accurately transcribe what you say. The recording and transcript will be stored securely, and your name will not be used in the report. I will remove identifying details and use a pseudonym.
+Do you have any questions?
+Do you consent to participate in this interview?
+Do you consent to audio recording?
+(Record responses: Participation ☐ Yes ☐ No | Audio recording ☐ Yes ☐ No)
+C3. Short Written Consent Form 
+Study Title: Evaluating and Recommending a Pragmatic Mobile App Prototype for Human–Wildlife Conflict Prevention and Resolution: A Qualitative Pilot Study
+Researcher: Felix O. Abayomi
+Purpose of the Study:
+The purpose of this study is to explore how everyday residents who encounter wildlife describe the ways a mobile app for reporting encounters and receiving guidance could help prevent or mitigate human–wildlife conflict.
+Procedures:
+If you agree to participate, you will complete one interview lasting approximately 30–45 minutes. The interview will include questions about your experiences with wildlife encounters and your views on what features or guidance would be useful in a mobile app.
+Voluntary Participation:
+Your participation is voluntary. You may skip any question and you may stop participation at any time without penalty.
+Risks and Discomforts:
+This study involves minimal risk. Some questions may involve recalling stressful encounters. You may pause, skip questions, or stop at any time.
+Benefits:
+There may be no direct benefit to you. However, your input may help inform practical ideas for user-centered technology to support safer human–wildlife interactions.
+Confidentiality:
+Your name will not be used in any report. The researcher will use a pseudonym and remove identifying details. Audio recordings and transcripts will be stored in a password-protected folder or encrypted storage. Audio files will be deleted after transcription.
+Audio Recording Permission:
+☐ I agree to be audio-recorded.
+☐ I do not agree to be audio-recorded.
+Consent Statement:
+I have read (or have read to me) the information above. I have had the opportunity to ask questions. I agree to participate in this study voluntarily.
+Participant Name (printed): ___________________________
+Participant Signature: ________________________________ Date: ___________
+Researcher Signature: _______________________________ Date: ___________
+________________________________________
+C4. Special Note for Family Participants
+Because participants are immediate family members, the researcher emphasized that participation was completely voluntary, that there were no consequences for declining or withdrawing, and that participants could skip any question or stop the interview at any time.

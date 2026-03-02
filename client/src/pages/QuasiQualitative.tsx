@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { 
   FlaskConical, ArrowRight, ArrowLeft, Lock, Mail, 
   Brain, FileText, ClipboardList, BookOpen, CheckSquare, MessageSquare, ExternalLink,
-  Code2
+  Code2, Shield, CheckCircle2, AlertCircle
 } from "lucide-react";
 import { QuasiReasoningView } from "@/components/QuasiReasoningView";
 import { QuasiPaperView } from "@/components/QuasiPaperView";
@@ -24,7 +24,7 @@ const ACCESS_CODE = "QUASI2026";
 const REMEMBER_KEY = "praxis-nexus-quasi-remember";
 
 type ViewMode = "reasoning" | "paper";
-type ActiveSection = null | "project" | "interview-protocol" | "coding-sheet";
+type ActiveSection = null | "project" | "interview-protocol" | "coding-sheet" | "recruitment-consent";
 
 function InterviewProtocol() {
   const questions = [
@@ -249,6 +249,221 @@ function InterviewProtocol() {
   );
 }
 
+function RecruitmentConsent() {
+  return (
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-violet-50 via-background to-fuchsia-50 dark:from-violet-950/20 dark:via-background dark:to-fuchsia-950/20">
+      <main className="flex-1 py-8 sm:py-12 px-4 sm:px-6">
+        <div className="max-w-3xl mx-auto space-y-8">
+          <div className="text-center space-y-3">
+            <Badge className="bg-violet-600">Appendix C</Badge>
+            <h1 className="font-sans text-2xl sm:text-3xl font-bold text-foreground" data-testid="text-consent-title">
+              Recruitment Script and Informed Consent
+            </h1>
+            <p className="text-muted-foreground text-sm">Qualitative Pilot Study</p>
+          </div>
+
+          <Card className="border-violet-200 dark:border-violet-900/50" data-testid="card-c1-recruitment">
+            <CardHeader className="bg-violet-500/5 dark:bg-violet-950/30 pb-3">
+              <div className="flex items-center gap-2">
+                <Mail className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+                <CardTitle className="font-sans text-lg">C1. Recruitment Script</CardTitle>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">Email / Text / Verbal Invitation</p>
+            </CardHeader>
+            <CardContent className="pt-4 space-y-4">
+              <p className="text-sm leading-relaxed">Hello,</p>
+              <p className="text-sm leading-relaxed">
+                I am conducting a small-scale qualitative pilot study for a course project that explores how everyday residents who encounter wildlife perceive the potential usefulness of a mobile application for reporting wildlife encounters and receiving practical guidance. Participation involves a one-time semi-structured interview lasting approximately 30–45 minutes.
+              </p>
+              <p className="text-sm leading-relaxed">
+                Your participation is completely voluntary. You may choose not to participate or to stop at any time. If you agree, the interview may be audio-recorded to support accurate transcription. Your name will not be used in any written report, and identifying details will be removed.
+              </p>
+              <p className="text-sm leading-relaxed">
+                If you are interested in participating, please let me know and we can schedule a time that works for you. Thank you.
+              </p>
+              <div className="pt-2 border-t border-border/50">
+                <p className="text-sm">Sincerely,</p>
+                <p className="text-sm font-medium">Felix O. Abayomi</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-violet-200 dark:border-violet-900/50" data-testid="card-c2-verbal-consent">
+            <CardHeader className="bg-violet-500/5 dark:bg-violet-950/30 pb-3">
+              <div className="flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+                <CardTitle className="font-sans text-lg">C2. Verbal Informed Consent Script</CardTitle>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">Read Before Interview Begins</p>
+            </CardHeader>
+            <CardContent className="pt-4 space-y-4">
+              <p className="text-sm leading-relaxed italic">
+                "Thank you for agreeing to participate. I am conducting a qualitative pilot study for a course project on how everyday residents perceive the usefulness of a mobile app for reporting wildlife encounters and receiving guidance."
+              </p>
+              <p className="text-sm leading-relaxed italic">
+                "Participation is voluntary. You may skip any question, take a break, or stop the interview at any time without any penalty or negative consequences. The interview will last about 30–45 minutes."
+              </p>
+              <p className="text-sm leading-relaxed italic">
+                "With your permission, I would like to audio-record this interview so I can accurately transcribe what you say. The recording and transcript will be stored securely, and your name will not be used in the report. I will remove identifying details and use a pseudonym."
+              </p>
+              <p className="text-sm leading-relaxed italic">"Do you have any questions?"</p>
+              <p className="text-sm leading-relaxed italic">"Do you consent to participate in this interview?"</p>
+              <p className="text-sm leading-relaxed italic">"Do you consent to audio recording?"</p>
+              <div className="mt-4 p-4 rounded-lg bg-muted/40 border border-border/50">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">Record Responses</p>
+                <div className="flex flex-wrap gap-6">
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium">Participation</p>
+                    <div className="flex gap-3">
+                      <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+                        <CheckSquare className="h-3.5 w-3.5" /> Yes
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+                        <CheckSquare className="h-3.5 w-3.5" /> No
+                      </span>
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium">Audio Recording</p>
+                    <div className="flex gap-3">
+                      <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+                        <CheckSquare className="h-3.5 w-3.5" /> Yes
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+                        <CheckSquare className="h-3.5 w-3.5" /> No
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-violet-200 dark:border-violet-900/50" data-testid="card-c3-written-consent">
+            <CardHeader className="bg-violet-500/5 dark:bg-violet-950/30 pb-3">
+              <div className="flex items-center gap-2">
+                <FileText className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+                <CardTitle className="font-sans text-lg">C3. Short Written Consent Form</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-4 space-y-5">
+              <div>
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Study Title</p>
+                <p className="text-sm leading-relaxed font-medium">
+                  Evaluating and Recommending a Pragmatic Mobile App Prototype for Human–Wildlife Conflict Prevention and Resolution: A Qualitative Pilot Study
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Researcher</p>
+                <p className="text-sm">Felix O. Abayomi</p>
+              </div>
+
+              <div className="space-y-4 pt-2">
+                <div>
+                  <p className="text-sm font-semibold text-foreground mb-1">Purpose of the Study</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    The purpose of this study is to explore how everyday residents who encounter wildlife describe the ways a mobile app for reporting encounters and receiving guidance could help prevent or mitigate human–wildlife conflict.
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-sm font-semibold text-foreground mb-1">Procedures</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    If you agree to participate, you will complete one interview lasting approximately 30–45 minutes. The interview will include questions about your experiences with wildlife encounters and your views on what features or guidance would be useful in a mobile app.
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-sm font-semibold text-foreground mb-1">Voluntary Participation</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    Your participation is voluntary. You may skip any question and you may stop participation at any time without penalty.
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-sm font-semibold text-foreground mb-1">Risks and Discomforts</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    This study involves minimal risk. Some questions may involve recalling stressful encounters. You may pause, skip questions, or stop at any time.
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-sm font-semibold text-foreground mb-1">Benefits</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    There may be no direct benefit to you. However, your input may help inform practical ideas for user-centered technology to support safer human–wildlife interactions.
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-sm font-semibold text-foreground mb-1">Confidentiality</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    Your name will not be used in any report. The researcher will use a pseudonym and remove identifying details. Audio recordings and transcripts will be stored in a password-protected folder or encrypted storage. Audio files will be deleted after transcription.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-4 p-4 rounded-lg bg-muted/40 border border-border/50 space-y-3">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Audio Recording Permission</p>
+                <div className="space-y-1.5">
+                  <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckSquare className="h-3.5 w-3.5" /> I agree to be audio-recorded.
+                  </span>
+                  <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckSquare className="h-3.5 w-3.5" /> I do not agree to be audio-recorded.
+                  </span>
+                </div>
+              </div>
+
+              <div className="mt-4 p-4 rounded-lg bg-violet-50 dark:bg-violet-950/30 border border-violet-200 dark:border-violet-900/50 space-y-3">
+                <p className="text-xs font-medium text-violet-700 dark:text-violet-300 uppercase tracking-wider">Consent Statement</p>
+                <p className="text-sm leading-relaxed text-muted-foreground italic">
+                  I have read (or have read to me) the information above. I have had the opportunity to ask questions. I agree to participate in this study voluntarily.
+                </p>
+                <div className="grid sm:grid-cols-2 gap-4 pt-2">
+                  <div className="space-y-1">
+                    <p className="text-xs text-muted-foreground">Participant Name (printed)</p>
+                    <div className="h-8 border-b border-dashed border-muted-foreground/40" />
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-xs text-muted-foreground">Date</p>
+                    <div className="h-8 border-b border-dashed border-muted-foreground/40" />
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-xs text-muted-foreground">Participant Signature</p>
+                    <div className="h-8 border-b border-dashed border-muted-foreground/40" />
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-xs text-muted-foreground">Researcher Signature</p>
+                    <div className="h-8 border-b border-dashed border-muted-foreground/40" />
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-amber-200 dark:border-amber-900/50 bg-amber-50/50 dark:bg-amber-950/20" data-testid="card-c4-family-note">
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <AlertCircle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                <CardTitle className="font-sans text-lg text-amber-700 dark:text-amber-400">C4. Special Note for Family Participants</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Because participants are immediate family members, the researcher emphasized that participation was completely voluntary, that there were no consequences for declining or withdrawing, and that participants could skip any question or stop the interview at any time.
+              </p>
+            </CardContent>
+          </Card>
+
+          <footer className="text-center pt-4 pb-8 border-t border-border/50">
+            <p className="text-xs text-muted-foreground">&copy; Felix Abayomi 2026</p>
+          </footer>
+        </div>
+      </main>
+    </div>
+  );
+}
+
 function QuasiContent() {
   const [viewMode, setViewMode] = useState<ViewMode>("reasoning");
   const [showPresentation, setShowPresentation] = useState(false);
@@ -423,6 +638,32 @@ function QuasiHub({ onSelectSection }: { onSelectSection: (section: ActiveSectio
               </div>
             </CardHeader>
           </Card>
+
+          <Card
+            className="cursor-pointer transition-all hover:shadow-md hover:border-violet-300 dark:hover:border-violet-700"
+            onClick={() => onSelectSection("recruitment-consent")}
+            data-testid="card-recruitment-consent"
+          >
+            <CardHeader>
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/10 text-violet-600 dark:text-violet-400">
+                      <Shield className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <Badge className="bg-violet-600 mb-1">Appendix C</Badge>
+                    </div>
+                  </div>
+                  <CardTitle className="font-sans text-xl mb-1">Recruitment Script and Informed Consent</CardTitle>
+                  <CardDescription>
+                    Recruitment invitation, verbal informed consent script, short written consent form, and special note for family participants.
+                  </CardDescription>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground shrink-0 mt-1" />
+              </div>
+            </CardHeader>
+          </Card>
         </div>
       </section>
 
@@ -553,6 +794,30 @@ export default function QuasiQualitative() {
             </div>
           </header>
           <CodingSheet />
+        </div>
+      );
+    }
+
+    if (activeSection === "recruitment-consent") {
+      return (
+        <div className="min-h-screen flex flex-col bg-gradient-to-br from-violet-50 via-background to-fuchsia-50 dark:from-violet-950/20 dark:via-background dark:to-fuchsia-950/20">
+          <header className="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-6 h-14 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setActiveSection(null)}
+              className="gap-2"
+              data-testid="button-back-quasi-hub-5"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span className="hidden sm:inline">Back to Quasi-Qualitative</span>
+            </Button>
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-muted-foreground hidden sm:inline font-medium">Appendix C</span>
+              <ThemeToggle />
+            </div>
+          </header>
+          <RecruitmentConsent />
         </div>
       );
     }

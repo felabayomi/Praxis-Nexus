@@ -1,0 +1,54 @@
+Appendix A
+Semi-Structured Interview Protocol (Qualitative Pilot Study)
+Opening Script
+“Thank you for participating. I’m exploring experiences with wildlife encounters and what kinds of information or features might be helpful in a mobile app designed to support prevention and reduce harm during encounters. Participation is voluntary. You may skip any question, and you can stop at any time. With your permission, I would like to record this interview so I can accurately capture your words. Your name will not be used in the write-up, and I will remove identifying details.”
+Q1. Encounter description
+Main question: “Describe a wildlife encounter you remember clearly.”
+Options (check all): ☐ Road/driving ☐ Near home ☐ Park/trail ☐ Work setting ☐ Other: ____
+Probes: “What happened first, and what happened next?”
+Q2. Animal(s) involved
+Options (check all): ☐ Deer ☐ Bear ☐ Coyote ☐ Snake ☐ Raccoon/opossum ☐ Birds ☐ Other: ____
+Probe: “What makes you confident about the animal identification?”
+Q3. Risk perception
+Main question: “How risky did it feel at the time?” ☐ Low ☐ Moderate ☐ High
+Probe: “What specific signs made it feel that way?”
+Q4. Immediate response
+Main question: “What did you do in the moment?”
+Options (check all): ☐ Kept distance ☐ Left area ☐ Waited/stayed still ☐ Tried to scare away ☐ Took photo/video ☐ Called someone ☐ Other: ____
+Probe: “Why did you choose that response?”
+Q5. In-the-moment information needs
+Main question: “What would have helped most during the encounter?” (Choose top 2)
+Options: ☐ Step-by-step safety guidance ☐ Species behavior info ☐ Danger signs ☐ Who to contact ☐ What to do after ☐ Other: ____
+Probe: “What would you want it to say exactly?”
+Q6. Prevention supports
+Main question: “Before encounters occur, what would help prevent problems?”
+Options (check all): ☐ Alerts ☐ Season/time reminders ☐ Route suggestions ☐ Education/tips ☐ Other: ____
+Probe: “When would you realistically use that?”
+Q7. App features (priority ranking)
+Main question: “What are your top three app features?” (Rank 1–3)
+Options: ☐ ‘Help Now’ guidance ☐ Reporting ☐ Sightings map ☐ Emergency/local contacts ☐ Notifications ☐ Offline/low-data mode ☐ Other: ____
+Probe: “What would make you trust the guidance?”
+Q8. Willingness to report
+Main question: “Would you report encounters through an app?” ☐ Yes ☐ Maybe/depends ☐ No
+Probe: “What would need to be true for you to report?”
+Q9. Trust and governance
+Main question: “Who would you trust to manage the app and its data?”
+Options (choose one): ☐ Government ☐ Nonprofit ☐ University ☐ Community org ☐ Private company ☐ Other: ____
+Probe: “Why that choice?”
+Q10. Privacy and ethical concerns
+Main question: “What privacy protections would you require?”
+Options (check all): ☐ Anonymous option ☐ Control location precision ☐ Retention limits ☐ Delete submissions ☐ No third-party sharing ☐ Other: ____
+Probe: “What worries you most?”
+Q11. Barriers to use
+Main question: “What might stop you from using the app?”
+Options (check all): ☐ Too complex ☐ Don’t trust accuracy ☐ Data/connectivity ☐ Fear of consequences ☐ Not relevant often ☐ Other: ____
+Probe: “Which is the biggest barrier and why?”
+Q12. Ideal workflow
+Main question: “Walk me through the best version of the app during an encounter—from opening it to feeling safe again.”
+Probe: “What do you see first? What steps do you take? What outcome do you expect?”
+Closing Question
+“Is there anything else you think is important about wildlife encounters or how a mobile app could help?”
+Closing Script
+“Thank you for your time. If you think of anything else you want to add later, you can share it with me. As a reminder, participation is voluntary and your identity will be protected in the write-up.”
+Interviewer Note
+“Because participants are immediate family members, voluntary participation and the option to skip questions or stop at any time were reiterated to reduce any perception of obligation.”

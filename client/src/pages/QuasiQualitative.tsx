@@ -5,11 +5,12 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import { 
   FlaskConical, ArrowRight, ArrowLeft, Lock, Mail, 
-  Brain, FileText
+  Brain, FileText, ClipboardList, BookOpen, CheckSquare, MessageSquare
 } from "lucide-react";
 import { QuasiReasoningView } from "@/components/QuasiReasoningView";
 import { QuasiPaperView } from "@/components/QuasiPaperView";
@@ -20,6 +21,230 @@ const ACCESS_CODE = "QUASI2026";
 const REMEMBER_KEY = "praxis-nexus-quasi-remember";
 
 type ViewMode = "reasoning" | "paper";
+type ActiveSection = null | "project" | "interview-protocol";
+
+function InterviewProtocol() {
+  const questions = [
+    {
+      id: "q1",
+      label: "Q1. Encounter description",
+      main: "Describe a wildlife encounter you remember clearly.",
+      options: ["Road/driving", "Near home", "Park/trail", "Work setting", "Other: ____"],
+      optionType: "check",
+      probes: ["What happened first, and what happened next?"],
+    },
+    {
+      id: "q2",
+      label: "Q2. Animal(s) involved",
+      main: null,
+      options: ["Deer", "Bear", "Coyote", "Snake", "Raccoon/opossum", "Birds", "Other: ____"],
+      optionType: "check",
+      probes: ["What makes you confident about the animal identification?"],
+    },
+    {
+      id: "q3",
+      label: "Q3. Risk perception",
+      main: "How risky did it feel at the time?",
+      options: ["Low", "Moderate", "High"],
+      optionType: "radio",
+      probes: ["What specific signs made it feel that way?"],
+    },
+    {
+      id: "q4",
+      label: "Q4. Immediate response",
+      main: "What did you do in the moment?",
+      options: ["Kept distance", "Left area", "Waited/stayed still", "Tried to scare away", "Took photo/video", "Called someone", "Other: ____"],
+      optionType: "check",
+      probes: ["Why did you choose that response?"],
+    },
+    {
+      id: "q5",
+      label: "Q5. In-the-moment information needs",
+      main: "What would have helped most during the encounter? (Choose top 2)",
+      options: ["Step-by-step safety guidance", "Species behavior info", "Danger signs", "Who to contact", "What to do after", "Other: ____"],
+      optionType: "check",
+      probes: ["What would you want it to say exactly?"],
+    },
+    {
+      id: "q6",
+      label: "Q6. Prevention supports",
+      main: "Before encounters occur, what would help prevent problems?",
+      options: ["Alerts", "Season/time reminders", "Route suggestions", "Education/tips", "Other: ____"],
+      optionType: "check",
+      probes: ["When would you realistically use that?"],
+    },
+    {
+      id: "q7",
+      label: "Q7. App features (priority ranking)",
+      main: "What are your top three app features? (Rank 1\u20133)",
+      options: ["'Help Now' guidance", "Reporting", "Sightings map", "Emergency/local contacts", "Notifications", "Offline/low-data mode", "Other: ____"],
+      optionType: "rank",
+      probes: ["What would make you trust the guidance?"],
+    },
+    {
+      id: "q8",
+      label: "Q8. Willingness to report",
+      main: "Would you report encounters through an app?",
+      options: ["Yes", "Maybe/depends", "No"],
+      optionType: "radio",
+      probes: ["What would need to be true for you to report?"],
+    },
+    {
+      id: "q9",
+      label: "Q9. Trust and governance",
+      main: "Who would you trust to manage the app and its data?",
+      options: ["Government", "Nonprofit", "University", "Community org", "Private company", "Other: ____"],
+      optionType: "radio",
+      probes: ["Why that choice?"],
+    },
+    {
+      id: "q10",
+      label: "Q10. Privacy and ethical concerns",
+      main: "What privacy protections would you require?",
+      options: ["Anonymous option", "Control location precision", "Retention limits", "Delete submissions", "No third-party sharing", "Other: ____"],
+      optionType: "check",
+      probes: ["What worries you most?"],
+    },
+    {
+      id: "q11",
+      label: "Q11. Barriers to use",
+      main: "What might stop you from using the app?",
+      options: ["Too complex", "Don't trust accuracy", "Data/connectivity", "Fear of consequences", "Not relevant often", "Other: ____"],
+      optionType: "check",
+      probes: ["Which is the biggest barrier and why?"],
+    },
+    {
+      id: "q12",
+      label: "Q12. Ideal workflow",
+      main: "Walk me through the best version of the app during an encounter \u2014 from opening it to feeling safe again.",
+      options: [],
+      optionType: "open",
+      probes: ["What do you see first? What steps do you take? What outcome do you expect?"],
+    },
+  ];
+
+  return (
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-violet-50 via-background to-fuchsia-50 dark:from-violet-950/20 dark:via-background dark:to-fuchsia-950/20">
+      <main className="flex-1 py-8 sm:py-12 px-4 sm:px-6">
+        <div className="max-w-3xl mx-auto space-y-8">
+          <div className="text-center space-y-3">
+            <Badge className="bg-violet-600">Appendix A</Badge>
+            <h1 className="font-sans text-2xl sm:text-3xl font-bold text-foreground" data-testid="text-interview-title">
+              Semi-Structured Interview Protocol
+            </h1>
+            <p className="text-muted-foreground text-sm">Qualitative Pilot Study</p>
+          </div>
+
+          <Card className="border-violet-200 dark:border-violet-900/50">
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+                <CardTitle className="font-sans text-lg">Opening Script</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground leading-relaxed italic">
+                "Thank you for participating. I'm exploring experiences with wildlife encounters and what kinds of information or features might be helpful in a mobile app designed to support prevention and reduce harm during encounters. Participation is voluntary. You may skip any question, and you can stop at any time. With your permission, I would like to record this interview so I can accurately capture your words. Your name will not be used in the write-up, and I will remove identifying details."
+              </p>
+            </CardContent>
+          </Card>
+
+          <div className="space-y-4">
+            {questions.map((q) => (
+              <Card key={q.id} className="overflow-hidden" data-testid={`card-${q.id}`}>
+                <CardHeader className="bg-violet-500/5 dark:bg-violet-950/30 pb-3">
+                  <CardTitle className="font-sans text-base text-violet-700 dark:text-violet-400">
+                    {q.label}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="pt-4 space-y-4">
+                  {q.main && (
+                    <div>
+                      <p className="text-sm font-medium text-foreground mb-1">Main question:</p>
+                      <p className="text-sm text-foreground italic">"{q.main}"</p>
+                    </div>
+                  )}
+                  {q.options.length > 0 && (
+                    <div>
+                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
+                        {q.optionType === "check" ? "Options (check all that apply):" : q.optionType === "radio" ? "Options (choose one):" : "Options (rank 1\u20133):"}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {q.options.map((opt) => (
+                          <span
+                            key={opt}
+                            className="inline-flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-md bg-muted/60 text-foreground"
+                          >
+                            <CheckSquare className="h-3.5 w-3.5 text-violet-500 shrink-0" />
+                            {opt}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {q.probes.length > 0 && (
+                    <div className="border-l-2 border-violet-300 dark:border-violet-700 pl-3">
+                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Probe:</p>
+                      {q.probes.map((probe) => (
+                        <p key={probe} className="text-sm text-muted-foreground italic">"{probe}"</p>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <Card className="border-violet-200 dark:border-violet-900/50">
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+                <CardTitle className="font-sans text-lg">Closing Question</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground leading-relaxed italic">
+                "Is there anything else you think is important about wildlife encounters or how a mobile app could help?"
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-violet-200 dark:border-violet-900/50">
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+                <CardTitle className="font-sans text-lg">Closing Script</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground leading-relaxed italic">
+                "Thank you for your time. If you think of anything else you want to add later, you can share it with me. As a reminder, participation is voluntary and your identity will be protected in the write-up."
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-amber-200 dark:border-amber-900/50 bg-amber-50/50 dark:bg-amber-950/20">
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <ClipboardList className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                <CardTitle className="font-sans text-lg text-amber-700 dark:text-amber-400">Interviewer Note</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground leading-relaxed italic">
+                "Because participants are immediate family members, voluntary participation and the option to skip questions or stop at any time were reiterated to reduce any perception of obligation."
+              </p>
+            </CardContent>
+          </Card>
+
+          <footer className="text-center pt-4 pb-8 border-t border-border/50">
+            <p className="text-xs text-muted-foreground">&copy; Felix Abayomi 2026</p>
+          </footer>
+        </div>
+      </main>
+    </div>
+  );
+}
 
 function QuasiContent() {
   const [viewMode, setViewMode] = useState<ViewMode>("reasoning");
@@ -42,15 +267,9 @@ function QuasiContent() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-violet-50 via-background to-fuchsia-50 dark:from-violet-950/20 dark:via-background dark:to-fuchsia-950/20">
+    <>
       <header className="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-6 h-14 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="flex items-center gap-4">
-          <Link href="/">
-            <Button variant="ghost" size="sm" className="gap-2" data-testid="button-back-hub">
-              <ArrowLeft className="h-4 w-4" />
-              <span className="hidden sm:inline">Back to Hub</span>
-            </Button>
-          </Link>
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-md bg-violet-500/10">
               <FlaskConical className="h-4 w-4 text-violet-600 dark:text-violet-400" />
@@ -91,7 +310,91 @@ function QuasiContent() {
         open={showSearch} 
         onOpenChange={setShowSearch}
       />
-    </div>
+    </>
+  );
+}
+
+function QuasiHub({ onSelectSection }: { onSelectSection: (section: ActiveSection) => void }) {
+  return (
+    <main className="flex-1">
+      <section className="px-4 sm:px-6 py-16 sm:py-20">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-violet-500/10 text-violet-600 dark:text-violet-400 rounded-full text-sm font-medium mb-6">
+            <FlaskConical className="h-4 w-4" />
+            <span>Research Methodology</span>
+          </div>
+          <h1 className="font-sans text-3xl sm:text-4xl font-bold leading-tight text-foreground mb-3" data-testid="text-hub-title">
+            Quasi-Qualitative Project
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Topic and Research Question Development
+          </p>
+          <p className="text-sm text-muted-foreground mt-4">Felix Abayomi &middot; EdD Candidate, Antioch University</p>
+        </div>
+      </section>
+
+      <section className="px-4 sm:px-6 py-12">
+        <div className="max-w-3xl mx-auto space-y-4">
+          <Card
+            className="cursor-pointer transition-all hover:shadow-md hover:border-violet-300 dark:hover:border-violet-700"
+            onClick={() => onSelectSection("project")}
+            data-testid="card-quasi-project"
+          >
+            <CardHeader>
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/10 text-violet-600 dark:text-violet-400">
+                      <Brain className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <Badge className="bg-violet-600 mb-1">Main Project</Badge>
+                    </div>
+                  </div>
+                  <CardTitle className="font-sans text-xl mb-1">Quasi-Qualitative Research</CardTitle>
+                  <CardDescription>
+                    Reasoning view with theoretical framework, research design, participants, data collection, data interpretation, ethics, and chapter summary. Includes AI Dissertation Generator.
+                  </CardDescription>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground shrink-0 mt-1" />
+              </div>
+            </CardHeader>
+          </Card>
+
+          <Card
+            className="cursor-pointer transition-all hover:shadow-md hover:border-violet-300 dark:hover:border-violet-700"
+            onClick={() => onSelectSection("interview-protocol")}
+            data-testid="card-interview-protocol"
+          >
+            <CardHeader>
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/10 text-violet-600 dark:text-violet-400">
+                      <ClipboardList className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <Badge className="bg-violet-600 mb-1">Appendix A</Badge>
+                    </div>
+                  </div>
+                  <CardTitle className="font-sans text-xl mb-1">Semi-Structured Interview Protocol</CardTitle>
+                  <CardDescription>
+                    Qualitative pilot study interview guide with 12 structured questions covering wildlife encounters, risk perception, app features, trust, privacy, and ideal workflows.
+                  </CardDescription>
+                </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground shrink-0 mt-1" />
+              </div>
+            </CardHeader>
+          </Card>
+        </div>
+      </section>
+
+      <footer className="px-4 sm:px-6 py-8 border-t">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-xs text-muted-foreground">&copy; Felix Abayomi 2026</p>
+        </div>
+      </footer>
+    </main>
   );
 }
 
@@ -101,6 +404,7 @@ export default function QuasiQualitative() {
   const [accessCode, setAccessCode] = useState("");
   const [error, setError] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [activeSection, setActiveSection] = useState<ActiveSection>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && localStorage.getItem(REMEMBER_KEY) === "true") {
@@ -145,7 +449,74 @@ export default function QuasiQualitative() {
   };
 
   if (hasAccess) {
-    return <QuasiContent />;
+    if (activeSection === "project") {
+      return (
+        <div className="min-h-screen flex flex-col bg-gradient-to-br from-violet-50 via-background to-fuchsia-50 dark:from-violet-950/20 dark:via-background dark:to-fuchsia-950/20">
+          <div className="flex items-center px-4 sm:px-6 h-10 bg-violet-500/5 dark:bg-violet-950/30 border-b border-violet-200/50 dark:border-violet-900/30">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setActiveSection(null)}
+              className="gap-2 h-8 text-xs text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 px-2"
+              data-testid="button-back-quasi-hub"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" />
+              Back to Quasi-Qualitative
+            </Button>
+          </div>
+          <QuasiContent />
+        </div>
+      );
+    }
+
+    if (activeSection === "interview-protocol") {
+      return (
+        <div className="min-h-screen flex flex-col bg-gradient-to-br from-violet-50 via-background to-fuchsia-50 dark:from-violet-950/20 dark:via-background dark:to-fuchsia-950/20">
+          <header className="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-6 h-14 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setActiveSection(null)}
+              className="gap-2"
+              data-testid="button-back-quasi-hub-2"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span className="hidden sm:inline">Back to Quasi-Qualitative</span>
+            </Button>
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-muted-foreground hidden sm:inline font-medium">Appendix A</span>
+              <ThemeToggle />
+            </div>
+          </header>
+          <InterviewProtocol />
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen flex flex-col bg-gradient-to-br from-violet-50 via-background to-fuchsia-50 dark:from-violet-950/20 dark:via-background dark:to-fuchsia-950/20">
+        <header className="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-6 h-14 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="flex items-center gap-4">
+            <Link href="/">
+              <Button variant="ghost" size="sm" className="gap-2" data-testid="button-back-hub">
+                <ArrowLeft className="h-4 w-4" />
+                <span className="hidden sm:inline">Back to Hub</span>
+              </Button>
+            </Link>
+            <div className="flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-violet-500/10">
+                <FlaskConical className="h-4 w-4 text-violet-600 dark:text-violet-400" />
+              </div>
+              <span className="font-sans text-sm font-semibold hidden sm:inline" data-testid="text-project-name">
+                Quasi-Qualitative
+              </span>
+            </div>
+          </div>
+          <ThemeToggle />
+        </header>
+        <QuasiHub onSelectSection={setActiveSection} />
+      </div>
+    );
   }
 
   return (
@@ -211,7 +582,7 @@ export default function QuasiQualitative() {
 
             <div className="pt-8 border-t border-border/50">
               <p className="text-xs text-muted-foreground">
-                © Felix Abayomi 2026
+                &copy; Felix Abayomi 2026
               </p>
             </div>
           </div>

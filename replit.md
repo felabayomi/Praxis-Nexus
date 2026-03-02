@@ -25,11 +25,26 @@ Praxis Nexus is an academic research hub web application presenting multiple res
      - **Reasoning View**: Research Question + 7 accordion sections + Tools (font size, audio, presentation, search)
      - **Paper View**: AI Dissertation Generator with chapter-by-chapter generation
    - **Card 2: Semi-Structured Interview Protocol** (Appendix A) → Read-only view
+     - Includes "View Responses" button to see submitted interview data + add transcripts
+     - Includes "Open Fillable Form" button linking to /interview
+   - **Card 3: Coding Sheet and Codebook** (Appendix B) → Interactive fillable tool
+     - Per-participant coding sheets (Participant A/B profiles)
+     - Option summary for structured responses
+     - Qualitative Evidence Log (add excerpts, codes, analytic memos)
+     - B2 Codebook: 8 domains, 40+ open coding categories
+     - B3 Theme Development Worksheet (3-6 themes)
+     - B4 Analytic Integrity Note
+     - Data saved to localStorage
+   - **Interview Responses Viewer** — View all submitted responses with transcript editing
+     - Expandable response cards per participant
+     - Add/edit full interview transcripts for recorded oral answers
+     - Transcripts stored in PostgreSQL alongside form responses
    - **Public Interview Form (/interview)** — Fillable, dynamic form for participants
      - 12 structured questions with checkboxes, radio buttons, ranking selects, textareas
      - Consent and participant ID required
      - Responses stored in PostgreSQL `interview_responses` table
      - No access code required (publicly shareable link)
+   - **AI Paper Generator** now fetches interview responses + transcripts to include in generation
 4. **Doctoral Portfolio (/portfolio)** - Blue/navy theme, serif typography
    - Landing Page → Access Code (PORTFOLIO2026) → Two Views (Portfolio / Paper)
    - **Portfolio View**: Browse three strands with expandable artifacts and reflections

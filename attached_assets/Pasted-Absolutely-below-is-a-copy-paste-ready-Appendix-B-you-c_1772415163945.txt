@@ -1,0 +1,183 @@
+Absolutely—below is a **copy/paste-ready Appendix B** you can drop into your manuscript right after Appendix A. It documents your analysis process in an Antioch-friendly way while keeping the study clearly *qualitative*.
+
+---
+
+## Appendix B
+
+**Coding Sheet and Codebook (Thematic Analysis for Qualitative Pilot Study)**
+
+### Purpose of Appendix B
+
+This appendix provides the coding sheet template and codebook used to support transparent, systematic thematic analysis of the interview transcripts. The structured “options” portion of the interview protocol is used as an organizing aid for summary and comparison, while the primary qualitative findings are derived from open-ended narrative responses and evidence excerpts.
+
+---
+
+## B1. Coding Sheet Template (Complete One Per Participant)
+
+### Participant Profile (De-identified)
+
+* Participant ID: ☐ A ☐ B
+* Approximate age: ______
+* Role (general): ______
+* Interview date: ______
+* Interview mode: ☐ In-person ☐ Online
+* Duration (minutes): ______
+
+---
+
+### Option Summary (Structured Responses)
+
+**Q1. Encounter context (check all that apply):**
+☐ Road/driving ☐ Near home ☐ Park/trail ☐ Work setting ☐ Other: ______
+
+**Q2. Animal(s) involved (check all that apply):**
+☐ Deer ☐ Bear ☐ Coyote ☐ Snake ☐ Raccoon/opossum ☐ Birds ☐ Other: ______
+
+**Q3. Perceived risk level (choose one):**
+☐ Low ☐ Moderate ☐ High
+**Brief explanation (1–2 lines):** ______________________________________
+
+**Q4. Immediate response (check all that apply):**
+☐ Kept distance ☐ Left area ☐ Waited/stayed still ☐ Tried to scare away
+☐ Took photo/video ☐ Called someone ☐ Other: ______
+
+**Q5. In-the-moment information needs (choose top 2):**
+
+1. ____________________  2) ____________________
+   (Options: Step-by-step safety guidance; Species behavior info; Danger signs; Who to contact; After-steps; Other)
+
+**Q6. Prevention supports (check all that apply):**
+☐ Alerts ☐ Season/time reminders ☐ Route suggestions ☐ Education/tips ☐ Other: ______
+
+**Q7. Top app features (rank 1–3):**
+
+1. ____________________  2) ____________________  3) ____________________
+   (Options: Help Now; Reporting; Sightings map; Emergency/local contacts; Notifications; Offline/low-data; Other)
+
+**Q8. Would report via app? (choose one):**
+☐ Yes ☐ Maybe/depends ☐ No
+**Conditions (1–2 lines):** ____________________________________________
+
+**Q9. Most trusted manager (choose one):**
+☐ Government ☐ Nonprofit ☐ University ☐ Community org ☐ Private company ☐ Other: ______
+
+**Q10. Required privacy protections (check all that apply):**
+☐ Anonymous option ☐ Control location precision ☐ Retention limits
+☐ Delete submissions ☐ No third-party sharing ☐ Other: ______
+
+**Q11. Barriers to use (check all that apply):**
+☐ Too complex ☐ Don’t trust accuracy ☐ Data/connectivity limits
+☐ Fear of consequences ☐ Not relevant often ☐ Other: ______
+
+---
+
+### Qualitative Evidence Log (Use During Coding)
+
+Use this table-style log (you can keep it as bullets if you prefer):
+
+* **Excerpt ID:** A-1 / B-1 / etc.
+* **Transcript excerpt (quoted):** “______________________________”
+* **Initial code(s):** ________________________________
+* **Analytic memo (1–2 lines):** _______________________
+
+---
+
+## B2. Codebook (Open Coding Categories)
+
+**Instructions:** Apply codes to meaningful units of text (phrases, sentences, or short paragraphs). Multiple codes may be applied to one excerpt. Codes are used to identify patterns that later form themes.
+
+---
+
+### 1) Encounter Experience
+
+* **ENCOUNTER_CONTEXT** — Describes where/when the encounter happened (general setting).
+* **ENCOUNTER_SEQUENCE** — Describes the sequence of events and key moments.
+* **SPECIES_ID_CONFIDENCE** — Indicates confidence or uncertainty about which animal was involved.
+
+### 2) Risk and Decision-Making
+
+* **RISK_PERCEPTION_LOW / MODERATE / HIGH** — Expresses perceived risk level and rationale.
+* **UNCERTAINTY** — Describes uncertainty about what to do or what might happen.
+* **DECISION_DRIVER** — Explains influences on decisions (fear, prior knowledge, advice, signage, etc.).
+* **SAFETY_STRATEGY** — Actions taken to stay safe (avoidance, distance, leaving area).
+* **ESCALATION_CONCERN** — Concern about provoking animal or worsening situation.
+
+### 3) Information Needs (During Encounter)
+
+* **NEED_STEP_BY_STEP** — Desire for clear “do/don’t” or stepwise guidance.
+* **NEED_SPECIES_BEHAVIOR** — Desire for information about animal behavior.
+* **NEED_DANGER_SIGNS** — Desire for warning signs and risk cues.
+* **NEED_CONTACTS** — Desire for who to call/report to and how.
+* **NEED_AFTERCARE** — Desire for post-encounter steps (reporting, medical, vehicle/property, etc.).
+
+### 4) Prevention and Preparedness
+
+* **PREVENTION_ALERTS** — Desire for alerts or push notifications.
+* **PREVENTION_ROUTE** — Desire for route guidance or hotspot avoidance.
+* **PREVENTION_SEASONAL** — Desire for seasonal/time-based risk information.
+* **PREVENTION_EDUCATION** — Desire for education, tips, or preparedness resources.
+* **SELF_EFFICACY** — Confidence or lack of confidence in handling encounters.
+
+### 5) App Feature Preferences
+
+* **FEATURE_HELP_NOW** — Preference for immediate guidance interface.
+* **FEATURE_REPORTING** — Preference for reporting features (photo, details, categories).
+* **FEATURE_MAP** — Preference for map-based sightings display.
+* **FEATURE_OFFLINE_LOW_DATA** — Need for offline or low-data usability.
+* **FEATURE_PERSONALIZATION** — Desire for context-aware or tailored guidance.
+* **FEATURE_SIMPLE_UI** — Desire for fast, simple interface suitable under stress.
+
+### 6) Trust, Governance, and Ethics
+
+* **TRUST_MANAGER** — Who should manage the app/data and why.
+* **TRUST_ACCURACY** — Concern about information quality and reliability.
+* **PRIVACY_LOCATION** — Location privacy concerns and preferences.
+* **PRIVACY_IDENTITY** — Identity privacy concerns and preferences.
+* **DATA_MISUSE_WILDLIFE** — Concern that wildlife location data could be misused.
+* **SURVEILLANCE_CONCERN** — Concern about surveillance or tracking.
+
+### 7) Adoption Barriers
+
+* **BARRIER_CONNECTIVITY** — Connectivity, data cost, signal limitations.
+* **BARRIER_COMPLEXITY** — Too slow/complex to use during an encounter.
+* **BARRIER_CONSEQUENCES** — Fear of negative consequences of reporting/using app.
+* **BARRIER_RELEVANCE** — Belief that encounters are too rare or app not needed.
+* **BARRIER_CULTURAL_BELIEF** — Beliefs/values that shape attitudes toward wildlife and technology.
+
+### 8) Desired Outcomes
+
+* **DESIRED_OUTCOME_SAFETY** — Goal of physical safety and harm reduction.
+* **DESIRED_OUTCOME_CONFIDENCE** — Reduced anxiety, increased certainty.
+* **DESIRED_OUTCOME_COEXISTENCE** — Avoiding harm to wildlife; humane response.
+* **DESIRED_OUTCOME_COMMUNITY** — Shared awareness, community benefit, collective safety.
+
+---
+
+## B3. Theme Development Worksheet (Use After Coding Both Interviews)
+
+### Theme 1: ______________________________
+
+* **Codes contributing to theme:** ______________________________
+* **Key evidence (Participant A):** “______________________________”
+* **Key evidence (Participant B):** “______________________________”
+* **Theme meaning (1–2 sentences):** ____________________________
+
+### Theme 2: ______________________________
+
+(repeat)
+
+### Theme 3: ______________________________
+
+(repeat)
+
+> **Recommended target for this pilot:** 3–6 themes total.
+
+---
+
+## B4. Analytic Integrity Note (Pilot Scope)
+
+Because this is a two-participant pilot, themes are presented as **preliminary** and intended to illuminate potential user needs, perceived usefulness, and barriers rather than to claim saturation or represent broader populations.
+
+---
+
+If you want, I can also draft **Appendix C: Recruitment Script + Consent Script (short form)** so your ethics documentation is complete and consistent with what you wrote in Chapter 3.

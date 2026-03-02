@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -88,6 +88,20 @@ export function QuasiPaperView() {
   const [format, setFormat] = useState<PaperFormat>("proposal");
   const [chapters, setChapters] = useState<Record<string, ChapterContent>>({});
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
+  const [interviewData, setInterviewData] = useState<string>("");
+  const [interviewLoaded, setInterviewLoaded] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/interview/data-for-generator")
+      .then(res => res.json())
+      .then(data => {
+        if (data.hasData) {
+          setInterviewData(data.summary);
+        }
+        setInterviewLoaded(true);
+      })
+      .catch(() => setInterviewLoaded(true));
+  }, []);
 
   const structure = CHAPTER_STRUCTURE[format];
   
@@ -116,11 +130,16 @@ export function QuasiPaperView() {
     }));
 
     try {
+      let sourceContent = getSourceContent();
+      if (interviewData) {
+        sourceContent += "\n\n" + interviewData;
+      }
+
       const response = await apiRequest("POST", "/api/dissertation/generate-chapter", {
         chapterId,
         chapterTitle: chapterInfo.title,
         chapterDescription: chapterInfo.description,
-        sourceContent: getSourceContent(),
+        sourceContent,
         format,
         references: getReferencesForApi(),
       });

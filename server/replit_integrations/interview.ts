@@ -115,4 +115,79 @@ export function registerInterviewRoutes(app: Express) {
       res.status(500).json({ error: "Failed to fetch response" });
     }
   });
+
+  app.patch("/api/interview/responses/:id/transcript", async (req, res) => {
+    try {
+      const { transcript } = req.body;
+      const result = await pool.query(
+        "UPDATE interview_responses SET transcript = $1 WHERE id = $2 RETURNING id",
+        [transcript, req.params.id]
+      );
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: "Response not found" });
+      }
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to save transcript:", error);
+      res.status(500).json({ error: "Failed to save transcript" });
+    }
+  });
+
+  app.get("/api/interview/data-for-generator", async (req, res) => {
+    try {
+      const result = await pool.query(
+        "SELECT * FROM interview_responses ORDER BY submitted_at ASC"
+      );
+      
+      if (result.rows.length === 0) {
+        return res.json({ hasData: false, summary: "" });
+      }
+
+      let summary = "## INTERVIEW DATA FROM QUALITATIVE PILOT STUDY\n\n";
+      
+      for (const r of result.rows) {
+        summary += `### Participant ${r.participant_id}\n\n`;
+        
+        if (r.q1_options?.length) summary += `Q1 Encounter context: ${r.q1_options.join(", ")}\n`;
+        if (r.q1_description) summary += `Q1 Description: ${r.q1_description}\n`;
+        if (r.q2_options?.length) summary += `Q2 Animals involved: ${r.q2_options.join(", ")}\n`;
+        if (r.q2_probe) summary += `Q2 Identification confidence: ${r.q2_probe}\n`;
+        if (r.q3_risk) summary += `Q3 Risk perception: ${r.q3_risk}\n`;
+        if (r.q3_probe) summary += `Q3 Risk signs: ${r.q3_probe}\n`;
+        if (r.q4_options?.length) summary += `Q4 Immediate response: ${r.q4_options.join(", ")}\n`;
+        if (r.q4_probe) summary += `Q4 Why: ${r.q4_probe}\n`;
+        if (r.q5_options?.length) summary += `Q5 Information needs: ${r.q5_options.join(", ")}\n`;
+        if (r.q5_probe) summary += `Q5 Specifics: ${r.q5_probe}\n`;
+        if (r.q6_options?.length) summary += `Q6 Prevention supports: ${r.q6_options.join(", ")}\n`;
+        if (r.q6_probe) summary += `Q6 When used: ${r.q6_probe}\n`;
+        if (r.q7_rank1) summary += `Q7 Top features: 1) ${r.q7_rank1}`;
+        if (r.q7_rank2) summary += `, 2) ${r.q7_rank2}`;
+        if (r.q7_rank3) summary += `, 3) ${r.q7_rank3}`;
+        if (r.q7_rank1) summary += `\n`;
+        if (r.q7_probe) summary += `Q7 Trust factors: ${r.q7_probe}\n`;
+        if (r.q8_answer) summary += `Q8 Would report: ${r.q8_answer}\n`;
+        if (r.q8_probe) summary += `Q8 Conditions: ${r.q8_probe}\n`;
+        if (r.q9_answer) summary += `Q9 Trusted manager: ${r.q9_answer}\n`;
+        if (r.q9_probe) summary += `Q9 Why: ${r.q9_probe}\n`;
+        if (r.q10_options?.length) summary += `Q10 Privacy protections: ${r.q10_options.join(", ")}\n`;
+        if (r.q10_probe) summary += `Q10 Biggest concern: ${r.q10_probe}\n`;
+        if (r.q11_options?.length) summary += `Q11 Barriers: ${r.q11_options.join(", ")}\n`;
+        if (r.q11_probe) summary += `Q11 Biggest barrier: ${r.q11_probe}\n`;
+        if (r.q12_workflow) summary += `Q12 Ideal workflow: ${r.q12_workflow}\n`;
+        if (r.q12_probe) summary += `Q12 Details: ${r.q12_probe}\n`;
+        if (r.closing_question) summary += `Closing: ${r.closing_question}\n`;
+        
+        if (r.transcript) {
+          summary += `\nFULL INTERVIEW TRANSCRIPT:\n${r.transcript}\n`;
+        }
+        
+        summary += `\n---\n\n`;
+      }
+
+      res.json({ hasData: true, summary, count: result.rows.length });
+    } catch (error) {
+      console.error("Failed to build interview data summary:", error);
+      res.status(500).json({ error: "Failed to fetch interview data" });
+    }
+  });
 }

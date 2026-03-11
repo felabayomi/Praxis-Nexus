@@ -564,9 +564,6 @@ export function CodingSheet() {
         <Button variant="outline" size="sm" onClick={addSheet} className="gap-1.5" data-testid="button-add-sheet">
           <Plus className="h-3.5 w-3.5" /> Add Participant
         </Button>
-        <Button variant="outline" size="sm" onClick={clearAllSheets} className="gap-1.5 text-red-600 border-red-300 hover:bg-red-50 dark:hover:bg-red-950/30" data-testid="button-clear-all">
-          <Trash2 className="h-3.5 w-3.5" /> Clear All
-        </Button>
         <div className="ml-auto flex items-center gap-2">
           {cloudStatus === "saving" && (
             <span className="flex items-center gap-1.5 text-xs text-muted-foreground" data-testid="status-cloud-saving">

@@ -283,21 +283,21 @@ function RecruitmentConsent() {
   const [cloudStatus, setCloudStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const saveToServer = async (data: ConsentFormData[]) => {
-    setCloudStatus("saving");
-    try {
-      const res = await fetch("/api/consent-forms", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data }),
-      });
-      if (!res.ok) throw new Error("Server error");
-      setCloudStatus("saved");
-      setTimeout(() => setCloudStatus("idle"), 2000);
-    } catch {
-      setCloudStatus("error");
-    }
+  const getConsentKey = (form: ConsentFormData, index: number) =>
+    form.participantId ? `p-${form.participantId}` : `p-index-${index}`;
+
+  const saveOneConsent = async (form: ConsentFormData, index: number) => {
+    const key = getConsentKey(form, index);
+    const res = await fetch(`/api/consent-forms/${encodeURIComponent(key)}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: form }),
+    });
+    if (!res.ok) throw new Error("Server error");
   };
+
+  const activeFormRef = useRef(activeForm);
+  useEffect(() => { activeFormRef.current = activeForm; }, [activeForm]);
 
   useEffect(() => {
     async function load() {
@@ -321,7 +321,10 @@ function RecruitmentConsent() {
           const parsed = JSON.parse(saved);
           if (Array.isArray(parsed) && parsed.length > 0) {
             setForms(parsed);
-            await saveToServer(parsed);
+            setCloudStatus("saving");
+            await Promise.all(parsed.map((f: ConsentFormData, i: number) => saveOneConsent(f, i)));
+            setCloudStatus("saved");
+            setTimeout(() => setCloudStatus("idle"), 2000);
           }
         } catch { /* ignore */ }
       }
@@ -332,8 +335,18 @@ function RecruitmentConsent() {
   const save = (updated: ConsentFormData[]) => {
     setForms(updated);
     localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(updated));
+    const idx = activeFormRef.current;
     if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
-    saveTimerRef.current = setTimeout(() => saveToServer(updated), 800);
+    saveTimerRef.current = setTimeout(async () => {
+      setCloudStatus("saving");
+      try {
+        await saveOneConsent(updated[idx], idx);
+        setCloudStatus("saved");
+        setTimeout(() => setCloudStatus("idle"), 2000);
+      } catch {
+        setCloudStatus("error");
+      }
+    }, 800);
   };
 
   const updateField = (field: keyof ConsentFormData, value: string | boolean) => {

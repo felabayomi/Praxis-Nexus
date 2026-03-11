@@ -191,61 +191,63 @@ export function registerInterviewRoutes(app: Express) {
     }
   });
 
+  // Coding sheets — one row per participant
   app.get("/api/coding-sheets", async (req, res) => {
     try {
-      const result = await pool.query("SELECT data FROM coding_sheets ORDER BY id LIMIT 1");
-      if (result.rows.length === 0 || !result.rows[0].data || (Array.isArray(result.rows[0].data) && result.rows[0].data.length === 0)) {
-        return res.json({ data: null });
-      }
-      res.json({ data: result.rows[0].data });
+      const result = await pool.query("SELECT participant_key, data FROM coding_sheets ORDER BY id ASC");
+      if (result.rows.length === 0) return res.json({ data: null });
+      const data = result.rows.map(r => r.data);
+      res.json({ data });
     } catch (error) {
       console.error("Failed to fetch coding sheets:", error);
       res.status(500).json({ error: "Failed to fetch coding sheets" });
     }
   });
 
-  app.put("/api/coding-sheets", async (req, res) => {
+  app.put("/api/coding-sheets/:key", async (req, res) => {
     try {
+      const { key } = req.params;
       const { data } = req.body;
-      const existing = await pool.query("SELECT id FROM coding_sheets LIMIT 1");
-      if (existing.rows.length > 0) {
-        await pool.query("UPDATE coding_sheets SET data = $1, updated_at = NOW() WHERE id = $2", [JSON.stringify(data), existing.rows[0].id]);
-      } else {
-        await pool.query("INSERT INTO coding_sheets (data) VALUES ($1)", [JSON.stringify(data)]);
-      }
+      await pool.query(
+        `INSERT INTO coding_sheets (participant_key, data, updated_at)
+         VALUES ($1, $2, NOW())
+         ON CONFLICT (participant_key) DO UPDATE SET data = $2, updated_at = NOW()`,
+        [key, JSON.stringify(data)]
+      );
       res.json({ success: true });
     } catch (error) {
-      console.error("Failed to save coding sheets:", error);
-      res.status(500).json({ error: "Failed to save coding sheets" });
+      console.error("Failed to save coding sheet:", error);
+      res.status(500).json({ error: "Failed to save coding sheet" });
     }
   });
 
+  // Consent forms — one row per participant
   app.get("/api/consent-forms", async (req, res) => {
     try {
-      const result = await pool.query("SELECT data FROM consent_forms ORDER BY id LIMIT 1");
-      if (result.rows.length === 0 || !result.rows[0].data || (Array.isArray(result.rows[0].data) && result.rows[0].data.length === 0)) {
-        return res.json({ data: null });
-      }
-      res.json({ data: result.rows[0].data });
+      const result = await pool.query("SELECT participant_key, data FROM consent_forms ORDER BY id ASC");
+      if (result.rows.length === 0) return res.json({ data: null });
+      const data = result.rows.map(r => r.data);
+      res.json({ data });
     } catch (error) {
       console.error("Failed to fetch consent forms:", error);
       res.status(500).json({ error: "Failed to fetch consent forms" });
     }
   });
 
-  app.put("/api/consent-forms", async (req, res) => {
+  app.put("/api/consent-forms/:key", async (req, res) => {
     try {
+      const { key } = req.params;
       const { data } = req.body;
-      const existing = await pool.query("SELECT id FROM consent_forms LIMIT 1");
-      if (existing.rows.length > 0) {
-        await pool.query("UPDATE consent_forms SET data = $1, updated_at = NOW() WHERE id = $2", [JSON.stringify(data), existing.rows[0].id]);
-      } else {
-        await pool.query("INSERT INTO consent_forms (data) VALUES ($1)", [JSON.stringify(data)]);
-      }
+      await pool.query(
+        `INSERT INTO consent_forms (participant_key, data, updated_at)
+         VALUES ($1, $2, NOW())
+         ON CONFLICT (participant_key) DO UPDATE SET data = $2, updated_at = NOW()`,
+        [key, JSON.stringify(data)]
+      );
       res.json({ success: true });
     } catch (error) {
-      console.error("Failed to save consent forms:", error);
-      res.status(500).json({ error: "Failed to save consent forms" });
+      console.error("Failed to save consent form:", error);
+      res.status(500).json({ error: "Failed to save consent form" });
     }
   });
 }

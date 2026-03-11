@@ -234,58 +234,6 @@ export function CodingSheet() {
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { toast } = useToast();
 
-  const saveToServer = async (data: CodingSheetData[]) => {
-    setCloudStatus("saving");
-    try {
-      const res = await fetch("/api/coding-sheets", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data }),
-      });
-      if (!res.ok) throw new Error("Server error");
-      setCloudStatus("saved");
-      setTimeout(() => setCloudStatus("idle"), 2000);
-    } catch {
-      setCloudStatus("error");
-    }
-  };
-
-  useEffect(() => {
-    async function load() {
-      try {
-        const res = await fetch("/api/coding-sheets");
-        if (res.ok) {
-          const { data } = await res.json();
-          if (data && Array.isArray(data) && data.length > 0) {
-            setSheets(data);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-            setCloudStatus("saved");
-            setTimeout(() => setCloudStatus("idle"), 2000);
-            return;
-          }
-        }
-      } catch { /* fall through to localStorage */ }
-
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            setSheets(parsed);
-            await saveToServer(parsed);
-          } else {
-            setSheets([createEmptySheet()]);
-          }
-        } catch {
-          setSheets([createEmptySheet()]);
-        }
-      } else {
-        setSheets([createEmptySheet()]);
-      }
-    }
-    load();
-  }, []);
-
   function createEmptySheet(): CodingSheetData {
     return {
       profile: { ...EMPTY_PROFILE },
@@ -299,11 +247,92 @@ export function CodingSheet() {
     };
   }
 
+  const getKey = (sheet: CodingSheetData, index: number) =>
+    sheet.profile.participantId ? `p-${sheet.profile.participantId}` : `p-index-${index}`;
+
+  const saveOneToServer = async (sheet: CodingSheetData, index: number) => {
+    const key = getKey(sheet, index);
+    const res = await fetch(`/api/coding-sheets/${encodeURIComponent(key)}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: sheet }),
+    });
+    if (!res.ok) throw new Error("Server error");
+  };
+
+  const activeSheetRef = useRef(activeSheet);
+  useEffect(() => { activeSheetRef.current = activeSheet; }, [activeSheet]);
+
+  useEffect(() => {
+    async function load() {
+      let dbSheets: CodingSheetData[] = [];
+      try {
+        const res = await fetch("/api/coding-sheets");
+        if (res.ok) {
+          const { data } = await res.json();
+          if (data && Array.isArray(data)) dbSheets = data;
+        }
+      } catch { /* continue with empty */ }
+
+      const localSheets: CodingSheetData[] = (() => {
+        try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          const parsed = saved ? JSON.parse(saved) : null;
+          return Array.isArray(parsed) ? parsed : [];
+        } catch { return []; }
+      })();
+
+      // Find local participants not yet in the DB, upload them
+      const dbIds = new Set(dbSheets.map(s => s.profile?.participantId).filter(Boolean));
+      const unsynced = localSheets.filter(s => s.profile?.participantId && !dbIds.has(s.profile.participantId));
+
+      if (unsynced.length > 0) {
+        setCloudStatus("saving");
+        try {
+          await Promise.all(unsynced.map((s) => saveOneToServer(s, dbSheets.length)));
+          for (const s of unsynced) dbSheets.push(s);
+          setCloudStatus("saved");
+          setTimeout(() => setCloudStatus("idle"), 2000);
+        } catch { setCloudStatus("error"); }
+      }
+
+      if (dbSheets.length > 0) {
+        setSheets(dbSheets);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(dbSheets));
+        if (unsynced.length === 0) {
+          setCloudStatus("saved");
+          setTimeout(() => setCloudStatus("idle"), 2000);
+        }
+      } else if (localSheets.length > 0) {
+        setSheets(localSheets);
+        setCloudStatus("saving");
+        try {
+          await Promise.all(localSheets.map((s, i) => saveOneToServer(s, i)));
+          setCloudStatus("saved");
+          setTimeout(() => setCloudStatus("idle"), 2000);
+        } catch { setCloudStatus("error"); }
+      } else {
+        setSheets([createEmptySheet()]);
+      }
+    }
+    load();
+  }, []);
+
   const save = (updatedSheets: CodingSheetData[]) => {
     setSheets(updatedSheets);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSheets));
+    const idx = activeSheetRef.current;
     if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
-    saveTimerRef.current = setTimeout(() => saveToServer(updatedSheets), 800);
+    saveTimerRef.current = setTimeout(async () => {
+      setCloudStatus("saving");
+      try {
+        await saveOneToServer(updatedSheets[idx], idx);
+        setCloudStatus("saved");
+        setTimeout(() => setCloudStatus("idle"), 2000);
+      } catch {
+        setCloudStatus("error");
+      }
+    }, 800);
   };
 
   const addSheet = () => {
@@ -480,7 +509,7 @@ export function CodingSheet() {
             </span>
           )}
           {cloudStatus === "error" && (
-            <Button variant="outline" size="sm" onClick={() => saveToServer(sheets)} className="gap-1.5 text-red-600 border-red-300 text-xs" data-testid="button-retry-save">
+            <Button variant="outline" size="sm" onClick={async () => { setCloudStatus("saving"); try { await Promise.all(sheets.map((s, i) => saveOneToServer(s, i))); setCloudStatus("saved"); setTimeout(() => setCloudStatus("idle"), 2000); } catch { setCloudStatus("error"); }}} className="gap-1.5 text-red-600 border-red-300 text-xs" data-testid="button-retry-save">
               <RefreshCw className="h-3 w-3" /> Retry save
             </Button>
           )}

@@ -204,10 +204,13 @@ export function registerInterviewRoutes(app: Express) {
     }
   });
 
-  // Flush endpoint — accepts POST (used by sendBeacon on page close)
+  // Flush endpoint — saves all sheets and removes any extra slots beyond the current count
   app.post("/api/coding-sheets/flush", async (req, res) => {
     try {
-      const sheets: { key: string; data: unknown }[] = req.body;
+      const body = req.body;
+      // Supports both array format (sendBeacon) and {sheets, totalCount} format
+      const sheets: { key: string; data: unknown }[] = Array.isArray(body) ? body : body.sheets;
+      const totalCount: number | undefined = Array.isArray(body) ? undefined : body.totalCount;
       if (!Array.isArray(sheets)) return res.json({ success: false });
       for (const { key, data } of sheets) {
         await pool.query(
@@ -216,6 +219,18 @@ export function registerInterviewRoutes(app: Express) {
            ON CONFLICT (participant_key) DO UPDATE SET data = $2, updated_at = NOW()`,
           [key, JSON.stringify(data)]
         );
+      }
+      // If totalCount is provided, delete any slots beyond that count
+      if (totalCount !== undefined) {
+        const keepKeys = Array.from({ length: totalCount }, (_, i) => `slot-${i}`);
+        if (keepKeys.length > 0) {
+          await pool.query(
+            `DELETE FROM coding_sheets WHERE participant_key LIKE 'slot-%' AND participant_key != ALL($1)`,
+            [keepKeys]
+          );
+        } else {
+          await pool.query(`DELETE FROM coding_sheets WHERE participant_key LIKE 'slot-%'`);
+        }
       }
       res.json({ success: true });
     } catch (error) {

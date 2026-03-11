@@ -342,6 +342,16 @@ export function CodingSheet() {
     return () => window.removeEventListener("beforeunload", handleUnload);
   }, []);
 
+  // Save all sheets to DB and remove any extra slots — used when count changes
+  const syncAllSheetsToServer = async (allSheets: CodingSheetData[]) => {
+    const payload = allSheets.map((s, i) => ({ key: slotKey(i), data: s }));
+    await fetch("/api/coding-sheets/flush", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sheets: payload, totalCount: allSheets.length }),
+    });
+  };
+
   const save = (updatedSheets: CodingSheetData[]) => {
     setSheets(updatedSheets);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSheets));
@@ -361,14 +371,26 @@ export function CodingSheet() {
 
   const addSheet = () => {
     const updated = [...sheets, createEmptySheet()];
-    save(updated);
+    sheetsRef.current = updated;
+    setSheets(updated);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    setCloudStatus("saving");
+    syncAllSheetsToServer(updated)
+      .then(() => { setCloudStatus("saved"); setTimeout(() => setCloudStatus("idle"), 2000); })
+      .catch(() => setCloudStatus("error"));
     setActiveSheet(updated.length - 1);
   };
 
   const removeSheet = (index: number) => {
     if (sheets.length <= 1) return;
     const updated = sheets.filter((_, i) => i !== index);
-    save(updated);
+    sheetsRef.current = updated;
+    setSheets(updated);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    setCloudStatus("saving");
+    syncAllSheetsToServer(updated)
+      .then(() => { setCloudStatus("saved"); setTimeout(() => setCloudStatus("idle"), 2000); })
+      .catch(() => setCloudStatus("error"));
     if (activeSheet >= updated.length) setActiveSheet(updated.length - 1);
   };
 

@@ -394,6 +394,27 @@ export function CodingSheet() {
     if (activeSheet >= updated.length) setActiveSheet(updated.length - 1);
   };
 
+  const clearAllSheets = async () => {
+    if (!window.confirm("Delete ALL participants and start fresh? This cannot be undone.")) return;
+    const empty = [createEmptySheet()];
+    sheetsRef.current = empty;
+    setSheets(empty);
+    setActiveSheet(0);
+    localStorage.removeItem(STORAGE_KEY);
+    setCloudStatus("saving");
+    try {
+      await fetch("/api/coding-sheets/flush", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sheets: [], totalCount: 0 }),
+      });
+      setCloudStatus("saved");
+      setTimeout(() => setCloudStatus("idle"), 2000);
+    } catch {
+      setCloudStatus("error");
+    }
+  };
+
   const importFromResponses = async () => {
     setImportLoading(true);
     try {
@@ -542,6 +563,9 @@ export function CodingSheet() {
         ))}
         <Button variant="outline" size="sm" onClick={addSheet} className="gap-1.5" data-testid="button-add-sheet">
           <Plus className="h-3.5 w-3.5" /> Add Participant
+        </Button>
+        <Button variant="outline" size="sm" onClick={clearAllSheets} className="gap-1.5 text-red-600 border-red-300 hover:bg-red-50 dark:hover:bg-red-950/30" data-testid="button-clear-all">
+          <Trash2 className="h-3.5 w-3.5" /> Clear All
         </Button>
         <div className="ml-auto flex items-center gap-2">
           {cloudStatus === "saving" && (

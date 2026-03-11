@@ -295,78 +295,42 @@ function RecruitmentConsent() {
   const activeFormRef = useRef(activeForm);
   useEffect(() => { activeFormRef.current = activeForm; }, [activeForm]);
 
-  const consentDataScore = (form: ConsentFormData) => {
-    let score = 0;
-    if (form.participantId) score++;
-    if (form.c3ResearcherSignature) score++;
-    if (form.c3ParticipantSignature) score++;
-    if (form.c3ParticipantDate) score++;
-    if (form.c2Participation) score++;
-    if (form.c2AudioRecording) score++;
-    return score;
-  };
-
-  const uploadAllConsentsToCloud = async (allForms: ConsentFormData[]) => {
-    setCloudStatus("saving");
-    try {
-      await Promise.all(allForms.map((f, i) => consentDataScore(f) > 0 ? saveConsentSlot(f, i) : Promise.resolve()));
-      setCloudStatus("saved");
-      setTimeout(() => setCloudStatus("idle"), 2500);
-    } catch {
-      setCloudStatus("error");
-    }
-  };
-
+  // DB is the single source of truth. Local storage is only a fallback when DB is unreachable.
   const loadConsentFromCloud = async () => {
     setCloudStatus("saving");
-    let dbForms: ConsentFormData[] = [];
     try {
       const res = await fetch("/api/consent-forms");
       if (res.ok) {
         const { data } = await res.json();
-        if (data && Array.isArray(data)) dbForms = data;
+        if (data && Array.isArray(data) && data.length > 0) {
+          setForms(data);
+          localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(data));
+          setCloudStatus("saved");
+          setTimeout(() => setCloudStatus("idle"), 2500);
+          return;
+        }
       }
-    } catch { /* continue */ }
+    } catch { /* network error — fall through */ }
 
-    const localForms: ConsentFormData[] = (() => {
-      try {
-        const saved = localStorage.getItem(CONSENT_STORAGE_KEY);
-        const parsed = saved ? JSON.parse(saved) : null;
-        return Array.isArray(parsed) ? parsed : [];
-      } catch { return []; }
-    })();
-
-    const maxSlots = Math.max(dbForms.length, localForms.length, 1);
-    const merged: ConsentFormData[] = [];
-
-    for (let i = 0; i < maxSlots; i++) {
-      const db = dbForms[i];
-      const local = localForms[i];
-      if (db && local) {
-        merged.push(consentDataScore(local) >= consentDataScore(db) ? local : db);
-      } else if (db) {
-        merged.push(db);
-      } else if (local) {
-        merged.push(local);
-      } else {
-        merged.push({ ...EMPTY_CONSENT, participantId: String.fromCharCode(65 + i) });
+    // DB empty or unreachable — try local storage
+    try {
+      const saved = localStorage.getItem(CONSENT_STORAGE_KEY);
+      const parsed = saved ? JSON.parse(saved) as ConsentFormData[] : null;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        setForms(parsed);
+        await Promise.all(parsed.map((f, i) => saveConsentSlot(f, i)));
+        setCloudStatus("saved");
+        setTimeout(() => setCloudStatus("idle"), 2500);
+        return;
       }
-    }
+    } catch { /* ignore */ }
 
-    setForms(merged);
-    localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(merged));
-    // Only upload slots with real data — never overwrite with empty
-    await Promise.all(merged.map((f, i) => {
-      const score = consentDataScore(f);
-      if (score > 0 && (!dbForms[i] || score > consentDataScore(dbForms[i]))) return saveConsentSlot(f, i);
-      return Promise.resolve();
-    }));
-    setCloudStatus("saved");
-    setTimeout(() => setCloudStatus("idle"), 2500);
+    // Nothing anywhere — start with two blank participants
+    setForms([{ ...EMPTY_CONSENT, participantId: "A" }, { ...EMPTY_CONSENT, participantId: "B" }]);
+    setCloudStatus("idle");
   };
 
   useEffect(() => {
-    // On startup: always merge DB + local, keeping whichever has more data per slot
     loadConsentFromCloud();
   }, []);
 

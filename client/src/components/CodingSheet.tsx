@@ -275,85 +275,44 @@ export function CodingSheet() {
   const activeSheetRef = useRef(activeSheet);
   useEffect(() => { activeSheetRef.current = activeSheet; }, [activeSheet]);
 
-  // Counts how many fields have real data (to compare local vs cloud)
-  const dataScore = (sheet: CodingSheetData) => {
-    let score = 0;
-    if (sheet.profile?.participantId) score++;
-    score += (sheet.evidenceLog || []).filter(e => e.excerpt || e.codes || e.memo).length * 3;
-    score += (sheet.themes || []).filter(t => t.name || t.codes).length * 2;
-    score += (sheet.q1Options || []).length + (sheet.q2Options || []).length;
-    if (sheet.q3Risk) score++;
-    if (sheet.q8Answer) score++;
-    return score;
-  };
-
-  // Upload sheets that have real data — never upload empty slots
-  const uploadAllToCloud = async (allSheets: CodingSheetData[]) => {
-    setCloudStatus("saving");
-    try {
-      await Promise.all(allSheets.map((s, i) => dataScore(s) > 0 ? saveSlotToServer(s, i) : Promise.resolve()));
-      setCloudStatus("saved");
-      setTimeout(() => setCloudStatus("idle"), 2500);
-    } catch {
-      setCloudStatus("error");
-    }
-  };
-
-  // Sync from cloud: merges cloud data into local, NEVER deletes local data
+  // DB is the single source of truth. Local storage is only a fallback when DB is unreachable.
   const loadFromCloud = async () => {
     setCloudStatus("saving");
-    let dbSheets: CodingSheetData[] = [];
     try {
       const res = await fetch("/api/coding-sheets");
       if (res.ok) {
         const { data } = await res.json();
-        if (data && Array.isArray(data)) dbSheets = data;
+        if (data && Array.isArray(data) && data.length > 0) {
+          // DB has data — use it on every device, no questions asked
+          setSheets(data);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+          setCloudStatus("saved");
+          setTimeout(() => setCloudStatus("idle"), 2500);
+          return;
+        }
       }
-    } catch { /* continue */ }
+    } catch { /* network error — fall through to local cache */ }
 
-    const localSheets: CodingSheetData[] = (() => {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        const parsed = saved ? JSON.parse(saved) : null;
-        return Array.isArray(parsed) ? parsed : [];
-      } catch { return []; }
-    })();
-
-    const maxSlots = Math.max(dbSheets.length, localSheets.length, 1);
-    const merged: CodingSheetData[] = [];
-
-    for (let i = 0; i < maxSlots; i++) {
-      const db = dbSheets[i];
-      const local = localSheets[i];
-      if (db && local) {
-        // Both exist: keep whichever has more real data
-        merged.push(dataScore(local) >= dataScore(db) ? local : db);
-      } else if (db) {
-        merged.push(db);
-      } else if (local) {
-        merged.push(local);
-      } else {
-        merged.push(createEmptySheet());
+    // DB empty or unreachable — try local storage as fallback
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const parsed = saved ? JSON.parse(saved) as CodingSheetData[] : null;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        setSheets(parsed);
+        // Upload local data to DB so other devices see it
+        await Promise.all(parsed.map((s, i) => saveSlotToServer(s, i)));
+        setCloudStatus("saved");
+        setTimeout(() => setCloudStatus("idle"), 2500);
+        return;
       }
-    }
+    } catch { /* ignore */ }
 
-    setSheets(merged);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
-    // Only upload slots that have REAL data and are richer than what's in DB
-    // NEVER upload an empty slot — it would overwrite another device's real data
-    await Promise.all(merged.map((s, i) => {
-      const score = dataScore(s);
-      if (score > 0 && (!dbSheets[i] || score > dataScore(dbSheets[i]))) {
-        return saveSlotToServer(s, i);
-      }
-      return Promise.resolve();
-    }));
-    setCloudStatus("saved");
-    setTimeout(() => setCloudStatus("idle"), 2500);
+    // Nothing anywhere — start fresh
+    setSheets([createEmptySheet()]);
+    setCloudStatus("idle");
   };
 
   useEffect(() => {
-    // On startup: merge DB + local, always keeping the richer version per slot
     loadFromCloud();
   }, []);
 

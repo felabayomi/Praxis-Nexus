@@ -316,6 +316,23 @@ export function CodingSheet() {
     loadFromCloud();
   }, []);
 
+  // Keep a ref to latest sheets so beforeunload can access them
+  const sheetsRef = useRef(sheets);
+  useEffect(() => { sheetsRef.current = sheets; }, [sheets]);
+
+  // Save all sheets to DB immediately (used on page close via sendBeacon)
+  const flushToServer = (allSheets: CodingSheetData[]) => {
+    const payload = allSheets.map((s, i) => ({ key: slotKey(i), data: s }));
+    navigator.sendBeacon("/api/coding-sheets/flush",
+      new Blob([JSON.stringify(payload)], { type: "application/json" }));
+  };
+
+  useEffect(() => {
+    const handleUnload = () => flushToServer(sheetsRef.current);
+    window.addEventListener("beforeunload", handleUnload);
+    return () => window.removeEventListener("beforeunload", handleUnload);
+  }, []);
+
   const save = (updatedSheets: CodingSheetData[]) => {
     setSheets(updatedSheets);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSheets));
@@ -330,7 +347,7 @@ export function CodingSheet() {
       } catch {
         setCloudStatus("error");
       }
-    }, 800);
+    }, 300);
   };
 
   const addSheet = () => {

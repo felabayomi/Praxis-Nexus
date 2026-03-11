@@ -204,6 +204,26 @@ export function registerInterviewRoutes(app: Express) {
     }
   });
 
+  // Flush endpoint — accepts POST (used by sendBeacon on page close)
+  app.post("/api/coding-sheets/flush", async (req, res) => {
+    try {
+      const sheets: { key: string; data: unknown }[] = req.body;
+      if (!Array.isArray(sheets)) return res.json({ success: false });
+      for (const { key, data } of sheets) {
+        await pool.query(
+          `INSERT INTO coding_sheets (participant_key, data, updated_at)
+           VALUES ($1, $2, NOW())
+           ON CONFLICT (participant_key) DO UPDATE SET data = $2, updated_at = NOW()`,
+          [key, JSON.stringify(data)]
+        );
+      }
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to flush coding sheets:", error);
+      res.status(500).json({ error: "Failed to flush" });
+    }
+  });
+
   app.put("/api/coding-sheets/:key", async (req, res) => {
     try {
       const { key } = req.params;

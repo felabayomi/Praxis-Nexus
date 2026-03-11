@@ -436,11 +436,6 @@ function RecruitmentConsent() {
                   Retry save
                 </Button>
               )}
-              {(cloudStatus === "idle" || cloudStatus === "saved") && (
-                <Button variant="outline" size="sm" onClick={loadConsentFromCloud} className="gap-1.5 text-violet-600 dark:text-violet-400 border-violet-300 dark:border-violet-700 hover:bg-violet-500/10 text-xs" data-testid="button-sync-consent-cloud">
-                  <RefreshCw className="h-3 w-3" /> Sync
-                </Button>
-              )}
             </div>
           </div>
 

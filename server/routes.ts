@@ -14,6 +14,12 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  // Disable all caching for every API route so responses are always fresh
+  app.use("/api", (_req, res, next) => {
+    res.set("Cache-Control", "no-store");
+    next();
+  });
+
   registerPresentationRoutes(app);
   registerTTSRoutes(app);
   registerCitationRoutes(app);

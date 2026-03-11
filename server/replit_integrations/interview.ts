@@ -100,6 +100,66 @@ export function registerInterviewRoutes(app: Express) {
     }
   });
 
+  // Export all interview responses as a downloadable JSON file
+  app.get("/api/interview/export", async (req, res) => {
+    try {
+      const result = await pool.query(
+        "SELECT * FROM interview_responses ORDER BY submitted_at ASC"
+      );
+      const filename = `interview-responses-${new Date().toISOString().slice(0, 10)}.json`;
+      res.set("Content-Disposition", `attachment; filename="${filename}"`);
+      res.set("Content-Type", "application/json");
+      res.send(JSON.stringify(result.rows, null, 2));
+    } catch (error) {
+      console.error("Failed to export interview responses:", error);
+      res.status(500).json({ error: "Failed to export responses" });
+    }
+  });
+
+  // Import interview responses from a JSON export (replaces all existing rows)
+  app.post("/api/interview/import", async (req, res) => {
+    try {
+      const rows: Record<string, unknown>[] = req.body;
+      if (!Array.isArray(rows)) return res.status(400).json({ error: "Expected an array" });
+      // Clear existing data then re-insert from the export
+      await pool.query("TRUNCATE TABLE interview_responses RESTART IDENTITY");
+      let imported = 0;
+      for (const r of rows) {
+        await pool.query(
+          `INSERT INTO interview_responses (
+            participant_id, consent_recording,
+            q1_description, q1_options, q2_options, q2_probe,
+            q3_risk, q3_probe, q4_options, q4_probe,
+            q5_options, q5_probe, q6_options, q6_probe,
+            q7_rank1, q7_rank2, q7_rank3, q7_probe,
+            q8_answer, q8_probe, q9_answer, q9_probe,
+            q10_options, q10_probe, q11_options, q11_probe,
+            q12_workflow, q12_probe, closing_question, transcript, submitted_at
+          ) VALUES (
+            $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,
+            $15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31
+          )`,
+          [
+            r.participant_id, r.consent_recording,
+            r.q1_description, r.q1_options, r.q2_options, r.q2_probe,
+            r.q3_risk, r.q3_probe, r.q4_options, r.q4_probe,
+            r.q5_options, r.q5_probe, r.q6_options, r.q6_probe,
+            r.q7_rank1, r.q7_rank2, r.q7_rank3, r.q7_probe,
+            r.q8_answer, r.q8_probe, r.q9_answer, r.q9_probe,
+            r.q10_options, r.q10_probe, r.q11_options, r.q11_probe,
+            r.q12_workflow, r.q12_probe, r.closing_question, r.transcript,
+            r.submitted_at
+          ]
+        );
+        imported++;
+      }
+      res.json({ success: true, imported });
+    } catch (error) {
+      console.error("Failed to import interview responses:", error);
+      res.status(500).json({ error: "Failed to import responses" });
+    }
+  });
+
   app.get("/api/interview/responses/:id", async (req, res) => {
     try {
       const result = await pool.query(

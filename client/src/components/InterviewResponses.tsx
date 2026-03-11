@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import {
   Loader2, ChevronDown, ChevronUp, Save, RefreshCw,
-  User, Calendar, MessageSquare, ClipboardList
+  User, Calendar, MessageSquare, ClipboardList, Download
 } from "lucide-react";
 
 interface InterviewResponse {
@@ -170,10 +170,28 @@ export function InterviewResponses() {
             {responses.length} response{responses.length !== 1 ? "s" : ""} received
           </p>
         </div>
-        <Button variant="outline" size="sm" onClick={fetchResponses} className="gap-2" data-testid="button-refresh-responses">
-          <RefreshCw className="h-4 w-4" />
-          Refresh
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              const url = "/api/interview/export";
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = "interview-responses.json";
+              a.click();
+            }}
+            className="gap-2"
+            data-testid="button-export-responses"
+          >
+            <Download className="h-4 w-4" />
+            Export JSON
+          </Button>
+          <Button variant="outline" size="sm" onClick={fetchResponses} className="gap-2" data-testid="button-refresh-responses">
+            <RefreshCw className="h-4 w-4" />
+            Refresh
+          </Button>
+        </div>
       </div>
 
       <div className="space-y-4">

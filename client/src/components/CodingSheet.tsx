@@ -586,6 +586,17 @@ export function CodingSheet() {
           <Button
             variant="outline"
             size="sm"
+            onClick={loadFromCloud}
+            disabled={cloudStatus === "saving"}
+            className="gap-1.5 text-blue-600 dark:text-blue-400 border-blue-300 dark:border-blue-700 hover:bg-blue-500/10"
+            data-testid="button-sync-from-cloud"
+            title="Replace local data with the latest saved version from the cloud"
+          >
+            <RefreshCw className="h-3.5 w-3.5" /> Sync from Cloud
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
             onClick={importFromResponses}
             disabled={importLoading}
             className="gap-1.5 text-violet-600 dark:text-violet-400 border-violet-300 dark:border-violet-700 hover:bg-violet-500/10"

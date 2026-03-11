@@ -364,20 +364,8 @@ function RecruitmentConsent() {
   };
 
   useEffect(() => {
-    // On startup: load local immediately, then silently push to cloud
-    let localForms: ConsentFormData[] | null = null;
-    try {
-      const saved = localStorage.getItem(CONSENT_STORAGE_KEY);
-      const parsed = saved ? JSON.parse(saved) : null;
-      if (Array.isArray(parsed) && parsed.length > 0) localForms = parsed as ConsentFormData[];
-    } catch { /* ignore */ }
-
-    if (localForms) {
-      setForms(localForms);
-      uploadAllConsentsToCloud(localForms);
-    } else {
-      setForms([{ ...EMPTY_CONSENT, participantId: "A" }, { ...EMPTY_CONSENT, participantId: "B" }]);
-    }
+    // On startup: always merge DB + local, keeping whichever has more data per slot
+    loadConsentFromCloud();
   }, []);
 
   const save = (updated: ConsentFormData[]) => {

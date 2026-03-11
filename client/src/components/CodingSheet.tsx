@@ -60,8 +60,13 @@ interface CodingSheetData {
   q8Answer: string;
   q8Conditions: string;
   q9Answer: string;
+  q9Explanation: string;
   q10Options: string[];
+  q10Explanation: string;
   q11Options: string[];
+  q11Explanation: string;
+  q12Summary: string;
+  q12Explanation: string;
   evidenceLog: EvidenceLog[];
   themes: ThemeEntry[];
 }
@@ -193,6 +198,8 @@ interface InterviewResponseData {
   q9_answer: string | null;
   q10_options: string[];
   q11_options: string[];
+  q12_workflow: string | null;
+  q12_probe: string | null;
 }
 
 function mapResponseToSheet(resp: InterviewResponseData): Partial<CodingSheetData> {
@@ -219,8 +226,13 @@ function mapResponseToSheet(resp: InterviewResponseData): Partial<CodingSheetDat
     q8Answer: resp.q8_answer || "",
     q8Conditions: resp.q8_probe || "",
     q9Answer: resp.q9_answer || "",
+    q9Explanation: "",
     q10Options: resp.q10_options || [],
+    q10Explanation: "",
     q11Options: resp.q11_options || [],
+    q11Explanation: "",
+    q12Summary: resp.q12_workflow || "",
+    q12Explanation: resp.q12_probe || "",
   };
 }
 
@@ -240,8 +252,9 @@ export function CodingSheet() {
       q1Options: [], q2Options: [], q3Risk: "", q3Explanation: "",
       q4Options: [], q5Top1: "", q5Top2: "", q6Options: [],
       q7Rank1: "", q7Rank2: "", q7Rank3: "",
-      q8Answer: "", q8Conditions: "", q9Answer: "",
-      q10Options: [], q11Options: [],
+      q8Answer: "", q8Conditions: "", q9Answer: "", q9Explanation: "",
+      q10Options: [], q10Explanation: "", q11Options: [], q11Explanation: "",
+      q12Summary: "", q12Explanation: "",
       evidenceLog: [{ ...EMPTY_EVIDENCE }],
       themes: [{ ...EMPTY_THEME }],
     };
@@ -336,20 +349,8 @@ export function CodingSheet() {
   };
 
   useEffect(() => {
-    // On startup: load local immediately, then silently upload to cloud
-    let localSheets: CodingSheetData[] | null = null;
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      const parsed = saved ? JSON.parse(saved) : null;
-      if (Array.isArray(parsed) && parsed.length > 0) localSheets = parsed as CodingSheetData[];
-    } catch { /* ignore */ }
-
-    if (localSheets) {
-      setSheets(localSheets);
-      uploadAllToCloud(localSheets);
-    } else {
-      setSheets([createEmptySheet()]);
-    }
+    // On startup: merge DB + local, always keeping the richer version per slot
+    loadFromCloud();
   }, []);
 
   const save = (updatedSheets: CodingSheetData[]) => {
@@ -720,14 +721,22 @@ export function CodingSheet() {
                 </label>
               ))}
             </RadioGroup>
+            <Textarea placeholder="Brief explanation (1–2 lines)..." value={sheet.q9Explanation} onChange={(e) => updateSheet({ q9Explanation: e.target.value })} rows={2} />
           </div>
           <div className="space-y-2">
             <Label className="text-sm font-semibold text-violet-700 dark:text-violet-400">Q10. Required privacy protections</Label>
             <CheckboxOptions field="q10Options" options={["Anonymous option", "Control location precision", "Retention limits", "Delete submissions", "No third-party sharing"]} />
+            <Textarea placeholder="Brief explanation (1–2 lines)..." value={sheet.q10Explanation} onChange={(e) => updateSheet({ q10Explanation: e.target.value })} rows={2} />
           </div>
           <div className="space-y-2">
             <Label className="text-sm font-semibold text-violet-700 dark:text-violet-400">Q11. Barriers to use</Label>
             <CheckboxOptions field="q11Options" options={["Too complex", "Don't trust accuracy", "Data/connectivity limits", "Fear of consequences", "Not relevant often"]} />
+            <Textarea placeholder="Brief explanation (1–2 lines)..." value={sheet.q11Explanation} onChange={(e) => updateSheet({ q11Explanation: e.target.value })} rows={2} />
+          </div>
+          <div className="space-y-2">
+            <Label className="text-sm font-semibold text-violet-700 dark:text-violet-400">Q12. Ideal reporting workflow</Label>
+            <Textarea placeholder="Summarise participant's ideal workflow (2–3 lines)..." value={sheet.q12Summary} onChange={(e) => updateSheet({ q12Summary: e.target.value })} rows={3} />
+            <Textarea placeholder="Brief explanation / probe notes (1–2 lines)..." value={sheet.q12Explanation} onChange={(e) => updateSheet({ q12Explanation: e.target.value })} rows={2} />
           </div>
         </CardContent>
       </Card>

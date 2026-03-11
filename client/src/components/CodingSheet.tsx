@@ -17,7 +17,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import {
   Save, Loader2, Plus, Trash2, User, ClipboardList, BookOpen, FileText,
-  ChevronDown, ChevronUp, Lightbulb, Download, RefreshCw
+  ChevronDown, ChevronUp, Lightbulb, Download, RefreshCw, Upload
 } from "lucide-react";
 
 interface ParticipantProfile {
@@ -242,7 +242,9 @@ export function CodingSheet() {
   const [showCodebook, setShowCodebook] = useState(false);
   const [showThemes, setShowThemes] = useState(false);
   const [importLoading, setImportLoading] = useState(false);
+  const [sheetImportLoading, setSheetImportLoading] = useState(false);
   const [cloudStatus, setCloudStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const sheetImportRef = useRef<HTMLInputElement>(null);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { toast } = useToast();
 
@@ -445,6 +447,35 @@ export function CodingSheet() {
     setImportLoading(false);
   };
 
+  const exportSheets = () => {
+    const url = "/api/coding-sheets/export";
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `coding-sheets-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+  };
+
+  const importSheets = async (file: File) => {
+    setSheetImportLoading(true);
+    try {
+      const text = await file.text();
+      const rows = JSON.parse(text);
+      const res = await fetch("/api/coding-sheets/import", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(rows),
+      });
+      if (!res.ok) throw new Error("Import failed");
+      const { imported } = await res.json();
+      // Reload from cloud so local state matches what was just imported
+      await loadFromCloud();
+      toast({ title: "Import successful", description: `${imported} coding sheet(s) imported from file.` });
+    } catch {
+      toast({ title: "Import failed", description: "Could not read or upload the file.", variant: "destructive" });
+    }
+    setSheetImportLoading(false);
+  };
+
   const updateSheet = (data: Partial<CodingSheetData>) => {
     const updated = [...sheets];
     updated[activeSheet] = { ...updated[activeSheet], ...data };
@@ -591,6 +622,34 @@ export function CodingSheet() {
             {importLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Download className="h-3.5 w-3.5" />}
             Import from Responses
           </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={exportSheets}
+            className="gap-1.5 text-green-700 dark:text-green-400 border-green-300 dark:border-green-700 hover:bg-green-500/10"
+            data-testid="button-export-sheets"
+          >
+            <Download className="h-3.5 w-3.5" /> Export Sheets
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => sheetImportRef.current?.click()}
+            disabled={sheetImportLoading}
+            className="gap-1.5 text-green-700 dark:text-green-400 border-green-300 dark:border-green-700 hover:bg-green-500/10"
+            data-testid="button-import-sheets"
+          >
+            {sheetImportLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />}
+            Import Sheets
+          </Button>
+          <input
+            ref={sheetImportRef}
+            type="file"
+            accept=".json"
+            className="hidden"
+            onChange={(e) => { const f = e.target.files?.[0]; if (f) importSheets(f); e.target.value = ""; }}
+            data-testid="input-import-sheets"
+          />
         </div>
       </div>
 

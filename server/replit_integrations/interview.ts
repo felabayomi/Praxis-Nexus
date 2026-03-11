@@ -300,6 +300,42 @@ export function registerInterviewRoutes(app: Express) {
     }
   });
 
+  // Export all coding sheets as a downloadable JSON file
+  app.get("/api/coding-sheets/export", async (req, res) => {
+    try {
+      const result = await pool.query(
+        "SELECT participant_key, data, updated_at FROM coding_sheets ORDER BY id ASC"
+      );
+      const filename = `coding-sheets-${new Date().toISOString().slice(0, 10)}.json`;
+      res.set("Content-Disposition", `attachment; filename="${filename}"`);
+      res.set("Content-Type", "application/json");
+      res.send(JSON.stringify(result.rows, null, 2));
+    } catch (error) {
+      console.error("Failed to export coding sheets:", error);
+      res.status(500).json({ error: "Failed to export coding sheets" });
+    }
+  });
+
+  // Import coding sheets from a JSON export (replaces all existing rows)
+  app.post("/api/coding-sheets/import", async (req, res) => {
+    try {
+      const rows: { participant_key: string; data: unknown }[] = req.body;
+      if (!Array.isArray(rows)) return res.status(400).json({ error: "Expected an array" });
+      await pool.query("TRUNCATE TABLE coding_sheets RESTART IDENTITY");
+      for (const row of rows) {
+        await pool.query(
+          `INSERT INTO coding_sheets (participant_key, data, updated_at)
+           VALUES ($1, $2, NOW())`,
+          [row.participant_key, JSON.stringify(row.data)]
+        );
+      }
+      res.json({ success: true, imported: rows.length });
+    } catch (error) {
+      console.error("Failed to import coding sheets:", error);
+      res.status(500).json({ error: "Failed to import coding sheets" });
+    }
+  });
+
   app.put("/api/coding-sheets/:key", async (req, res) => {
     try {
       const { key } = req.params;

@@ -282,10 +282,17 @@ export function CodingSheet() {
       const res = await fetch("/api/coding-sheets");
       if (res.ok) {
         const { data } = await res.json();
-        if (data && Array.isArray(data) && data.length > 0) {
-          // DB has data — use it on every device, no questions asked
-          setSheets(data);
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        // Normalize: each element must be a plain object (not an array from an old upload)
+        const normalized = Array.isArray(data)
+          ? data.map((d: unknown) => Array.isArray(d) ? (d as CodingSheetData[])[0] : d as CodingSheetData).filter(Boolean)
+          : [];
+        // Only treat as "has data" if at least one sheet has a non-empty participant profile
+        const hasRealData = normalized.some(s => s?.profile?.participantId || s?.q3Risk || (s?.q1Options?.length ?? 0) > 0);
+        if (hasRealData) {
+          // DB has real data — update ref IMMEDIATELY so beforeunload sees it, then update state
+          sheetsRef.current = normalized;
+          setSheets(normalized);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
           setCloudStatus("saved");
           setTimeout(() => setCloudStatus("idle"), 2500);
           return;
@@ -298,6 +305,8 @@ export function CodingSheet() {
       const saved = localStorage.getItem(STORAGE_KEY);
       const parsed = saved ? JSON.parse(saved) as CodingSheetData[] : null;
       if (Array.isArray(parsed) && parsed.length > 0) {
+        // Update ref IMMEDIATELY so beforeunload sees the real data, then update state
+        sheetsRef.current = parsed;
         setSheets(parsed);
         // Upload local data to DB so other devices see it
         await Promise.all(parsed.map((s, i) => saveSlotToServer(s, i)));

@@ -247,12 +247,11 @@ export function CodingSheet() {
     };
   }
 
-  const getKey = (sheet: CodingSheetData, index: number) =>
-    sheet.profile.participantId ? `p-${sheet.profile.participantId}` : `p-index-${index}`;
+  // Key is always slot-based so it never depends on the user filling in the ID field
+  const slotKey = (index: number) => `slot-${index}`;
 
-  const saveOneToServer = async (sheet: CodingSheetData, index: number) => {
-    const key = getKey(sheet, index);
-    const res = await fetch(`/api/coding-sheets/${encodeURIComponent(key)}`, {
+  const saveSlotToServer = async (sheet: CodingSheetData, index: number) => {
+    const res = await fetch(`/api/coding-sheets/${slotKey(index)}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data: sheet }),
@@ -263,59 +262,94 @@ export function CodingSheet() {
   const activeSheetRef = useRef(activeSheet);
   useEffect(() => { activeSheetRef.current = activeSheet; }, [activeSheet]);
 
-  useEffect(() => {
-    async function load() {
-      let dbSheets: CodingSheetData[] = [];
-      try {
-        const res = await fetch("/api/coding-sheets");
-        if (res.ok) {
-          const { data } = await res.json();
-          if (data && Array.isArray(data)) dbSheets = data;
-        }
-      } catch { /* continue with empty */ }
+  // Counts how many fields have real data (to compare local vs cloud)
+  const dataScore = (sheet: CodingSheetData) => {
+    let score = 0;
+    if (sheet.profile?.participantId) score++;
+    score += (sheet.evidenceLog || []).filter(e => e.excerpt || e.codes || e.memo).length * 3;
+    score += (sheet.themes || []).filter(t => t.name || t.codes).length * 2;
+    score += (sheet.q1Options || []).length + (sheet.q2Options || []).length;
+    if (sheet.q3Risk) score++;
+    if (sheet.q8Answer) score++;
+    return score;
+  };
 
-      const localSheets: CodingSheetData[] = (() => {
-        try {
-          const saved = localStorage.getItem(STORAGE_KEY);
-          const parsed = saved ? JSON.parse(saved) : null;
-          return Array.isArray(parsed) ? parsed : [];
-        } catch { return []; }
-      })();
+  // Upload all current sheets to cloud without changing local state
+  const uploadAllToCloud = async (allSheets: CodingSheetData[]) => {
+    setCloudStatus("saving");
+    try {
+      await Promise.all(allSheets.map((s, i) => saveSlotToServer(s, i)));
+      setCloudStatus("saved");
+      setTimeout(() => setCloudStatus("idle"), 2500);
+    } catch {
+      setCloudStatus("error");
+    }
+  };
 
-      // Find local participants not yet in the DB, upload them
-      const dbIds = new Set(dbSheets.map(s => s.profile?.participantId).filter(Boolean));
-      const unsynced = localSheets.filter(s => s.profile?.participantId && !dbIds.has(s.profile.participantId));
-
-      if (unsynced.length > 0) {
-        setCloudStatus("saving");
-        try {
-          await Promise.all(unsynced.map((s) => saveOneToServer(s, dbSheets.length)));
-          for (const s of unsynced) dbSheets.push(s);
-          setCloudStatus("saved");
-          setTimeout(() => setCloudStatus("idle"), 2000);
-        } catch { setCloudStatus("error"); }
+  // Sync from cloud: merges cloud data into local, NEVER deletes local data
+  const loadFromCloud = async () => {
+    setCloudStatus("saving");
+    let dbSheets: CodingSheetData[] = [];
+    try {
+      const res = await fetch("/api/coding-sheets");
+      if (res.ok) {
+        const { data } = await res.json();
+        if (data && Array.isArray(data)) dbSheets = data;
       }
+    } catch { /* continue */ }
 
-      if (dbSheets.length > 0) {
-        setSheets(dbSheets);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(dbSheets));
-        if (unsynced.length === 0) {
-          setCloudStatus("saved");
-          setTimeout(() => setCloudStatus("idle"), 2000);
-        }
-      } else if (localSheets.length > 0) {
-        setSheets(localSheets);
-        setCloudStatus("saving");
-        try {
-          await Promise.all(localSheets.map((s, i) => saveOneToServer(s, i)));
-          setCloudStatus("saved");
-          setTimeout(() => setCloudStatus("idle"), 2000);
-        } catch { setCloudStatus("error"); }
+    const localSheets: CodingSheetData[] = (() => {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        const parsed = saved ? JSON.parse(saved) : null;
+        return Array.isArray(parsed) ? parsed : [];
+      } catch { return []; }
+    })();
+
+    const maxSlots = Math.max(dbSheets.length, localSheets.length, 1);
+    const merged: CodingSheetData[] = [];
+
+    for (let i = 0; i < maxSlots; i++) {
+      const db = dbSheets[i];
+      const local = localSheets[i];
+      if (db && local) {
+        // Both exist: keep whichever has more real data
+        merged.push(dataScore(local) >= dataScore(db) ? local : db);
+      } else if (db) {
+        merged.push(db);
+      } else if (local) {
+        merged.push(local);
       } else {
-        setSheets([createEmptySheet()]);
+        merged.push(createEmptySheet());
       }
     }
-    load();
+
+    setSheets(merged);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+    // Upload any slots that are richer locally than in DB
+    await Promise.all(merged.map((s, i) => {
+      if (!dbSheets[i] || dataScore(s) > dataScore(dbSheets[i])) return saveSlotToServer(s, i);
+      return Promise.resolve();
+    }));
+    setCloudStatus("saved");
+    setTimeout(() => setCloudStatus("idle"), 2500);
+  };
+
+  useEffect(() => {
+    // On startup: load local immediately, then silently upload to cloud
+    let localSheets: CodingSheetData[] | null = null;
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const parsed = saved ? JSON.parse(saved) : null;
+      if (Array.isArray(parsed) && parsed.length > 0) localSheets = parsed as CodingSheetData[];
+    } catch { /* ignore */ }
+
+    if (localSheets) {
+      setSheets(localSheets);
+      uploadAllToCloud(localSheets);
+    } else {
+      setSheets([createEmptySheet()]);
+    }
   }, []);
 
   const save = (updatedSheets: CodingSheetData[]) => {
@@ -326,7 +360,7 @@ export function CodingSheet() {
     saveTimerRef.current = setTimeout(async () => {
       setCloudStatus("saving");
       try {
-        await saveOneToServer(updatedSheets[idx], idx);
+        await saveSlotToServer(updatedSheets[idx], idx);
         setCloudStatus("saved");
         setTimeout(() => setCloudStatus("idle"), 2000);
       } catch {
@@ -509,8 +543,13 @@ export function CodingSheet() {
             </span>
           )}
           {cloudStatus === "error" && (
-            <Button variant="outline" size="sm" onClick={async () => { setCloudStatus("saving"); try { await Promise.all(sheets.map((s, i) => saveOneToServer(s, i))); setCloudStatus("saved"); setTimeout(() => setCloudStatus("idle"), 2000); } catch { setCloudStatus("error"); }}} className="gap-1.5 text-red-600 border-red-300 text-xs" data-testid="button-retry-save">
+            <Button variant="outline" size="sm" onClick={async () => { setCloudStatus("saving"); try { await Promise.all(sheets.map((s, i) => saveSlotToServer(s, i))); setCloudStatus("saved"); setTimeout(() => setCloudStatus("idle"), 2000); } catch { setCloudStatus("error"); }}} className="gap-1.5 text-red-600 border-red-300 text-xs" data-testid="button-retry-save">
               <RefreshCw className="h-3 w-3" /> Retry save
+            </Button>
+          )}
+          {(cloudStatus === "idle" || cloudStatus === "saved") && (
+            <Button variant="outline" size="sm" onClick={() => loadFromCloud()} className="gap-1.5 text-violet-600 dark:text-violet-400 border-violet-300 dark:border-violet-700 hover:bg-violet-500/10 text-xs" data-testid="button-sync-cloud">
+              <RefreshCw className="h-3 w-3" /> Sync
             </Button>
           )}
           <Button

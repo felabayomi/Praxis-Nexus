@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { 
   FlaskConical, ArrowRight, ArrowLeft, Lock, Mail, 
   Brain, FileText, ClipboardList, BookOpen, CheckSquare, MessageSquare, ExternalLink,
-  Code2, Shield, CheckCircle2, AlertCircle, ShieldCheck
+  Code2, Shield, CheckCircle2, AlertCircle, ShieldCheck, RefreshCw
 } from "lucide-react";
 import { QuasiReasoningView } from "@/components/QuasiReasoningView";
 import { QuasiPaperView } from "@/components/QuasiPaperView";
@@ -283,12 +283,8 @@ function RecruitmentConsent() {
   const [cloudStatus, setCloudStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const getConsentKey = (form: ConsentFormData, index: number) =>
-    form.participantId ? `p-${form.participantId}` : `p-index-${index}`;
-
-  const saveOneConsent = async (form: ConsentFormData, index: number) => {
-    const key = getConsentKey(form, index);
-    const res = await fetch(`/api/consent-forms/${encodeURIComponent(key)}`, {
+  const saveConsentSlot = async (form: ConsentFormData, index: number) => {
+    const res = await fetch(`/api/consent-forms/slot-${index}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data: form }),
@@ -299,37 +295,89 @@ function RecruitmentConsent() {
   const activeFormRef = useRef(activeForm);
   useEffect(() => { activeFormRef.current = activeForm; }, [activeForm]);
 
-  useEffect(() => {
-    async function load() {
-      try {
-        const res = await fetch("/api/consent-forms");
-        if (res.ok) {
-          const { data } = await res.json();
-          if (data && Array.isArray(data) && data.length > 0) {
-            setForms(data);
-            localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(data));
-            setCloudStatus("saved");
-            setTimeout(() => setCloudStatus("idle"), 2000);
-            return;
-          }
-        }
-      } catch { /* fall through */ }
+  const consentDataScore = (form: ConsentFormData) => {
+    let score = 0;
+    if (form.participantId) score++;
+    if (form.c3ResearcherSignature) score++;
+    if (form.c3ParticipantSignature) score++;
+    if (form.c3ParticipantDate) score++;
+    if (form.c2Participation) score++;
+    if (form.c2AudioRecording) score++;
+    return score;
+  };
 
-      const saved = localStorage.getItem(CONSENT_STORAGE_KEY);
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            setForms(parsed);
-            setCloudStatus("saving");
-            await Promise.all(parsed.map((f: ConsentFormData, i: number) => saveOneConsent(f, i)));
-            setCloudStatus("saved");
-            setTimeout(() => setCloudStatus("idle"), 2000);
-          }
-        } catch { /* ignore */ }
+  const uploadAllConsentsToCloud = async (allForms: ConsentFormData[]) => {
+    setCloudStatus("saving");
+    try {
+      await Promise.all(allForms.map((f, i) => saveConsentSlot(f, i)));
+      setCloudStatus("saved");
+      setTimeout(() => setCloudStatus("idle"), 2500);
+    } catch {
+      setCloudStatus("error");
+    }
+  };
+
+  const loadConsentFromCloud = async () => {
+    setCloudStatus("saving");
+    let dbForms: ConsentFormData[] = [];
+    try {
+      const res = await fetch("/api/consent-forms");
+      if (res.ok) {
+        const { data } = await res.json();
+        if (data && Array.isArray(data)) dbForms = data;
+      }
+    } catch { /* continue */ }
+
+    const localForms: ConsentFormData[] = (() => {
+      try {
+        const saved = localStorage.getItem(CONSENT_STORAGE_KEY);
+        const parsed = saved ? JSON.parse(saved) : null;
+        return Array.isArray(parsed) ? parsed : [];
+      } catch { return []; }
+    })();
+
+    const maxSlots = Math.max(dbForms.length, localForms.length, 1);
+    const merged: ConsentFormData[] = [];
+
+    for (let i = 0; i < maxSlots; i++) {
+      const db = dbForms[i];
+      const local = localForms[i];
+      if (db && local) {
+        merged.push(consentDataScore(local) >= consentDataScore(db) ? local : db);
+      } else if (db) {
+        merged.push(db);
+      } else if (local) {
+        merged.push(local);
+      } else {
+        merged.push({ ...EMPTY_CONSENT, participantId: String.fromCharCode(65 + i) });
       }
     }
-    load();
+
+    setForms(merged);
+    localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(merged));
+    await Promise.all(merged.map((f, i) => {
+      if (!dbForms[i] || consentDataScore(f) > consentDataScore(dbForms[i])) return saveConsentSlot(f, i);
+      return Promise.resolve();
+    }));
+    setCloudStatus("saved");
+    setTimeout(() => setCloudStatus("idle"), 2500);
+  };
+
+  useEffect(() => {
+    // On startup: load local immediately, then silently push to cloud
+    let localForms: ConsentFormData[] | null = null;
+    try {
+      const saved = localStorage.getItem(CONSENT_STORAGE_KEY);
+      const parsed = saved ? JSON.parse(saved) : null;
+      if (Array.isArray(parsed) && parsed.length > 0) localForms = parsed as ConsentFormData[];
+    } catch { /* ignore */ }
+
+    if (localForms) {
+      setForms(localForms);
+      uploadAllConsentsToCloud(localForms);
+    } else {
+      setForms([{ ...EMPTY_CONSENT, participantId: "A" }, { ...EMPTY_CONSENT, participantId: "B" }]);
+    }
   }, []);
 
   const save = (updated: ConsentFormData[]) => {
@@ -340,7 +388,7 @@ function RecruitmentConsent() {
     saveTimerRef.current = setTimeout(async () => {
       setCloudStatus("saving");
       try {
-        await saveOneConsent(updated[idx], idx);
+        await saveConsentSlot(updated[idx], idx);
         setCloudStatus("saved");
         setTimeout(() => setCloudStatus("idle"), 2000);
       } catch {
@@ -394,8 +442,13 @@ function RecruitmentConsent() {
                 </span>
               )}
               {cloudStatus === "error" && (
-                <Button variant="outline" size="sm" onClick={() => saveToServer(forms)} className="gap-1.5 text-red-600 border-red-300 text-xs" data-testid="button-retry-consent-save">
+                <Button variant="outline" size="sm" onClick={() => uploadAllConsentsToCloud(forms)} className="gap-1.5 text-red-600 border-red-300 text-xs" data-testid="button-retry-consent-save">
                   Retry save
+                </Button>
+              )}
+              {(cloudStatus === "idle" || cloudStatus === "saved") && (
+                <Button variant="outline" size="sm" onClick={loadConsentFromCloud} className="gap-1.5 text-violet-600 dark:text-violet-400 border-violet-300 dark:border-violet-700 hover:bg-violet-500/10 text-xs" data-testid="button-sync-consent-cloud">
+                  <RefreshCw className="h-3 w-3" /> Sync
                 </Button>
               )}
             </div>

@@ -194,6 +194,7 @@ export function registerInterviewRoutes(app: Express) {
   // Coding sheets — one row per participant
   app.get("/api/coding-sheets", async (req, res) => {
     try {
+      res.set("Cache-Control", "no-store");
       const result = await pool.query("SELECT participant_key, data FROM coding_sheets ORDER BY id ASC");
       if (result.rows.length === 0) return res.json({ data: null });
       const data = result.rows.map(r => r.data);

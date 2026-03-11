@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ai-inquiry-journal-v1';
+const CACHE_NAME = 'ai-inquiry-journal-v2';
 const urlsToCache = [
   '/',
   '/index.html'
@@ -27,7 +27,13 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
-  
+
+  // Never cache API calls — always fetch live from network
+  if (event.request.url.includes('/api/')) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
   event.respondWith(
     fetch(event.request)
       .then((response) => {

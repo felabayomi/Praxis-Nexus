@@ -1,0 +1,206 @@
+Excerpt 1
+
+Excerpt ID
+B-1
+
+Initial code(s)
+ENCOUNTER_CONTEXT, ENCOUNTER_SEQUENCE
+
+Transcript excerpt (quoted)
+“I was going to classes… I saw a deer close to our school housing… it saw me [and] ran away.”
+
+Analytic memo (1–2 lines)
+Encounter occurred during routine movement near campus housing; sequence shows wildlife avoidance and low-intensity interaction.
+
+Excerpt 2
+
+Excerpt ID
+B-2
+
+Initial code(s)
+SPECIES_ID_CONFIDENCE
+
+Transcript excerpt (quoted)
+“I’ve seen [them]… outside… [and in] movies.”
+
+Analytic memo (1–2 lines)
+Species identification confidence is based on familiarity from prior exposure, not formal knowledge.
+
+Excerpt 3
+
+Excerpt ID
+B-3
+
+Initial code(s)
+RISK_PERCEPTION_LOW, DECISION_DRIVER
+
+Transcript excerpt (quoted)
+“Low… deer are not scary, and it’s just going to eat…”
+
+Analytic memo (1–2 lines)
+Risk judgment is low and driven by beliefs about deer behavior (non-threatening, feeding).
+
+Excerpt 4
+
+Excerpt ID
+B-4
+
+Initial code(s)
+SAFETY_STRATEGY, FEATURE_REPORTING
+
+Transcript excerpt (quoted)
+“Take a video and a picture and I left for class.”
+
+Analytic memo (1–2 lines)
+Response included documenting the animal (report-like behavior) and leaving the area (avoidance as safety strategy).
+
+Excerpt 5
+
+Excerpt ID
+B-5
+
+Initial code(s)
+DECISION_DRIVER
+
+Transcript excerpt (quoted)
+“I was already leaving for class… I took the photo for my Snapchat.”
+
+Analytic memo (1–2 lines)
+Decision was shaped by time pressure/routine (going to class) and motivation to share socially.
+
+Excerpt 6
+
+Excerpt ID
+B-6
+
+Initial code(s)
+NEED_SPECIES_BEHAVIOR, NEED_STEP_BY_STEP
+
+Transcript excerpt (quoted)
+“Species behavior info… and… step-by-step safety guidance.”
+
+Analytic memo (1–2 lines)
+Participant wants both understanding (behavior) and action-oriented instructions (do/don’t steps).
+
+Excerpt 7
+
+Excerpt ID
+B-7
+
+Initial code(s)
+UNCERTAINTY
+
+Transcript excerpt (quoted)
+“Skip. I have no idea.”
+
+Analytic memo (1–2 lines)
+Participant could not articulate what exact guidance should say, suggesting uncertainty about translating needs into specific instructions.
+
+Excerpt 8
+
+Excerpt ID
+B-8
+
+Initial code(s)
+PREVENTION_SEASONAL
+
+Transcript excerpt (quoted)
+“Season[al]… time reminders… during the specific season that we know when they are coming out.”
+
+Analytic memo (1–2 lines)
+Prevention preference is seasonal/anticipatory rather than constant; aligns with predictable wildlife activity periods.
+
+Excerpt 9
+
+Excerpt ID
+B-9
+
+Initial code(s)
+FEATURE_MAP, FEATURE_REPORTING, NEED_CONTACTS
+
+Transcript excerpt (quoted)
+“Sightings map… reporting… emergency or local contact.”
+
+Analytic memo (1–2 lines)
+Feature priorities map to awareness (map), action (reporting), and escalation support (contacts).
+
+Excerpt 10
+
+Excerpt ID
+B-10
+
+Initial code(s)
+TRUST_ACCURACY, FEATURE_SIMPLE_UI, SELF_EFFICACY
+
+Transcript excerpt (quoted)
+“Maybe it’s easy to use… I most likely trust it…”
+
+Analytic memo (1–2 lines)
+Trust is linked to ease of use and familiarity; user confidence may increase with simple design and prior experience.
+
+Excerpt 11
+
+Excerpt ID
+B-11
+
+Initial code(s)
+BARRIER_RELEVANCE
+
+Transcript excerpt (quoted)
+“If the animal is dangerous or not… if I see a snake, I know.”
+
+Analytic memo (1–2 lines)
+App use/reporting appears conditional on perceived danger; may not feel necessary for low-risk animals (situational relevance).
+
+Excerpt 12
+
+Excerpt ID
+B-12
+
+Initial code(s)
+TRUST_MANAGER
+
+Transcript excerpt (quoted)
+“Community organization… because it’s mostly [going to] be free, available… private companies want to make money, government do the same thing.”
+
+Analytic memo (1–2 lines)
+Trust in governance is tied to perceived motives and accessibility; community-based management is viewed as more trustworthy.
+
+Excerpt 13
+
+Excerpt ID
+B-13
+
+Initial code(s)
+PRIVACY_IDENTITY, PRIVACY_THIRD_PARTY
+
+Transcript excerpt (quoted)
+“No 3rd party sharing, anonymous option… I just like [being] anonymous.”
+
+Analytic memo (1–2 lines)
+Privacy preference emphasizes anonymity and limits on data sharing as conditions for participation.
+
+Excerpt 14
+
+Excerpt ID
+B-14
+
+Initial code(s)
+BARRIER_COMPLEXITY
+
+Transcript excerpt (quoted)
+“Just too complex… I don’t have the patience to be navigating my way around.”
+
+Analytic memo (1–2 lines)
+Complexity is the main barrier; app must minimize steps and cognitive load.
+
+Excerpt 15
+
+Excerpt ID
+B-15
+
+Initial code(s)
+FEATURE_SIMPLE_UI
+
+Transcript excerpt (quoted)
+“[When you] open the app… they should have bars down here… so you know what you are looking for… and you not be scrambling around…”

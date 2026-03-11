@@ -230,19 +230,37 @@ export function CodingSheet() {
   const [showCodebook, setShowCodebook] = useState(false);
   const [showThemes, setShowThemes] = useState(false);
   const [importLoading, setImportLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
+    async function load() {
       try {
-        setSheets(JSON.parse(saved));
-      } catch {
+        const res = await fetch("/api/coding-sheets");
+        if (res.ok) {
+          const { data } = await res.json();
+          if (data && Array.isArray(data) && data.length > 0) {
+            setSheets(data);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            return;
+          }
+        }
+      } catch { /* fall through to localStorage */ }
+
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          setSheets(parsed);
+          saveToServer(parsed);
+        } catch {
+          setSheets([createEmptySheet()]);
+        }
+      } else {
         setSheets([createEmptySheet()]);
       }
-    } else {
-      setSheets([createEmptySheet()]);
     }
+    load();
   }, []);
 
   function createEmptySheet(): CodingSheetData {
@@ -258,9 +276,23 @@ export function CodingSheet() {
     };
   }
 
+  const saveToServer = async (data: CodingSheetData[]) => {
+    try {
+      await fetch("/api/coding-sheets", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data }),
+      });
+    } catch { /* silent - localStorage is the fallback */ }
+  };
+
+  const saveTimeout = { current: null as ReturnType<typeof setTimeout> | null };
+
   const save = (updatedSheets: CodingSheetData[]) => {
     setSheets(updatedSheets);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSheets));
+    if (saveTimeout.current) clearTimeout(saveTimeout.current);
+    saveTimeout.current = setTimeout(() => saveToServer(updatedSheets), 1000);
   };
 
   const addSheet = () => {

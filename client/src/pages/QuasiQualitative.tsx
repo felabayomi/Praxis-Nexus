@@ -280,19 +280,51 @@ const EMPTY_CONSENT: ConsentFormData = {
 function RecruitmentConsent() {
   const [forms, setForms] = useState<ConsentFormData[]>([{ ...EMPTY_CONSENT, participantId: "A" }, { ...EMPTY_CONSENT, participantId: "B" }]);
   const [activeForm, setActiveForm] = useState(0);
+  const saveToServer = async (data: ConsentFormData[]) => {
+    try {
+      await fetch("/api/consent-forms", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data }),
+      });
+    } catch { /* silent */ }
+  };
+
   useEffect(() => {
-    const saved = localStorage.getItem(CONSENT_STORAGE_KEY);
-    if (saved) {
+    async function load() {
       try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) setForms(parsed);
-      } catch { /* ignore */ }
+        const res = await fetch("/api/consent-forms");
+        if (res.ok) {
+          const { data } = await res.json();
+          if (data && Array.isArray(data) && data.length > 0) {
+            setForms(data);
+            localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(data));
+            return;
+          }
+        }
+      } catch { /* fall through */ }
+
+      const saved = localStorage.getItem(CONSENT_STORAGE_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setForms(parsed);
+            saveToServer(parsed);
+          }
+        } catch { /* ignore */ }
+      }
     }
+    load();
   }, []);
+
+  const saveTimeout = { current: null as ReturnType<typeof setTimeout> | null };
 
   const save = (updated: ConsentFormData[]) => {
     setForms(updated);
     localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(updated));
+    if (saveTimeout.current) clearTimeout(saveTimeout.current);
+    saveTimeout.current = setTimeout(() => saveToServer(updated), 1000);
   };
 
   const updateField = (field: keyof ConsentFormData, value: string | boolean) => {

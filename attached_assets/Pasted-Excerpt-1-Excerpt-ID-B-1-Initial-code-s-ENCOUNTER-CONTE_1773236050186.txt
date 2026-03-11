@@ -1,0 +1,164 @@
+Excerpt 1
+
+Excerpt ID
+B-1
+
+Initial code(s)
+ENCOUNTER_CONTEXT, ENCOUNTER_SEQUENCE, SPECIES_ID_CONFIDENCE
+
+Transcript excerpt (quoted)
+“I was going to classes… I saw a deer close to our school housing… it saw me [and] ran away.”
+
+Analytic memo (1–2 lines)
+Everyday encounter in a routine setting (campus/residential area). The animal avoided the human, suggesting low conflict intensity but highlights unpredictability of encounters during daily movement.
+
+Excerpt 2
+
+Excerpt ID
+B-2
+
+Initial code(s)
+RISK_PERCEPTION_LOW, DECISION_DRIVER, SAFETY_STRATEGY
+
+Transcript excerpt (quoted)
+“Low… deer are not scary, and it’s just going to eat when I see it.”
+
+Analytic memo (1–2 lines)
+Risk appraisal is shaped by beliefs about the species (non-threatening, feeding behavior). This influences minimal response and suggests guidance may need to address species-specific risk cues.
+
+Excerpt 3
+
+Excerpt ID
+B-3
+
+Initial code(s)
+SAFETY_STRATEGY, FEATURE_REPORTING, FEATURE_SIMPLE_UI
+
+Transcript excerpt (quoted)
+“[I] take a video and a picture and I left for class… I took the photo for my Snapchat.”
+
+Analytic memo (1–2 lines)
+Participant prioritizes quick documentation and moving on. Reporting features may need to feel as fast and simple as social media posting to fit real behavior.
+
+Excerpt 4
+
+Excerpt ID
+B-4
+
+Initial code(s)
+NEED_SPECIES_BEHAVIOR, NEED_STEP_BY_STEP
+
+Transcript excerpt (quoted)
+“Species behavior info… and… step-by-step safety guidance.”
+
+Analytic memo (1–2 lines)
+User wants both understanding (behavior) and action (step-by-step). Suggests guidance should combine brief explanation with clear “do/don’t” steps.
+
+Excerpt 5
+
+Excerpt ID
+B-5
+
+Initial code(s)
+PREVENTION_SEASONAL, PREVENTION_ALERTS
+
+Transcript excerpt (quoted)
+“Season[al]… time reminders… during the specific season that we know when they are coming out.”
+
+Analytic memo (1–2 lines)
+Prevention interest is seasonal/anticipatory rather than constant monitoring. App alerts may be most acceptable if they are time-limited and predictable.
+
+Excerpt 6
+
+Excerpt ID
+B-6
+
+Initial code(s)
+FEATURE_MAP, FEATURE_REPORTING, NEED_CONTACTS
+
+Transcript excerpt (quoted)
+“Sightings map… reporting… emergency or local contact.”
+
+Analytic memo (1–2 lines)
+Feature priorities cluster around awareness (map), contribution (reporting), and escalation support (contacts). These map cleanly onto “before/during/after” encounter needs.
+
+Excerpt 7
+
+Excerpt ID
+B-7
+
+Initial code(s)
+TRUST_ACCURACY, FEATURE_SIMPLE_UI, SELF_EFFICACY
+
+Transcript excerpt (quoted)
+“Maybe it’s easy to use… I most likely trust it, because I had… the former idea from just watching things.”
+
+Analytic memo (1–2 lines)
+Trust is tied to usability and prior familiarity rather than formal authority. Indicates onboarding and credible presentation may be essential for perceived reliability.
+
+Excerpt 8
+
+Excerpt ID
+B-8
+
+Initial code(s)
+ADOPTION_CONDITION, RISK_PERCEPTION_MODERATORS
+
+Transcript excerpt (quoted)
+“If the animal is dangerous or not… if I see a snake, I know.”
+
+Analytic memo (1–2 lines)
+Reporting/use is conditional on perceived danger. App engagement may be situational—higher during high-risk species encounters than low-risk ones.
+
+Excerpt 9
+
+Excerpt ID
+B-9
+
+Initial code(s)
+TRUST_MANAGER, TRUST_GOVERNANCE
+
+Transcript excerpt (quoted)
+“Community organization… because it’s mostly [going to] be free, available, everybody can use it… private companies want to make money, government do the same thing.”
+
+Analytic memo (1–2 lines)
+Governance trust is linked to perceived motives (public-serving vs profit). Suggests app adoption may depend on who sponsors/manages it and how that role is communicated.
+
+Excerpt 10
+
+Excerpt ID
+B-10
+
+Initial code(s)
+PRIVACY_IDENTITY, PRIVACY_THIRD_PARTY, ETHICAL_CONCERNS
+
+Transcript excerpt (quoted)
+“No 3rd party sharing… anonymous option… I just like [being] anonymous.”
+
+Analytic memo (1–2 lines)
+Privacy expectations are clear and specific. Anonymous reporting and non-sharing commitments are likely baseline requirements for trust.
+
+Excerpt 11
+
+Excerpt ID
+B-11
+
+Initial code(s)
+BARRIER_COMPLEXITY, FEATURE_SIMPLE_UI
+
+Transcript excerpt (quoted)
+“Just too complex… I don’t have the patience to be navigating my way around.”
+
+Analytic memo (1–2 lines)
+Complexity is the main adoption barrier. App must minimize steps and cognitive load, especially because wildlife encounters can be time-pressured.
+
+Excerpt 12
+
+Excerpt ID
+B-12
+
+Initial code(s)
+FEATURE_SIMPLE_UI, USABILITY_REQUIREMENT
+
+Transcript excerpt (quoted)
+“[When you] open the app… they should have bars down here… so you know what you are looking for… and you not be scrambling around to find what you’re looking for.”

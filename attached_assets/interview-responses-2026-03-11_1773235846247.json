@@ -1,0 +1,108 @@
+[
+  {
+    "id": 1,
+    "participant_id": "1",
+    "submitted_at": "2026-03-10T15:57:53.082Z",
+    "q1_description": null,
+    "q1_options": [
+      "Near home",
+      "Work setting"
+    ],
+    "q2_options": [
+      "Deer"
+    ],
+    "q2_probe": null,
+    "q3_risk": "Low",
+    "q3_probe": null,
+    "q4_options": [
+      "Took photo/video",
+      "Left area"
+    ],
+    "q4_probe": null,
+    "q5_options": [
+      "Species behavior info",
+      "Step-by-step safety guidance"
+    ],
+    "q5_probe": null,
+    "q6_options": [
+      "Season/time reminders"
+    ],
+    "q6_probe": null,
+    "q7_rank1": "Sightings map",
+    "q7_rank2": "Reporting",
+    "q7_rank3": "Emergency/local contacts",
+    "q7_probe": null,
+    "q8_answer": "Maybe/depends",
+    "q8_probe": null,
+    "q9_answer": "Community org",
+    "q9_probe": null,
+    "q10_options": [
+      "No third-party sharing",
+      "Anonymous option"
+    ],
+    "q10_probe": null,
+    "q11_options": [
+      "Too complex"
+    ],
+    "q11_probe": null,
+    "q12_workflow": null,
+    "q12_probe": null,
+    "closing_question": null,
+    "consent_recording": true,
+    "transcript": "Thank you for participating. I am exploring experiences with wildlife encounters, and what kinds of information or features might be helpful in a mobile app. designed to support prevention and reduce harm during encounters. Partipation is voluntary.  You may skip any answer and you can stop at any time. With your permission. I would like to record this interview so I can accurately capture your words.  Your name will not be used in the write up and I will remove identifying details. So, um, do I have your permission? Yes.  Thank you. Question one, encounter description. Describe a wildlife encounter you remember clearly.  Options, check all that apply. I've checked in. What happened 1st and what happened next?  It was that I was going to classes, I saw EDA close to our school, school housing. So that was all happened as it saw me run away. Question two.  Animals involved. Yeah. What makes you confident about the animal's identification?  I've seen Linmo, due out, dog mix, and movies. Okay. Did you click DI on your?  Risk percussion. How whiskey? Did it did it feel at the time?  Lou. What specific signs make it feel that we? D's are not scary, and it's just going to eat when I sweet.  Okay. Question four, immediate response. What did you do in the moment?  Take a video and a picture and I left for class. Okay. Why, why did you choose that response?  I was already leaving for class, but I took the photo for my Snapchat. What would you, what would have helped most during the encounter? To stop two?  Species, behavior, info. And... step-by-step safety guardians. Okay.  What would you want, what, what would you want it to see exactly? Skip. I have no idea.  Okay. Question 6. Before encounters occur, what would help prevent problems?  Season what time reminders. When would you realistically use that? I during the specific season that we know when they are coming out.  I'm in a way, to be best to see there. Okay. So, app features, priority ranking.  What are your top 3 app features? Rank one, if we are to if you are to have a mobile app. Sightings map.  Reporting. Emergency or look at contact. What will make you trust the guardians?  Of the app. Maybe it's easy to use. Easy to use, to make you trust the guidance, like, how to make you trust the information you see in the in the app?  Yeah, but you are using the app. So what will make you trust the information? Yeah, I found an idea of it before someday, I most likely trust it, because I had, and I had the former. idea from just watching things.  Okay. What would you, what would you report encounters through an app? Would you recall, report an encounter you have with an, with this, with a, like with that, with that there?  Would you would you report it with an app? Okay, so what, what, why would you need to retry? So what does it depend on?  If the animal is dangerous or not. Like, in the options, there was, if I see a snake, I know. But the other thing you say you took a picture to put it in your, to put it in your Snapchat.  Yeah, but you say you took a picture to put it on Snapchat so you could also use the app for that. Trust and guidance, would you trust to manage the app and his data? Who would you trust to manage the app and his data?  Maybe a company or a company organization, universities, private companies. Choose one. Why?  Community organization. Why that choice? Because it's mostly be free, available, everybody can, can use it, for private companies want to make money, government, do the same thing.  Non-profit. You can't. Don't use it to speed out money at all.  Okay. Privacy and ethical concerns. What privacy protection would you require?  Check all that applies. No 3rd party sharing, anonymous option. What worries you most?  How many more options? I just like bit anonymous. Okay.  Barriers to use what might stop you from using the app. Just too complex. Which is the biggest barrier why?  It's too complex, sound of the patience to be navigating my way around. I can't with the patience. Okay.  Walk me through the best version of the app during an encounter from opening it to feeling safe again. What do you see first? What do you want to make?  What, what outcome do you expect? Like, if you, if you were to use an app, so work me through. Like, once you open the app, how do you want the app to work?  It's like opened the app. They should have, like, bars down here, for it, it just keeps on that, you know what you are looking for, ECD. And you not be scram, you not be scrambling around to find what you're looking for.  All right. Is there anything else you would think is important about wildlife encounters and how a mobile app could help? Closing scripts.  Thank you for your time. If you think of anything else you want to add later, you can share it with me as a reminder, participation is voluntary and your identity will be protected in the right top. Thank you. "
+  },
+  {
+    "id": 2,
+    "participant_id": "2",
+    "submitted_at": "2026-03-11T00:12:02.121Z",
+    "q1_description": null,
+    "q1_options": [
+      "Work setting"
+    ],
+    "q2_options": [
+      "Deer",
+      "Birds"
+    ],
+    "q2_probe": null,
+    "q3_risk": "Low",
+    "q3_probe": null,
+    "q4_options": [
+      "Kept distance",
+      "Took photo/video"
+    ],
+    "q4_probe": null,
+    "q5_options": [
+      "Species behavior info"
+    ],
+    "q5_probe": null,
+    "q6_options": [
+      "Season/time reminders",
+      "Education/tips"
+    ],
+    "q6_probe": null,
+    "q7_rank1": "Emergency/local contacts",
+    "q7_rank2": "Reporting",
+    "q7_rank3": null,
+    "q7_probe": null,
+    "q8_answer": "Maybe/depends",
+    "q8_probe": null,
+    "q9_answer": "Private company",
+    "q9_probe": null,
+    "q10_options": [
+      "Anonymous option",
+      "No third-party sharing"
+    ],
+    "q10_probe": null,
+    "q11_options": [
+      "Fear of consequences",
+      "Not relevant often",
+      "Too complex"
+    ],
+    "q11_probe": null,
+    "q12_workflow": null,
+    "q12_probe": null,
+    "closing_question": null,
+    "consent_recording": true,
+    "transcript": "Thank you for participating. I'm exploring experiences with wildlife encounters and What kind of information or features might be helpful in a mobile app? Designed to support prevention and reduce harm during encounters.  Partipation is voluntary. You may skip any question and you can stop at any time. With your permission, I would like to record this interview.  So I can accurately capture your words. Your name will not be in the write up and I will remove identifying details. Do you agree?  Yes. First question. Encounter, describe a wildlife encounter you remember clearly.  Oh, yeah, choose the options there. The options either road driving near home, just click on the options. Check all that applies.  What happened 1st and what happened next? Uh, I can remember a couple of times, um, encounter with deer mainly. Um, coming out my house in the morning to get the bus, and a whole family is standing in my front yard, and I'm just looking at them, and they just looking at me, and I'm like, okay, are you guys gonna make me miss the bus?  Are you gonna move or? And I was just frozen because I didn't, at that time, I wasn't sure if they were charging me. So I just stay still and the sound of the bus coming. made them run away.  Okay, question two. animals involved? You can click on. Check all that applies.  What made you confident about this animal identification? What makes you confident that you can identify this animal? That you have selected?  Um, What makes me confident, I, them never charged at me? Um, and driving, they have just kept walking, uh, if I was walking, um, they just kept going. So, Just their behavior made me confident.  In identifying them, and knowing that, oh, this is a dear, or. Yes, no, and this is a dear, that's their behavior because they've never, in all my encounters, they've never charged at me. Question three.  How risky does it feel at the time when you saw this day? Choose one, low moderate high. I would say low.  What specific sign make it feel that way? Uh, just their stillness, you know, there was no running, there was no noise. They just stood still.  And because the stillness of their emotion made me feel confident that they wasn't, they wasn't gonna do anything. Okay, when you saw them, what did you do in the moment? Check all that apply.  Did you keep your distance, left area, with try to scare them away, took photo of someone? Um, I have tried to take a photo. And I've definitely kept my distance because I didn't want to get in there personal space.  Click all that applies. In the moment, information needed. So when you, what would have helped when you saw them?  Yes, you did keep your distance, you took a photo, but in the moment, what would what would have helped when you saw them? Choose all that up, yeah? Step by step, safety guidance.  We need have helped you, specie behavior, information, danger signs, who to contact, what to do after, or order. What, what do you, what would you, what do you want it to say, like, what would have helped during the encounter when you saw them? Would any of these have helped?  Our face special behavior, information, you know, just to know that this is a deer. This is their behavior. You don't have to do anything.  So if I knew that, which I did, stay still, but just knowing I'm doing the right thing, I would feel more confident. Okay. Now, before encounters are called, what would have, what will help prevent problems?  So even before you saw them, let's say, for example, what would have helped to prevent problems in case a problem do arise? Is it alert? Check all that applies.  Is this season and time reminders, routes, suggestions, education, tips, or what do you think would have helped realistically? Uh, educational tips. Um, and I do know seasonal that they, That part I've been told that they, um, made doing November, October, November season.  Okay. Now, if you were to have a mobile hub, you know, to help in all these, what features do you think you would want in the app? Select all the applies.  If if you had to, if there were to be a mobile app for this kind of thing. So what features would you have a play? Um.  I would want a picture where if I had to choose one. Um... So can the click in the box and then select.  Uh, record. Mm Emergency contact location. Sitcom.  Third one. That's an answer, that's an answer. Oh, if you think that stops, you don't have any other one.  That's fine. So, um, any other information that you might have needed? That you think the app should have.  Um, just an app that could have where um, You can ask questions, whatever animal you may come in contact with, what they're seasonal or whether there's something that moves about every day. Because there are some that, um, that are seasonal, and then like the groundhog, and then there's some that, that's just, they're gonna be around all the time, like different birds. So, an app that you can ask questions about whatever you saw.  Okay, question eight. Would you report encounter with an app through an app, like if you mix C an app, would you report it through an app? I'll just be honest.  Maybe not, so. Okay. Okay, kick that.  Would you need to be true for you to be report? What would you need? for you to, like, if you were to report, if, for example, you maybe or maybe not, you know, but what would you have needed to to report?  Uh, if somebody was being home by the animal, And I would, you know, need to know who I can contact to get help or or even if the animal was being home, it could be vice versa. one way or the other. Okay, question nine. So if this app were to be created or who would you trust to manage the app?  Would you trust government in nonprofit, university, a community organization, a private company? Who would you trust to handle such a hap if it were to be built at all? Um, I would 1st say a private company, because I feel like if they're private, they have a different level of love and dedication for the animals.  Um, I believe if it's, um, a nonprofit. You can only choose one. Oh, so which one would you choose nonprofit or private?  Private. Okay. So why did you make that choice?  You were explaining Italy. Because if somebody takes upon themselves to be a private company that just cater to animals, I feel like they will have to have, that's their love, that's their passion. That's their lane.  It's not something you'll just wake up one day, like myself, which I'm not, I like animals, but that's not my lane. I would just be like, oh, I'm going to have a private company about animals. Because that's not, those are, you know, when you, when someone choose something privately to do, that's, that's a love.  That's that's where their love is. Okay. Just my opinion.  Okay, now privacy. So if you were to use this app, for example, if it were created, what privacy or intercal concerns would you require? Click, check all that applies.  Uh, no, no. Um... No 3rd party sharing.  That's right. What worries you most? Out of these two?  Uh, my private information being passed on. Okay. Next question.  But he has to use, so what will stop you from using this app? If I thought, if it was produced, what would stop you? If it's too complex.  You don't trust accuracy, data connectivity, fear of consequences. Not relevant or what is the biggest barrier and why? Um, We are of confidentiality.  Check all that apply. And then walk me through the best version of the hub. during an encounter. So let's even assume that, okay, you see the app, you want to use it.  What is your walk me through? Like if you open the app, what should the app? Do?  How would you use the app? So what is the 1st thing you would want the app? to have and then what should be the 2nd thing, 3rd thing that you would do with the app when if you if you were to use this app?  Uh, the 1st thing once opening it, I wouldn't want them to ask too many personal questions about myself. I would want them the app to focus more on the animal. Literally, the animal wears the animal.  Where am I? Am I somewhere safe? Is the animal safe?  Questions like that. Um, I would want it to be, as they would say, kindergarten friendly, you know, showing a picture of the animal. You know what I mean?  A picture of this one, a picture of that one, a picture of that one. Um, because it could be somebody that's can't hear, but they can see. You know what I mean?  Just to make it uh, usable for those that can hear and see or those that are deaf, just anybody can use. But I think picture friendly because you may have teenagers or, you know, may get involved and, and all that kind of stuff. But anyway, um, I think just for myself, I'm a picture person, you know, when I see something, you know, it would be more revalent that, you know, this is, yeah, that's what I saw.  You know, so I not even name an animal the wrong way. You know what I mean? I could be calling, um, a squirrel, a wreck when, you know, when it really wasn't based on how fast it went past me.  So, but to have the picture would be more relevant, that that's really what I saw. Okay, is there anything else you would think is important about wildlife encounters and how immobile could help? I think a mobile app can help more in places where there's more, um, more wildlife, uh, where they're, like, where houses are very spaced out and where government hasn't came in and take, taken up all the land.  Um, Continue. Wait, government haven't came in, picked up a lot of the land. So you would still have a lot of wildlife around because they're in there still natural habitat.  They haven't been driven out. So, That's my thought on that. All right.  So, closing statement. Thank you for your time. If you think of anything else you want to add later, you can share it with me as a reminder, participation is voluntary, and your identity will be protected in this right.  Thank you."
+  }
+]

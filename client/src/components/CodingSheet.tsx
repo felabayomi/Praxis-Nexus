@@ -287,11 +287,11 @@ export function CodingSheet() {
     return score;
   };
 
-  // Upload all current sheets to cloud without changing local state
+  // Upload sheets that have real data — never upload empty slots
   const uploadAllToCloud = async (allSheets: CodingSheetData[]) => {
     setCloudStatus("saving");
     try {
-      await Promise.all(allSheets.map((s, i) => saveSlotToServer(s, i)));
+      await Promise.all(allSheets.map((s, i) => dataScore(s) > 0 ? saveSlotToServer(s, i) : Promise.resolve()));
       setCloudStatus("saved");
       setTimeout(() => setCloudStatus("idle"), 2500);
     } catch {
@@ -339,9 +339,13 @@ export function CodingSheet() {
 
     setSheets(merged);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
-    // Upload any slots that are richer locally than in DB
+    // Only upload slots that have REAL data and are richer than what's in DB
+    // NEVER upload an empty slot — it would overwrite another device's real data
     await Promise.all(merged.map((s, i) => {
-      if (!dbSheets[i] || dataScore(s) > dataScore(dbSheets[i])) return saveSlotToServer(s, i);
+      const score = dataScore(s);
+      if (score > 0 && (!dbSheets[i] || score > dataScore(dbSheets[i]))) {
+        return saveSlotToServer(s, i);
+      }
       return Promise.resolve();
     }));
     setCloudStatus("saved");

@@ -309,7 +309,7 @@ function RecruitmentConsent() {
   const uploadAllConsentsToCloud = async (allForms: ConsentFormData[]) => {
     setCloudStatus("saving");
     try {
-      await Promise.all(allForms.map((f, i) => saveConsentSlot(f, i)));
+      await Promise.all(allForms.map((f, i) => consentDataScore(f) > 0 ? saveConsentSlot(f, i) : Promise.resolve()));
       setCloudStatus("saved");
       setTimeout(() => setCloudStatus("idle"), 2500);
     } catch {
@@ -355,8 +355,10 @@ function RecruitmentConsent() {
 
     setForms(merged);
     localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(merged));
+    // Only upload slots with real data — never overwrite with empty
     await Promise.all(merged.map((f, i) => {
-      if (!dbForms[i] || consentDataScore(f) > consentDataScore(dbForms[i])) return saveConsentSlot(f, i);
+      const score = consentDataScore(f);
+      if (score > 0 && (!dbForms[i] || score > consentDataScore(dbForms[i]))) return saveConsentSlot(f, i);
       return Promise.resolve();
     }));
     setCloudStatus("saved");

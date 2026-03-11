@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -280,14 +280,23 @@ const EMPTY_CONSENT: ConsentFormData = {
 function RecruitmentConsent() {
   const [forms, setForms] = useState<ConsentFormData[]>([{ ...EMPTY_CONSENT, participantId: "A" }, { ...EMPTY_CONSENT, participantId: "B" }]);
   const [activeForm, setActiveForm] = useState(0);
+  const [cloudStatus, setCloudStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const saveToServer = async (data: ConsentFormData[]) => {
+    setCloudStatus("saving");
     try {
-      await fetch("/api/consent-forms", {
+      const res = await fetch("/api/consent-forms", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ data }),
       });
-    } catch { /* silent */ }
+      if (!res.ok) throw new Error("Server error");
+      setCloudStatus("saved");
+      setTimeout(() => setCloudStatus("idle"), 2000);
+    } catch {
+      setCloudStatus("error");
+    }
   };
 
   useEffect(() => {
@@ -299,6 +308,8 @@ function RecruitmentConsent() {
           if (data && Array.isArray(data) && data.length > 0) {
             setForms(data);
             localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(data));
+            setCloudStatus("saved");
+            setTimeout(() => setCloudStatus("idle"), 2000);
             return;
           }
         }
@@ -310,7 +321,7 @@ function RecruitmentConsent() {
           const parsed = JSON.parse(saved);
           if (Array.isArray(parsed) && parsed.length > 0) {
             setForms(parsed);
-            saveToServer(parsed);
+            await saveToServer(parsed);
           }
         } catch { /* ignore */ }
       }
@@ -318,13 +329,11 @@ function RecruitmentConsent() {
     load();
   }, []);
 
-  const saveTimeout = { current: null as ReturnType<typeof setTimeout> | null };
-
   const save = (updated: ConsentFormData[]) => {
     setForms(updated);
     localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(updated));
-    if (saveTimeout.current) clearTimeout(saveTimeout.current);
-    saveTimeout.current = setTimeout(() => saveToServer(updated), 1000);
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(() => saveToServer(updated), 800);
   };
 
   const updateField = (field: keyof ConsentFormData, value: string | boolean) => {
@@ -360,6 +369,23 @@ function RecruitmentConsent() {
                 Participant {f.participantId || String.fromCharCode(65 + i)}
               </Button>
             ))}
+            <div className="ml-auto">
+              {cloudStatus === "saving" && (
+                <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                  <span className="inline-block h-2 w-2 rounded-full bg-amber-400 animate-pulse" /> Saving to cloud…
+                </span>
+              )}
+              {cloudStatus === "saved" && (
+                <span className="flex items-center gap-1.5 text-xs text-green-600 dark:text-green-400">
+                  <span className="inline-block h-2 w-2 rounded-full bg-green-500" /> Saved to cloud
+                </span>
+              )}
+              {cloudStatus === "error" && (
+                <Button variant="outline" size="sm" onClick={() => saveToServer(forms)} className="gap-1.5 text-red-600 border-red-300 text-xs" data-testid="button-retry-consent-save">
+                  Retry save
+                </Button>
+              )}
+            </div>
           </div>
 
           <Card className="border-violet-200 dark:border-violet-900/50" data-testid="card-c1-recruitment">

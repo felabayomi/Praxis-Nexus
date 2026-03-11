@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -230,8 +230,25 @@ export function CodingSheet() {
   const [showCodebook, setShowCodebook] = useState(false);
   const [showThemes, setShowThemes] = useState(false);
   const [importLoading, setImportLoading] = useState(false);
-  const [saving, setSaving] = useState(false);
+  const [cloudStatus, setCloudStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { toast } = useToast();
+
+  const saveToServer = async (data: CodingSheetData[]) => {
+    setCloudStatus("saving");
+    try {
+      const res = await fetch("/api/coding-sheets", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data }),
+      });
+      if (!res.ok) throw new Error("Server error");
+      setCloudStatus("saved");
+      setTimeout(() => setCloudStatus("idle"), 2000);
+    } catch {
+      setCloudStatus("error");
+    }
+  };
 
   useEffect(() => {
     async function load() {
@@ -242,6 +259,8 @@ export function CodingSheet() {
           if (data && Array.isArray(data) && data.length > 0) {
             setSheets(data);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            setCloudStatus("saved");
+            setTimeout(() => setCloudStatus("idle"), 2000);
             return;
           }
         }
@@ -251,8 +270,12 @@ export function CodingSheet() {
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
-          setSheets(parsed);
-          saveToServer(parsed);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setSheets(parsed);
+            await saveToServer(parsed);
+          } else {
+            setSheets([createEmptySheet()]);
+          }
         } catch {
           setSheets([createEmptySheet()]);
         }
@@ -276,23 +299,11 @@ export function CodingSheet() {
     };
   }
 
-  const saveToServer = async (data: CodingSheetData[]) => {
-    try {
-      await fetch("/api/coding-sheets", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data }),
-      });
-    } catch { /* silent - localStorage is the fallback */ }
-  };
-
-  const saveTimeout = { current: null as ReturnType<typeof setTimeout> | null };
-
   const save = (updatedSheets: CodingSheetData[]) => {
     setSheets(updatedSheets);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSheets));
-    if (saveTimeout.current) clearTimeout(saveTimeout.current);
-    saveTimeout.current = setTimeout(() => saveToServer(updatedSheets), 1000);
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(() => saveToServer(updatedSheets), 800);
   };
 
   const addSheet = () => {
@@ -457,7 +468,22 @@ export function CodingSheet() {
         <Button variant="outline" size="sm" onClick={addSheet} className="gap-1.5" data-testid="button-add-sheet">
           <Plus className="h-3.5 w-3.5" /> Add Participant
         </Button>
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-2">
+          {cloudStatus === "saving" && (
+            <span className="flex items-center gap-1.5 text-xs text-muted-foreground" data-testid="status-cloud-saving">
+              <Loader2 className="h-3 w-3 animate-spin" /> Saving…
+            </span>
+          )}
+          {cloudStatus === "saved" && (
+            <span className="flex items-center gap-1.5 text-xs text-green-600 dark:text-green-400" data-testid="status-cloud-saved">
+              <Save className="h-3 w-3" /> Saved to cloud
+            </span>
+          )}
+          {cloudStatus === "error" && (
+            <Button variant="outline" size="sm" onClick={() => saveToServer(sheets)} className="gap-1.5 text-red-600 border-red-300 text-xs" data-testid="button-retry-save">
+              <RefreshCw className="h-3 w-3" /> Retry save
+            </Button>
+          )}
           <Button
             variant="outline"
             size="sm"

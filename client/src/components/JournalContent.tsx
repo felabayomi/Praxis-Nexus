@@ -28,7 +28,8 @@ import {
   Cpu,
   Home,
   TrendingUp,
-  MessageCircle
+  MessageCircle,
+  Lightbulb
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import {
@@ -54,6 +55,7 @@ import {
   getReferencesReadingTime,
   getInquiryQuestionsReadingTime,
   getMethodsPathwayReadingTime,
+  getKeyInsightsReadingTime,
   formatReadingTime 
 } from "@/lib/journalUtils";
 import type { ContentSection, MonthSection, Reference } from "@shared/schema";
@@ -264,6 +266,7 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
   const introTime = getIntroductionReadingTime(journalData);
   const inquiryTime = getInquiryQuestionsReadingTime(journalData);
   const methodsTime = getMethodsPathwayReadingTime(journalData);
+  const insightsTime = getKeyInsightsReadingTime(journalData);
   const refsTime = getReferencesReadingTime(journalData);
   
   // Font size state with localStorage persistence (with SSR safety check)
@@ -703,6 +706,92 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
             <div className="space-y-6">
               {journalData.methodsPathway.map((section) => (
                 <MonthSectionCard key={section.id} section={section} fontSize={fontSize} />
+              ))}
+            </div>
+          </article>
+        )}
+
+        {activeSection === "key-insights" && journalData.keyInsights && (
+          <article data-testid="section-key-insights">
+            <div className="mb-6">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onSectionChange?.("overview")}
+                className="gap-2"
+                data-testid="button-back-to-overview-ki"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to Overview
+              </Button>
+            </div>
+            <header className="mb-10">
+              <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Badge variant="secondary">
+                    Key Insights
+                  </Badge>
+                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <Clock className="h-3 w-3" />
+                    <span>{formatReadingTime(insightsTime)}</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <TextToSpeech sectionId="key-insights" />
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="ghost" size="icon" title="AI Audio (CarPlay compatible)" data-testid="button-ai-audio-ki">
+                        <Headphones className="h-4 w-4" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle className="font-serif">AI Audio Narration</DialogTitle>
+                      </DialogHeader>
+                      <AudioPlayer sectionId="key-insights" />
+                    </DialogContent>
+                  </Dialog>
+                  {onOpenPresentation && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onOpenPresentation("key-insights")}
+                      className="flex items-center gap-2"
+                      data-testid="button-presentation-ki"
+                    >
+                      <Presentation className="h-4 w-4" />
+                      <span className="hidden sm:inline">Presentation View</span>
+                    </Button>
+                  )}
+                </div>
+              </div>
+              <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3 leading-tight">
+                Key Insights
+              </h1>
+              <h2 className="font-serif text-xl md:text-2xl text-muted-foreground mb-4">
+                AI, Conservation, and the Reconfiguration of Human–Wildlife Relations
+              </h2>
+            </header>
+
+            <Separator className="mb-8" />
+
+            <div className="space-y-8">
+              {journalData.keyInsights.map((section, idx) => (
+                <Card key={section.id} className="p-6 border-l-4 border-l-primary/40" data-testid={`card-insight-${section.id}`}>
+                  <div className="flex items-center gap-2 mb-4">
+                    <Lightbulb className="h-5 w-5 text-primary shrink-0" />
+                    <h3 className="font-serif text-xl font-semibold text-foreground">
+                      {idx + 1}. {section.title}
+                    </h3>
+                  </div>
+                  <div className="space-y-4">
+                    {section.content.map((cs) => (
+                      <p key={cs.id} className="text-foreground/90 leading-relaxed">
+                        {cs.content}
+                      </p>
+                    ))}
+                  </div>
+                </Card>
               ))}
             </div>
           </article>

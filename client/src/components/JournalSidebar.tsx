@@ -19,7 +19,8 @@ import {
   ChevronRight,
   Clock,
   Brain,
-  Compass
+  Compass,
+  Lightbulb
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import { 
@@ -28,6 +29,7 @@ import {
   getReferencesReadingTime,
   getInquiryQuestionsReadingTime,
   getMethodsPathwayReadingTime,
+  getKeyInsightsReadingTime,
   formatReadingTime,
   getTotalReadingTime
 } from "@/lib/journalUtils";
@@ -42,6 +44,7 @@ export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCente
   const introTime = getIntroductionReadingTime(journalData);
   const inquiryTime = getInquiryQuestionsReadingTime(journalData);
   const methodsTime = getMethodsPathwayReadingTime(journalData);
+  const insightsTime = getKeyInsightsReadingTime(journalData);
   const refsTime = getReferencesReadingTime(journalData);
   const totalTime = getTotalReadingTime(journalData);
 
@@ -141,6 +144,24 @@ export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCente
                       </span>
                     </div>
                     {activeSection === "methods-pathway" && (
+                      <ChevronRight className="ml-auto h-4 w-4" />
+                    )}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem className="ml-4">
+                  <SidebarMenuButton
+                    onClick={() => onSectionChange("key-insights")}
+                    className={activeSection === "key-insights" ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""}
+                    data-testid="nav-key-insights"
+                  >
+                    <Lightbulb className="h-4 w-4" />
+                    <div className="flex flex-col items-start gap-0.5 flex-1">
+                      <span>Key Insights</span>
+                      <span className="text-xs text-sidebar-foreground/50">
+                        {formatReadingTime(insightsTime)}
+                      </span>
+                    </div>
+                    {activeSection === "key-insights" && (
                       <ChevronRight className="ml-auto h-4 w-4" />
                     )}
                   </SidebarMenuButton>

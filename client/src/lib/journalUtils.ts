@@ -57,13 +57,20 @@ export function getMethodsPathwayReadingTime(journal: JournalEntry): number {
   return calculateReadingTime(countWords(text));
 }
 
+export function getKeyInsightsReadingTime(journal: JournalEntry): number {
+  if (!journal.keyInsights) return 0;
+  const text = journal.keyInsights.map(s => getContentText(s.content)).join(" ");
+  return calculateReadingTime(countWords(text));
+}
+
 export function getTotalReadingTime(journal: JournalEntry): number {
   const introTime = getIntroductionReadingTime(journal);
   const inquiryTime = getInquiryQuestionsReadingTime(journal);
   const methodsTime = getMethodsPathwayReadingTime(journal);
+  const insightsTime = getKeyInsightsReadingTime(journal);
   const monthsTime = journal.months.reduce((acc, month) => acc + getMonthReadingTime(month), 0);
   const refsTime = getReferencesReadingTime(journal);
-  return introTime + inquiryTime + methodsTime + monthsTime + refsTime;
+  return introTime + inquiryTime + methodsTime + insightsTime + monthsTime + refsTime;
 }
 
 export interface SearchResult {
@@ -149,6 +156,13 @@ export function getAllTextForTTS(journal: JournalEntry, sectionId: string): stri
 
   if (sectionId === "methods-pathway" && journal.methodsPathway) {
     return journal.methodsPathway.map(section => {
+      const content = getContentText(section.content);
+      return `${section.title}. ${content}`;
+    }).join(" ");
+  }
+
+  if (sectionId === "key-insights" && journal.keyInsights) {
+    return journal.keyInsights.map(section => {
       const content = getContentText(section.content);
       return `${section.title}. ${content}`;
     }).join(" ");

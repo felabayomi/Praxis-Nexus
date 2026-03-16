@@ -504,6 +504,93 @@ export const journalData: JournalEntry = {
       ]
     }
   ],
+  keyInsights: [
+    {
+      id: "ki-infrastructure",
+      title: "AI as Infrastructure, Not Just a Tool",
+      content: [
+        {
+          id: "ki-infra-1",
+          type: "paragraph",
+          content: "One of the central insights emerging from this phase of the inquiry is that AI in conservation must be understood as infrastructure rather than simply as a technological tool. AI-enabled conservation systems depend on complex networks of data centers, cloud computing platforms, satellite systems, sensor networks, and telecommunications infrastructure (Crawford, 2021). These systems require significant energy, material resources, and institutional coordination (Griffin, 2024). As a result, evaluating AI in conservation requires attention not only to algorithmic outputs but also to the material and logistical systems that sustain those outputs."
+        },
+        {
+          id: "ki-infra-2",
+          type: "paragraph",
+          content: "Recognizing AI as infrastructure shifts the focus from algorithmic performance to the material conditions that make AI possible. This perspective highlights how conservation technologies are tied to energy consumption, data governance, and infrastructural expansion, raising important questions about whether the environmental benefits attributed to AI outweigh the ecological costs of the infrastructures that sustain it (Olawade & Oladapo, 2024)."
+        }
+      ]
+    },
+    {
+      id: "ki-ecological",
+      title: "Ecological Benefits and Environmental Costs",
+      content: [
+        {
+          id: "ki-eco-1",
+          type: "paragraph",
+          content: "A second key insight concerns the tension between AI's potential ecological benefits and its environmental costs. AI systems are often promoted as tools for improving conservation outcomes through real-time monitoring, predictive modeling, and automated decision-making (Griffin, 2024). However, these systems require significant computational resources and energy-intensive infrastructures (Alotaibi & Nassif, 2024)."
+        },
+        {
+          id: "ki-eco-2",
+          type: "paragraph",
+          content: "This tension raises a critical question within the inquiry: whether AI-driven conservation genuinely reduces ecological pressures or whether it redistributes environmental burdens through increased energy demand, infrastructure expansion, and material extraction associated with digital technologies (Crawford, 2021). Understanding this trade-off is essential for evaluating the long-term sustainability of AI-enabled conservation strategies (Reynolds, 2024)."
+        }
+      ]
+    },
+    {
+      id: "ki-capital",
+      title: "Capital Flows Shape Conservation Priorities",
+      content: [
+        {
+          id: "ki-cap-1",
+          type: "paragraph",
+          content: "The analysis of investment patterns reveals that funding structures strongly influence how AI technologies are deployed in conservation contexts. Public funding, philanthropic initiatives, and private sector investments often prioritize technologies that promise measurable outputs, such as monitoring systems, predictive tools, and enforcement technologies (Reim & Eckerwall, 2023)."
+        },
+        {
+          id: "ki-cap-2",
+          type: "paragraph",
+          content: "This investment logic can shape which environmental problems receive attention and which solutions are considered viable. Technologies that align with efficiency metrics and data-driven decision-making tend to attract greater support, while community-based approaches or relational forms of stewardship may receive less visibility and funding (Woodroffe & Thirgood, 2005). As a result, capital flows play a significant role in determining how conservation challenges are framed and addressed."
+        }
+      ]
+    },
+    {
+      id: "ki-power",
+      title: "Power, Governance, and Knowledge Systems",
+      content: [
+        {
+          id: "ki-pow-1",
+          type: "paragraph",
+          content: "Another key insight emerging from the inquiry concerns the governance structures that shape AI deployment. Decisions about infrastructure development, data ownership, and algorithmic design are often concentrated within governmental agencies, technology companies, and international organizations (Latour, 2004). These actors hold significant influence over how environmental data is collected, interpreted, and acted upon (Ullah & Xiong, 2024)."
+        },
+        {
+          id: "ki-pow-2",
+          type: "paragraph",
+          content: "This concentration of authority raises concerns about whose knowledge is incorporated into AI systems and whose perspectives may be marginalized. Indigenous and local ecological knowledge systems, which often emphasize relational stewardship and long-term ecological balance, may be overlooked in favor of technologically mediated approaches that prioritize optimization and prediction (Tom & McCarty, 2019; Datta & Starlight, 2024)."
+        }
+      ]
+    },
+    {
+      id: "ki-relational",
+      title: "The Importance of Relational Accountability",
+      content: [
+        {
+          id: "ki-rel-1",
+          type: "paragraph",
+          content: "Finally, the inquiry highlights the importance of relational accountability in the development and deployment of AI systems. Across the cohort's reflections and synthesis, a recurring theme is that ecological governance cannot be reduced to purely technical solutions (Madden & McQuinn, 2014). Ethical judgment, care, dignity, and relational responsibility remain central to sustainable environmental stewardship (Harris & Nhleko, 2023)."
+        },
+        {
+          id: "ki-rel-2",
+          type: "paragraph",
+          content: "AI systems may support ecological decision-making, but they cannot replace the relational dimensions of governance that connect communities, ecosystems, and cultural knowledge systems (Stucki, 2023; Grogan, 2023). Ensuring that AI deployment aligns with these relational values requires inclusive governance processes and deliberate efforts to integrate diverse epistemologies into technological design (Datta & Starlight, 2024)."
+        },
+        {
+          id: "ki-rel-3",
+          type: "paragraph",
+          content: "Together, these insights suggest that evaluating AI in conservation requires attention not only to technological performance but also to the infrastructures, economic incentives, governance arrangements, and ethical commitments that shape how these systems operate in practice."
+        }
+      ]
+    }
+  ],
   references: [
     {
       id: "ref-1",
@@ -778,6 +865,48 @@ export const journalData: JournalEntry = {
       source: "Frontiers in Conservation Science",
       doi: "10.3389/fcosc.2021.734314",
       type: "journal"
+    },
+    {
+      id: "ref-32",
+      authors: "Tom, M. N., Huaman, E. S., & McCarty, T. L.",
+      year: "2019",
+      title: "Indigenous knowledges as vital contributions to sustainability",
+      source: "International Review of Education, 65(1), 1–18",
+      doi: "10.1007/s11159-019-09770-9",
+      type: "journal"
+    },
+    {
+      id: "ref-33",
+      authors: "Madden, F., & McQuinn, B.",
+      year: "2014",
+      title: "Conservation's blind spot: The case for conflict transformation in wildlife conservation",
+      source: "Biological Conservation, 178, 97–106",
+      doi: "10.1016/j.biocon.2014.07.015",
+      type: "journal"
+    },
+    {
+      id: "ref-34",
+      authors: "Stucki, S.",
+      year: "2023",
+      title: "One rights: Human and animal rights in the anthropocene",
+      source: "Springer",
+      type: "book"
+    },
+    {
+      id: "ref-35",
+      authors: "Grogan, A.",
+      year: "2023",
+      title: "International consensus principles for ethical wildlife control",
+      source: "Human-Wildlife Conflict Task Force",
+      type: "website"
+    },
+    {
+      id: "ref-36",
+      authors: "IUCN",
+      year: "2023",
+      title: "A partnership for our planet: Innovative technology and digital solutions for fair and effective area-based conservation",
+      source: "TECH4NATURE",
+      type: "report"
     }
   ]
 };

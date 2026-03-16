@@ -1,0 +1,69 @@
+Key Insights
+
+AI as Infrastructure, Not Just a Tool
+
+One of the central insights emerging from this phase of the inquiry is that AI in conservation must be understood as infrastructure rather than simply as a technological tool. AI-enabled conservation systems depend on complex networks of data centers, cloud computing platforms, satellite systems, sensor networks, and telecommunications infrastructure (Crawford, 2021). These systems require significant energy, material resources, and institutional coordination (Griffin, 2024). As a result, AI interventions are embedded within broader technological and economic systems that shape how environmental problems are defined and addressed.
+
+Recognizing AI as infrastructure shifts the focus from algorithmic performance to the material conditions that make AI possible. This perspective highlights how conservation technologies are tied to energy consumption, data governance, and infrastructural expansion, raising important questions about whether the environmental benefits attributed to AI outweigh the ecological costs of the infrastructures that sustain it (Olawade & Oladapo, 2024).
+
+Ecological Benefits and Environmental Costs
+
+A second key insight concerns the tension between AI’s potential ecological benefits and its environmental costs. AI systems are often promoted as tools for improving conservation outcomes through real-time monitoring, predictive modeling, and automated decision-making (Griffin, 2024). However, these systems require significant computational resources and energy-intensive infrastructures (Alotaibi & Nassif, 2024).
+
+This tension raises a critical question within the inquiry: whether AI-driven conservation genuinely reduces ecological pressures or whether it redistributes environmental burdens through increased energy demand, infrastructure expansion, and material extraction associated with digital technologies (Crawford, 2021). Understanding this trade-off is essential for evaluating the long-term sustainability of AI-enabled conservation strategies (Reynolds, 2024).
+
+Capital Flows Shape Conservation Priorities
+
+The analysis of investment patterns reveals that funding structures strongly influence how AI technologies are deployed in conservation contexts. Public funding, philanthropic initiatives, and private sector investments often prioritize technologies that promise measurable outputs, such as monitoring systems, predictive tools, and enforcement technologies (Reim & Eckerwall, 2023).
+
+This investment logic can shape which environmental problems receive attention and which solutions are considered viable. Technologies that align with efficiency metrics and data-driven decision-making tend to attract greater support, while community-based approaches or relational forms of stewardship may receive less visibility and funding (Woodroffe & Thirgood, 2005). As a result, capital flows play a significant role in determining how conservation challenges are framed and addressed (IUCN, 2023).
+
+Power, Governance, and Knowledge Systems
+
+Another key insight emerging from the inquiry concerns the governance structures that shape AI deployment. Decisions about infrastructure development, data ownership, and algorithmic design are often concentrated within governmental agencies, technology companies, and international organizations (Latour, 2004). These actors hold significant influence over how environmental data is collected, interpreted, and acted upon (Ullah & Xiong, 2024).
+
+This concentration of authority raises concerns about whose knowledge is incorporated into AI systems and whose perspectives may be marginalized. Indigenous and local ecological knowledge systems, which often emphasize relational stewardship and long-term ecological balance, may be overlooked in favor of technologically mediated approaches that prioritize optimization and prediction (Tom & McCarty, 2019; Datta & Starlight, 2024).
+
+The Importance of Relational Accountability
+
+Finally, the inquiry highlights the importance of relational accountability in the development and deployment of AI systems. Across the cohort’s reflections and synthesis, a recurring theme is that ecological governance cannot be reduced to purely technical solutions (Madden & McQuinn, 2014). Ethical judgment, care, dignity, and relational responsibility remain central to sustainable environmental stewardship (Harris & Nhleko, 2023).
+
+AI systems may support ecological decision-making, but they cannot replace the relational dimensions of governance that connect communities, ecosystems, and cultural knowledge systems (Stucki, 2023; Grogan, 2023). Ensuring that AI deployment aligns with these relational values requires inclusive governance processes and deliberate efforts to integrate diverse epistemologies into technological design (Datta & Starlight, 2024).
+
+Together, these insights suggest that evaluating AI in conservation requires attention not only to technological performance but also to the infrastructures, economic incentives, governance arrangements, and ethical commitments that shape how these systems operate in practice.
+
+---
+
+References
+
+Crawford, K. (2021). *The atlas of AI: Power, politics, and the planetary costs of artificial intelligence*. Yale University Press. https://books.google.com/books?id=XvEdEAAAQBAJ\&printsec=frontcover\&source=gbs_ViewAPI\&hl=en\#v=onepage\&q\&f=false
+
+Griffin, G. (2024). Conservation technology: How technology protects wildlife. https://forestry.com/wildlife-management/human-wildlife-interaction/conservation-technology-how-technology-protects-wildlife/
+
+Olawade, D. B., Wada, O. Z., Ige, A. O., Egbewole, B. I., Olojo, A., & Oladapo, B. I. (2024). Artificial intelligence in environmental monitoring: Advancements, challenges, and future directions. *Hygiene and Environmental Health Advances, 12, 100114*. https://doi.org/10.1016/j.heha.2024.100114
+
+Alotaibi, E. & Nassif, N. (2024). Artificial intelligence in environmental monitoring: in-depth analysis. *Discover Artificial Intelligence, 4(1), 84*. https://doi.org/10.1007/s44163-024-00198-1
+
+Reynolds, S. A., Beery, S., Burgess, N., Burgman, M., Butchart, S. H. M., Cooke, S. J., Coomes, D., Danielsen, F., Minin, E. D., Durán, A. P., Gassert, F., Hinsley, A., Jaffer, S., Jones, J. P. G., Li, B. V., Aodha, O. M., Madhavapeddy, A., O'Donnell, S. A. L., Oxbury, W. M., ... Sutherland, W. J. (2024). The potential for AI to revolutionize conservation: a horizon scan. *Trends in Ecology & Evolution*. https://doi.org/10.1016/j.tree.2024.11.013
+
+Reim, W., Andersson, E., & Eckerwall, K. (2023). Enabling collaboration on digital platforms: a study of digital twins. *International Journal of Production Research, 61(12), 3926-3942*. https://doi.org/10.1080/00207543.2022.2116499
+
+Woodroffe, R., Thirgood, S., & Rabinowitz, A. (2005). *People and wildlife, conflict or co-existence?*. Cambridge: Cambridge University Press. https://doi.org/10.1017/CBO9780511614774
+
+IUCN (2023). A PARTNERSHIP FOR OUR PLANET: Innovative technology and digital solutions for fair and effective area-based conservation. *TECH4NATURE*. https://tech4nature.iucngreenlist.org/wp-content/uploads/2023/10/T4N-layout-v03.pdf
+
+Latour, B. (2004). Why has critique run out of steam? From matters of fact to matters of concern. *Critical Inquiry*. https://doi.org/10.1086/421123
+
+Ullah, F., Saqib, S., & Xiong, Y. (2024). Integrating artificial intelligence in biodiversity conservation: bridging classical and modern approaches. *Biodiversity and Conservation*. https://doi.org/10.1007/s10531-024-02977-9
+
+Tom, M. N., Huaman, E. S., & McCarty, T. L. (2019). Indigenous knowledges as vital contributions to sustainability. *International Review of Education, 65(1), 1-18*. https://doi.org/10.1007/s11159-019-09770-9
+
+Datta, R. & Starlight, T. (2024). Building a meaningful bridge between indigenous and western worldviews: Through decolonial conversation. *International Journal of Qualitative Methods, 23, 16094069241235564*. https://doi.org/10.1177/16094069241235564
+
+Madden, F. & McQuinn, B. (2014). Conservation’s blind spot: The case for conflict transformation in wildlife conservation. *Biological Conservation, 178, 97-106*. https://doi.org/10.1016/j.biocon.2014.07.015
+
+Harris, N. C., Wilkinson, C. E., Fleury, G., & Nhleko, Z. N. (2023). Responsibility, equity, justice, and inclusion in dynamic human–wildlife interactions. *Frontiers in Ecology and the Environment*. https://doi.org/10.1002/fee.2603
+
+Stucki, S. (2023). *One rights : human and animal rights in the anthropocene*. Cham, Switzerland: Springer.
+
+Grogan, A. (2023). International consensus principles for ethical wildlife control. https://www.hwctf.org/conference-videos?pgid=lgvbjz57-eada68a2-db71-489c-bc7c-e9d5067f067f

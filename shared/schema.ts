@@ -40,6 +40,7 @@ export interface JournalEntry {
   introduction: ContentSection[];
   inquiryQuestions?: MonthSection[];
   methodsPathway?: MonthSection[];
+  keyInsights?: MonthSection[];
   months: JournalMonth[];
   references: Reference[];
 }

@@ -39,6 +39,7 @@ export interface AiHubContribution {
   year: string;
   author: string;
   shortDescription: string;
+  introduction: string;
   apa: string;
   url?: string;
   sections: MonthSection[];

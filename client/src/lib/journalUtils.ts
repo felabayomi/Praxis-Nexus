@@ -180,10 +180,12 @@ export function getAllTextForTTS(journal: JournalEntry, sectionId: string): stri
   if (journal.aiHubContributions) {
     const contribution = journal.aiHubContributions.find(c => `contribution-${c.id}` === sectionId);
     if (contribution) {
-      return contribution.sections.map(section => {
+      const intro = `${contribution.title}. ${contribution.resourceTitle}, by ${contribution.author}, ${contribution.year}. ${contribution.introduction} `;
+      const body = contribution.sections.map(section => {
         const content = getContentText(section.content);
         return `${section.title}. ${content}`;
       }).join(" ");
+      return intro + body;
     }
   }
 

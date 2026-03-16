@@ -30,7 +30,8 @@ import {
   TrendingUp,
   MessageCircle,
   Lightbulb,
-  BookMarked
+  BookMarked,
+  FileDown
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import {
@@ -803,6 +804,16 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
         {journalData.aiHubContributions?.map((contribution) => {
           const sectionId = `contribution-${contribution.id}`;
           if (activeSection !== sectionId) return null;
+          const downloadContributionPdf = () => {
+            const sectionsHtml = contribution.sections.map(s => {
+              const paragraphs = s.content.map(c => `<p style="margin:0 0 14px 0;line-height:1.7;">${c.content}</p>`).join("");
+              return `<h3 style="font-size:16px;font-weight:600;margin:32px 0 10px 0;border-bottom:1px solid #ddd;padding-bottom:6px;">${s.title}</h3>${paragraphs}`;
+            }).join("");
+            const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${contribution.title}</title><style>body{font-family:Georgia,serif;max-width:700px;margin:60px auto;padding:0 30px;color:#1a1a1a;font-size:15px}h1{font-size:24px;margin-bottom:6px}h2{font-size:18px;font-weight:400;color:#555;margin:4px 0 2px}p.meta{font-size:13px;color:#666;margin:4px 0}p.intro{font-size:14px;color:#333;margin:20px 0;line-height:1.7}blockquote{background:#f5f5f5;border-left:4px solid #666;padding:12px 16px;margin:20px 0;font-size:13px;font-family:monospace;line-height:1.6}@media print{body{margin:40px}}</style></head><body><h1>${contribution.title}</h1><h2>${contribution.resourceTitle}</h2><p class="meta">${contribution.apa}</p><p class="intro">${contribution.introduction}</p>${sectionsHtml}</body></html>`;
+            const win = window.open("", "_blank");
+            if (win) { win.document.write(html); win.document.close(); win.print(); }
+          };
+
           return (
             <article key={contribution.id} data-testid={`section-${sectionId}`}>
               <div className="mb-6">
@@ -827,6 +838,15 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      title="Download as PDF"
+                      onClick={downloadContributionPdf}
+                      data-testid={`button-pdf-${sectionId}`}
+                    >
+                      <FileDown className="h-4 w-4" />
+                    </Button>
                     <TextToSpeech sectionId={sectionId} />
                     <Dialog>
                       <DialogTrigger asChild>
@@ -876,6 +896,12 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
               </header>
 
               <Separator className="mb-8" />
+
+              {contribution.introduction && (
+                <p className="text-base text-foreground/85 leading-relaxed mb-8 italic border-l-2 border-primary/30 pl-4">
+                  {contribution.introduction}
+                </p>
+              )}
 
               <div className="space-y-8">
                 {contribution.sections.map((section) => (

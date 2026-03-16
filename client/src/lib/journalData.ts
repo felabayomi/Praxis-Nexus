@@ -588,6 +588,7 @@ export const journalData: JournalEntry = {
       year: "2021",
       author: "Crawford, K.",
       shortDescription: "The hidden costs of artificial intelligence, from natural resources and labor to privacy and freedom.",
+      introduction: "This contribution reflects on Crawford's examination of the material and political dimensions of artificial intelligence. It situates the resource within the inquiry's analytical frame, considering how the book's central arguments about resource use, infrastructure investment, and governance illuminate the tensions between AI's ecological promise and its planetary costs—tensions that are central to this phase of the inquiry.",
       apa: "Crawford, K. (2021). The atlas of AI: Power, politics, and the planetary costs of artificial intelligence. Yale University Press. https://books.google.com/books?id=XvEdEAAAQBAJ&printsec=frontcover&source=gbs_ViewAPI&hl=en#v=onepage&q&f=false",
       url: "https://books.google.com/books?id=XvEdEAAAQBAJ&printsec=frontcover&source=gbs_ViewAPI&hl=en#v=onepage&q&f=false",
       sections: [

@@ -1,0 +1,23 @@
+Month 3: Deepening the Inquiry Through Practice
+
+As I move further into this inquiry, my engagement with AI tools, policy materials, and case studies is becoming less about discovering what AI can do and more about noticing how it operates within systems of resources, infrastructure, and investment. At this stage, the inquiry is still exploratory, but the patterns beginning to surface feel more connected to my original concerns about ecological limits, governance, and the economic drivers shaping technological adoption.
+
+What strengths and limitations became visible?
+
+One strength that became visible is AI’s ability to identify patterns across complex datasets that would otherwise remain difficult to detect. For example, predictive models used in conservation can analyze animal movement, climate patterns, and landscape change in ways that help anticipate human–wildlife conflict or habitat disruption. This kind of analytical capacity can support early intervention and potentially reduce harm when it is embedded within thoughtful governance structures.
+
+At the same time, the limitations of these systems become clearer when the lens widens beyond technical capability. AI tools rely on extensive digital infrastructure—data centers, sensors, satellite systems, and energy-intensive computation. This raises questions about energy demand, infrastructure pressure, and resource competition, especially when conservation technologies expand into fragile ecosystems. The strength of AI as a pattern-recognition tool is therefore inseparable from the material and economic systems that sustain it.
+
+What surprised or unsettled me?
+
+What continues to unsettle me is the speed with which technological expansion is normalized. In many discussions about AI, the framing suggests that adoption is inevitable, leaving little room for democratic deliberation about whether certain systems should be developed or deployed at all. I find myself questioning how easily technological enthusiasm can overshadow deeper considerations about shared governance, resource management, and long-term ecological resilience.
+
+Another unsettling realization is how often AI solutions are shaped more by funding priorities and infrastructure investment than by ecological necessity. When I trace where capital flows—through development spending, technology deployment initiatives, and sustainability branding—I see how certain environmental problems become visible because they align with available technologies and funding streams, while other forms of knowledge or stewardship remain marginalized.
+
+What patterns am I noticing across systems?
+
+Across different cases and readings, a recurring pattern is emerging: AI does not fundamentally transform existing systems so much as it intensifies them. Where governance structures already concentrate power, AI can reinforce those asymmetries through control over data, infrastructure, and decision-making tools. Where institutions prioritize efficiency and economic growth, AI tends to amplify those priorities through automation and predictive optimization.
+
+Another pattern I notice is the tension between technological efficiency and relational responsibility. AI systems often frame environmental governance as a problem of prediction and control, yet many ecological traditions—including place-based and Indigenous perspectives—approach environmental stewardship through relationships, reciprocity, and long time horizons. This contrast continues to shape how I think about sustainability pathways and intergenerational outcomes in the age of AI.
+
+At this point in the inquiry, I am not seeking to resolve these tensions. Instead, I am allowing them to guide how I interpret the cases I encounter and how I position my inquiry within broader conversations about ecological resilience, infrastructure investment, and technological governance.

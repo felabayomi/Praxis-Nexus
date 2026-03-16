@@ -20,7 +20,8 @@ import {
   Clock,
   Brain,
   Compass,
-  Lightbulb
+  Lightbulb,
+  BookMarked
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import { 
@@ -30,6 +31,7 @@ import {
   getInquiryQuestionsReadingTime,
   getMethodsPathwayReadingTime,
   getKeyInsightsReadingTime,
+  getAiHubReadingTime,
   formatReadingTime,
   getTotalReadingTime
 } from "@/lib/journalUtils";
@@ -45,6 +47,7 @@ export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCente
   const inquiryTime = getInquiryQuestionsReadingTime(journalData);
   const methodsTime = getMethodsPathwayReadingTime(journalData);
   const insightsTime = getKeyInsightsReadingTime(journalData);
+  const aiHubTime = getAiHubReadingTime(journalData);
   const refsTime = getReferencesReadingTime(journalData);
   const totalTime = getTotalReadingTime(journalData);
 
@@ -169,6 +172,39 @@ export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCente
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
+
+          {journalData.aiHubContributions && journalData.aiHubContributions.length > 0 && (
+            <SidebarGroup>
+              <SidebarGroupLabel className="text-sidebar-foreground/50 text-xs uppercase tracking-wider">
+                AI Hub Contribution
+              </SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {journalData.aiHubContributions.map((contribution) => {
+                    const sectionId = `contribution-${contribution.id}`;
+                    return (
+                      <SidebarMenuItem key={contribution.id}>
+                        <SidebarMenuButton
+                          onClick={() => onSectionChange(sectionId)}
+                          className={`${activeSection === sectionId ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""} h-auto whitespace-normal`}
+                          data-testid={`nav-${sectionId}`}
+                        >
+                          <BookMarked className="h-4 w-4 shrink-0" />
+                          <div className="flex flex-col items-start gap-0.5 flex-1 min-w-0">
+                            <span className="text-sm leading-tight">{contribution.resourceTitle}</span>
+                            <span className="text-xs text-sidebar-foreground/50">{contribution.author}, {contribution.year}</span>
+                          </div>
+                          {activeSection === sectionId && (
+                            <ChevronRight className="ml-auto h-4 w-4 shrink-0" />
+                          )}
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    );
+                  })}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          )}
 
           <SidebarGroup>
             <SidebarGroupLabel className="text-sidebar-foreground/50 text-xs uppercase tracking-wider">

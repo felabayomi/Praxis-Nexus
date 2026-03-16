@@ -32,6 +32,18 @@ export interface MonthSection {
   content: ContentSection[];
 }
 
+export interface AiHubContribution {
+  id: string;
+  title: string;
+  resourceTitle: string;
+  year: string;
+  author: string;
+  shortDescription: string;
+  apa: string;
+  url?: string;
+  sections: MonthSection[];
+}
+
 export interface JournalEntry {
   id: string;
   projectTitle: string;
@@ -41,6 +53,7 @@ export interface JournalEntry {
   inquiryQuestions?: MonthSection[];
   methodsPathway?: MonthSection[];
   keyInsights?: MonthSection[];
+  aiHubContributions?: AiHubContribution[];
   months: JournalMonth[];
   references: Reference[];
 }

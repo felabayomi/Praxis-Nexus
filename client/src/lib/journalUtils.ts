@@ -63,14 +63,23 @@ export function getKeyInsightsReadingTime(journal: JournalEntry): number {
   return calculateReadingTime(countWords(text));
 }
 
+export function getAiHubReadingTime(journal: JournalEntry): number {
+  if (!journal.aiHubContributions) return 0;
+  const text = journal.aiHubContributions.map(c =>
+    c.title + " " + c.sections.map(s => getContentText(s.content)).join(" ")
+  ).join(" ");
+  return calculateReadingTime(countWords(text));
+}
+
 export function getTotalReadingTime(journal: JournalEntry): number {
   const introTime = getIntroductionReadingTime(journal);
   const inquiryTime = getInquiryQuestionsReadingTime(journal);
   const methodsTime = getMethodsPathwayReadingTime(journal);
   const insightsTime = getKeyInsightsReadingTime(journal);
+  const aiHubTime = getAiHubReadingTime(journal);
   const monthsTime = journal.months.reduce((acc, month) => acc + getMonthReadingTime(month), 0);
   const refsTime = getReferencesReadingTime(journal);
-  return introTime + inquiryTime + methodsTime + insightsTime + monthsTime + refsTime;
+  return introTime + inquiryTime + methodsTime + insightsTime + aiHubTime + monthsTime + refsTime;
 }
 
 export interface SearchResult {
@@ -166,6 +175,16 @@ export function getAllTextForTTS(journal: JournalEntry, sectionId: string): stri
       const content = getContentText(section.content);
       return `${section.title}. ${content}`;
     }).join(" ");
+  }
+
+  if (journal.aiHubContributions) {
+    const contribution = journal.aiHubContributions.find(c => `contribution-${c.id}` === sectionId);
+    if (contribution) {
+      return contribution.sections.map(section => {
+        const content = getContentText(section.content);
+        return `${section.title}. ${content}`;
+      }).join(" ");
+    }
   }
 
   if (sectionId === "references") {

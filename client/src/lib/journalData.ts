@@ -580,6 +580,71 @@ export const journalData: JournalEntry = {
       ]
     }
   ],
+  aiHubContributions: [
+    {
+      id: "ai-atlas",
+      title: "AI Infrastructure, Planetary Resources, and the Hidden Costs of Intelligence",
+      resourceTitle: "The Atlas of AI: Power, Politics, and the Planetary Costs of Artificial Intelligence",
+      year: "2021",
+      author: "Crawford, K.",
+      shortDescription: "The hidden costs of artificial intelligence, from natural resources and labor to privacy and freedom.",
+      apa: "Crawford, K. (2021). The atlas of AI: Power, politics, and the planetary costs of artificial intelligence. Yale University Press. https://books.google.com/books?id=XvEdEAAAQBAJ&printsec=frontcover&source=gbs_ViewAPI&hl=en#v=onepage&q&f=false",
+      url: "https://books.google.com/books?id=XvEdEAAAQBAJ&printsec=frontcover&source=gbs_ViewAPI&hl=en#v=onepage&q&f=false",
+      sections: [
+        {
+          id: "ai-atlas-what",
+          title: "What It Is and What It Is Used For",
+          icon: "book-open",
+          content: [
+            {
+              id: "ai-atlas-what-1",
+              type: "paragraph",
+              content: "This book examines the global infrastructure behind artificial intelligence, showing how AI systems depend on vast networks of energy, data centers, mineral extraction, labor, and digital infrastructure. Rather than treating AI as purely digital, Crawford traces how AI technologies are materially grounded in planetary resources and economic systems. The work is widely used to understand the political, environmental, and economic dimensions of AI development."
+            }
+          ]
+        },
+        {
+          id: "ai-atlas-matters",
+          title: "What Matters About It / Questions It Raises",
+          icon: "brain",
+          content: [
+            {
+              id: "ai-atlas-matters-1",
+              type: "paragraph",
+              content: "What makes this resource particularly important for my inquiry is that it reveals how AI systems are embedded in resource use, infrastructure investment, and capital flows. AI does not operate independently of the physical world; it relies on energy demand, rare earth minerals, and large-scale infrastructure deployment. This raises important questions about whether AI-driven environmental governance actually reduces ecological pressure or simply relocates environmental costs elsewhere."
+            },
+            {
+              id: "ai-atlas-matters-2",
+              type: "paragraph",
+              content: "The work also raises broader questions about who benefits and who is harmed by AI infrastructures, and how power dynamics shape which technological systems are developed and deployed."
+            }
+          ]
+        },
+        {
+          id: "ai-atlas-opportunities",
+          title: "Opportunities and Dangers Related to My Inquiry",
+          icon: "alert-triangle",
+          content: [
+            {
+              id: "ai-atlas-opp-1",
+              type: "paragraph",
+              content: "From the perspective of environmental monitoring and conservation, AI offers opportunities to analyze ecological systems at scale, identify patterns in wildlife movement, and support early detection of environmental change. As research in Artificial intelligence in environmental monitoring: Advancements, challenges, and future directions suggests, AI can significantly improve environmental data analysis and forecasting capabilities."
+            },
+            {
+              id: "ai-atlas-opp-2",
+              type: "paragraph",
+              content: "However, these opportunities are inseparable from significant risks. AI systems depend on energy-intensive infrastructure and global supply chains that place pressure on natural resources. When technology deployment is driven primarily by funding priorities and infrastructure investment, it can reinforce existing power dynamics and economic inequalities."
+            },
+            {
+              id: "ai-atlas-opp-3",
+              type: "paragraph",
+              content: "For my inquiry, this resource helps surface a key tension: AI may support environmental monitoring and conservation strategies, but it can also contribute to systemic risk if the ecological costs of infrastructure expansion and resource extraction remain unexamined."
+            }
+          ]
+        }
+      ]
+    }
+  ],
   keyInsights: [
     {
       id: "ki-infrastructure",

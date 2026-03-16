@@ -29,7 +29,8 @@ import {
   Home,
   TrendingUp,
   MessageCircle,
-  Lightbulb
+  Lightbulb,
+  BookMarked
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import {
@@ -56,6 +57,7 @@ import {
   getInquiryQuestionsReadingTime,
   getMethodsPathwayReadingTime,
   getKeyInsightsReadingTime,
+  getAiHubReadingTime,
   formatReadingTime 
 } from "@/lib/journalUtils";
 import type { ContentSection, MonthSection, Reference } from "@shared/schema";
@@ -267,6 +269,7 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
   const inquiryTime = getInquiryQuestionsReadingTime(journalData);
   const methodsTime = getMethodsPathwayReadingTime(journalData);
   const insightsTime = getKeyInsightsReadingTime(journalData);
+  const aiHubTime = getAiHubReadingTime(journalData);
   const refsTime = getReferencesReadingTime(journalData);
   
   // Font size state with localStorage persistence (with SSR safety check)
@@ -796,6 +799,92 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
             </div>
           </article>
         )}
+
+        {journalData.aiHubContributions?.map((contribution) => {
+          const sectionId = `contribution-${contribution.id}`;
+          if (activeSection !== sectionId) return null;
+          return (
+            <article key={contribution.id} data-testid={`section-${sectionId}`}>
+              <div className="mb-6">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onSectionChange?.("overview")}
+                  className="gap-2"
+                  data-testid={`button-back-${sectionId}`}
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  Back to Overview
+                </Button>
+              </div>
+              <header className="mb-10">
+                <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <Badge variant="secondary">AI Hub Contribution</Badge>
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                      <Clock className="h-3 w-3" />
+                      <span>{formatReadingTime(aiHubTime)}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <TextToSpeech sectionId={sectionId} />
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button variant="ghost" size="icon" title="AI Audio (CarPlay compatible)" data-testid={`button-ai-audio-${sectionId}`}>
+                          <Headphones className="h-4 w-4" />
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-md">
+                        <DialogHeader>
+                          <DialogTitle className="font-serif">AI Audio Narration</DialogTitle>
+                        </DialogHeader>
+                        <AudioPlayer sectionId={sectionId} />
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                </div>
+                <h1 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-2 leading-tight">
+                  {contribution.title}
+                </h1>
+                <div className="flex items-center gap-2 mt-3 mb-1">
+                  <BookMarked className="h-4 w-4 text-primary shrink-0" />
+                  <span className="font-serif text-lg font-semibold text-primary">
+                    {contribution.resourceTitle}
+                  </span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-2">
+                  {contribution.author} ({contribution.year})
+                </p>
+                <p className="text-sm italic text-muted-foreground mb-4">
+                  {contribution.shortDescription}
+                </p>
+                <div className="bg-muted/50 rounded-md p-4 text-xs text-muted-foreground font-mono leading-relaxed">
+                  <span className="font-semibold text-foreground block mb-1">APA 7th Edition Reference</span>
+                  {contribution.apa}
+                  {contribution.url && (
+                    <a
+                      href={contribution.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 ml-2 text-primary hover:underline"
+                      data-testid={`link-resource-${contribution.id}`}
+                    >
+                      <ExternalLink className="h-3 w-3" /> View
+                    </a>
+                  )}
+                </div>
+              </header>
+
+              <Separator className="mb-8" />
+
+              <div className="space-y-8">
+                {contribution.sections.map((section) => (
+                  <MonthSectionCard key={section.id} section={section} fontSize={16} />
+                ))}
+              </div>
+            </article>
+          );
+        })}
 
         {activeSection === "references" && (
           <article data-testid="section-references">

@@ -21,7 +21,10 @@ import {
   Sun,
   Compass,
   X,
-  Palette
+  Palette,
+  ArrowRight,
+  CheckCircle2,
+  Circle
 } from "lucide-react";
 import { journalData } from "@/lib/journalData";
 import { apiRequest } from "@/lib/queryClient";
@@ -417,6 +420,134 @@ const templateStyles = {
   }
 };
 
+type ContentBlock =
+  | { type: "bullets"; items: string[] }
+  | { type: "quote"; text: string }
+  | { type: "qa"; question: string; answer: string }
+  | { type: "paragraph"; text: string };
+
+function parseSlideContent(raw: string): ContentBlock[] {
+  const blocks: ContentBlock[] = [];
+  let bulletBuffer: string[] = [];
+
+  const flushBullets = () => {
+    if (bulletBuffer.length > 0) {
+      blocks.push({ type: "bullets", items: [...bulletBuffer] });
+      bulletBuffer = [];
+    }
+  };
+
+  for (const block of raw.split("\n\n").filter(b => b.trim())) {
+    const lines = block.split("\n").map(l => l.trim()).filter(Boolean);
+    if (!lines.length) continue;
+
+    // Q&A: question line + arrow answer on next line
+    if (lines.length >= 2 && (lines[0].startsWith('"') || lines[0].startsWith('\u201c')) && lines[1].startsWith("→")) {
+      flushBullets();
+      blocks.push({
+        type: "qa",
+        question: lines[0].replace(/^["\u201c]|["\u201d]$/g, "").trim(),
+        answer: lines[1].replace(/^→\s*/, "").trim()
+      });
+    }
+    // All-bullet block
+    else if (lines.every(l => l.startsWith("•"))) {
+      lines.forEach(l => bulletBuffer.push(l.replace(/^•\s*/, "")));
+    }
+    // Quote block
+    else if (lines[0].startsWith('"') || lines[0].startsWith('\u201c')) {
+      flushBullets();
+      blocks.push({ type: "quote", text: block.replace(/^["\u201c]|["\u201d]$/g, "").trim() });
+    }
+    // Mixed: bullets + other text
+    else if (lines.some(l => l.startsWith("•"))) {
+      flushBullets();
+      const textLines = lines.filter(l => !l.startsWith("•")).join(" ");
+      const bulletLines = lines.filter(l => l.startsWith("•")).map(l => l.replace(/^•\s*/, ""));
+      if (textLines) blocks.push({ type: "paragraph", text: textLines });
+      if (bulletLines.length) blocks.push({ type: "bullets", items: bulletLines });
+    }
+    // Plain paragraph
+    else {
+      flushBullets();
+      blocks.push({ type: "paragraph", text: block.trim() });
+    }
+  }
+
+  flushBullets();
+  return blocks;
+}
+
+function SmartSlideContent({ content, style }: { content: string; style: typeof templateStyles[keyof typeof templateStyles] }) {
+  const blocks = parseSlideContent(content);
+
+  return (
+    <div className="flex-1 flex flex-col gap-3 md:gap-4 overflow-y-auto pr-1">
+      {blocks.map((block, i) => {
+        if (block.type === "bullets") {
+          const isGrid = block.items.length >= 3;
+          return (
+            <div
+              key={i}
+              className={isGrid ? "grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3" : "flex flex-col gap-2"}
+            >
+              {block.items.map((item, j) => (
+                <div
+                  key={j}
+                  className="flex items-start gap-3 p-3 md:p-4 rounded-xl bg-background/60 dark:bg-white/5 border border-border/40 backdrop-blur-sm shadow-sm"
+                >
+                  <div
+                    className={`h-6 w-6 rounded-full ${style.footerIcon} flex items-center justify-center shrink-0 mt-0.5`}
+                  >
+                    <span className="text-white text-[10px] font-bold">{j + 1}</span>
+                  </div>
+                  <p className="font-serif text-sm md:text-base leading-snug text-foreground/85">{item}</p>
+                </div>
+              ))}
+            </div>
+          );
+        }
+
+        if (block.type === "quote") {
+          return (
+            <div
+              key={i}
+              className="relative pl-5 py-3 my-1"
+            >
+              <div className="absolute left-0 top-0 bottom-0 w-[3px] rounded-full bg-gradient-to-b from-primary via-primary/50 to-transparent" />
+              <span className="absolute -top-3 left-3 text-5xl text-primary/15 font-serif leading-none select-none">&ldquo;</span>
+              <p className="font-serif text-base md:text-lg lg:text-xl italic leading-relaxed text-foreground/80 pt-4">
+                {block.text}
+              </p>
+            </div>
+          );
+        }
+
+        if (block.type === "qa") {
+          return (
+            <div key={i} className="rounded-xl overflow-hidden border border-border/40 shadow-sm">
+              <div className="bg-primary/8 dark:bg-primary/10 px-4 py-2.5 flex items-start gap-2.5 border-b border-border/30">
+                <MessageCircleQuestion className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                <p className="font-serif text-sm md:text-base font-semibold text-foreground italic">{block.question}</p>
+              </div>
+              <div className="px-4 py-2.5 bg-card/60 dark:bg-card/30 flex items-start gap-2.5">
+                <ArrowRight className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
+                <p className="font-serif text-sm md:text-base text-foreground/80 leading-relaxed">{block.answer}</p>
+              </div>
+            </div>
+          );
+        }
+
+        return (
+          <p key={i} className="font-serif text-base md:text-lg lg:text-xl leading-relaxed text-foreground/85">
+            {block.text}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
 export function PresentationView({ template, onClose, onChangeTemplate, section }: PresentationViewProps) {
   const [slides, setSlides] = useState<Slide[]>(createSlides(section));
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -665,60 +796,63 @@ export function PresentationView({ template, onClose, onChangeTemplate, section 
               </div>
             </Card>
           ) : (
-            <Card 
-              className={`w-full max-w-5xl h-full max-h-full relative overflow-hidden border shadow-xl flex flex-col`}
-              style={{
-                background: style.pattern + ", hsl(var(--card))"
-              }}
+            <Card
+              className={`w-full max-w-5xl h-full max-h-full relative overflow-hidden border shadow-2xl flex flex-col`}
+              style={{ background: style.pattern + ", hsl(var(--card))" }}
             >
+              {/* Top accent bar */}
               <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${style.accentBar} z-20`} />
-              
-              <div className="absolute top-6 right-6 opacity-5">
-                <Icon className="h-32 w-32" />
+
+              {/* Decorative dot-grid background */}
+              <div className="absolute inset-0 pointer-events-none opacity-[0.025]">
+                <svg width="100%" height="100%">
+                  <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1.5" fill="currentColor" />
+                  </pattern>
+                  <rect width="100%" height="100%" fill="url(#dots)" />
+                </svg>
               </div>
-              
-              <div className="relative z-10 flex-1 flex flex-col p-6 md:p-10 lg:p-12 overflow-hidden">
+
+              {/* Large watermark slide number */}
+              <div className="absolute bottom-2 right-4 font-mono font-black opacity-[0.04] select-none pointer-events-none leading-none"
+                style={{ fontSize: "clamp(4rem, 15vw, 10rem)" }}>
+                {String(currentSlide + 1).padStart(2, "0")}
+              </div>
+
+              {/* Corner icon */}
+              <div className="absolute top-6 right-6 opacity-[0.05]">
+                <Icon className="h-28 w-28" />
+              </div>
+
+              <div className="relative z-10 flex-1 flex flex-col p-5 md:p-8 lg:p-10 overflow-hidden gap-4">
+                {/* Slide heading */}
                 {(slide.title || slide.aiHeading || headingCache[currentSlide]) && (
-                  <div className="mb-4 shrink-0">
-                    <Badge className={`${style.badgeBg} uppercase tracking-wider text-xs`}>
+                  <div className="shrink-0 space-y-1">
+                    <Badge className={`${style.badgeBg} uppercase tracking-widest text-[10px]`}>
                       {slide.aiHeading || headingCache[currentSlide] || slide.title}
                     </Badge>
+                    {(slide.aiHeading || headingCache[currentSlide]) && slide.title && (
+                      <h2 className="font-serif text-lg md:text-xl font-semibold text-foreground/70 leading-snug">
+                        {slide.title}
+                      </h2>
+                    )}
                   </div>
                 )}
-                
-                {!slide.title && !slide.aiHeading && !headingCache[currentSlide] && (
-                  <div className="mb-3 shrink-0">
-                    <Quote className="h-6 w-6 opacity-20" />
-                  </div>
-                )}
-                
-                <div className="flex-1 overflow-y-auto pr-2">
-                  <div className="font-serif text-base md:text-lg lg:text-xl leading-relaxed text-foreground/90 space-y-4">
-                    {slide.content?.split('\n\n').map((paragraph, idx) => (
-                      <p key={idx} className={paragraph.startsWith('•') ? 'pl-2' : ''}>
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between pt-4 border-t border-border/50 mt-4 shrink-0">
-                  <div className="flex items-center gap-3">
-                    <div className={`h-8 w-8 rounded-full ${style.footerIcon} flex items-center justify-center`}>
-                      <Icon className="h-4 w-4 text-white" />
+
+                {/* Smart content */}
+                <SmartSlideContent content={slide.content || ""} style={style} />
+
+                {/* Footer */}
+                <div className="flex items-center justify-between pt-3 border-t border-border/30 shrink-0">
+                  <div className="flex items-center gap-2.5">
+                    <div className={`h-7 w-7 rounded-full ${style.footerIcon} flex items-center justify-center`}>
+                      <Icon className="h-3.5 w-3.5 text-white" />
                     </div>
-                    <span className="text-sm text-muted-foreground font-medium">
-                      {journalData.author}
-                    </span>
+                    <span className="text-xs text-muted-foreground font-medium">{journalData.author}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground uppercase tracking-wider">
-                      Slide
-                    </span>
-                    <span className="font-mono text-sm font-bold opacity-70">
-                      {String(currentSlide + 1).padStart(2, '0')}
-                    </span>
-                  </div>
+                  <span className="text-xs text-muted-foreground/50 uppercase tracking-widest font-mono">
+                    EdD · 2026
+                  </span>
                 </div>
               </div>
             </Card>

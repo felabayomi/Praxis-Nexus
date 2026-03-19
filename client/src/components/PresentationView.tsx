@@ -226,6 +226,84 @@ function createSlides(sectionId?: string): Slide[] {
         });
       }
     });
+  } else if (sectionId?.startsWith("contribution-") && journalData.aiHubContributions) {
+    const contributionId = sectionId.replace("contribution-", "");
+    const contribution = journalData.aiHubContributions.find(c => c.id === contributionId);
+    if (contribution) {
+      // Title slide
+      slides.push({
+        id: "title-slide",
+        type: "title",
+        title: "AI Inquiry Hub",
+        subtitle: "A Living Learning Commons for Cohort Exploration",
+        author: journalData.author,
+        slideNumber: 1
+      });
+      // Opening
+      slides.push({
+        id: "slide-opening",
+        type: "content",
+        title: "Opening — Setting the Scene",
+        content: "\"This is the AI Inquiry Hub — designed as a living learning commons for the cohort's exploration of AI across disciplines.\"\n\n• The Hub makes learning visible, shared, and accessible\n• It frames this as a reflective process rather than a purely technical one",
+        slideNumber: 2
+      });
+      // Section 1
+      slides.push({
+        id: "slide-what-this-is",
+        type: "content",
+        title: "Section 1 — What This Is",
+        content: "• The homepage grounds the inquiry in shared values — curiosity, ethics, and collective wisdom\n\n• Participants are invited into a reflective process, not a prescriptive one\n\n• The design signals intention: this is not about AI adoption — it is about critical inquiry into AI",
+        slideNumber: 3
+      });
+      // Section 2
+      slides.push({
+        id: "slide-inquiry-journey",
+        type: "content",
+        title: "Section 2 — The Inquiry Journey",
+        content: "• Structured across seven months — from framing and exploration to integration and presentation\n\n• Each phase outlines the focus, activities, and deliverables for that stage\n\n• Individual reflection and group collaboration are woven throughout the journey\n\n• The structure is consistent and easy to navigate",
+        slideNumber: 4
+      });
+      // Section 3
+      slides.push({
+        id: "slide-learning-commons",
+        type: "content",
+        title: "Section 3 — The Learning Commons (Core)",
+        content: "• The heart of the Hub — where all cohort contributions live\n\n• Participants submit resources, reflections, and emerging questions through a shared form\n\n• Submissions are organized and displayed through shared folders and curated resources\n\n• Over time, this becomes a living repository of tools, insights, and questions from across the cohort",
+        slideNumber: 5
+      });
+      // Section 4
+      slides.push({
+        id: "slide-small-groups",
+        type: "content",
+        title: "Section 4 — Small Groups",
+        content: "• Small groups are where most of the inquiry happens — peer dialogue drives the process\n\n• This page outlines group structure, participation expectations, and shared responsibilities\n\n• Dialogue and collaboration support thematic clustering around emerging patterns and tensions",
+        slideNumber: 6
+      });
+      // Closing
+      slides.push({
+        id: "slide-closing",
+        type: "content",
+        title: "Section 5 — Closing Statement",
+        content: "\"The Hub is designed to support both the process and the outcomes of the inquiry — making learning visible, shared, and accessible beyond the cohort.\"\n\n• Not just a website\n• A system. A learning model. A scalable digital commons.\n• That is why this matters.",
+        slideNumber: 7
+      });
+      // Delivery Tips
+      slides.push({
+        id: "slide-delivery",
+        type: "content",
+        title: "Delivery Tips",
+        content: "• Don't read — guide. You are narrating, not presenting slides\n\n• Move slowly — scrolling too fast creates confusion\n\n• Pause briefly between sections — signals confidence, not rushing\n\n• Timing: Opening 10s · Homepage 15s · Journey 20s · Commons 40s · Groups 10s · Close 10s\n\n• Total: approximately 1.5 minutes",
+        slideNumber: 8
+      });
+      // Q&A
+      slides.push({
+        id: "slide-qa",
+        type: "content",
+        title: "If They Ask — Be Ready",
+        content: "\"How do contributions show up?\"\n→ Submitted through the form; captured in a shared structure — the connection is being finalized so everything appears seamlessly.\n\n\"Can this scale to the whole program?\"\n→ Yes — the structure is designed to expand beyond the cohort into a broader program resource.\n\n\"Who maintains it?\"\n→ Low-maintenance — once the contribution flow is finalized, updates happen naturally through submissions.",
+        slideNumber: 9
+      });
+    }
   } else {
     // Default: Introduction slides - group every 2-3 paragraphs together
     slides.push({

@@ -861,6 +861,18 @@ export function JournalContent({ activeSection, onOpenPresentation, onOpenInfoCe
                         <AudioPlayer sectionId={sectionId} />
                       </DialogContent>
                     </Dialog>
+                    {onOpenPresentation && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => onOpenPresentation(sectionId)}
+                        className="flex items-center gap-2"
+                        data-testid={`button-presentation-${sectionId}`}
+                      >
+                        <Presentation className="h-4 w-4" />
+                        <span className="hidden sm:inline">Presentation View</span>
+                      </Button>
+                    )}
                   </div>
                 </div>
                 <h1 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-2 leading-tight">

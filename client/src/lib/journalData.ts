@@ -644,6 +644,90 @@ export const journalData: JournalEntry = {
           ]
         }
       ]
+    },
+    {
+      id: "ai-hub-demo",
+      title: "Presenting the AI Inquiry Hub — A Living Learning Commons",
+      resourceTitle: "AI Inquiry Hub (Google Sites)",
+      year: "2026",
+      author: "Abayomi, F. O.",
+      shortDescription: "A structured 1–2 minute demo script for presenting the AI Inquiry Hub as a living digital commons to the EdD cohort and faculty.",
+      introduction: "This contribution documents the AI Inquiry Hub as a scholarly artefact — a purpose-built digital commons designed to support the cohort's collective exploration of AI across disciplines. The entry captures both the conceptual frame of the Hub and the practical walk-through prepared for cohort presentation. It is structured as a navigated demo, guiding audiences from the homepage through the inquiry journey, the learning commons, and small group structures.",
+      apa: "Abayomi, F. O. (2026). AI Inquiry Hub: A living learning commons for EdD cohort inquiry. Unpublished course artefact.",
+      sections: [
+        {
+          id: "ai-hub-demo-opening",
+          title: "Opening — Setting the Scene",
+          icon: "megaphone",
+          content: [
+            {
+              id: "ai-hub-demo-opening-1",
+              type: "paragraph",
+              content: "\"This is the AI Inquiry Hub — designed as a living learning commons for the cohort's exploration of AI across disciplines.\" This opening statement orients the audience immediately. The Hub is not a course management tool or an information repository in the conventional sense. It is a structured space for collective, reflective inquiry — designed so that learning is visible, shared, and accessible beyond the immediate cohort experience."
+            }
+          ]
+        },
+        {
+          id: "ai-hub-demo-what",
+          title: "Section 1 — What This Is",
+          icon: "layout-dashboard",
+          content: [
+            {
+              id: "ai-hub-demo-what-1",
+              type: "paragraph",
+              content: "The homepage grounds the inquiry in shared values — curiosity, ethics, and collective wisdom — and frames this as a reflective process rather than a technical one. The design itself signals intention: this is not about AI adoption but about critical inquiry into AI. Participants are invited into a process, not prescribed a conclusion."
+            }
+          ]
+        },
+        {
+          id: "ai-hub-demo-journey",
+          title: "Section 2 — The Inquiry Journey",
+          icon: "compass",
+          content: [
+            {
+              id: "ai-hub-demo-journey-1",
+              type: "paragraph",
+              content: "The journey is structured across seven months — from framing and exploration to integration and presentation — with each phase guiding both individual reflection and group collaboration. Each section outlines the focus, activities, and deliverables, while keeping the experience consistent and easy to navigate. The arc from framing to presentation ensures the cohort builds iteratively on shared understanding."
+            }
+          ]
+        },
+        {
+          id: "ai-hub-demo-commons",
+          title: "Section 3 — The Learning Commons (Core)",
+          icon: "library",
+          content: [
+            {
+              id: "ai-hub-demo-commons-1",
+              type: "paragraph",
+              content: "This is the core of the Hub — the Learning Commons — where all cohort contributions live. Participants contribute through a shared form that captures resources, reflections, and emerging questions. Submissions are then organised and displayed through shared folders and curated resources. Over time, this becomes a living repository of tools, insights, and emerging questions from across the cohort."
+            }
+          ]
+        },
+        {
+          id: "ai-hub-demo-groups",
+          title: "Section 4 — Small Groups",
+          icon: "users",
+          content: [
+            {
+              id: "ai-hub-demo-groups-1",
+              type: "paragraph",
+              content: "Small groups are where most of the inquiry happens. This page outlines group structure, participation expectations, and shared responsibilities. Peer dialogue and collaborative reflection support thematic clustering — patterns and tensions that emerge across submissions are surfaced and examined within small group settings before being brought back to the wider cohort."
+            }
+          ]
+        },
+        {
+          id: "ai-hub-demo-closing",
+          title: "Section 5 — Closing and Why It Matters",
+          icon: "flag",
+          content: [
+            {
+              id: "ai-hub-demo-closing-1",
+              type: "paragraph",
+              content: "\"The Hub is designed to support both the process and the outcomes of the inquiry — making learning visible, shared, and accessible beyond the cohort.\" This is not merely a website. It is a system, a learning model, and a scalable digital commons. The structure is designed so it can expand beyond the cohort into a broader programme resource — low-maintenance, contribution-driven, and aligned with the inquiry's scholarly values."
+            }
+          ]
+        }
+      ]
     }
   ],
   keyInsights: [

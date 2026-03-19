@@ -176,7 +176,7 @@ export function JournalSidebar({ activeSection, onSectionChange, onOpenInfoCente
           {journalData.aiHubContributions && journalData.aiHubContributions.length > 0 && (
             <SidebarGroup>
               <SidebarGroupLabel className="text-sidebar-foreground/50 text-xs uppercase tracking-wider">
-                AI Hub Contribution
+                AI Hub Contributions
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>

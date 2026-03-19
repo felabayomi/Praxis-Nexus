@@ -11,6 +11,7 @@ interface SlideInsight {
   thematicConnection: string;
   discussionQuestion: string;
   inquiryGuidance: string;
+  imageQuery: string;
 }
 
 export function registerPresentationRoutes(app: Express): void {
@@ -31,8 +32,9 @@ For each slide, provide:
 2. A THEMATIC CONNECTION: How this connects to broader themes of AI, ecology, ethics, or conservation (1 sentence)
 3. A DISCUSSION QUESTION: A thought-provoking question that could spark academic dialogue (1 question)
 4. INQUIRY GUIDANCE: 2-3 pathways or approaches to explore the discussion question. These should guide the reader toward discovering answers through inquiry methods like examining literature, considering multiple perspectives, analyzing case studies, or reflecting on personal experience. Frame these as starting points for exploration, not definitive answers.
+5. IMAGE QUERY: A 2-3 word Unsplash search keyword for a professional, relevant image that visually reinforces this slide's theme. Use concrete, searchable nouns (e.g., "collaborative learning", "wildlife technology", "data analytics", "community meeting", "forest ecosystem", "research library"). Avoid abstract words.
 
-Respond in JSON format with keys: keyInsight, thematicConnection, discussionQuestion, inquiryGuidance.
+Respond in JSON format with keys: keyInsight, thematicConnection, discussionQuestion, inquiryGuidance, imageQuery.
 Keep responses scholarly yet accessible. Be specific to the content provided.`;
 
       const response = await openai.chat.completions.create({

@@ -54,6 +54,7 @@ interface SlideInsight {
   thematicConnection: string;
   discussionQuestion: string;
   inquiryGuidance: string;
+  imageQuery?: string;
 }
 
 function createSlides(sectionId?: string): Slide[] {
@@ -478,72 +479,111 @@ function parseSlideContent(raw: string): ContentBlock[] {
   return blocks;
 }
 
-function SmartSlideContent({ content, style }: { content: string; style: typeof templateStyles[keyof typeof templateStyles] }) {
+function RichSlideLayout({
+  content,
+  title,
+  style,
+  imageQuery,
+  slideIndex,
+}: {
+  content: string;
+  title?: string;
+  style: typeof templateStyles[keyof typeof templateStyles];
+  imageQuery?: string;
+  slideIndex: number;
+}) {
   const blocks = parseSlideContent(content);
+  const bullets = blocks.flatMap(b => b.type === "bullets" ? b.items : []);
+  const otherBlocks = blocks.filter(b => b.type !== "bullets");
+  const imageUrl = imageQuery
+    ? `https://source.unsplash.com/400x400/?${encodeURIComponent(imageQuery)}&sig=${slideIndex}`
+    : null;
 
   return (
-    <div className="flex-1 flex flex-col gap-3 md:gap-4 overflow-y-auto pr-1">
-      {blocks.map((block, i) => {
-        if (block.type === "bullets") {
-          const isGrid = block.items.length >= 3;
-          return (
-            <div
-              key={i}
-              className={isGrid ? "grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3" : "flex flex-col gap-2"}
-            >
-              {block.items.map((item, j) => (
-                <div
-                  key={j}
-                  className="flex items-start gap-3 p-3 md:p-4 rounded-xl bg-background/60 dark:bg-white/5 border border-border/40 backdrop-blur-sm shadow-sm"
-                >
-                  <div
-                    className={`h-6 w-6 rounded-full ${style.footerIcon} flex items-center justify-center shrink-0 mt-0.5`}
-                  >
-                    <span className="text-white text-[10px] font-bold">{j + 1}</span>
-                  </div>
-                  <p className="font-serif text-sm md:text-base leading-snug text-foreground/85">{item}</p>
+    <div className="flex-1 flex flex-col gap-3 md:gap-5 overflow-hidden min-h-0">
+      {/* Bold large title */}
+      {title && (
+        <h2 className="font-black text-xl md:text-2xl lg:text-3xl xl:text-4xl uppercase tracking-tight text-foreground leading-none shrink-0">
+          {title}
+        </h2>
+      )}
+
+      {/* Two-column: image left, content right */}
+      <div className="flex-1 flex gap-4 md:gap-6 overflow-hidden min-h-0">
+        {/* Left: circular image */}
+        <div className="relative shrink-0 flex flex-col items-center justify-center w-28 md:w-36 lg:w-44">
+          {/* Dot grid behind image */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
+            <svg width="100%" height="100%">
+              <pattern id={`dotgrid-${slideIndex}`} width="10" height="10" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1.2" fill="currentColor" className="text-foreground/40" />
+              </pattern>
+              <rect width="100%" height="100%" fill={`url(#dotgrid-${slideIndex})`} />
+            </svg>
+          </div>
+          {/* Circular image */}
+          <div className="relative w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden shadow-xl border-[3px] border-white/70 dark:border-white/20 bg-muted z-10">
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={imageQuery}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                  (e.target as HTMLImageElement).parentElement!.classList.add("flex", "items-center", "justify-center");
+                }}
+              />
+            ) : (
+              <div className={`w-full h-full bg-gradient-to-br ${style.titleBg} flex items-center justify-center`}>
+                <Sparkles className="h-8 w-8 text-white/50" />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Right: content */}
+        <div className="flex-1 flex flex-col gap-2 md:gap-3 overflow-y-auto min-h-0">
+          {/* Bullets as icon chips */}
+          {bullets.map((item, j) => (
+            <div key={j} className="flex items-start gap-3">
+              <div className={`h-8 w-8 md:h-9 md:w-9 rounded-full ${style.footerIcon} flex items-center justify-center shrink-0 shadow-sm mt-0.5`}>
+                <span className="text-white text-[10px] md:text-xs font-bold">{String(j + 1).padStart(2, "0")}</span>
+              </div>
+              <div className="flex-1 py-1">
+                <p className="font-serif text-sm md:text-base leading-snug text-foreground/85">{item}</p>
+              </div>
+            </div>
+          ))}
+          {/* Other blocks (quotes, Q&A, paragraphs) */}
+          {otherBlocks.map((block, i) => {
+            if (block.type === "quote") {
+              return (
+                <div key={i} className="relative pl-4 border-l-[3px] border-primary/60 py-1">
+                  <span className="absolute -top-2 left-2 text-4xl text-primary/10 font-serif leading-none select-none">&ldquo;</span>
+                  <p className="font-serif text-sm md:text-base italic leading-relaxed text-foreground/75 pt-3">{block.text}</p>
                 </div>
-              ))}
-            </div>
-          );
-        }
-
-        if (block.type === "quote") {
-          return (
-            <div
-              key={i}
-              className="relative pl-5 py-3 my-1"
-            >
-              <div className="absolute left-0 top-0 bottom-0 w-[3px] rounded-full bg-gradient-to-b from-primary via-primary/50 to-transparent" />
-              <span className="absolute -top-3 left-3 text-5xl text-primary/15 font-serif leading-none select-none">&ldquo;</span>
-              <p className="font-serif text-base md:text-lg lg:text-xl italic leading-relaxed text-foreground/80 pt-4">
-                {block.text}
-              </p>
-            </div>
-          );
-        }
-
-        if (block.type === "qa") {
-          return (
-            <div key={i} className="rounded-xl overflow-hidden border border-border/40 shadow-sm">
-              <div className="bg-primary/8 dark:bg-primary/10 px-4 py-2.5 flex items-start gap-2.5 border-b border-border/30">
-                <MessageCircleQuestion className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                <p className="font-serif text-sm md:text-base font-semibold text-foreground italic">{block.question}</p>
-              </div>
-              <div className="px-4 py-2.5 bg-card/60 dark:bg-card/30 flex items-start gap-2.5">
-                <ArrowRight className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
-                <p className="font-serif text-sm md:text-base text-foreground/80 leading-relaxed">{block.answer}</p>
-              </div>
-            </div>
-          );
-        }
-
-        return (
-          <p key={i} className="font-serif text-base md:text-lg lg:text-xl leading-relaxed text-foreground/85">
-            {block.text}
-          </p>
-        );
-      })}
+              );
+            }
+            if (block.type === "qa") {
+              return (
+                <div key={i} className="rounded-lg overflow-hidden border border-border/40 shadow-sm">
+                  <div className="bg-primary/8 dark:bg-primary/10 px-3 py-2 flex items-start gap-2 border-b border-border/20">
+                    <MessageCircleQuestion className="h-3.5 w-3.5 text-primary mt-0.5 shrink-0" />
+                    <p className="font-serif text-xs md:text-sm font-semibold italic text-foreground">{block.question}</p>
+                  </div>
+                  <div className="px-3 py-2 flex items-start gap-2 bg-card/40">
+                    <ArrowRight className="h-3.5 w-3.5 text-emerald-500 mt-0.5 shrink-0" />
+                    <p className="font-serif text-xs md:text-sm text-foreground/80 leading-relaxed">{block.answer}</p>
+                  </div>
+                </div>
+              );
+            }
+            return (
+              <p key={i} className="font-serif text-sm md:text-base leading-relaxed text-foreground/85">{block.text}</p>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
@@ -558,6 +598,7 @@ export function PresentationView({ template, onClose, onChangeTemplate, section 
   const [isLoadingInsight, setIsLoadingInsight] = useState(false);
   const [insightCache, setInsightCache] = useState<Record<number, SlideInsight>>({});
   const [headingCache, setHeadingCache] = useState<Record<number, string>>({});
+  const [imageCache, setImageCache] = useState<Record<number, string>>({});
 
   const slide = slides[currentSlide];
   const progress = ((currentSlide + 1) / slides.length) * 100;
@@ -571,6 +612,7 @@ export function PresentationView({ template, onClose, onChangeTemplate, section 
     setCurrentSlide(0);
     setInsightCache({});
     setHeadingCache({});
+    setImageCache({});
   }, [section]);
 
   useEffect(() => {
@@ -580,6 +622,10 @@ export function PresentationView({ template, onClose, onChangeTemplate, section 
     if (currentSlideData.type === "content" && showAI) {
       if (insightCache[slideIndex]) {
         setInsight(insightCache[slideIndex]);
+        const cached = insightCache[slideIndex];
+        if (cached.imageQuery && !imageCache[slideIndex]) {
+          setImageCache(prev => ({ ...prev, [slideIndex]: cached.imageQuery! }));
+        }
       } else {
         fetchInsight();
       }
@@ -628,6 +674,9 @@ export function PresentationView({ template, onClose, onChangeTemplate, section 
       const result: SlideInsight = await response.json();
       setInsight(result);
       setInsightCache(prev => ({ ...prev, [currentSlide]: result }));
+      if (result.imageQuery) {
+        setImageCache(prev => ({ ...prev, [currentSlide]: result.imageQuery! }));
+      }
     } catch (error) {
       console.error("Failed to fetch insight:", error);
     } finally {
@@ -797,62 +846,72 @@ export function PresentationView({ template, onClose, onChangeTemplate, section 
             </Card>
           ) : (
             <Card
-              className={`w-full max-w-5xl h-full max-h-full relative overflow-hidden border shadow-2xl flex flex-col`}
+              className={`w-full max-w-5xl h-full max-h-full relative overflow-hidden border-0 shadow-2xl flex flex-col`}
               style={{ background: style.pattern + ", hsl(var(--card))" }}
             >
-              {/* Top accent bar */}
-              <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${style.accentBar} z-20`} />
+              {/* Top gradient accent bar */}
+              <div className={`absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r ${style.accentBar} z-20`} />
 
-              {/* Decorative dot-grid background */}
-              <div className="absolute inset-0 pointer-events-none opacity-[0.025]">
-                <svg width="100%" height="100%">
-                  <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
-                    <circle cx="2" cy="2" r="1.5" fill="currentColor" />
-                  </pattern>
-                  <rect width="100%" height="100%" fill="url(#dots)" />
+              {/* ── Geometric corner decorations ── */}
+              {/* Top-left: two stacked accent rectangles */}
+              <div className="absolute top-4 left-4 pointer-events-none z-10">
+                <div className={`w-16 md:w-20 h-3 rounded-sm bg-gradient-to-r ${style.accentBar} opacity-60 mb-1`} />
+                <div className={`w-10 md:w-12 h-3 rounded-sm bg-gradient-to-r ${style.accentBar} opacity-30`} />
+              </div>
+              {/* Top-right: concentric arcs */}
+              <div className="absolute top-4 right-4 pointer-events-none z-10 opacity-20">
+                <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+                  <path d="M 52 0 A 52 52 0 0 1 0 52" stroke="currentColor" strokeWidth="2" fill="none" />
+                  <path d="M 40 0 A 40 40 0 0 1 0 40" stroke="currentColor" strokeWidth="2" fill="none" />
+                  <path d="M 28 0 A 28 28 0 0 1 0 28" stroke="currentColor" strokeWidth="2" fill="none" />
                 </svg>
               </div>
-
-              {/* Large watermark slide number */}
-              <div className="absolute bottom-2 right-4 font-mono font-black opacity-[0.04] select-none pointer-events-none leading-none"
-                style={{ fontSize: "clamp(4rem, 15vw, 10rem)" }}>
-                {String(currentSlide + 1).padStart(2, "0")}
+              {/* Bottom-left: small concentric arcs */}
+              <div className="absolute bottom-10 left-4 pointer-events-none z-10 opacity-15">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                  <path d="M 0 40 A 40 40 0 0 1 40 0" stroke="currentColor" strokeWidth="2" fill="none" />
+                  <path d="M 0 28 A 28 28 0 0 1 28 0" stroke="currentColor" strokeWidth="2" fill="none" />
+                </svg>
+              </div>
+              {/* Bottom-right: slide number + two bars */}
+              <div className="absolute bottom-10 right-4 pointer-events-none z-10 flex flex-col items-end gap-1">
+                <span className="font-mono text-lg md:text-xl font-black text-foreground/10 leading-none">
+                  {String(currentSlide + 1).padStart(2, "0")}
+                </span>
+                <div className="flex gap-1">
+                  <div className={`h-1.5 w-8 rounded-full bg-gradient-to-r ${style.accentBar} opacity-40`} />
+                  <div className={`h-1.5 w-5 rounded-full bg-gradient-to-r ${style.accentBar} opacity-20`} />
+                </div>
               </div>
 
-              {/* Corner icon */}
-              <div className="absolute top-6 right-6 opacity-[0.05]">
-                <Icon className="h-28 w-28" />
-              </div>
+              {/* AI heading badge */}
+              {(slide.aiHeading || headingCache[currentSlide]) && (
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20">
+                  <Badge className={`${style.badgeBg} uppercase tracking-widest text-[10px] shadow-sm`}>
+                    {slide.aiHeading || headingCache[currentSlide]}
+                  </Badge>
+                </div>
+              )}
 
-              <div className="relative z-10 flex-1 flex flex-col p-5 md:p-8 lg:p-10 overflow-hidden gap-4">
-                {/* Slide heading */}
-                {(slide.title || slide.aiHeading || headingCache[currentSlide]) && (
-                  <div className="shrink-0 space-y-1">
-                    <Badge className={`${style.badgeBg} uppercase tracking-widest text-[10px]`}>
-                      {slide.aiHeading || headingCache[currentSlide] || slide.title}
-                    </Badge>
-                    {(slide.aiHeading || headingCache[currentSlide]) && slide.title && (
-                      <h2 className="font-serif text-lg md:text-xl font-semibold text-foreground/70 leading-snug">
-                        {slide.title}
-                      </h2>
-                    )}
-                  </div>
-                )}
-
-                {/* Smart content */}
-                <SmartSlideContent content={slide.content || ""} style={style} />
+              {/* Main content */}
+              <div className="relative z-10 flex-1 flex flex-col p-5 md:p-8 lg:p-10 pt-12 md:pt-14 overflow-hidden">
+                <RichSlideLayout
+                  content={slide.content || ""}
+                  title={slide.title}
+                  style={style}
+                  imageQuery={imageCache[currentSlide]}
+                  slideIndex={currentSlide}
+                />
 
                 {/* Footer */}
-                <div className="flex items-center justify-between pt-3 border-t border-border/30 shrink-0">
-                  <div className="flex items-center gap-2.5">
-                    <div className={`h-7 w-7 rounded-full ${style.footerIcon} flex items-center justify-center`}>
-                      <Icon className="h-3.5 w-3.5 text-white" />
+                <div className="flex items-center justify-between pt-3 border-t border-border/20 mt-3 shrink-0">
+                  <div className="flex items-center gap-2">
+                    <div className={`h-6 w-6 rounded-full ${style.footerIcon} flex items-center justify-center`}>
+                      <Icon className="h-3 w-3 text-white" />
                     </div>
                     <span className="text-xs text-muted-foreground font-medium">{journalData.author}</span>
                   </div>
-                  <span className="text-xs text-muted-foreground/50 uppercase tracking-widest font-mono">
-                    EdD · 2026
-                  </span>
+                  <span className="text-[10px] text-muted-foreground/40 uppercase tracking-widest font-mono">EdD · 2026</span>
                 </div>
               </div>
             </Card>

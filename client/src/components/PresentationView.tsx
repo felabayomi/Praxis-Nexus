@@ -286,20 +286,6 @@ function createSlides(sectionId?: string): Slide[] {
           content: "\"The Hub is designed to support both the process and the outcomes of the inquiry — making learning visible, shared, and accessible beyond the cohort.\"\n\n• Not just a website\n• A system. A learning model. A scalable digital commons.\n• That is why this matters.",
           slideNumber: 7
         });
-        slides.push({
-          id: "slide-delivery",
-          type: "content",
-          title: "Delivery Tips",
-          content: "• Don't read — guide. You are narrating, not presenting slides\n\n• Move slowly — scrolling too fast creates confusion\n\n• Pause briefly between sections — signals confidence, not rushing\n\n• Timing: Opening 10s · Homepage 15s · Journey 20s · Commons 40s · Groups 10s · Close 10s\n\n• Total: approximately 1.5 minutes",
-          slideNumber: 8
-        });
-        slides.push({
-          id: "slide-qa",
-          type: "content",
-          title: "If They Ask — Be Ready",
-          content: "\"How do contributions show up?\"\n→ Submitted through the form; captured in a shared structure — the connection is being finalized so everything appears seamlessly.\n\n\"Can this scale to the whole program?\"\n→ Yes — the structure is designed to expand beyond the cohort into a broader program resource.\n\n\"Who maintains it?\"\n→ Low-maintenance — once the contribution flow is finalized, updates happen naturally through submissions.",
-          slideNumber: 9
-        });
       } else {
         // Generic: generate slides from the contribution's own sections
         slides.push({

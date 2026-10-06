@@ -3,8 +3,7 @@ import type { Express, Request, Response } from "express";
 import { loadDefaultReferences, searchReferences, formatReferenceAPA, formatInTextCitation, parseBibTeX, ParsedReference } from "../utils/bibtexParser";
 
 const openai = new OpenAI({
-  apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY,
-  baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 interface CitationSuggestion {
